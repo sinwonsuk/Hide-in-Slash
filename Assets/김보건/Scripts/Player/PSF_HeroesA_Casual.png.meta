@@ -381,6 +381,45 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2509,7 +2548,103 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PSF_HeroesA_Casual_0: -6916139332887413538
+      PSF_HeroesA_Casual_1: -3676149357930287545
+      PSF_HeroesA_Casual_10: 2729884689587740693
+      PSF_HeroesA_Casual_11: -7227231319284763627
+      PSF_HeroesA_Casual_12: -3816446903771182563
+      PSF_HeroesA_Casual_13: -2146457262943704861
+      PSF_HeroesA_Casual_14: -3268735198323149435
+      PSF_HeroesA_Casual_15: -7098119086198620861
+      PSF_HeroesA_Casual_16: 6087319450423348696
+      PSF_HeroesA_Casual_17: 7990621172892743134
+      PSF_HeroesA_Casual_18: -2051128761412503792
+      PSF_HeroesA_Casual_19: 4834011815641393911
+      PSF_HeroesA_Casual_2: 1291900368127537205
+      PSF_HeroesA_Casual_20: -7076080126963758774
+      PSF_HeroesA_Casual_21: 5724822955876435118
+      PSF_HeroesA_Casual_22: -3028930748585567458
+      PSF_HeroesA_Casual_23: -7100557707688295416
+      PSF_HeroesA_Casual_24: -2696193257703402590
+      PSF_HeroesA_Casual_25: 7576516358557936419
+      PSF_HeroesA_Casual_26: -1868244418356692855
+      PSF_HeroesA_Casual_27: 2135684265066551452
+      PSF_HeroesA_Casual_28: -3506267031051071500
+      PSF_HeroesA_Casual_29: 9132106496775226809
+      PSF_HeroesA_Casual_3: -5164600687104189076
+      PSF_HeroesA_Casual_30: -168763412171276341
+      PSF_HeroesA_Casual_31: 8789825826240740563
+      PSF_HeroesA_Casual_32: 8948336117375529471
+      PSF_HeroesA_Casual_33: -2589549407629666007
+      PSF_HeroesA_Casual_34: -7508117340687331651
+      PSF_HeroesA_Casual_35: -275327992889803483
+      PSF_HeroesA_Casual_36: -8455123088591648274
+      PSF_HeroesA_Casual_37: 4448783401555142751
+      PSF_HeroesA_Casual_38: 3904465361413125152
+      PSF_HeroesA_Casual_39: 1519196343053153976
+      PSF_HeroesA_Casual_4: -235124597498546353
+      PSF_HeroesA_Casual_40: -1749350381392836825
+      PSF_HeroesA_Casual_41: -4161649736304712507
+      PSF_HeroesA_Casual_42: -6884778395843540405
+      PSF_HeroesA_Casual_43: 5960489312765262588
+      PSF_HeroesA_Casual_44: -7787716451615819551
+      PSF_HeroesA_Casual_45: 677443745307415213
+      PSF_HeroesA_Casual_46: 6582944278769582259
+      PSF_HeroesA_Casual_47: -7941550010785715305
+      PSF_HeroesA_Casual_48: -208231555160914414
+      PSF_HeroesA_Casual_49: -1234991686656978344
+      PSF_HeroesA_Casual_5: -560259497230206715
+      PSF_HeroesA_Casual_50: 4283905175267846737
+      PSF_HeroesA_Casual_51: -5194742187822067815
+      PSF_HeroesA_Casual_52: -2373603241757147138
+      PSF_HeroesA_Casual_53: 7437149797303699880
+      PSF_HeroesA_Casual_54: 4215523931607200581
+      PSF_HeroesA_Casual_55: -1621560333132102678
+      PSF_HeroesA_Casual_56: -3174110338117658973
+      PSF_HeroesA_Casual_57: -8462037705926673371
+      PSF_HeroesA_Casual_58: -4195203274134385363
+      PSF_HeroesA_Casual_59: -1351882285188493033
+      PSF_HeroesA_Casual_6: -2037647125831836695
+      PSF_HeroesA_Casual_60: 7005116867707340759
+      PSF_HeroesA_Casual_61: 7721550741544008556
+      PSF_HeroesA_Casual_62: 6913609975982008255
+      PSF_HeroesA_Casual_63: -6473840886169767026
+      PSF_HeroesA_Casual_64: 6070582461438025464
+      PSF_HeroesA_Casual_65: -1085962634870440972
+      PSF_HeroesA_Casual_66: -1428940879876904558
+      PSF_HeroesA_Casual_67: 263052159686265036
+      PSF_HeroesA_Casual_68: 287849069014488781
+      PSF_HeroesA_Casual_69: 8185481261799653490
+      PSF_HeroesA_Casual_7: 8737868007653229527
+      PSF_HeroesA_Casual_70: -567681603107310122
+      PSF_HeroesA_Casual_71: 4394319426124937616
+      PSF_HeroesA_Casual_72: -8747654625142289403
+      PSF_HeroesA_Casual_73: -8547750492995370457
+      PSF_HeroesA_Casual_74: -5036251889834388244
+      PSF_HeroesA_Casual_75: -4293899112290722969
+      PSF_HeroesA_Casual_76: 2571635723441894071
+      PSF_HeroesA_Casual_77: 5834740290375823302
+      PSF_HeroesA_Casual_78: 1445658406976810066
+      PSF_HeroesA_Casual_79: -7655744134151106392
+      PSF_HeroesA_Casual_8: 6766462303136362327
+      PSF_HeroesA_Casual_80: -4297917624086018790
+      PSF_HeroesA_Casual_81: -6902336493083548683
+      PSF_HeroesA_Casual_82: -3538453898575228381
+      PSF_HeroesA_Casual_83: -7859312267607644028
+      PSF_HeroesA_Casual_84: -3857798037832456678
+      PSF_HeroesA_Casual_85: -5405996816550567652
+      PSF_HeroesA_Casual_86: 4785506879235567043
+      PSF_HeroesA_Casual_87: 5692277226127896003
+      PSF_HeroesA_Casual_88: 8716703655502537142
+      PSF_HeroesA_Casual_89: -5456028848091660944
+      PSF_HeroesA_Casual_9: -3663641150641844820
+      PSF_HeroesA_Casual_90: 5092497124782112663
+      PSF_HeroesA_Casual_91: -780229419369382174
+      PSF_HeroesA_Casual_92: 4821679522131058766
+      PSF_HeroesA_Casual_93: 3702335415018778871
+      PSF_HeroesA_Casual_94: 4422797185138073332
+      PSF_HeroesA_Casual_95: -8953158527193317746
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
