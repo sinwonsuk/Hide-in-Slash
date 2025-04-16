@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class GhostStateMachine
+{
+    public GhostState currentState { get; private set; }
+
+    public void Initialize(GhostState _startState)
+    {
+        currentState = _startState;
+        currentState.Enter();
+    }
+
+    public void ChangeState(GhostState _newState)
+    {
+        currentState.Exit();
+        currentState = _newState;
+        currentState.Enter();
+    }
+}
