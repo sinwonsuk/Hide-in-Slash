@@ -9,7 +9,10 @@ public class Peanut : Ghost
     {
 
         base.Awake();
+        idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
         moveState = new PeanutMove(this, ghostStateMachine, "Move");
+
+        ghostStateMachine.Initialize(idleState);
     }
 
     protected override void Start()
