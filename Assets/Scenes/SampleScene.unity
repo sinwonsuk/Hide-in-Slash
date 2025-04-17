@@ -1135,6 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1290765041}
   - component: {fileID: 1290765042}
+  - component: {fileID: 1290765043}
   m_Layer: 0
   m_Name: titleBackGround2
   m_TagString: Untagged
@@ -1212,6 +1213,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1290765043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290765040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e61853ce348364f9968b8bd93e8a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1290765042}
+  duration: 2
 --- !u!1 &1796842075
 GameObject:
   m_ObjectHideFlags: 0
