@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     protected bool facingRight = true;
 
     [Header("이동")]
-    public float moveSpeed = 12f;
+    public float moveSpeed = 5f;
 
     public PlayerStateMachine PlayerStateMachine { get; private set; }
 
@@ -20,11 +20,19 @@ public class Player : MonoBehaviour
 
     private int deadCount = 0;
 
+    [Header("에너지드링크")]
+    [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private float boostedSpeed = 10f;
+    [SerializeField] private float boostDuration = 10f;
+    [SerializeField] private bool hasEnergyDrink = false;     //에너지드링크 가지고 있는지
+    private bool isBoosted = false;           //에너지드링크 사용중인지 여부
+    [SerializeField] private float boostTimer;        // 부스트타이머(디버깅용 시리얼필드)
 
-    [Header("투명물약")]
+    [Header("투명포션")]
     [SerializeField] private float invisibleDuration = 5f;
-    [SerializeField] private bool hasInvisiblePotion = false;    //투명물약을 가지고 있는지 여부
+    [SerializeField] private bool hasInvisiblePotion = false;    //투명물약을 가지고 있는지 
     private bool isInvisible = false;           //투명상태 여부
+    [SerializeField] private float invisibleTimer;   // 투명타이머(디버깅용 시리얼필드)
 
     [Header("납치됨")]
     [SerializeField] private GameObject moveMap;
@@ -37,6 +45,9 @@ public class Player : MonoBehaviour
     [Header("발전기")]
     [SerializeField] private GameObject generator;
     private bool isInGenerator = false;
+
+    [Header("상점")]
+    private bool isInShop = false;
 
 
     private void Awake()
@@ -66,23 +77,39 @@ public class Player : MonoBehaviour
             OpenMiniGame();
         }
 
-        if (hasInvisiblePotion && Input.GetKeyDown(KeyCode.Q))
+        if (hasInvisiblePotion && Input.GetKeyDown(KeyCode.Alpha1))
         {
-            hasInvisiblePotion = false;
-            isInvisible = true;
-
             BecomeInvisible();
-            Debug.Log("투명 물약 사용");
+        }
+        else if (!hasInvisiblePotion)
+        {
+            Debug.Log("투명 물약 없음");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            BecomeBoost();
+        }
+        else if (!hasEnergyDrink)
+        {
+            Debug.Log("에너지드링크 없음");
         }
 
         if (isInvisible)
         {
-            invisibleDuration -= Time.deltaTime;
-            if(invisibleDuration <= 0f)
+            invisibleTimer -= Time.deltaTime;
+            if (invisibleTimer <= 0f)
             {
-                isInvisible = false;
                 ResetTransparency();
-                Debug.Log("투명상태 해제");
+            }
+        }
+
+        if (isBoosted)
+        {
+            boostTimer -= Time.deltaTime;
+            if (boostTimer <= 0f)
+            {
+                ResetMoveSpeed();
             }
         }
     }
@@ -156,7 +183,12 @@ public class Player : MonoBehaviour
         //    isInGenerator = true;
         //}
 
-        // 상점같은 상호작용추가
+        // 상점
+        //if(collision.CompareTag("Shop"))
+        //{
+        //    Debug.Log("상점 상호작용 가능");
+        //    isInShop = true;
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -172,6 +204,12 @@ public class Player : MonoBehaviour
         //    Debug.Log("발전기 작동 불가능");
         //    isInGenerator = false;
         //}
+
+        //if (collision.CompareTag("Shop"))
+        //{
+        //    Debug.Log("상점 이용 불가능");
+        //    isInShop = false;
+        //}
     }
 
     private void OpenMiniGame()
@@ -183,6 +221,7 @@ public class Player : MonoBehaviour
         // 플레이어 조작 잠금
     }
 
+    //플레이어죽음
     public void BecomeGhost()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -200,6 +239,7 @@ public class Player : MonoBehaviour
         col.enabled = false;
     }
 
+    //투명 물약 관련
     public void BecomeInvisible()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -207,7 +247,11 @@ public class Player : MonoBehaviour
         c.a = 0.5f;
         sr.color = c;
 
+        hasInvisiblePotion = false;
         isInvisible = true;
+        invisibleTimer = invisibleDuration;
+
+        Debug.Log("투명 물약 사용");
 
         //보스한테 안보이게
         //if (!isMine())
@@ -222,6 +266,38 @@ public class Player : MonoBehaviour
         Color c = sr.color;
         c.a = 1f;
         sr.color = c;
+
+        isInvisible = false;
+        Debug.Log("투명상태 해제");
+    }
+
+    // 에너지 드링크 관련
+    public void BecomeBoost()
+    {
+        moveSpeed = boostedSpeed;
+        hasEnergyDrink = false;
+        isBoosted = true;
+        boostTimer = boostDuration;
+        Debug.Log("속도 버프");
+    }
+    private void ResetMoveSpeed()
+    {
+        moveSpeed = baseSpeed;
+        isBoosted = false;
+        Debug.Log("속도 버프 종료");
+    }
+
+    //상점 관련
+    public void BuyInvisiblePotion()
+    {
+        hasInvisiblePotion = true;
+        Debug.Log("투명 포션 구매");
+    }
+
+    public void BuyEnergyDrink()
+    {
+        hasEnergyDrink = true;
+        Debug.Log("에너지 드링크 구매");
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
