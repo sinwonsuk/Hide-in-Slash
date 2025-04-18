@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
 
     public PlayerIdle idleState { get; private set; }
     public PlayerMove moveState { get; private set; }
+    public PlayerDead deadState { get; private set; }
+
+    private int deadCount = 0;
 
 
     [Header("납치됨")]
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
 
         idleState = new PlayerIdle(this, PlayerStateMachine, "Idle");
         moveState = new PlayerMove(this, PlayerStateMachine, "Move");
+        deadState = new PlayerDead(this, PlayerStateMachine, "Dead");
     }
 
     private void Start()
@@ -92,6 +96,17 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.CompareTag("Prison"))
+        {
+            deadCount++;
+            Debug.Log($"{deadCount} 번 감옥에 들어옴");
+            if (deadCount >= 2)
+            {
+                Debug.Log("플레이어 사망~");
+                PlayerStateMachine.ChangeState(deadState);
+            }
+        }
+
         //귀신에게 잡혔을 때
         if (collision.CompareTag("Ghost"))
         {
@@ -109,11 +124,11 @@ public class Player : MonoBehaviour
         }
 
         // 발전기 돌리기
-        if (collision.CompareTag("Generator"))
-        {
-            Debug.Log("발전기 작동가능");
-            isInGenerator = true;
-        }
+        //if (collision.CompareTag("Generator"))
+        //{
+        //    Debug.Log("발전기 작동가능");
+        //    isInGenerator = true;
+        //}
 
         // 상점같은 상호작용추가
     }
@@ -126,11 +141,11 @@ public class Player : MonoBehaviour
             isInGame = false;
         }
 
-        if (collision.CompareTag("Generator"))
-        {
-            Debug.Log("발전기 작동 불가능");
-            isInGenerator = false;
-        }
+        //if (collision.CompareTag("Generator"))
+        //{
+        //    Debug.Log("발전기 작동 불가능");
+        //    isInGenerator = false;
+        //}
     }
 
     private void OpenMiniGame()
@@ -140,6 +155,23 @@ public class Player : MonoBehaviour
             miniGame.SetActive(true);
 
         // 플레이어 조작 잠금
+    }
+
+    public void BecomeGhost()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+        c.a = 0.5f;
+        sr.color = c;
+
+        //다른사람한테 안보이게
+        //if (!isMine())
+        //{
+        //    gameObject.SetActive(false); 
+        //}
+
+        Collider2D col = GetComponent<Collider2D>();
+        col.enabled = false;
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
