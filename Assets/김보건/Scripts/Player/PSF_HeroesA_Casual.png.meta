@@ -427,10 +427,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 671
-        width: 47
-        height: 83
+        x: 0
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -449,10 +449,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_1
       rect:
         serializedVersion: 2
-        x: 56
-        y: 671
-        width: 47
-        height: 86
+        x: 54
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -471,10 +471,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_2
       rect:
         serializedVersion: 2
-        x: 110
-        y: 671
-        width: 47
-        height: 83
+        x: 108
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -493,10 +493,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_3
       rect:
         serializedVersion: 2
-        x: 164
-        y: 671
-        width: 47
-        height: 80
+        x: 162
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -515,10 +515,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_4
       rect:
         serializedVersion: 2
-        x: 221
-        y: 671
-        width: 41
-        height: 83
+        x: 216
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -537,10 +537,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_5
       rect:
         serializedVersion: 2
-        x: 272
-        y: 671
-        width: 47
-        height: 80
+        x: 270
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -559,10 +559,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_6
       rect:
         serializedVersion: 2
-        x: 326
-        y: 671
-        width: 44
-        height: 80
+        x: 324
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -581,10 +581,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_7
       rect:
         serializedVersion: 2
-        x: 383
-        y: 671
-        width: 41
-        height: 83
+        x: 378
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -603,10 +603,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_8
       rect:
         serializedVersion: 2
-        x: 437
-        y: 671
-        width: 44
-        height: 80
+        x: 432
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -625,10 +625,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_9
       rect:
         serializedVersion: 2
-        x: 488
-        y: 671
-        width: 44
-        height: 83
+        x: 486
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -647,10 +647,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_10
       rect:
         serializedVersion: 2
-        x: 545
-        y: 671
-        width: 41
-        height: 86
+        x: 540
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -669,10 +669,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_11
       rect:
         serializedVersion: 2
-        x: 599
-        y: 671
-        width: 44
-        height: 83
+        x: 594
+        y: 672
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -691,10 +691,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_12
       rect:
         serializedVersion: 2
-        x: 8
-        y: 575
-        width: 41
-        height: 83
+        x: 0
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -713,10 +713,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_13
       rect:
         serializedVersion: 2
-        x: 62
-        y: 575
-        width: 41
-        height: 86
+        x: 54
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -735,10 +735,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_14
       rect:
         serializedVersion: 2
-        x: 113
-        y: 575
-        width: 47
-        height: 83
+        x: 108
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -757,10 +757,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_15
       rect:
         serializedVersion: 2
-        x: 167
-        y: 575
-        width: 47
-        height: 80
+        x: 162
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -779,10 +779,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_16
       rect:
         serializedVersion: 2
-        x: 221
-        y: 575
-        width: 47
-        height: 83
+        x: 216
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -801,10 +801,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_17
       rect:
         serializedVersion: 2
-        x: 275
-        y: 575
-        width: 50
-        height: 80
+        x: 270
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -823,10 +823,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_18
       rect:
         serializedVersion: 2
-        x: 332
-        y: 575
-        width: 44
-        height: 80
+        x: 324
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -845,10 +845,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_19
       rect:
         serializedVersion: 2
-        x: 389
-        y: 575
-        width: 41
-        height: 83
+        x: 378
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -867,10 +867,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_20
       rect:
         serializedVersion: 2
-        x: 440
-        y: 575
-        width: 44
-        height: 80
+        x: 432
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -889,10 +889,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_21
       rect:
         serializedVersion: 2
-        x: 494
-        y: 575
-        width: 44
-        height: 83
+        x: 486
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -911,10 +911,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_22
       rect:
         serializedVersion: 2
-        x: 548
-        y: 575
-        width: 44
-        height: 86
+        x: 540
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -933,10 +933,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_23
       rect:
         serializedVersion: 2
-        x: 602
-        y: 575
-        width: 44
-        height: 83
+        x: 594
+        y: 576
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -955,10 +955,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_24
       rect:
         serializedVersion: 2
-        x: 5
-        y: 479
-        width: 41
-        height: 83
+        x: 0
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -977,10 +977,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_25
       rect:
         serializedVersion: 2
-        x: 59
-        y: 479
-        width: 41
-        height: 86
+        x: 54
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -999,10 +999,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_26
       rect:
         serializedVersion: 2
-        x: 110
-        y: 479
-        width: 47
-        height: 83
+        x: 108
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1021,10 +1021,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_27
       rect:
         serializedVersion: 2
-        x: 164
-        y: 479
-        width: 44
-        height: 80
+        x: 162
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1043,10 +1043,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_28
       rect:
         serializedVersion: 2
-        x: 218
-        y: 479
-        width: 44
-        height: 83
+        x: 216
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1065,10 +1065,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_29
       rect:
         serializedVersion: 2
-        x: 269
-        y: 479
-        width: 47
-        height: 80
+        x: 270
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1087,10 +1087,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_30
       rect:
         serializedVersion: 2
-        x: 326
-        y: 479
-        width: 44
-        height: 80
+        x: 324
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1109,10 +1109,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_31
       rect:
         serializedVersion: 2
-        x: 380
-        y: 479
-        width: 41
-        height: 83
+        x: 378
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1131,10 +1131,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_32
       rect:
         serializedVersion: 2
-        x: 434
-        y: 479
-        width: 44
-        height: 80
+        x: 432
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1153,10 +1153,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_33
       rect:
         serializedVersion: 2
-        x: 488
-        y: 479
-        width: 44
-        height: 83
+        x: 486
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1175,10 +1175,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_34
       rect:
         serializedVersion: 2
-        x: 542
-        y: 479
-        width: 44
-        height: 86
+        x: 540
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1197,10 +1197,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_35
       rect:
         serializedVersion: 2
-        x: 596
-        y: 479
-        width: 44
-        height: 83
+        x: 594
+        y: 480
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1219,10 +1219,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_36
       rect:
         serializedVersion: 2
-        x: 2
-        y: 383
-        width: 47
-        height: 83
+        x: 0
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1241,10 +1241,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_37
       rect:
         serializedVersion: 2
-        x: 56
-        y: 383
-        width: 47
-        height: 86
+        x: 54
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1263,10 +1263,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_38
       rect:
         serializedVersion: 2
-        x: 110
-        y: 383
-        width: 47
-        height: 83
+        x: 108
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1285,10 +1285,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_39
       rect:
         serializedVersion: 2
-        x: 167
-        y: 383
-        width: 41
-        height: 80
+        x: 162
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1307,10 +1307,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_40
       rect:
         serializedVersion: 2
-        x: 221
-        y: 383
-        width: 41
-        height: 83
+        x: 216
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1329,10 +1329,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_41
       rect:
         serializedVersion: 2
-        x: 275
-        y: 383
-        width: 41
-        height: 80
+        x: 270
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1351,10 +1351,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_42
       rect:
         serializedVersion: 2
-        x: 329
-        y: 383
-        width: 41
-        height: 80
+        x: 324
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1373,10 +1373,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_43
       rect:
         serializedVersion: 2
-        x: 383
-        y: 383
-        width: 41
-        height: 83
+        x: 378
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1395,10 +1395,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_44
       rect:
         serializedVersion: 2
-        x: 437
-        y: 383
-        width: 41
-        height: 80
+        x: 432
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1417,10 +1417,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_45
       rect:
         serializedVersion: 2
-        x: 488
-        y: 383
-        width: 44
-        height: 83
+        x: 486
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1439,10 +1439,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_46
       rect:
         serializedVersion: 2
-        x: 545
-        y: 383
-        width: 41
-        height: 86
+        x: 540
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1461,10 +1461,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_47
       rect:
         serializedVersion: 2
-        x: 599
-        y: 383
-        width: 44
-        height: 83
+        x: 594
+        y: 384
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1483,10 +1483,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_48
       rect:
         serializedVersion: 2
-        x: 2
-        y: 287
-        width: 47
-        height: 80
+        x: 0
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1505,10 +1505,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_49
       rect:
         serializedVersion: 2
-        x: 59
-        y: 287
-        width: 44
-        height: 83
+        x: 54
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1527,10 +1527,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_50
       rect:
         serializedVersion: 2
-        x: 110
-        y: 287
-        width: 47
-        height: 80
+        x: 108
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1549,10 +1549,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_51
       rect:
         serializedVersion: 2
-        x: 164
-        y: 287
-        width: 44
-        height: 80
+        x: 162
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1571,10 +1571,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_52
       rect:
         serializedVersion: 2
-        x: 221
-        y: 287
-        width: 41
-        height: 83
+        x: 216
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1593,10 +1593,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_53
       rect:
         serializedVersion: 2
-        x: 275
-        y: 287
-        width: 44
-        height: 80
+        x: 270
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1615,10 +1615,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_54
       rect:
         serializedVersion: 2
-        x: 326
-        y: 287
-        width: 44
-        height: 80
+        x: 324
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1637,10 +1637,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_55
       rect:
         serializedVersion: 2
-        x: 383
-        y: 287
-        width: 41
-        height: 83
+        x: 378
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1659,10 +1659,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_56
       rect:
         serializedVersion: 2
-        x: 437
-        y: 287
-        width: 44
-        height: 80
+        x: 432
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1681,10 +1681,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_57
       rect:
         serializedVersion: 2
-        x: 488
-        y: 287
-        width: 44
-        height: 80
+        x: 486
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1703,10 +1703,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_58
       rect:
         serializedVersion: 2
-        x: 542
-        y: 287
-        width: 47
-        height: 83
+        x: 540
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1725,10 +1725,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_59
       rect:
         serializedVersion: 2
-        x: 599
-        y: 287
-        width: 44
-        height: 80
+        x: 594
+        y: 288
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1747,10 +1747,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_60
       rect:
         serializedVersion: 2
-        x: 8
-        y: 191
-        width: 44
-        height: 80
+        x: 0
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1769,10 +1769,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_61
       rect:
         serializedVersion: 2
-        x: 62
-        y: 191
-        width: 41
-        height: 83
+        x: 54
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1791,10 +1791,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_62
       rect:
         serializedVersion: 2
-        x: 116
-        y: 191
-        width: 44
-        height: 80
+        x: 108
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1813,10 +1813,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_63
       rect:
         serializedVersion: 2
-        x: 170
-        y: 191
-        width: 41
-        height: 77
+        x: 162
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1835,10 +1835,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_64
       rect:
         serializedVersion: 2
-        x: 227
-        y: 191
-        width: 38
-        height: 80
+        x: 216
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1857,10 +1857,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_65
       rect:
         serializedVersion: 2
-        x: 278
-        y: 191
-        width: 41
-        height: 77
+        x: 270
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1879,10 +1879,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_66
       rect:
         serializedVersion: 2
-        x: 332
-        y: 191
-        width: 44
-        height: 80
+        x: 324
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1901,10 +1901,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_67
       rect:
         serializedVersion: 2
-        x: 386
-        y: 191
-        width: 41
-        height: 83
+        x: 378
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1923,10 +1923,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_68
       rect:
         serializedVersion: 2
-        x: 440
-        y: 191
-        width: 41
-        height: 80
+        x: 432
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1945,10 +1945,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_69
       rect:
         serializedVersion: 2
-        x: 494
-        y: 191
-        width: 41
-        height: 80
+        x: 486
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1967,10 +1967,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_70
       rect:
         serializedVersion: 2
-        x: 551
-        y: 191
-        width: 38
-        height: 83
+        x: 540
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1989,10 +1989,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_71
       rect:
         serializedVersion: 2
-        x: 602
-        y: 191
-        width: 41
-        height: 80
+        x: 594
+        y: 192
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2011,10 +2011,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_72
       rect:
         serializedVersion: 2
-        x: 2
-        y: 95
-        width: 47
-        height: 80
+        x: 0
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2033,10 +2033,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_73
       rect:
         serializedVersion: 2
-        x: 59
-        y: 95
-        width: 44
-        height: 83
+        x: 54
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2055,10 +2055,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_74
       rect:
         serializedVersion: 2
-        x: 110
-        y: 95
-        width: 47
-        height: 80
+        x: 108
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2077,10 +2077,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_75
       rect:
         serializedVersion: 2
-        x: 167
-        y: 95
-        width: 41
-        height: 77
+        x: 162
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2099,10 +2099,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_76
       rect:
         serializedVersion: 2
-        x: 221
-        y: 95
-        width: 38
-        height: 80
+        x: 216
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2121,10 +2121,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_77
       rect:
         serializedVersion: 2
-        x: 275
-        y: 95
-        width: 41
-        height: 77
+        x: 270
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2143,10 +2143,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_78
       rect:
         serializedVersion: 2
-        x: 326
-        y: 95
-        width: 44
-        height: 80
+        x: 324
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2165,10 +2165,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_79
       rect:
         serializedVersion: 2
-        x: 383
-        y: 95
-        width: 41
-        height: 83
+        x: 378
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2187,10 +2187,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_80
       rect:
         serializedVersion: 2
-        x: 437
-        y: 95
-        width: 41
-        height: 80
+        x: 432
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2209,10 +2209,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_81
       rect:
         serializedVersion: 2
-        x: 491
-        y: 95
-        width: 41
-        height: 80
+        x: 486
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2231,10 +2231,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_82
       rect:
         serializedVersion: 2
-        x: 545
-        y: 95
-        width: 38
-        height: 83
+        x: 540
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2253,10 +2253,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_83
       rect:
         serializedVersion: 2
-        x: 599
-        y: 95
-        width: 41
-        height: 80
+        x: 594
+        y: 96
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2275,10 +2275,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_84
       rect:
         serializedVersion: 2
-        x: 5
+        x: 0
         y: 0
-        width: 44
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2297,10 +2297,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_85
       rect:
         serializedVersion: 2
-        x: 59
+        x: 54
         y: 0
-        width: 41
-        height: 82
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2319,10 +2319,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_86
       rect:
         serializedVersion: 2
-        x: 110
+        x: 108
         y: 0
-        width: 44
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2341,10 +2341,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_87
       rect:
         serializedVersion: 2
-        x: 167
+        x: 162
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2363,10 +2363,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_88
       rect:
         serializedVersion: 2
-        x: 221
+        x: 216
         y: 0
-        width: 41
-        height: 82
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2385,10 +2385,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_89
       rect:
         serializedVersion: 2
-        x: 275
+        x: 270
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2407,10 +2407,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_90
       rect:
         serializedVersion: 2
-        x: 329
+        x: 324
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2429,10 +2429,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_91
       rect:
         serializedVersion: 2
-        x: 383
+        x: 378
         y: 0
-        width: 41
-        height: 82
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2451,10 +2451,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_92
       rect:
         serializedVersion: 2
-        x: 437
+        x: 432
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2473,10 +2473,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_93
       rect:
         serializedVersion: 2
-        x: 491
+        x: 486
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2495,10 +2495,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_94
       rect:
         serializedVersion: 2
-        x: 542
+        x: 540
         y: 0
-        width: 47
-        height: 82
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2517,10 +2517,10 @@ TextureImporter:
       name: PSF_HeroesA_Casual_95
       rect:
         serializedVersion: 2
-        x: 599
+        x: 594
         y: 0
-        width: 41
-        height: 79
+        width: 54
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2539,7 +2539,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 4dfaf84eb4370044f9429cfbc810e3ed
     internalID: 0
     vertices: []
     indices: 

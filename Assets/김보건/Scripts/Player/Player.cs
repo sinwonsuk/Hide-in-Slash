@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -34,6 +35,13 @@ public class Player : MonoBehaviour
     private bool isInvisible = false;           //투명상태 여부
     [SerializeField] private float invisibleTimer;   // 투명타이머(디버깅용 시리얼필드)
 
+    [Header("손전등업그레이드")]
+    [SerializeField] private bool hasUpgradedFlashlight = false;
+    [SerializeField] private Light2D flashlight;
+    [SerializeField] private float upgradedRadius = 8f; // 업그레이드 시 반경
+    [SerializeField] private float defaultRadius = 3.5f; // 기본 반경
+    private bool isupgradedFlashlight = false; // 업그레이드 상태 
+
     [Header("납치됨")]
     [SerializeField] private GameObject moveMap;
     [SerializeField] private string portalName = "CaughtPoint";
@@ -60,7 +68,9 @@ public class Player : MonoBehaviour
         idleState = new PlayerIdle(this, PlayerStateMachine, "Idle");
         moveState = new PlayerMove(this, PlayerStateMachine, "Move");
         deadState = new PlayerDead(this, PlayerStateMachine, "Dead");
-       
+
+        flashlight.pointLightOuterRadius = defaultRadius;
+
     }
 
     private void Start()
@@ -86,7 +96,7 @@ public class Player : MonoBehaviour
             Debug.Log("투명 물약 없음");
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (hasEnergyDrink && Input.GetKeyDown(KeyCode.Alpha2))
         {
             BecomeBoost();
         }
@@ -94,6 +104,17 @@ public class Player : MonoBehaviour
         {
             Debug.Log("에너지드링크 없음");
         }
+
+        if(hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UpGradeLight();
+        }
+        else if (!hasUpgradedFlashlight)
+        {
+            Debug.Log("업그레이드 손전등 없음");
+        }
+
+        // 투명화 지속시간
 
         if (isInvisible)
         {
@@ -104,6 +125,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        // 에너지드링크 지속시간
         if (isBoosted)
         {
             boostTimer -= Time.deltaTime;
@@ -285,6 +307,14 @@ public class Player : MonoBehaviour
         moveSpeed = baseSpeed;
         isBoosted = false;
         Debug.Log("속도 버프 종료");
+    }
+
+    //손전등 업그레이드
+    private void UpGradeLight()
+    {
+        isupgradedFlashlight = true;
+        flashlight.pointLightOuterRadius = upgradedRadius;
+        Debug.Log("손전등 업그레이드");
     }
 
     //상점 관련
