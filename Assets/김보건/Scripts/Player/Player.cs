@@ -21,6 +21,11 @@ public class Player : MonoBehaviour
     private int deadCount = 0;
 
 
+    [Header("투명물약")]
+    [SerializeField] private float invisibleDuration = 5f;
+    [SerializeField] private bool hasInvisiblePotion = false;    //투명물약을 가지고 있는지 여부
+    private bool isInvisible = false;           //투명상태 여부
+
     [Header("납치됨")]
     [SerializeField] private GameObject moveMap;
     [SerializeField] private string portalName = "CaughtPoint";
@@ -44,6 +49,7 @@ public class Player : MonoBehaviour
         idleState = new PlayerIdle(this, PlayerStateMachine, "Idle");
         moveState = new PlayerMove(this, PlayerStateMachine, "Move");
         deadState = new PlayerDead(this, PlayerStateMachine, "Dead");
+       
     }
 
     private void Start()
@@ -58,6 +64,26 @@ public class Player : MonoBehaviour
         if (isInGame && Input.GetKeyDown(KeyCode.E))
         {
             OpenMiniGame();
+        }
+
+        if (hasInvisiblePotion && Input.GetKeyDown(KeyCode.Q))
+        {
+            hasInvisiblePotion = false;
+            isInvisible = true;
+
+            BecomeInvisible();
+            Debug.Log("투명 물약 사용");
+        }
+
+        if (isInvisible)
+        {
+            invisibleDuration -= Time.deltaTime;
+            if(invisibleDuration <= 0f)
+            {
+                isInvisible = false;
+                ResetTransparency();
+                Debug.Log("투명상태 해제");
+            }
         }
     }
 
@@ -172,6 +198,30 @@ public class Player : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         col.enabled = false;
+    }
+
+    public void BecomeInvisible()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+        c.a = 0.5f;
+        sr.color = c;
+
+        isInvisible = true;
+
+        //보스한테 안보이게
+        //if (!isMine())
+        //{
+        //    gameObject.SetActive(false); 
+        //}
+    }
+
+    private void ResetTransparency()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+        c.a = 1f;
+        sr.color = c;
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
