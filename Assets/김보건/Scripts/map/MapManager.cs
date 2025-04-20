@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
@@ -35,8 +33,9 @@ public class MapManager : MonoBehaviour
         return mapDic[mapName];
     }
 
-    //public void MovePlayer(Vector2 newPos)
-    //{
-    //    player.transform.position = newPos;
-    //}
+    //public void MovePlayer(Vector2 newPos)  
+    //{  
+    //    player.transform.position = newPos;  
+    //}  
 }
+

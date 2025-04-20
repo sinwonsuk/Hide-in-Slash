@@ -1,0 +1,97 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class LineMiniGame : MonoBehaviour
+{
+
+    private void Awake()
+    {
+        action = CheckLineCount;
+
+        LineMiniGameRightCollisions = GetComponentsInChildren<LineMiniGameRightCollision>();
+
+        foreach (var LineMiniGameRightCollision in LineMiniGameRightCollisions)
+        {
+            RectTransform transform = LineMiniGameRightCollision.gameObject.GetComponent<RectTransform>();
+
+            childTransforms.Add(transform.anchoredPosition);
+        }
+
+        for (int i = 0; i < childTransforms.Count; i++)
+        {
+            int random = Random.Range(0, 4);
+        }
+
+        CreateUnDuplicateRandom(0, 4);
+
+        for (int i = 0; i < LineMiniGameRightCollisions.Length; i++)
+        {
+            RectTransform target = LineMiniGameRightCollisions[i].GetComponent<RectTransform>();
+
+            Vector2 anchoredPosition = childTransforms[Indexs[i]];
+
+            target.anchoredPosition = anchoredPosition;
+        }
+    }
+
+    void CheckLineCount(int num)
+    {
+        for (int i = 0; i < lineChecks.Count; i++)
+        {
+            if (lineChecks[i]==num)
+            {
+                return;
+            }
+        }
+
+        lineChecks.Add(num);
+    
+        if(lineChecks.Count == 4)
+        {
+            Debug.Log("라인미니게임승리");
+        }
+
+    }
+
+    void CreateUnDuplicateRandom(int min, int max)
+    {
+        int currentNumber = Random.Range(min, max);
+
+        for (int i = 0; i < max;)
+        {
+            if (Indexs.Contains(currentNumber))
+            {
+                currentNumber = Random.Range(min, max);
+            }
+            else
+            {
+                Indexs.Add(currentNumber);
+                i++;
+            }
+        }
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    LineMiniGameRightCollision[] LineMiniGameRightCollisions;
+    List<Vector2> childTransforms = new List<Vector2>();
+    List<int> Indexs = new List<int>();
+    List<int> lineChecks = new List<int>();
+
+    public Action<int> action;
+
+}
+ 
