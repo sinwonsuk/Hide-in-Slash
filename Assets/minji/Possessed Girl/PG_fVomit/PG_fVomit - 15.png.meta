@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e62d9d248bef5a149bf96c82e75eec9a
+guid: 10a932606b48adb419983762daf7ad15
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4192053148399194979
-    second: PG_fVomit - 14_0
+      213: -8339272914651423324
+    second: PG_fVomit - 15_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PG_fVomit - 14_0
+      name: PG_fVomit - 15_0
       rect:
         serializedVersion: 2
         x: 53
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 36354e5c02a2d2a30800000000000000
-      internalID: 4192053148399194979
+      spriteID: 4ad5a2da773f44c80800000000000000
+      internalID: -8339272914651423324
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PG_fVomit - 14_0: 4192053148399194979
+      PG_fVomit - 15_0: -8339272914651423324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
