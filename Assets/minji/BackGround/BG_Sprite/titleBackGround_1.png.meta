@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 075d44540b9164e4a9f67a092760a189
+guid: 74551e135dee7404685f320901f2feb7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1486569033412943020
-    second: titleBackGround_Appear_0
+      213: 6115998162808564674
+    second: titleBackGround_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 75
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: titleBackGround_Appear_0
+      name: titleBackGround_1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1440
-        height: 810
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cac9ca2e8aa51a410800000000000000
-      internalID: 1486569033412943020
+      spriteID: 2cb6525dce360e450800000000000000
+      internalID: 6115998162808564674
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      titleBackGround_Appear_0: 1486569033412943020
+      titleBackGround_1_0: 6115998162808564674
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
