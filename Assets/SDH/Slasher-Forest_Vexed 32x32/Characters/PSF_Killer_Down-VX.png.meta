@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 76389a95643c01a4da7b4091bfb2a817
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8348222036322840883
+    second: PSF_Killer_Down-VX_0
+  - first:
+      213: 8094077669565801737
+    second: PSF_Killer_Down-VX_1
+  - first:
+      213: 8188283289995322924
+    second: PSF_Killer_Down-VX_2
+  - first:
+      213: 2444987133754979761
+    second: PSF_Killer_Down-VX_3
+  - first:
+      213: -5267409551433356349
+    second: PSF_Killer_Down-VX_4
+  - first:
+      213: -7594757410492470891
+    second: PSF_Killer_Down-VX_5
+  - first:
+      213: 1139512539156086262
+    second: PSF_Killer_Down-VX_6
+  - first:
+      213: 6073863466193734663
+    second: PSF_Killer_Down-VX_7
+  - first:
+      213: -973524037592183101
+    second: PSF_Killer_Down-VX_8
+  - first:
+      213: 5381382853066718800
+    second: PSF_Killer_Down-VX_9
+  - first:
+      213: -2818024552672950720
+    second: PSF_Killer_Down-VX_10
+  - first:
+      213: 5559522233936963272
+    second: PSF_Killer_Down-VX_11
+  - first:
+      213: 92878728614787401
+    second: PSF_Killer_Down-VX_12
+  - first:
+      213: 332675697855403093
+    second: PSF_Killer_Down-VX_13
+  - first:
+      213: 332014750878721667
+    second: PSF_Killer_Down-VX_14
+  - first:
+      213: -1657666442171352949
+    second: PSF_Killer_Down-VX_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 193
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce83eae948252c80800000000000000
+      internalID: -8348222036322840883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_1
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 193
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90524e691c0f35070800000000000000
+      internalID: 8094077669565801737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_2
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 193
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c262074d440a2a170800000000000000
+      internalID: 8188283289995322924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_3
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 207
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5bdd318d65ee120800000000000000
+      internalID: 2444987133754979761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_4
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 129
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cba050cbe666e6b0800000000000000
+      internalID: -5267409551433356349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_5
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 129
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 599a458bf500a9690800000000000000
+      internalID: -7594757410492470891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_6
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 169
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fd7081fd9c50df00800000000000000
+      internalID: 1139512539156086262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_7
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 129
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c43bc44a2ba4450800000000000000
+      internalID: 6073863466193734663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_8
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 65
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ce8307bb095d72f0800000000000000
+      internalID: -973524037592183101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_9
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 65
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05e7b6d61338eaa40800000000000000
+      internalID: 5381382853066718800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_10
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 65
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0468991999d54e8d0800000000000000
+      internalID: -2818024552672950720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_11
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c6e2b22404672d40800000000000000
+      internalID: 5559522233936963272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_12
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949364a26b8f94100800000000000000
+      internalID: 92878728614787401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_13
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 1
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 554931cd8c6ed9400800000000000000
+      internalID: 332675697855403093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_14
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 41
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 386e05628ad8b9400800000000000000
+      internalID: 332014750878721667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killer_Down-VX_15
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 1
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b887a4e4729cef8e0800000000000000
+      internalID: -1657666442171352949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PSF_Killer_Down-VX_0: -8348222036322840883
+      PSF_Killer_Down-VX_1: 8094077669565801737
+      PSF_Killer_Down-VX_10: -2818024552672950720
+      PSF_Killer_Down-VX_11: 5559522233936963272
+      PSF_Killer_Down-VX_12: 92878728614787401
+      PSF_Killer_Down-VX_13: 332675697855403093
+      PSF_Killer_Down-VX_14: 332014750878721667
+      PSF_Killer_Down-VX_15: -1657666442171352949
+      PSF_Killer_Down-VX_2: 8188283289995322924
+      PSF_Killer_Down-VX_3: 2444987133754979761
+      PSF_Killer_Down-VX_4: -5267409551433356349
+      PSF_Killer_Down-VX_5: -7594757410492470891
+      PSF_Killer_Down-VX_6: 1139512539156086262
+      PSF_Killer_Down-VX_7: 6073863466193734663
+      PSF_Killer_Down-VX_8: -973524037592183101
+      PSF_Killer_Down-VX_9: 5381382853066718800
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

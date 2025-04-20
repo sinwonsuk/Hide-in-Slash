@@ -1,0 +1,1404 @@
+fileFormatVersion: 2
+guid: e6fc982b8fafadd4b926daa7a6b1469a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -606904232515650824
+    second: PSF_Killers_0
+  - first:
+      213: 1802895900847538661
+    second: PSF_Killers_1
+  - first:
+      213: 5495041976344452232
+    second: PSF_Killers_2
+  - first:
+      213: -1451498751401063817
+    second: PSF_Killers_3
+  - first:
+      213: -2192515373547520376
+    second: PSF_Killers_4
+  - first:
+      213: 7315150547810020445
+    second: PSF_Killers_5
+  - first:
+      213: -8137588230813965463
+    second: PSF_Killers_6
+  - first:
+      213: 9161591253558010331
+    second: PSF_Killers_7
+  - first:
+      213: 2838812078584277700
+    second: PSF_Killers_8
+  - first:
+      213: -6411599333008087624
+    second: PSF_Killers_9
+  - first:
+      213: 6877948092794822180
+    second: PSF_Killers_10
+  - first:
+      213: -4181181493706899587
+    second: PSF_Killers_11
+  - first:
+      213: -272792232575430879
+    second: PSF_Killers_12
+  - first:
+      213: -3839580609233467080
+    second: PSF_Killers_13
+  - first:
+      213: 4378726061071319136
+    second: PSF_Killers_14
+  - first:
+      213: -5006015207351718766
+    second: PSF_Killers_15
+  - first:
+      213: -6895564307491314417
+    second: PSF_Killers_16
+  - first:
+      213: 7865786474104089291
+    second: PSF_Killers_17
+  - first:
+      213: -5622183011137983235
+    second: PSF_Killers_18
+  - first:
+      213: -2555175377627980764
+    second: PSF_Killers_19
+  - first:
+      213: -4461077683802111789
+    second: PSF_Killers_20
+  - first:
+      213: -4348995530694553339
+    second: PSF_Killers_21
+  - first:
+      213: -464698237577183087
+    second: PSF_Killers_22
+  - first:
+      213: 2200545099437291448
+    second: PSF_Killers_23
+  - first:
+      213: 7499694481654106623
+    second: PSF_Killers_24
+  - first:
+      213: -5210986824502361110
+    second: PSF_Killers_25
+  - first:
+      213: -4064135901372613499
+    second: PSF_Killers_26
+  - first:
+      213: 5901179907019277491
+    second: PSF_Killers_27
+  - first:
+      213: -8768755516815641079
+    second: PSF_Killers_28
+  - first:
+      213: 451972304150799368
+    second: PSF_Killers_29
+  - first:
+      213: 8406059555642596952
+    second: PSF_Killers_30
+  - first:
+      213: 7165275398320182846
+    second: PSF_Killers_31
+  - first:
+      213: -4100203284162526565
+    second: PSF_Killers_32
+  - first:
+      213: 5765674011123467451
+    second: PSF_Killers_33
+  - first:
+      213: -7092027567285309804
+    second: PSF_Killers_34
+  - first:
+      213: 5964004257255654828
+    second: PSF_Killers_35
+  - first:
+      213: -6308255991135555570
+    second: PSF_Killers_36
+  - first:
+      213: -8571565147245996346
+    second: PSF_Killers_37
+  - first:
+      213: -2607556084818593528
+    second: PSF_Killers_38
+  - first:
+      213: -6132121873055904438
+    second: PSF_Killers_39
+  - first:
+      213: 3628026200771572740
+    second: PSF_Killers_40
+  - first:
+      213: 74495729287652823
+    second: PSF_Killers_41
+  - first:
+      213: 6674546433024631191
+    second: PSF_Killers_42
+  - first:
+      213: -7372297093912227517
+    second: PSF_Killers_43
+  - first:
+      213: -6006302928691803425
+    second: PSF_Killers_44
+  - first:
+      213: -1615363975825551217
+    second: PSF_Killers_45
+  - first:
+      213: 8894658899574678967
+    second: PSF_Killers_46
+  - first:
+      213: -6270784725347872489
+    second: PSF_Killers_47
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PSF_Killers_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 447
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fa3938e0d7d397f0800000000000000
+      internalID: -606904232515650824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 447
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e18609054c250910800000000000000
+      internalID: 1802895900847538661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 447
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88c1fd1409f424c40800000000000000
+      internalID: 5495041976344452232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 447
+        width: 40
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77a01d2739d3bdbe0800000000000000
+      internalID: -1451498751401063817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_4
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 447
+        width: 44
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88efd1b52ee9291e0800000000000000
+      internalID: -2192515373547520376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_5
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 447
+        width: 44
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5c68b87aa2a48560800000000000000
+      internalID: 7315150547810020445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_6
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 447
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9632fed6e9a711f80800000000000000
+      internalID: -8137588230813965463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_7
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 447
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd1a6a574b2842f70800000000000000
+      internalID: 9161591253558010331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_8
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 447
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4caaa187b8c756720800000000000000
+      internalID: 2838812078584277700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_9
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 447
+        width: 40
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b5ebe1706c6507a0800000000000000
+      internalID: -6411599333008087624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_10
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 447
+        width: 44
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42e5c967951637f50800000000000000
+      internalID: 6877948092794822180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_11
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 447
+        width: 44
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7fb926959579f5c0800000000000000
+      internalID: -4181181493706899587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 383
+        width: 30
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f0bd7e8e8d63cf0800000000000000
+      internalID: -272792232575430879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_13
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 383
+        width: 28
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 839492467c117bac0800000000000000
+      internalID: -3839580609233467080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_14
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 383
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060c6ee272c54cc30800000000000000
+      internalID: 4378726061071319136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_15
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 383
+        width: 34
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ce89121bf078ab0800000000000000
+      internalID: -5006015207351718766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_16
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 383
+        width: 36
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f052e1eebc80e40a0800000000000000
+      internalID: -6895564307491314417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_17
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 383
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcaeb0c9f13e82d60800000000000000
+      internalID: 7865786474104089291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_18
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 383
+        width: 30
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfc62e6c65ef9f1b0800000000000000
+      internalID: -5622183011137983235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_19
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 383
+        width: 28
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42cd8ad28813a8cd0800000000000000
+      internalID: -2555175377627980764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_20
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 383
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d08d8d7b711712c0800000000000000
+      internalID: -4461077683802111789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_21
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 383
+        width: 34
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50190375b9345a3c0800000000000000
+      internalID: -4348995530694553339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_22
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 383
+        width: 36
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 190467d3a6f0d89f0800000000000000
+      internalID: -464698237577183087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_23
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 383
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b7bf24eb18e98e10800000000000000
+      internalID: 2200545099437291448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_24
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 319
+        width: 30
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff943fe5564441860800000000000000
+      internalID: 7499694481654106623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_25
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 319
+        width: 28
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae3cb44971bdea7b0800000000000000
+      internalID: -5210986824502361110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_26
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 319
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cf5cf2ee94997c0800000000000000
+      internalID: -4064135901372613499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_27
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 319
+        width: 34
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b48e811cd335e150800000000000000
+      internalID: 5901179907019277491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_28
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 255
+        width: 44
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 906f4f9f05f1f4680800000000000000
+      internalID: -8768755516815641079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_29
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 319
+        width: 36
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 804293d7a6ab54600800000000000000
+      internalID: 451972304150799368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_30
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 319
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85edadee0a258a470800000000000000
+      internalID: 8406059555642596952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_31
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 319
+        width: 30
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3658b2f20c207360800000000000000
+      internalID: 7165275398320182846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_32
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 319
+        width: 28
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b924a9c36d62917c0800000000000000
+      internalID: -4100203284162526565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_33
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 319
+        width: 34
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb447bb17f9c30050800000000000000
+      internalID: 5765674011123467451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_34
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 319
+        width: 34
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49e6ea2b08e049d90800000000000000
+      internalID: -7092027567285309804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_35
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 255
+        width: 44
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca504a8f54664c250800000000000000
+      internalID: 5964004257255654828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_36
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 319
+        width: 36
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e00b22049929478a0800000000000000
+      internalID: -6308255991135555570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_37
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 319
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c69845a9eeab0980800000000000000
+      internalID: -8571565147245996346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_38
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 255
+        width: 32
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 809ba786e8910dbd0800000000000000
+      internalID: -2607556084818593528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_39
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 255
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d891555a356eaa0800000000000000
+      internalID: -6132121873055904438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_40
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 255
+        width: 32
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 404bcc48b96595230800000000000000
+      internalID: 3628026200771572740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_41
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 255
+        width: 40
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d569799879a80100800000000000000
+      internalID: 74495729287652823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_42
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 255
+        width: 44
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 791a8491e90c0ac50800000000000000
+      internalID: 6674546433024631191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_43
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 255
+        width: 32
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34197ba6ad650b990800000000000000
+      internalID: -7372297093912227517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_44
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 255
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdacfe12f4355aca0800000000000000
+      internalID: -6006302928691803425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_45
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 255
+        width: 32
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8094f5c5031599e0800000000000000
+      internalID: -1615363975825551217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_46
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 255
+        width: 40
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b56a6ba42d207b70800000000000000
+      internalID: 8894658899574678967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_Killers_47
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 255
+        width: 44
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 711d1be2482b9f8a0800000000000000
+      internalID: -6270784725347872489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PSF_Killers_0: -606904232515650824
+      PSF_Killers_1: 1802895900847538661
+      PSF_Killers_10: 6877948092794822180
+      PSF_Killers_11: -4181181493706899587
+      PSF_Killers_12: -272792232575430879
+      PSF_Killers_13: -3839580609233467080
+      PSF_Killers_14: 4378726061071319136
+      PSF_Killers_15: -5006015207351718766
+      PSF_Killers_16: -6895564307491314417
+      PSF_Killers_17: 7865786474104089291
+      PSF_Killers_18: -5622183011137983235
+      PSF_Killers_19: -2555175377627980764
+      PSF_Killers_2: 5495041976344452232
+      PSF_Killers_20: -4461077683802111789
+      PSF_Killers_21: -4348995530694553339
+      PSF_Killers_22: -464698237577183087
+      PSF_Killers_23: 2200545099437291448
+      PSF_Killers_24: 7499694481654106623
+      PSF_Killers_25: -5210986824502361110
+      PSF_Killers_26: -4064135901372613499
+      PSF_Killers_27: 5901179907019277491
+      PSF_Killers_28: -8768755516815641079
+      PSF_Killers_29: 451972304150799368
+      PSF_Killers_3: -1451498751401063817
+      PSF_Killers_30: 8406059555642596952
+      PSF_Killers_31: 7165275398320182846
+      PSF_Killers_32: -4100203284162526565
+      PSF_Killers_33: 5765674011123467451
+      PSF_Killers_34: -7092027567285309804
+      PSF_Killers_35: 5964004257255654828
+      PSF_Killers_36: -6308255991135555570
+      PSF_Killers_37: -8571565147245996346
+      PSF_Killers_38: -2607556084818593528
+      PSF_Killers_39: -6132121873055904438
+      PSF_Killers_4: -2192515373547520376
+      PSF_Killers_40: 3628026200771572740
+      PSF_Killers_41: 74495729287652823
+      PSF_Killers_42: 6674546433024631191
+      PSF_Killers_43: -7372297093912227517
+      PSF_Killers_44: -6006302928691803425
+      PSF_Killers_45: -1615363975825551217
+      PSF_Killers_46: 8894658899574678967
+      PSF_Killers_47: -6270784725347872489
+      PSF_Killers_5: 7315150547810020445
+      PSF_Killers_6: -8137588230813965463
+      PSF_Killers_7: 9161591253558010331
+      PSF_Killers_8: 2838812078584277700
+      PSF_Killers_9: -6411599333008087624
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
