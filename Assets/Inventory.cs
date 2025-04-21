@@ -61,27 +61,47 @@ public class Inventory : MonoBehaviour
         if (orderedKeys == null || orderedKeys.Count == 0)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (inventoryMoveIndex <= 0)
+            if (0 >= ItemDictionary.Count - 1)
             {
-                inventoryMoveIndex = 0;
                 return;
             }
 
-            inventoryMoveIndex -= 1;
+            inventoryMoveIndex = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (inventoryMoveIndex >= ItemDictionary.Count - 1)
+            if (ItemDictionary.Count < 2)
             {
-                inventoryMoveIndex = ItemDictionary.Count - 1;
                 return;
             }
 
-            inventoryMoveIndex += 1;
-
-
+            inventoryMoveIndex = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (ItemDictionary.Count < 3)
+            {
+                return;
+            }
+            inventoryMoveIndex = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (ItemDictionary.Count < 4)
+            {
+                return;
+            }
+            inventoryMoveIndex = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if (ItemDictionary.Count < 5)
+            {
+                return;
+            }
+            inventoryMoveIndex = 4;
         }
 
     }
@@ -92,12 +112,16 @@ public class Inventory : MonoBehaviour
         if (ItemDictionary.TryGetValue((InventoryType)_type, out GameObject gameObject))
         {
             gameObject.GetComponent<Item>().AddItemCount();
+
+            
+
         }
         else
         {
             GameObject item = Instantiate(inventoryList[_type], transform);
             ItemDictionary.Add((InventoryType)_type, item);
             orderedKeys.Add((InventoryType)_type);
+            item.GetComponentInChildren<ItemNumber>().ChangeImage(orderedKeys.Count);
         }
 
     }
@@ -130,13 +154,17 @@ public class Inventory : MonoBehaviour
 
     public void DeleteItem(GameObject gameObject)
     {
-        if (gameObject.GetComponent<Item>().GetItemCount() == 0)
-        {
-            Destroy(gameObject);
-            ItemDictionary.Remove(orderedKeys[inventoryMoveIndex]);
-            orderedKeys.Remove(orderedKeys[inventoryMoveIndex]);   
-        }
+        
+        Destroy(gameObject);
+        ItemDictionary.Remove(orderedKeys[inventoryMoveIndex]);
+        orderedKeys.Remove(orderedKeys[inventoryMoveIndex]);
 
+
+        for (int i = inventoryMoveIndex; i < orderedKeys.Count; i++)
+        {
+            ItemDictionary[orderedKeys[i]].GetComponentInChildren<ItemNumber>().ChangeImage(i+1);
+        }
+      
         if (inventoryMoveIndex == 0)
         {
             return;
@@ -156,6 +184,10 @@ public class Inventory : MonoBehaviour
     Dictionary<InventoryType,GameObject> ItemDictionary = new Dictionary<InventoryType, GameObject>();
 
     private List<InventoryType> orderedKeys; // 정렬된 키 리스트
+
+    [SerializeField]
+    List<GameObject> itemNumbersRenders = new List<GameObject>();
+
     private int inventoryMoveIndex = 0;
 
 }
