@@ -240,13 +240,11 @@ public class Player : MonoBehaviour
 
     public void UpdateAnimParam(Vector2 input)
     {
-        // 이동 입력이 있을 때만 lastDir 갱신
         if (input != Vector2.zero)
-            lastDir = input.normalized;   // 크기를 1로 맞춰 두는 게 깔끔
+            lastDir = input.normalized;   
 
         bool isMoving = input != Vector2.zero;
 
-        // DirX·DirY 에는 항상 lastDir 을 넣는다
         anim.SetBool("IsMoving", isMoving);
         anim.SetFloat("DirX", lastDir.x);
         anim.SetFloat("DirY", lastDir.y);
