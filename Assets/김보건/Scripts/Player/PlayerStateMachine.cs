@@ -14,6 +14,9 @@ public class PlayerStateMachine
     {
         currentState.Exit();
         currentState = _newState;
+
+        Debug.Log($"현재 상태: {currentState.StateType} (Code: {(int)currentState.StateType})");
+
         currentState.Enter();
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    public GameObject player;
     public List<GameObject> mapObjects;
 
     private Dictionary<string, GameObject> mapDic = new();
@@ -33,9 +32,5 @@ public class MapManager : MonoBehaviour
         return mapDic[mapName];
     }
 
-    //public void MovePlayer(Vector2 newPos)  
-    //{  
-    //    player.transform.position = newPos;  
-    //}  
 }
 

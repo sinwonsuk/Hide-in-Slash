@@ -8,7 +8,10 @@ public class PukeGirl : Ghost
     {
 
         base.Awake();
-        moveState = new PukeGirlMove(this, ghostStateMachine, "Move");
+        idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
+        moveState = new PeanutMove(this, ghostStateMachine, "Move");
+
+        ghostStateMachine.Initialize(idleState);
     }
 
     protected override void Start()

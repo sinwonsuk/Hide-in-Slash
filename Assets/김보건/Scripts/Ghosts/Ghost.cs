@@ -9,11 +9,15 @@ public class Ghost : MonoBehaviour
     public int facingDir { get; protected set; } = 1;
     protected bool facingRight = true;
 
+    // 서버 전송용 위치 및 스케일 변수
+    public float posX, posY, posZ;
+    public float scaleX, scaleY, scaleZ;
+
     [Header("이동 속도")]
     [SerializeField] protected float moveSpeed = 5f;
 
     public GhostStateMachine ghostStateMachine { get; protected set; }
-    public GhostIdle idleState { get; protected set; }
+    public virtual GhostState idleState { get; protected set; }
     public virtual GhostState moveState { get; protected set; }
 
     protected virtual void Awake()
@@ -22,12 +26,12 @@ public class Ghost : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         ghostStateMachine = new GhostStateMachine();
-        idleState = new GhostIdle(this, ghostStateMachine, "Idle");
+        //idleState = new GhostIdle(this, ghostStateMachine, "Idle");
     }
 
     protected virtual void Start()
     {
-        ghostStateMachine.Initialize(idleState);
+        //ghostStateMachine.Initialize(idleState);
     }
 
     protected virtual void Update()
@@ -45,6 +49,14 @@ public class Ghost : MonoBehaviour
         ghostStateMachine.currentState.FixedUpdate();
         Vector3 pos = transform.position;
         transform.position = new Vector3(pos.x, pos.y, pos.y);
+
+        posX = transform.position.x;
+        posY = transform.position.y;
+        posZ = transform.position.z;
+
+        scaleX = transform.localScale.x;
+        scaleY = transform.localScale.y;
+        scaleZ = transform.localScale.z;
     }
 
 

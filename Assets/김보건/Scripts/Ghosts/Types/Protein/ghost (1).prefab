@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 5625176388407011428}
   - component: {fileID: 6662361738999055363}
   - component: {fileID: 4128171411151749187}
-  - component: {fileID: 3614339558503738807}
-  - component: {fileID: -7268383430209303783}
   m_Layer: 0
   m_Name: ghost (1)
   m_TagString: Ghost
@@ -163,35 +161,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4515258887366952447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f9193af9d2214247b89bd3eff0215fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
---- !u!114 &3614339558503738807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515258887366952447}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e72eed3dac736be49b0f9118e46d5d15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
---- !u!114 &-7268383430209303783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515258887366952447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f9193af9d2214247b89bd3eff0215fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posX: 0
+  posY: 0
+  posZ: 0
+  scaleX: 0
+  scaleY: 0
+  scaleZ: 0
   moveSpeed: 5
+  ProteinDuration: 10
+  ProteincooldownDuration: 5
+  buffedSpeed: 2
+  proteinTimer: 0
+  proteinCooldownTimer: 0
