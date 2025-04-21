@@ -3,20 +3,21 @@ using System.Collections;
 
 public class titleBackGround : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
-    public float duration = 1f;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float duration;
+    [SerializeField] private float offTime;
 
     void Start()
     {
         spriteRenderer.enabled = false;
-        StartCoroutine(backGroundAnimation());
+        StartCoroutine(backGroundAnimation()); //배경화면 애니메이션 효과 코루틴
     }
 
     public IEnumerator backGroundAnimation()
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(offTime);
 
             // 반짝임 효과
             spriteRenderer.enabled = true;
