@@ -9,6 +9,14 @@ TagManager:
   - DrawMiniGameCollision3
   - DrawMiniGameCollision4
   - DrawMiniGameCollision1
+  - MiniGame
+  - Ghost
+  - Prison
+  - Hatch
+  - ExitDoor
+  - PrisonDoor
+  - DeadPlayer
+  - PlayerSight
   layers:
   - Default
   - TransparentFX

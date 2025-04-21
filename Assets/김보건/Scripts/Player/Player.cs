@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public enum EscapeType
@@ -22,11 +23,11 @@ public class Player : MonoBehaviour
 
     public SpriteRenderer sr { get; private set; }
 
-    // 인벤토리 Action
-    public Action useEnergyDrink;
-    public Action useInvisiblePotion;
-    public Action useUpgradedLight;
-    public Action usePrisonKey;
+    // 인벤토리 유니티 Action
+    public UnityAction useEnergyDrink;
+    public UnityAction useInvisiblePotion;
+    public UnityAction useUpgradedLight;
+    public UnityAction usePrisonKey;
 
     // 서버용 트랜스폼 스케일변수
     public float posX, posY, posZ;  
@@ -74,6 +75,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float upgradeLightDuration = 10f;
     private bool isUpgradedLight = false;
     [SerializeField] private float upgradedLightTimer; // 디버깅용
+    private bool isLightOn = false; // 기본손전등껏다키기
+    private bool isBlinking = false;
+    private float blinkTimer = 0f;
+    private float blinkInterval = 0.3f; // 깜빡이는 간격
 
     [Header("감옥키")]
     [SerializeField] private bool hasPrisonKey = false; // 감옥키를 가지고 있는지
@@ -115,6 +120,8 @@ public class Player : MonoBehaviour
         escapeState = new PlayerEscapeState(this, PlayerStateMachine, "Escape");
 
         flashlight.pointLightOuterRadius = defaultRadius;
+
+        flashlight.enabled = false;
 
     }
 
@@ -163,7 +170,12 @@ public class Player : MonoBehaviour
             Debug.Log("업그레이드 손전등 없음");
         }
 
-        if(hasPrisonKey && isInPrisonDoor && Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ToggleLight();
+        }
+
+        if (hasPrisonKey && isInPrisonDoor && Input.GetKeyDown(KeyCode.Alpha4))
         {
             usePrisonKeyItem();
         }
@@ -198,10 +210,32 @@ public class Player : MonoBehaviour
         {
             upgradedLightTimer -= Time.deltaTime;
 
-           
+            // 5초 남았을 때부터 깜빡이기 시작
+            if (upgradedLightTimer <= 5f && !isBlinking)
+            {
+                isBlinking = true;
+                blinkTimer = blinkInterval;
+            }
+
+            // 깜빡이는 중이면 라이트 On/Off 반복
+            if (isBlinking)
+            {
+                float timeRatio = upgradedLightTimer / 5f;
+                blinkInterval = Mathf.Lerp(0.05f, 0.3f, timeRatio);
+
+                blinkTimer -= Time.deltaTime;
+                if (blinkTimer <= 0f)
+                {
+                    flashlight.enabled = !flashlight.enabled;
+                    blinkTimer = blinkInterval;
+                }
+            }
+
+
             if (upgradedLightTimer <= 0f)
             {
                 ResetFlashlight();
+                flashlight.enabled = true;
             }
         }
 
@@ -213,7 +247,7 @@ public class Player : MonoBehaviour
     {
         PlayerStateMachine.currentState.FixedUpdate();
         Vector3 pos = transform.position;
-        transform.position = new Vector3(pos.x, pos.y, pos.y);
+        //transform.position = new Vector3(pos.x, pos.y, pos.y);
 
         posX = transform.position.x;
         posY = transform.position.y;
@@ -258,10 +292,10 @@ public class Player : MonoBehaviour
 
         float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
 
-        // 위치 고정
+        // 라이트 위치 고정
         lightObject.localPosition = Vector3.zero;
 
-        // 회전만 조절 (로컬 회전)
+        // 라이트 회전만 조절 (로컬 회전)
         lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
@@ -312,7 +346,7 @@ public class Player : MonoBehaviour
         }
 
         //귀신에게 잡혔을 때
-        if (collision.CompareTag("Ghost"))
+        if (collision.CompareTag("Ghost") && collision.gameObject == collision.transform.root.gameObject)
         {
             Debug.Log("귀신에게 잡힘");
 
@@ -457,6 +491,8 @@ public class Player : MonoBehaviour
     private void UpGradeLight()
     {
         flashlight.pointLightOuterRadius = upgradedRadius;
+        flashlight.enabled = true;
+
         hasUpgradedFlashlight = false;
         isUpgradedLight = true;
         upgradedLightTimer = upgradeLightDuration;
@@ -467,9 +503,20 @@ public class Player : MonoBehaviour
     private void ResetFlashlight()
     {
         flashlight.pointLightOuterRadius = defaultRadius;
+
         isUpgradedLight = false;
+        isBlinking = false;
+        blinkTimer = 0f;
 
         Debug.Log("손전등 업그레이드 끝");
+    }
+
+    private void ToggleLight()
+    {
+        isLightOn = !isLightOn;
+        flashlight.enabled = isLightOn;
+
+        Debug.Log(isLightOn ? "손전등 켜짐" : "손전등 꺼짐");
     }
 
     private void usePrisonKeyItem()

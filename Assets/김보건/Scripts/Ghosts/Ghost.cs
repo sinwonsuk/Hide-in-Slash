@@ -48,7 +48,7 @@ public class Ghost : MonoBehaviour
     {
         ghostStateMachine.currentState.FixedUpdate();
         Vector3 pos = transform.position;
-        transform.position = new Vector3(pos.x, pos.y, pos.y);
+        //transform.position = new Vector3(pos.x, pos.y, pos.y);
 
         posX = transform.position.x;
         posY = transform.position.y;
