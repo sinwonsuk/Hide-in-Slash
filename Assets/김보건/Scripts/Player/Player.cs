@@ -1,14 +1,41 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+public enum EscapeType
+{
+    Dead = 0,         // 탈출 못함
+    ExitDoor = 1,     // 탈출구 탈출
+    Hatch = 2         // 개구멍 탈출
+}
+
 public class Player : MonoBehaviour
 {
+    [SerializeField] private GameObject spriteObject; // SpriteRenderer 있는 오브젝트
+    [SerializeField] private Transform lightObject;   // Light2D 있는 오브젝트
+
+    private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
+
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
 
+    public SpriteRenderer sr { get; private set; }
+
+    // 인벤토리 Action
+    public Action useEnergyDrink;
+    public Action useInvisiblePotion;
+    public Action useUpgradedLight;
+    public Action usePrisonKey;
+
+    // 서버용 트랜스폼 스케일변수
+    public float posX, posY, posZ;  
+    public float scaleX, scaleY, scaleZ;
+
     public int facingDir { get; private set; } = 1;
+    public int facingUpDir { get; private set; } = 1;   // 1 = 위, -1 = 아래
     protected bool facingRight = true;
+    protected bool facingUp = true;
 
     [Header("이동")]
     public float moveSpeed = 5f;
@@ -18,8 +45,12 @@ public class Player : MonoBehaviour
     public PlayerIdle idleState { get; private set; }
     public PlayerMove moveState { get; private set; }
     public PlayerDead deadState { get; private set; }
+    public PlayerEscapeState escapeState { get; private set; }
+    public EscapeType escapeType { get; private set; } = EscapeType.Dead;
+    public int EscapeCode => (int)escapeType;
 
-    private int deadCount = 0;
+
+    private int countLife = 2;  //목숨
 
     [Header("에너지드링크")]
     [SerializeField] private float baseSpeed = 5f;
@@ -40,7 +71,13 @@ public class Player : MonoBehaviour
     [SerializeField] private Light2D flashlight;
     [SerializeField] private float upgradedRadius = 8f; // 업그레이드 시 반경
     [SerializeField] private float defaultRadius = 3.5f; // 기본 반경
-    private bool isupgradedFlashlight = false; // 업그레이드 상태 
+    [SerializeField] private float upgradeLightDuration = 10f;
+    private bool isUpgradedLight = false;
+    [SerializeField] private float upgradedLightTimer; // 디버깅용
+
+    [Header("감옥키")]
+    [SerializeField] private bool hasPrisonKey = false; // 감옥키를 가지고 있는지
+    private bool isInPrisonDoor = false;
 
     [Header("납치됨")]
     [SerializeField] private GameObject moveMap;
@@ -48,26 +85,34 @@ public class Player : MonoBehaviour
 
     [Header("미니게임")]
     [SerializeField] private GameObject miniGame;
-    private bool isInGame = false;
+    private bool isInGame = false;      
+    private bool isInMiniGame = false; // 미니게임 중(빤짝이)
+    private bool isMiniGameSuccess = false; // 미니게임 성공
 
     [Header("발전기")]
     [SerializeField] private GameObject generator;
-    private bool isInGenerator = false;
+    private bool isInGenerator = false; // 발전기 작동중?
+    private bool isGenerator = false; // 
+    private bool isGeneratorSuccess = false; // 발전기 성공
+    private bool isStarForce = false; // 스타포스 실패 여부
 
     [Header("상점")]
     private bool isInShop = false;
+
 
 
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
 
         PlayerStateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdle(this, PlayerStateMachine, "Idle");
         moveState = new PlayerMove(this, PlayerStateMachine, "Move");
         deadState = new PlayerDead(this, PlayerStateMachine, "Dead");
+        escapeState = new PlayerEscapeState(this, PlayerStateMachine, "Escape");
 
         flashlight.pointLightOuterRadius = defaultRadius;
 
@@ -76,6 +121,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         PlayerStateMachine.Initialize(idleState);
+        useEnergyDrink = BecomeBoost;
+        useInvisiblePotion = BecomeInvisible;
+        useUpgradedLight = UpGradeLight;
+        usePrisonKey = usePrisonKeyItem;
     }
 
     private void Update()
@@ -114,6 +163,15 @@ public class Player : MonoBehaviour
             Debug.Log("업그레이드 손전등 없음");
         }
 
+        if(hasPrisonKey && isInPrisonDoor && Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            usePrisonKeyItem();
+        }
+        else if (!hasPrisonKey && Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Debug.Log("감옥키 없음");
+        }
+
         // 투명화 지속시간
 
         if (isInvisible)
@@ -134,6 +192,20 @@ public class Player : MonoBehaviour
                 ResetMoveSpeed();
             }
         }
+
+        // 손전등 업그레이드 지속시간
+        if (isUpgradedLight)
+        {
+            upgradedLightTimer -= Time.deltaTime;
+
+           
+            if (upgradedLightTimer <= 0f)
+            {
+                ResetFlashlight();
+            }
+        }
+
+        
     }
 
 
@@ -142,18 +214,59 @@ public class Player : MonoBehaviour
         PlayerStateMachine.currentState.FixedUpdate();
         Vector3 pos = transform.position;
         transform.position = new Vector3(pos.x, pos.y, pos.y);
+
+        posX = transform.position.x;
+        posY = transform.position.y;
+        posZ = transform.position.z;
+
+        scaleX = transform.localScale.x;
+        scaleY = transform.localScale.y;
+        scaleZ = transform.localScale.z;
+    }
+    public void SetEscapeType(EscapeType type)
+    {
+        escapeType = type;
     }
 
     public void SetVelocity(Vector2 velocity)
     {
         rb.linearVelocity = velocity;
-        FlipController(velocity.x);
     }
 
     public void SetZeroVelocity()
     {
         rb.linearVelocity = Vector2.zero;
     }
+
+    public void UpdateAnimParam(Vector2 input)
+    {
+        // 이동 입력이 있을 때만 lastDir 갱신
+        if (input != Vector2.zero)
+            lastDir = input.normalized;   // 크기를 1로 맞춰 두는 게 깔끔
+
+        bool isMoving = input != Vector2.zero;
+
+        // DirX·DirY 에는 항상 lastDir 을 넣는다
+        anim.SetBool("IsMoving", isMoving);
+        anim.SetFloat("DirX", lastDir.x);
+        anim.SetFloat("DirY", lastDir.y);
+
+    }
+
+    public void RotateLight(Vector2 moveInput)
+    {
+        if (moveInput == Vector2.zero)
+            return;
+
+        float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
+
+        // 위치 고정
+        lightObject.localPosition = Vector3.zero;
+
+        // 회전만 조절 (로컬 회전)
+        lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
 
     public void Flip()
     {
@@ -162,10 +275,22 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    public void FlipController(float x)
+    private void FlipVertical()
     {
+        facingUpDir *= -1;
+        facingUp = !facingUp;
+        transform.Rotate(180, 0, 0); 
+    }
+
+    public void FlipController(float x, float y)
+    {
+        // 좌우 반전
         if (x > 0 && !facingRight) Flip();
         else if (x < 0 && facingRight) Flip();
+
+        // 상하 반전
+        if (y > 0 && !facingUp) FlipVertical();
+        else if (y < 0 && facingUp) FlipVertical();
     }
 
 
@@ -173,12 +298,18 @@ public class Player : MonoBehaviour
     {
         if(collision.CompareTag("Prison"))
         {
-            deadCount++;
-            Debug.Log($"{deadCount} 번 감옥에 들어옴");
-            if (deadCount >= 2)
+            countLife--;
+            Debug.Log($"{countLife} 번 감옥에 들어옴");
+            if (countLife <= 0)
             {
                 Debug.Log("플레이어 사망~");
                 PlayerStateMachine.ChangeState(deadState);
+            }
+
+            if (hasPrisonKey)
+            {
+                Debug.Log("감옥키 사용가능");
+                usePrisonKeyItem();
             }
         }
 
@@ -196,6 +327,29 @@ public class Player : MonoBehaviour
         {
             Debug.Log("미니게임 가능");
             isInGame = true;
+        }
+
+        if (collision.CompareTag("ExitDoor"))
+        {
+            Debug.Log("탈출구 : 탈출가능");
+            escapeState.SetEscapeType(EscapeType.ExitDoor);
+            PlayerStateMachine.ChangeState(escapeState);
+        }
+
+        if (collision.CompareTag("Hatch"))
+        {
+            Debug.Log("개구멍 : 탈출가능");
+            escapeState.SetEscapeType(EscapeType.Hatch);
+            PlayerStateMachine.ChangeState(escapeState);
+        }
+
+        if (collision.CompareTag("PrisonDoor"))
+        {
+            isInPrisonDoor = true; 
+            if (hasPrisonKey)
+            {
+                Debug.Log("감옥키 사용가능");
+            }
         }
 
         // 발전기 돌리기
@@ -221,6 +375,11 @@ public class Player : MonoBehaviour
             isInGame = false;
         }
 
+        if (collision.CompareTag("Prison"))
+        {
+            isInPrisonDoor = false; // 감옥 범위 밖으로 나감
+        }
+
         //if (collision.CompareTag("Generator"))
         //{
         //    Debug.Log("발전기 작동 불가능");
@@ -232,6 +391,7 @@ public class Player : MonoBehaviour
         //    Debug.Log("상점 이용 불가능");
         //    isInShop = false;
         //}
+
     }
 
     private void OpenMiniGame()
@@ -246,25 +406,18 @@ public class Player : MonoBehaviour
     //플레이어죽음
     public void BecomeGhost()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
         c.a = 0.5f;
         sr.color = c;
 
-        //다른사람한테 안보이게
-        //if (!isMine())
-        //{
-        //    gameObject.SetActive(false); 
-        //}
-
         Collider2D col = GetComponent<Collider2D>();
         col.enabled = false;
+
     }
 
     //투명 물약 관련
     public void BecomeInvisible()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
         c.a = 0.5f;
         sr.color = c;
@@ -274,17 +427,10 @@ public class Player : MonoBehaviour
         invisibleTimer = invisibleDuration;
 
         Debug.Log("투명 물약 사용");
-
-        //보스한테 안보이게
-        //if (!isMine())
-        //{
-        //    gameObject.SetActive(false); 
-        //}
     }
 
     private void ResetTransparency()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
         c.a = 1f;
         sr.color = c;
@@ -312,22 +458,34 @@ public class Player : MonoBehaviour
     //손전등 업그레이드
     private void UpGradeLight()
     {
-        isupgradedFlashlight = true;
         flashlight.pointLightOuterRadius = upgradedRadius;
+        hasUpgradedFlashlight = false;
+        isUpgradedLight = true;
+        upgradedLightTimer = upgradeLightDuration;
+
         Debug.Log("손전등 업그레이드");
     }
 
-    //상점 관련
-    public void BuyInvisiblePotion()
+    private void ResetFlashlight()
     {
-        hasInvisiblePotion = true;
-        Debug.Log("투명 포션 구매");
+        flashlight.pointLightOuterRadius = defaultRadius;
+        isUpgradedLight = false;
+
+        Debug.Log("손전등 업그레이드 끝");
     }
 
-    public void BuyEnergyDrink()
+    private void usePrisonKeyItem()
     {
-        hasEnergyDrink = true;
-        Debug.Log("에너지 드링크 구매");
+        Debug.Log("감옥 키 사용");
+        MapEventManager.TriggerEvent(MapEventType.OpenPrisonDoor);
+        hasPrisonKey = false;
+    }
+
+    private IEnumerator ShutdownLight(float delay)
+    {
+        while (true) {
+
+        }
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();

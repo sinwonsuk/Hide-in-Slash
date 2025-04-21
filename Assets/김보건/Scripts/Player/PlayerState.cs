@@ -1,8 +1,17 @@
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
+public enum PlayerStateType
+{
+    Idle = 0,
+    Move = 1,
+    Dead = 2,
+    Escape = 3
+}
+
 public class PlayerState
 {
+
     protected PlayerStateMachine stateMachine;
     protected Player player;
 
@@ -14,9 +23,11 @@ public class PlayerState
     protected float stateTimer;
     protected bool triggerCalled;
 
+    protected PlayerStateType stateType;
+    public PlayerStateType StateType => stateType;
 
-    public PlayerState(Player _player,
-        PlayerStateMachine _stateMachine, string _animBoolName)
+
+    public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
         this.player = _player;
         this.stateMachine = _stateMachine;
@@ -49,6 +60,11 @@ public class PlayerState
     public virtual void AnimationFinishTrigger()
     {
         triggerCalled = true;
+    }
+
+    protected void HandleFlipByInput()
+    {
+        player.FlipController(moveInput.x, moveInput.y);
     }
 
 }

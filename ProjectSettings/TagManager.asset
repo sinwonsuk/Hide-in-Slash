@@ -7,6 +7,10 @@ TagManager:
   - Ghost
   - MiniGame
   - Prison
+  - Hatch
+  - ExitDoor
+  - PrisonDoor
+  - DeadPlayer
   layers:
   - Default
   - TransparentFX

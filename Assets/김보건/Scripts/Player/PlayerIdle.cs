@@ -5,6 +5,7 @@ public class PlayerIdle : PlayerState
 {
     public PlayerIdle(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
+        stateType = PlayerStateType.Idle;
     }
 
     public override void Enter()
@@ -13,7 +14,8 @@ public class PlayerIdle : PlayerState
 
         player.SetZeroVelocity();
 
-        Debug.Log("가만히");
+        // 마지막 바라보던 방향 그대로 유지
+        player.UpdateAnimParam(Vector2.zero);
     }
     public override void Update()
     {
