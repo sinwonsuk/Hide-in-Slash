@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerNameInput : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class PlayerNameInput : MonoBehaviour
             {
                 Debug.Log("입력된 이름: " + playerName);
                 PlayerPrefs.SetString("PlayerName", playerName);
+                SceneManager.LoadScene("RobbyScene");
             }
             else
             {

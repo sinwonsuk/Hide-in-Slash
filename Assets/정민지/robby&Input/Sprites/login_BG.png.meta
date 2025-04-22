@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8746399857aa18c4abcd69bb4c0ca90c
+guid: 12dc6fef2f76d6544bef421bf2f20f80
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7361933145266258526
-    second: shopBackGround_Sprite_0
+      213: 1665993880975326792
+    second: login_BG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shopBackGround_Sprite_0
+      name: login_BG_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 62
-        height: 62
+        y: 5
+        width: 93
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e5205cfb037da2660800000000000000
-      internalID: 7361933145266258526
+      spriteID: 84e3281ab9cce1710800000000000000
+      internalID: 1665993880975326792
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      shopBackGround_Sprite_0: 7361933145266258526
+      login_BG_0: 1665993880975326792
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

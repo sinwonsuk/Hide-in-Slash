@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 909d185dc19938940b0ee2cf2ca406de
+guid: 1692ffe96c2853a4aad7d1557c7092ce
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7504273913922324738
-    second: CreativeRoom1_Sprite_0
+      213: -962772596735794068
+    second: shopBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CreativeRoom1_Sprite_0
+      name: shopBG_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 15
         y: 4
-        width: 86
-        height: 52
+        width: 67
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 20902988d59842860800000000000000
-      internalID: 7504273913922324738
+      spriteID: c64251c9c6b83a2f0800000000000000
+      internalID: -962772596735794068
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CreativeRoom1_Sprite_0: 7504273913922324738
+      shopBG_0: -962772596735794068
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
