@@ -18,6 +18,7 @@ public class SettingRoom : MonoBehaviour
         {
             GameObject room = Instantiate(roomPanelPrefab, roomListContent);
 
+
             Transform roomNameObj = room.transform.Find("RoomNameText");
 
             if (roomNameObj != null)
