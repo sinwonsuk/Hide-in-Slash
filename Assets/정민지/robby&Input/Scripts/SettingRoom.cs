@@ -6,7 +6,7 @@ public class SettingRoom : MonoBehaviour
     public TMP_InputField roomNameInput;
     public TMP_InputField passwordInput;
     public Transform roomListContent;
-    public GameObject roomPanelPrefab;
+    public GameObject roomPanelPrefab; //룸
     public GameObject popupPanel; // 팝업 루트 오브젝트
 
     public void OnClickConfirm()
@@ -22,7 +22,7 @@ public class SettingRoom : MonoBehaviour
 
             if (roomNameObj != null)
             {
-                roomNameObj.GetComponent<TMP_Text>().text = roomName;
+                roomNameObj.GetComponent<TMP_Text>().text = roomName; //방이름
             }
             else
             {
