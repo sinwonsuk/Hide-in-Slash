@@ -29,7 +29,10 @@ public class PlayerNameInput : MonoBehaviour
         if ((Input.GetKeyUp(KeyCode.Escape)) && (warning == 1 || warning == 2))
         {
             if (currentWarning != null)
+            {
                 Destroy(currentWarning);
+                Time.timeScale = 0;
+            }     
 
             warning = 0;
         }
@@ -55,7 +58,7 @@ public class PlayerNameInput : MonoBehaviour
             {
                 if(currentWarning==null)
                 {
-                    currentWarning = Instantiate(lengthExceeded); // 인스턴스 저장!
+                    currentWarning = Instantiate(lengthExceeded); // 현재 경고 = 길이 초과
                 }
                 warning = 2;
             }
@@ -64,7 +67,7 @@ public class PlayerNameInput : MonoBehaviour
         {
             warning = 1;
             if(currentWarning==null)
-            currentWarning = Instantiate(nicknameIsNull); // 인스턴스 저장!
+            currentWarning = Instantiate(nicknameIsNull); // 현재 경고 = 텍스트 빔
         }
     }
 
