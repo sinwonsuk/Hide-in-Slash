@@ -73,12 +73,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float upgradedRadius = 8f; // 업그레이드 시 반경
     [SerializeField] private float defaultRadius = 3.5f; // 기본 반경
     [SerializeField] private float upgradeLightDuration = 10f;
+    [SerializeField] private PolygonCollider2D lightCollider;   // 손전등 콜라이더
     private bool isUpgradedLight = false;
     [SerializeField] private float upgradedLightTimer; // 디버깅용
     private bool isLightOn = false; // 기본손전등껏다키기
     private bool isBlinking = false;
     private float blinkTimer = 0f;
     private float blinkInterval = 0.3f; // 깜빡이는 간격
+    private Vector2[] defaultColliderPoints;
 
     [Header("감옥키")]
     [SerializeField] private bool hasPrisonKey = false; // 감옥키를 가지고 있는지
@@ -104,6 +106,11 @@ public class Player : MonoBehaviour
     [Header("상점")]
     private bool isInShop = false;
 
+    [Header("개구멍")]
+    [SerializeField] private bool hasHatch = false;
+    private bool isInHatch = false;
+
+
 
 
     private void Awake()
@@ -120,6 +127,7 @@ public class Player : MonoBehaviour
         escapeState = new PlayerEscapeState(this, PlayerStateMachine, "Escape");
 
         flashlight.pointLightOuterRadius = defaultRadius;
+        defaultColliderPoints = lightCollider.points;
 
         flashlight.enabled = false;
 
@@ -182,6 +190,19 @@ public class Player : MonoBehaviour
         else if (!hasPrisonKey && Input.GetKeyDown(KeyCode.Alpha4))
         {
             Debug.Log("감옥키 없음");
+        }
+
+        if(hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            useHatchItem();
+        }
+        else if (hasHatch && !isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Debug.Log("개구멍을 사용할 수 없는 장소");
+        }
+        else
+        {
+            Debug.Log("상호작용안됨");
         }
 
         // 투명화 지속시간
@@ -328,7 +349,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Prison"))
+        // 'PlayerSight' 태그 가진 라이트 오브젝트는 무시
+        if (collision.CompareTag("PlayerSight"))
+            return;
+
+        if (collision.CompareTag("Prison"))
         {
             countLife--;
             Debug.Log($"{countLife} 번 감옥에 들어옴");
@@ -346,7 +371,7 @@ public class Player : MonoBehaviour
         }
 
         //귀신에게 잡혔을 때
-        if (collision.CompareTag("Ghost") && collision.gameObject == collision.transform.root.gameObject)
+        if (collision.CompareTag("Ghost") )
         {
             Debug.Log("귀신에게 잡힘");
 
@@ -368,13 +393,6 @@ public class Player : MonoBehaviour
             PlayerStateMachine.ChangeState(escapeState);
         }
 
-        if (collision.CompareTag("Hatch"))
-        {
-            Debug.Log("개구멍 : 탈출가능");
-            escapeState.SetEscapeType(EscapeType.Hatch);
-            PlayerStateMachine.ChangeState(escapeState);
-        }
-
         if (collision.CompareTag("PrisonDoor"))
         {
             isInPrisonDoor = true; 
@@ -384,19 +402,24 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (collision.CompareTag("Hatch"))
+        {
+            isInHatch = true;
+        }
+
         // 발전기 돌리기
-        //if (collision.CompareTag("Generator"))
-        //{
-        //    Debug.Log("발전기 작동가능");
-        //    isInGenerator = true;
-        //}
+        if (collision.CompareTag("Generator"))
+        {
+            Debug.Log("발전기 작동가능");
+            isInGenerator = true;
+        }
 
         // 상점
-        //if(collision.CompareTag("Shop"))
-        //{
-        //    Debug.Log("상점 상호작용 가능");
-        //    isInShop = true;
-        //}
+        if (collision.CompareTag("Shop"))
+        {
+            Debug.Log("상점 상호작용 가능");
+            isInShop = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -412,17 +435,22 @@ public class Player : MonoBehaviour
             isInPrisonDoor = false; // 감옥 범위 밖으로 나감
         }
 
-        //if (collision.CompareTag("Generator"))
-        //{
-        //    Debug.Log("발전기 작동 불가능");
-        //    isInGenerator = false;
-        //}
+        if (collision.CompareTag("Hatch"))
+        {
+            isInHatch = false;
+        }
 
-        //if (collision.CompareTag("Shop"))
-        //{
-        //    Debug.Log("상점 이용 불가능");
-        //    isInShop = false;
-        //}
+        if (collision.CompareTag("Generator"))
+        {
+            Debug.Log("발전기 작동 불가능");
+            isInGenerator = false;
+        }
+
+        if (collision.CompareTag("Shop"))
+        {
+            Debug.Log("상점 이용 불가능");
+            isInShop = false;
+        }
 
     }
 
@@ -497,6 +525,9 @@ public class Player : MonoBehaviour
         isUpgradedLight = true;
         upgradedLightTimer = upgradeLightDuration;
 
+        float scaleRatio = upgradedRadius / defaultRadius;
+        ScalePolygonCollider(scaleRatio);
+
         Debug.Log("손전등 업그레이드");
     }
 
@@ -508,6 +539,7 @@ public class Player : MonoBehaviour
         isBlinking = false;
         blinkTimer = 0f;
 
+        ScalePolygonCollider(1.0f); // 원래 크기로 복귀
         Debug.Log("손전등 업그레이드 끝");
     }
 
@@ -519,18 +551,30 @@ public class Player : MonoBehaviour
         Debug.Log(isLightOn ? "손전등 켜짐" : "손전등 꺼짐");
     }
 
+    private void ScalePolygonCollider(float scale)
+    {
+        Vector2[] scaled = new Vector2[defaultColliderPoints.Length];
+        for (int i = 0; i < scaled.Length; i++)
+        {
+            scaled[i] = defaultColliderPoints[i] * scale;
+        }
+        lightCollider.points = scaled;
+    }
+
+    // 감옥키 사용
+
     private void usePrisonKeyItem()
     {
         Debug.Log("감옥 키 사용");
         MapEventManager.TriggerEvent(MapEventType.OpenPrisonDoor);
         hasPrisonKey = false;
     }
-
-    private IEnumerator ShutdownLight(float delay)
+    
+    private void useHatchItem()
     {
-        while (true) {
-
-        }
+        Debug.Log("개구멍 사용");
+        escapeState.SetEscapeType(EscapeType.Hatch);
+        PlayerStateMachine.ChangeState(escapeState);
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();

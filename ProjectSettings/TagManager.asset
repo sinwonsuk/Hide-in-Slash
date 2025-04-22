@@ -17,6 +17,8 @@ TagManager:
   - PrisonDoor
   - DeadPlayer
   - PlayerSight
+  - Generator
+  - Shop
   layers:
   - Default
   - TransparentFX

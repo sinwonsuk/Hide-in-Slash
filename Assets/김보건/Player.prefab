@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 558437193489618087}
   - component: {fileID: 1423832201539319560}
   - component: {fileID: 8855099458535565669}
+  - component: {fileID: 4849121566837285235}
   m_Layer: 0
   m_Name: Light 2D
   m_TagString: PlayerSight
@@ -188,8 +189,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 108.83721
-  m_PointLightOuterAngle: 108.83721
+  m_PointLightInnerAngle: 83.47
+  m_PointLightOuterAngle: 83.47
   m_PointLightInnerRadius: 0
   m_PointLightOuterRadius: 3.54
   m_ShapeLightParametricSides: 5
@@ -248,13 +249,42 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.009368726, y: 2.4055629}
-      - {x: -1.2415433, y: 2.0519211}
-      - {x: -1.2734085, y: 1.6800823}
+    - - {x: 0.5160289, y: 3.5106697}
+      - {x: -0.31485215, y: 3.529823}
+      - {x: -1.2610073, y: 3.3201697}
+      - {x: -1.9393063, y: 2.9689808}
+      - {x: -2.3519764, y: 2.6451166}
       - {x: -0.016838439, y: -0.017374039}
-      - {x: 1.1761994, y: 1.3338915}
-      - {x: 1.3165042, y: 2.0238044}
+      - {x: 2.3510637, y: 2.648271}
+      - {x: 1.4413333, y: 3.242726}
   m_UseDelaunayMesh: 0
+--- !u!50 &4849121566837285235
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029605772521539735}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &8590158748932471979
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,8 +346,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 76.5, y: -83.3, z: 1}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3525224134891909331}
   - {fileID: 5669406857322749836}
@@ -363,6 +393,7 @@ MonoBehaviour:
   portalName: CaughtPoint
   miniGame: {fileID: 0}
   generator: {fileID: 0}
+  hasHatch: 0
 --- !u!50 &2919237809497951774
 Rigidbody2D:
   serializedVersion: 5
