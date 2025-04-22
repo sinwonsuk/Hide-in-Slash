@@ -6,8 +6,13 @@ public class Ghost : MonoBehaviour
     public Animator anim { get; protected set; }
     public Rigidbody2D rb { get; protected set; }
 
-    public int facingDir { get; protected set; } = 1;
+    public SpriteRenderer sr { get; protected set; }
+
+    public int facingDir { get; private set; } = 1;
+    public int facingUpDir { get; private set; } = 1;   // 1 = 위, -1 = 아래
     protected bool facingRight = true;
+    protected bool facingUp = true;
+
 
     // 서버 전송용 위치 및 스케일 변수
     public float posX, posY, posZ;
@@ -24,6 +29,7 @@ public class Ghost : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
 
         ghostStateMachine = new GhostStateMachine();
         //idleState = new GhostIdle(this, ghostStateMachine, "Idle");
@@ -59,12 +65,9 @@ public class Ghost : MonoBehaviour
         scaleZ = transform.localScale.z;
     }
 
-
-
-    public virtual void SetVelocity(Vector2 velocity)
+    public void SetVelocity(Vector2 velocity)
     {
         rb.linearVelocity = velocity;
-        FlipController(velocity.x);
     }
 
     public void SetZeroVelocity()
@@ -79,14 +82,28 @@ public class Ghost : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    public void FlipController(float x)
+    private void FlipVertical()
     {
+        facingUpDir *= -1;
+        facingUp = !facingUp;
+        transform.Rotate(180, 0, 0);
+    }
+
+    public void FlipController(float x, float y)
+    {
+        // 좌우 반전
         if (x > 0 && !facingRight) Flip();
         else if (x < 0 && facingRight) Flip();
+
+        // 상하 반전
+        if (y > 0 && !facingUp) FlipVertical();
+        else if (y < 0 && facingUp) FlipVertical();
     }
 
     public float GetMoveSpeed()
     {
         return moveSpeed;
     }
+
+    public virtual void UpdateAnimParam(Vector2 input) { }
 }

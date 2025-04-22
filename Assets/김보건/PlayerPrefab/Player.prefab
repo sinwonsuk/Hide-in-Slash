@@ -335,7 +335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5050953728194211362
 Transform:
   m_ObjectHideFlags: 0
@@ -387,6 +387,7 @@ MonoBehaviour:
   upgradedRadius: 8
   defaultRadius: 3.5
   upgradeLightDuration: 10
+  lightCollider: {fileID: 8855099458535565669}
   upgradedLightTimer: 0
   hasPrisonKey: 0
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
@@ -479,7 +480,7 @@ GameObject:
   - component: {fileID: 4861942138428816013}
   - component: {fileID: 6223385511578981971}
   m_Layer: 0
-  m_Name: PSF_HeroesA_Casual_25
+  m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
