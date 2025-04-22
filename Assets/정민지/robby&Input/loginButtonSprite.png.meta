@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 87ee1e37976214843a3771bcd5b75e15
+guid: 49949265830c2444fa0cf83701889ec6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6879810321425695185
-    second: robby_Sprite_1_0
+      213: 7625346189836892431
+    second: loginButtonSprite_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: robby_Sprite_1_0
+      name: loginButtonSprite_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 8
-        width: 62
-        height: 69
+        x: 11
+        y: 15
+        width: 43
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2efa55a6f00680a0800000000000000
-      internalID: -6879810321425695185
+      spriteID: f093b9675fba2d960800000000000000
+      internalID: 7625346189836892431
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      robby_Sprite_1_0: -6879810321425695185
+      loginButtonSprite_0: 7625346189836892431
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

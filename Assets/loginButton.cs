@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LoginButton : MonoBehaviour
+public class loginButton : MonoBehaviour
 {
     [SerializeField] private PlayerNameInput input;
 
