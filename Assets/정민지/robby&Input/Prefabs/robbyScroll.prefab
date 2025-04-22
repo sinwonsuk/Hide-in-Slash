@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2660642155477928490}
   - component: {fileID: 9078799349808527618}
   - component: {fileID: 9166683452333436830}
+  - component: {fileID: 2199253044771946235}
   m_Layer: 5
   m_Name: robbyScroll
   m_TagString: Untagged
@@ -103,6 +104,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2199253044771946235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879746480008615897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986592e644cf2f3448844d9ad18f1ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomItemPrefab: {fileID: 2318875568925577560, guid: 86cfe703cf4656f408e5abdd0083a1c9, type: 3}
+  contentParent: {fileID: 6104579086784972853}
 --- !u!1 &1070836422365550094
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +238,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9214646082824451803}
   m_HandleRect: {fileID: 6348666812228981383}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -300,7 +315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -96.69488, y: 100.00001}
+  m_AnchoredPosition: {x: -96.69488, y: 100}
   m_SizeDelta: {x: 154.3742, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6606031054074505796
@@ -589,6 +604,7 @@ GameObject:
   - component: {fileID: 1059993230000757866}
   - component: {fileID: 6252510539493611047}
   - component: {fileID: 8981149124403253433}
+  - component: {fileID: 2401019442528464265}
   m_Layer: 5
   m_Name: CreativeRoom
   m_TagString: Untagged
@@ -676,8 +692,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    m_PressedColor: {r: 0.51572317, g: 0.51572317, b: 0.51572317, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -697,7 +713,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6252510539493611047}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2401019442528464265}
+        m_TargetAssemblyTypeName: CreativeRoom, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2401019442528464265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288370702992651627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0175a281a14814fbfbff0037c97977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creativeRoom: {fileID: 2325740444448904576, guid: 4735483be682e5b418c0571fe5223960, type: 3}
 --- !u!1 &7583801522097278936
 GameObject:
   m_ObjectHideFlags: 0
