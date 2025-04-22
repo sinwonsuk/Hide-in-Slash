@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 6985084815004352040}
   - component: {fileID: 25064600803388743}
   - component: {fileID: 4886226947849098666}
-  - component: {fileID: 7145753187823256623}
+  - component: {fileID: 6421525319054543971}
   m_Layer: 5
   m_Name: NicknameNull
   m_TagString: Untagged
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7145753187823256623
+--- !u!114 &6421525319054543971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7145753187823256623}
+      - m_Target: {fileID: 6421525319054543971}
         m_TargetAssemblyTypeName: EscButton, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1

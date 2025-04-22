@@ -420,7 +420,6 @@ GameObject:
   - component: {fileID: 7804095922633766115}
   - component: {fileID: 450906894612480269}
   - component: {fileID: 96181405483030367}
-  - component: {fileID: 149478374749477420}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -587,21 +586,6 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
---- !u!114 &149478374749477420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123262670222670356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc32bb64f6897b4da12f57f9c74259f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nicknameIsNull: {fileID: 3641281223192473759, guid: 67948e38dbc24184685d0c83de3717cc, type: 3}
-  lengthExceeded: {fileID: 2218333914126809915, guid: 525945277e30fbf4a96d59795407873e, type: 3}
-  nameInputField: {fileID: 96181405483030367}
 --- !u!1 &1343572045945278670
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +786,6 @@ GameObject:
   - component: {fileID: 2450203271157498745}
   - component: {fileID: 3922575527564694114}
   - component: {fileID: 8750846866535975040}
-  - component: {fileID: 4313654423636400524}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -912,8 +895,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4313654423636400524}
-        m_TargetAssemblyTypeName: loginButton, Assembly-CSharp
+      - m_Target: {fileID: 8311996691714650724}
+        m_TargetAssemblyTypeName: PlayerNameInput, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -924,19 +907,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4313654423636400524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2284749669408006165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6854e2d1a5e44444b090103b12e5f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  input: {fileID: 149478374749477420}
 --- !u!1 &4229331826114641608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,6 +1229,7 @@ GameObject:
   - component: {fileID: 3375371103910819272}
   - component: {fileID: 8197702036584932175}
   - component: {fileID: 8203366664500163569}
+  - component: {fileID: 8311996691714650724}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -1364,6 +1335,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ab145b6aa73c041a336ac1ea6d61a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8311996691714650724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409034000419116843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc32bb64f6897b4da12f57f9c74259f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nicknameIsNull: {fileID: 3641281223192473759, guid: 67948e38dbc24184685d0c83de3717cc, type: 3}
+  lengthExceeded: {fileID: 2218333914126809915, guid: 525945277e30fbf4a96d59795407873e, type: 3}
+  nameInputField: {fileID: 96181405483030367}
 --- !u!1 &6831865259933296025
 GameObject:
   m_ObjectHideFlags: 0
