@@ -23,7 +23,6 @@ public class PlayerNameInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && warning == 0)
         {
-            Time.timeScale = 1;
             Destroy(gameObject);
         }
             
@@ -33,7 +32,6 @@ public class PlayerNameInput : MonoBehaviour
             if (currentWarning != null)
             {
                 Destroy(currentWarning);
-                Time.timeScale = 0;
             }     
 
             warning = 0;

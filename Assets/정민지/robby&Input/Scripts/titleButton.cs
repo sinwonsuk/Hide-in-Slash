@@ -7,7 +7,6 @@ public class titleButton : MonoBehaviour
 
     public void OnClickStart()
     {
-        Time.timeScale = 0;
         Instantiate(login);
     }
 

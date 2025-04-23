@@ -1228,8 +1228,8 @@ GameObject:
   - component: {fileID: 7725205151923252197}
   - component: {fileID: 3375371103910819272}
   - component: {fileID: 8197702036584932175}
-  - component: {fileID: 8203366664500163569}
   - component: {fileID: 8311996691714650724}
+  - component: {fileID: 3928834069958884944}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -1323,18 +1323,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8203366664500163569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6409034000419116843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ab145b6aa73c041a336ac1ea6d61a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8311996691714650724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,6 +1338,18 @@ MonoBehaviour:
   nicknameIsNull: {fileID: 3641281223192473759, guid: 67948e38dbc24184685d0c83de3717cc, type: 3}
   lengthExceeded: {fileID: 2218333914126809915, guid: 525945277e30fbf4a96d59795407873e, type: 3}
   nameInputField: {fileID: 96181405483030367}
+--- !u!114 &3928834069958884944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409034000419116843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49207f64d1990c14599a35be758ce293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6831865259933296025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,8 +1471,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8203366664500163569}
-        m_TargetAssemblyTypeName: escAndTimeScaleIsOne, Assembly-CSharp
+      - m_Target: {fileID: 3928834069958884944}
+        m_TargetAssemblyTypeName: EscButton, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
