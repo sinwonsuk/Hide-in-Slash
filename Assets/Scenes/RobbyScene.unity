@@ -447,6 +447,18 @@ PrefabInstance:
       propertyPath: m_text
       value: "(\uC22B\uC790\uB85C 5\uC790 \uC774\uD558 \uC785\uB825)"
       objectReference: {fileID: 0}
+    - target: {fileID: 8686431561778825319, guid: e32d2fe2af0e7a244a217d94732b2b3e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8686431561778825319, guid: e32d2fe2af0e7a244a217d94732b2b3e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8686431561778825319, guid: e32d2fe2af0e7a244a217d94732b2b3e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
