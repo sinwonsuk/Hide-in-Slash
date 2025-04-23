@@ -8,7 +8,8 @@ public class robbyMove : MonoBehaviour
     public float targetY = 0f;     // 내려올 최종 Y 위치
     public float duration = 1f;    // 내려오는데 걸리는 시간
 
-    private void Start()
+
+    void Start()
     {
         //코루틴시작
         StartCoroutine(MoveUI());
