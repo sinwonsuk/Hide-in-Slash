@@ -8,11 +8,12 @@ public enum MapEventType
 {
     OpenPrisonDoor,
     ClosePrisonDoor,
-    GeneratorStart,
-    GeneratorSuccess,
-    miniGameStart,
     miniGameSuccess,
+    GeneratorSuccess,
+    AllGeneratorSuccess,
 }
+
+
 
 public class MapEventManager
 {
