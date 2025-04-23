@@ -8,43 +8,37 @@ public enum MapEventType
 {
     OpenPrisonDoor,
     ClosePrisonDoor,
-    GeneratorStart,
-    GeneratorSuccess,
-    miniGameStart,
     miniGameSuccess,
+    GeneratorSuccess,
+    AllGeneratorSuccess,
 }
+
+
 
 public class MapEventManager
 {
-    private static Dictionary<MapEventType, Action> eventMap = new();
+    private static readonly Dictionary<MapEventType, Action> _eventMap = new();
 
-    // 신호
+    // 이벤트 등록
     public static void RegisterEvent(MapEventType eventType, Action eventFunc)
     {
-        if (!eventMap.ContainsKey(eventType))
-            eventMap[eventType] = eventFunc;
+        if (!_eventMap.ContainsKey(eventType))
+            _eventMap[eventType] = eventFunc;
         else
-            eventMap[eventType] += eventFunc;
+            _eventMap[eventType] += eventFunc;
     }
 
-    // 신호받기
+    // 이벤트 등록 해제
     public static void UnRegisterEvent(MapEventType eventType, Action eventFunc)
     {
-        if (eventMap.ContainsKey(eventType))
-            eventMap[eventType] -= eventFunc;
+        if (_eventMap.ContainsKey(eventType))
+            _eventMap[eventType] -= eventFunc;
     }
 
-    // 이벤트 발생
+    // 이벤트 실행
     public static void TriggerEvent(MapEventType eventType)
     {
-        if (eventMap.ContainsKey(eventType))
-        {
-            Action action = eventMap[eventType];
-
-            if (action != null)
-            {
-                action.Invoke(); 
-            }
-        }
+        _eventMap.TryGetValue(eventType, out var action);
+        action?.Invoke();
     }
 }

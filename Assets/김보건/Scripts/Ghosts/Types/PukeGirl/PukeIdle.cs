@@ -10,6 +10,7 @@ public class PukeIdle : GhostState
     {
         base.Enter();
         ghost.SetZeroVelocity();
+        ghost.UpdateAnimParam(Vector2.zero);
         Debug.Log("°¡¸¸È÷");
     }
     public override void Update()

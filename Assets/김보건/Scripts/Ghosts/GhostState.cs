@@ -49,4 +49,9 @@ public class GhostState
         triggerCalled = true;
     }
 
+    protected void HandleFlipByInput()
+    {
+        ghost.FlipController(moveInput.x, moveInput.y);
+    }
+
 }
