@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MemoryMiniGame : MonoBehaviour
 {
@@ -10,24 +11,20 @@ public class MemoryMiniGame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        memoryMiniGameColorChange = GetComponentInChildren<MemoryMiniGameColorChange>();
-        memoryMiniGameColorChange.memoryColorAction += MemoryMiniGame_OnColorChange;
+        colorChangeAction = MemoryMiniGame_OnColorChange;
+        checkColorAction = CheckColor;
+        activeButtonAction = ActiveButton;
     }
 
     private void MemoryMiniGame_OnColorChange(ColorState colorState)
     {
         colors.Add(colorState);
-    }  
-
-    public bool ActiveButton()
-    {
-        return memoryCount == colors.Count;
     }
 
-    public void CheckColor(int color)
-    {
-      
+    bool ActiveButton() => memoryCount == colors.Count;
 
+    public void CheckColor(int color)
+    {     
         if (colors[colorindex] == (ColorState)color)
         {
             colorcheck.Add(true);
@@ -65,6 +62,9 @@ public class MemoryMiniGame : MonoBehaviour
        
     }
 
+    public UnityAction<ColorState> colorChangeAction;
+    public UnityAction<int> checkColorAction;
+    public Func<bool> activeButtonAction;
 
     int colorindex = 0;
     public int memoryCount { get; set; } = 5;
@@ -72,5 +72,4 @@ public class MemoryMiniGame : MonoBehaviour
     List<bool> colorcheck = new List<bool>();
 
     List<ColorState> colors = new List<ColorState>();
-    MemoryMiniGameColorChange memoryMiniGameColorChange;
 }
