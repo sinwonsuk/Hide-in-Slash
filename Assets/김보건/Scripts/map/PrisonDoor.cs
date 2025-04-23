@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class PrisonDoor : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
-
+ 
     private void OnEnable()
     {
         MapEventManager.RegisterEvent(MapEventType.OpenPrisonDoor, OpenDoor);

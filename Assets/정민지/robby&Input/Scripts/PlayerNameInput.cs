@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerNameInput : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerNameInput : MonoBehaviour
     public TMP_InputField nameInputField;
 
     private GameObject currentWarning;  // 경고창 인스턴스를 저장할 변수
+
 
 
     void Update()
@@ -53,6 +55,7 @@ public class PlayerNameInput : MonoBehaviour
             {
                 Debug.Log("입력된 이름: " + playerName);
                 PlayerPrefs.SetString("PlayerName", playerName);
+                SceneManager.LoadScene("RobbyScene");
             }
             else
             {

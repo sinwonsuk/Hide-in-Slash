@@ -1,0 +1,702 @@
+fileFormatVersion: 2
+guid: 8ffdd1f842b2b704bb740bb9f5404e2a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4173570699572249483
+    second: PSF_E_Interior_Extras_0
+  - first:
+      213: -6663498517157074981
+    second: PSF_E_Interior_Extras_1
+  - first:
+      213: -5754205064391658119
+    second: PSF_E_Interior_Extras_2
+  - first:
+      213: 3924260079454101515
+    second: PSF_E_Interior_Extras_3
+  - first:
+      213: -5532791269412140475
+    second: PSF_E_Interior_Extras_4
+  - first:
+      213: -988206607059746682
+    second: PSF_E_Interior_Extras_5
+  - first:
+      213: 91080930619728077
+    second: PSF_E_Interior_Extras_6
+  - first:
+      213: -8448702228483058851
+    second: PSF_E_Interior_Extras_7
+  - first:
+      213: -5772446200898404173
+    second: PSF_E_Interior_Extras_8
+  - first:
+      213: -5151955774283079406
+    second: PSF_E_Interior_Extras_9
+  - first:
+      213: -5332286490753805572
+    second: PSF_E_Interior_Extras_10
+  - first:
+      213: 7207561849148282197
+    second: PSF_E_Interior_Extras_11
+  - first:
+      213: 985230783734908038
+    second: PSF_E_Interior_Extras_12
+  - first:
+      213: -6370328707915884463
+    second: PSF_E_Interior_Extras_13
+  - first:
+      213: 2309619252944831461
+    second: PSF_E_Interior_Extras_14
+  - first:
+      213: -1946999691483500185
+    second: PSF_E_Interior_Extras_15
+  - first:
+      213: -5584417110911238064
+    second: PSF_E_Interior_Extras_16
+  - first:
+      213: -7479450043288400434
+    second: PSF_E_Interior_Extras_17
+  - first:
+      213: 2900045258557139531
+    second: PSF_E_Interior_Extras_18
+  - first:
+      213: 4861155436239807923
+    second: PSF_E_Interior_Extras_19
+  - first:
+      213: 3450942089376813682
+    second: PSF_E_Interior_Extras_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 429
+        width: 289
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57c740faf8f7416c0800000000000000
+      internalID: -4173570699572249483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_1
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 429
+        width: 54
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd7a283476f7683a0800000000000000
+      internalID: -6663498517157074981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_2
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 419
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9757e242bf4f420b0800000000000000
+      internalID: -5754205064391658119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_3
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 401
+        width: 27
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b00ab1a20c5c57630800000000000000
+      internalID: 3924260079454101515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 291
+        width: 289
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a8e4a87a39733b0800000000000000
+      internalID: -5532791269412140475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_5
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 333
+        width: 54
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 680828d935f2942f0800000000000000
+      internalID: -988206607059746682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_6
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 273
+        width: 160
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc0a663bf95934100800000000000000
+      internalID: 91080930619728077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 205
+        width: 33
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d53573a161e20ca80800000000000000
+      internalID: -8448702228483058851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_8
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 243
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0c56693c624efa0800000000000000
+      internalID: -5772446200898404173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_9
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 191
+        width: 160
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 211a55ff4839088b0800000000000000
+      internalID: -5151955774283079406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_10
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 191
+        width: 94
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf2510630b9eff5b0800000000000000
+      internalID: -5332286490753805572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_11
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 267
+        width: 126
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55514238057660460800000000000000
+      internalID: 7207561849148282197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_12
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 255
+        width: 90
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6848c468d2e3cad00800000000000000
+      internalID: 985230783734908038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_13
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 131
+        width: 60
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1585336aacb0897a0800000000000000
+      internalID: -6370328707915884463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_14
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 197
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e30e22497a6d0020800000000000000
+      internalID: 2309619252944831461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_15
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 205
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 761b453a81edaf4e0800000000000000
+      internalID: -1946999691483500185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_16
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 195
+        width: 125
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 050c582a93a2082b0800000000000000
+      internalID: -5584417110911238064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 449
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecdc38e30d7a33890800000000000000
+      internalID: -7479450043288400434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_18
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 131
+        width: 125
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4aaadc2cc70f3820800000000000000
+      internalID: 2900045258557139531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_19
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 67
+        width: 63
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b5680f1d1b467340800000000000000
+      internalID: 4861155436239807923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PSF_E_Interior_Extras_20
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 7
+        width: 63
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 272dfb1eb8534ef20800000000000000
+      internalID: 3450942089376813682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PSF_E_Interior_Extras_0: -4173570699572249483
+      PSF_E_Interior_Extras_1: -6663498517157074981
+      PSF_E_Interior_Extras_10: -5332286490753805572
+      PSF_E_Interior_Extras_11: 7207561849148282197
+      PSF_E_Interior_Extras_12: 985230783734908038
+      PSF_E_Interior_Extras_13: -6370328707915884463
+      PSF_E_Interior_Extras_14: 2309619252944831461
+      PSF_E_Interior_Extras_15: -1946999691483500185
+      PSF_E_Interior_Extras_16: -5584417110911238064
+      PSF_E_Interior_Extras_17: -7479450043288400434
+      PSF_E_Interior_Extras_18: 2900045258557139531
+      PSF_E_Interior_Extras_19: 4861155436239807923
+      PSF_E_Interior_Extras_2: -5754205064391658119
+      PSF_E_Interior_Extras_20: 3450942089376813682
+      PSF_E_Interior_Extras_3: 3924260079454101515
+      PSF_E_Interior_Extras_4: -5532791269412140475
+      PSF_E_Interior_Extras_5: -988206607059746682
+      PSF_E_Interior_Extras_6: 91080930619728077
+      PSF_E_Interior_Extras_7: -8448702228483058851
+      PSF_E_Interior_Extras_8: -5772446200898404173
+      PSF_E_Interior_Extras_9: -5151955774283079406
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

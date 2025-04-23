@@ -4,7 +4,7 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     private LineRenderer lineRenderer;
-    private RectTransform[] points;
+    private Transform[] points;
 
     private void Awake()
     {
@@ -13,7 +13,7 @@ public class LineController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
-    public void SetUpLine(RectTransform[] points)
+    public void SetUpLine(Transform[] points)
     {
         lineRenderer.positionCount = points.Length;
         this.points = points;
