@@ -23,8 +23,8 @@ public class MemoryMiniGameColorChange : MonoBehaviour
     void Start()
     {
         memoryMiniGame = GetComponentInParent<MemoryMiniGame>();
-        image = GetComponent<Image>();
-        image.color = Color.white;
+        spriteRender = GetComponent<SpriteRenderer>();
+        spriteRender.color = Color.white;
         StartCoroutine(ColorCorution());
     }
 
@@ -52,13 +52,13 @@ public class MemoryMiniGameColorChange : MonoBehaviour
 
             if (time > duration*2.0f)
             {
-                memoryColorAction.Invoke(colorState);
+                memoryMiniGame.colorChangeAction.Invoke(colorState);
                 time = 0;
                 yield break;
             }
             float t = Mathf.PingPong(Time.time, duration) / duration;
             Color currentColor = Color.Lerp(Color.white, colors[(int)colorState], t);
-            image.color = currentColor;
+            spriteRender.color = currentColor;
             yield return null;
         }     
     }
@@ -68,9 +68,8 @@ public class MemoryMiniGameColorChange : MonoBehaviour
 
     MemoryMiniGame memoryMiniGame;
 
-    public event Action<ColorState> memoryColorAction;
     public float duration = 2f;
-    Image image;
+    SpriteRenderer spriteRender;
     float time;
 
 }
