@@ -8,6 +8,7 @@ public class SettingRoom : MonoBehaviour
     public Transform roomListContent; //스크롤 콘텐트
     public GameObject roomPanelPrefab; //생성할 방
     public GameObject popupPanel; // 방 생성창
+    private int numberOfPlayers; //플레이어 인원
 
     [Header("경고창")]
     [SerializeField] private GameObject nicknameIsNull;
@@ -60,16 +61,19 @@ public class SettingRoom : MonoBehaviour
 
         if (!string.IsNullOrEmpty(roomName) && !string.IsNullOrEmpty(password))
         {
-            if (roomName.Length < 11 && password.Length < 6)
+            if (roomName.Length < 14 && password.Length < 6)
             {
                 GameObject room = Instantiate(roomPanelPrefab, roomListContent);
 
-
                 Transform roomNameObj = room.transform.Find("RoomNameText");
+                Transform roomplayerObj = room.transform.Find("player");
+
+                numberOfPlayers = 1;
 
                 if (roomNameObj != null)
                 {
                     roomNameObj.GetComponent<TMP_Text>().text = roomName; //방이름
+                    roomplayerObj.GetComponent<TMP_Text>().text = ($"{numberOfPlayers}/5");
                 }
                 else
                 {

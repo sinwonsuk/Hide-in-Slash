@@ -15,6 +15,7 @@ public class PlayerNameInput : MonoBehaviour
     private GameObject currentWarning;  // 경고창 인스턴스를 저장할 변수
 
 
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
