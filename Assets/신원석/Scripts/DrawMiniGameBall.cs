@@ -6,8 +6,6 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
@@ -26,26 +24,18 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 localPos;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rectTransform.parent.GetComponent<RectTransform>(),
-            Input.mousePosition,
-            canvas.worldCamera,
-            out localPos
-        );
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        rectTransform.anchoredPosition = localPos;
+        transform.position = worldPos;
 
         rigidbody2D.gravityScale = 0;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        rigidbody2D.gravityScale = 1;
+        rigidbody2D.gravityScale = 3;
     }
 
-    Canvas canvas;
-    RectTransform rectTransform;
     private new Rigidbody2D rigidbody2D;
 }

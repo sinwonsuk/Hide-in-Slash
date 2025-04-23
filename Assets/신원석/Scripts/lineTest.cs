@@ -3,7 +3,7 @@ using UnityEngine;
 public class lineTest : MonoBehaviour
 {
     [SerializeField]
-    private RectTransform[] points;
+    private Transform[] points;
     [SerializeField]
     private LineController line;
 

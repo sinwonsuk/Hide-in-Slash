@@ -8,8 +8,6 @@ public class MemoryMinigameLineMove : MonoBehaviour, IBeginDragHandler, IDragHan
     void Start()
     {
         LineMiniGame = GetComponentInParent<LineMiniGame>();
-        rectTransform = GetComponent<RectTransform>();  
-        canvas = GetComponentInParent<Canvas>();  
     }
 
    
@@ -20,28 +18,21 @@ public class MemoryMinigameLineMove : MonoBehaviour, IBeginDragHandler, IDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 localPos;
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rectTransform.parent.GetComponent<RectTransform>(),  
-            Input.mousePosition, 
-            canvas.worldCamera, 
-            out localPos
-        );        
-        rectTransform.anchoredPosition = localPos;
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        transform.position = worldPos;
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Collider2D hit = Physics2D.OverlapPoint(rectTransform.position);
+        Collider2D hit = Physics2D.OverlapPoint(transform.position);
         if (hit != null && this.CompareTag(hit.tag))
         {
             LineMiniGame.action.Invoke(check);
         }     
     }
 
-    RectTransform rectTransform;
-    Canvas canvas;
     LineMiniGame LineMiniGame;
 
     [SerializeField]

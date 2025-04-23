@@ -16,9 +16,9 @@ public class LineMiniGame : MonoBehaviour
 
         foreach (var LineMiniGameRightCollision in LineMiniGameRightCollisions)
         {
-            RectTransform transform = LineMiniGameRightCollision.gameObject.GetComponent<RectTransform>();
+            Transform transform = LineMiniGameRightCollision.transform;
 
-            childTransforms.Add(transform.anchoredPosition);
+            childTransforms.Add(transform.position);
         }
 
         for (int i = 0; i < childTransforms.Count; i++)
@@ -30,11 +30,11 @@ public class LineMiniGame : MonoBehaviour
 
         for (int i = 0; i < LineMiniGameRightCollisions.Length; i++)
         {
-            RectTransform target = LineMiniGameRightCollisions[i].GetComponent<RectTransform>();
+            Transform target = LineMiniGameRightCollisions[i].transform;
 
             Vector2 anchoredPosition = childTransforms[Indexs[i]];
 
-            target.anchoredPosition = anchoredPosition;
+            target.transform.position = anchoredPosition;
         }
     }
 
