@@ -22,9 +22,10 @@ public class MapTrigger : MonoBehaviour
         isTeleport = true;
 
         GameObject newMap = mapManager.MoveMap(moveMap);
-
+        Debug.Log(newMap);
         Transform returnTrigger = newMap.transform.Find(Portal);
-
+        Debug.Log(returnTrigger);
+        Debug.Log(other.transform.position);
         other.transform.position = returnTrigger.position;
 
         StartCoroutine(TeleportCooldown());

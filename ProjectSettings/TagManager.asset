@@ -19,6 +19,9 @@ TagManager:
   - PlayerSight
   - Generator
   - Shop
+  - Bullet
+  - PlayerSpawnPoint
+  - EventSpawnPoint
   layers:
   - Default
   - TransparentFX
