@@ -56,6 +56,7 @@ public class SettingRoom : MonoBehaviour
 
     public void AddRoom()
     {
+        Time.timeScale = 1;
         string roomName = roomNameInput.text;
         string password = passwordInput.text;
 

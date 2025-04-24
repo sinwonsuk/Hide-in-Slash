@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6332b27e4df7c4c419c842885bdcf5e7
+guid: 19cd270431519114795ddf0df4edc541
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7892047784573844242
-    second: transparentPotionIcon_0
+      213: 3260142433860564229
+    second: Plug_puple - Layer 1 (3)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: transparentPotionIcon_0
+      name: Plug_puple - Layer 1 (3)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 4
+        y: 7
+        width: 24
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 21bbeed65af268d60800000000000000
-      internalID: 7892047784573844242
+      spriteID: 505bf67454a5e3d20800000000000000
+      internalID: 3260142433860564229
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      transparentPotionIcon_0: 7892047784573844242
+      Plug_puple - Layer 1 (3)_0: 3260142433860564229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
