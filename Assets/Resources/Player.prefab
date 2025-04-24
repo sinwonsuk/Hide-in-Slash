@@ -494,6 +494,7 @@ MonoBehaviour:
   miniGame: {fileID: 0}
   generator: {fileID: 0}
   hasHatch: 0
+  hasMap: 0
 --- !u!50 &2919237809497951774
 Rigidbody2D:
   serializedVersion: 5

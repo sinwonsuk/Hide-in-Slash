@@ -19,14 +19,8 @@ TagManager:
   - PlayerSight
   - Generator
   - Shop
-<<<<<<< HEAD
   - generatorMiniGameWall
   - generatorMiniGameStop
-=======
-  - Bullet
-  - PlayerSpawnPoint
-  - EventSpawnPoint
->>>>>>> 175e8586bf103788997b17ad368c77701830712e
   layers:
   - Default
   - TransparentFX
