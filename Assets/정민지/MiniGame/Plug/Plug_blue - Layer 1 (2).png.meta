@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 34aca3aa305ad214ca9991e689dac82a
+guid: c06b4478e2612984d912005538126278
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 505985046779205497
-    second: TurnstileIcon_0
+      213: -6296812925840438393
+    second: Plug_blue - Layer 1 (2)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TurnstileIcon_0
+      name: Plug_blue - Layer 1 (2)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 4
+        y: 3
+        width: 24
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9771fee18be950700800000000000000
-      internalID: 505985046779205497
+      spriteID: 78b4132810a3d98a0800000000000000
+      internalID: -6296812925840438393
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TurnstileIcon_0: 505985046779205497
+      Plug_blue - Layer 1 (2)_0: -6296812925840438393
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
