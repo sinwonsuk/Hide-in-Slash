@@ -51,10 +51,8 @@ public class PlayerNameInput : MonoBehaviour
         {
             if (playerName.Length < 7)
             {
-                Debug.Log("입력된 이름: " + playerName);
-                PlayerPrefs.SetString("PlayerName", playerName);
-				//SceneManager.LoadScene("RobbyScene");
-				SceneManager.Instance.LoadSceneAsync(SceneName.RobbyScene);
+                GameReadyManager.Instance.Connect();
+                SceneManager.Instance.LoadSceneAsync(SceneName.RobbyScene);
 			}
             else
             {

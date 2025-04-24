@@ -411,6 +411,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5561670726510836805, guid: d934efac69d9fab46a117d334048094d, type: 3}
+      propertyPath: login
+      value: 
+      objectReference: {fileID: 6409034000419116843, guid: e2068a59b83b30b47a8d7bf1689265a4, type: 3}
+    - target: {fileID: 5561670726510836805, guid: d934efac69d9fab46a117d334048094d, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 4424384947438334842, guid: 19500b69e6e9432408add454071a1aba, type: 3}
     - target: {fileID: 5704680997101461352, guid: d934efac69d9fab46a117d334048094d, type: 3}
       propertyPath: m_Name
       value: titleButton
