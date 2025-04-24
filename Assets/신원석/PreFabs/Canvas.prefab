@@ -365,6 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6db391eeaa2574c84b820f9795bf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!114 &825153292628049763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,7 +794,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4142527483032031336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2899,6 +2900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6db391eeaa2574c84b820f9795bf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!114 &5335511714065578001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3675,6 +3677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6db391eeaa2574c84b820f9795bf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!114 &5763423517392794585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3909,6 +3912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6db391eeaa2574c84b820f9795bf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!114 &4635198099703698457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4129,6 +4133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6db391eeaa2574c84b820f9795bf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!114 &6879695751064308327
 MonoBehaviour:
   m_ObjectHideFlags: 0
