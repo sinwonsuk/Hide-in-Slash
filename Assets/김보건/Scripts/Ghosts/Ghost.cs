@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-
+    public Vector2 MoveInput => ghostStateMachine.CurrentStateMoveInput;
     public Animator anim { get; protected set; }
     public Rigidbody2D rb { get; protected set; }
 

@@ -54,4 +54,9 @@ public class GhostState
         ghost.FlipController(moveInput.x, moveInput.y);
     }
 
+    public virtual Vector2 GetMoveInput()
+    {
+        return moveInput;
+    }
+
 }
