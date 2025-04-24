@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3226561899284956993}
   - component: {fileID: 3111670354730210727}
   - component: {fileID: -5575215229666615784}
+  - component: {fileID: 1833434556819877986}
   m_Layer: 0
   m_Name: PrisonDoor
   m_TagString: Untagged
@@ -147,3 +148,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.0625, y: 0.34420776}
   m_EdgeRadius: 0
+--- !u!114 &1833434556819877986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299654989545640355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 351e772994bdd1745882f4b55ec02b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prisonDoor: {fileID: 4299654989545640355}

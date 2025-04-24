@@ -288,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 653501804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7, y: 195.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -467,6 +467,8 @@ MonoBehaviour:
   - {fileID: 3511546581409082572, guid: 920950ed985551a46abec91300ec72f9, type: 3}
   - {fileID: 2087135517141416217, guid: 1d441eee28dd74748ad50db67af035b4, type: 3}
   miniGamePrefab: {fileID: 0}
+  generatorPrefab: {fileID: 0}
+  playerPrefab: {fileID: 0}
 --- !u!1 &8886977999765951427
 GameObject:
   m_ObjectHideFlags: 0
