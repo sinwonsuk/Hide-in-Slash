@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using Photon.Pun;
+using Photon.Realtime;
+using Unity.Cinemachine;
 
 public enum EscapeType
 {
@@ -11,10 +14,18 @@ public enum EscapeType
     Hatch = 2         // 개구멍 탈출
 }
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private GameObject spriteObject; // SpriteRenderer 있는 오브젝트
     [SerializeField] private Transform lightObject;   // Light2D 있는 오브젝트
+
+    private Vector3 networkedPosition;
+    private Vector3 networkedVelocity;
+    private float lerpSpeed = 10f;
+    private bool networkedIsMoving;
+    private float networkedDirX;
+    private float networkedDirY;
+    private float lightAngle; 
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
@@ -93,15 +104,12 @@ public class Player : MonoBehaviour
     [Header("미니게임")]
     [SerializeField] private GameObject miniGame;
     private bool isInGame = false;      
-    private bool isInMiniGame = false; // 미니게임 중(빤짝이)
-    private bool isMiniGameSuccess = false; // 미니게임 성공
+    private bool isInMiniGame = false; // 미니게임 중
 
     [Header("발전기")]
     [SerializeField] private GameObject generator;
     private bool isInGenerator = false; // 발전기 작동중?
-    private bool isGenerator = false; // 
-    private bool isGeneratorSuccess = false; // 발전기 성공
-    private bool isStarForce = false; // 스타포스 실패 여부
+    private bool isGenerator = false; // 발전기 작동가능
 
     [Header("상점")]
     private bool isInShop = false;
@@ -110,7 +118,9 @@ public class Player : MonoBehaviour
     [SerializeField] private bool hasHatch = false;
     private bool isInHatch = false;
 
-
+    [Header("맵")]
+    [SerializeField] private bool hasMap = false;
+    private bool isInMap = false;
 
 
     private void Awake()
@@ -140,11 +150,39 @@ public class Player : MonoBehaviour
         useInvisiblePotion = BecomeInvisible;
         useUpgradedLight = UpGradeLight;
         usePrisonKey = usePrisonKeyItem;
+
+        if (photonView.IsMine)
+        {
+            CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+            if (cam != null)
+                cam.Follow = transform;
+        }
     }
 
     private void Update()
     {
-        PlayerStateMachine.currentState.Update();
+        if (photonView.IsMine)
+        {
+            PlayerStateMachine.currentState.Update();
+
+        }
+        else
+        {
+            // 상대방 위치를 부드럽게 보간
+            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
+            rb.linearVelocity = networkedVelocity;
+
+            anim.SetBool("IsMoving", networkedIsMoving);
+            anim.SetFloat("DirX", networkedDirX);
+            anim.SetFloat("DirY", networkedDirY);
+
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * facingDir;
+            scale.y = Mathf.Abs(scale.y) * facingUpDir;
+            transform.localScale = scale;
+
+            lightObject.localRotation = Quaternion.Euler(0f, 0f, lightAngle);
+        }
 
         if (isInGame && Input.GetKeyDown(KeyCode.E))
         {
@@ -169,9 +207,9 @@ public class Player : MonoBehaviour
             Debug.Log("에너지드링크 없음");
         }
 
-        if(hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
+        if (hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
         {
-            UpGradeLight();
+            photonView.RPC("UpGradeLight", RpcTarget.All);
         }
         else if (!hasUpgradedFlashlight)
         {
@@ -192,7 +230,7 @@ public class Player : MonoBehaviour
             Debug.Log("감옥키 없음");
         }
 
-        if(hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
+        if (hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
         {
             useHatchItem();
         }
@@ -203,6 +241,18 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("상호작용안됨");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            if (!isInMap)
+                OpenMap();
+            else
+                CloseMap();
+        }
+        else if (!hasMap && Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            Debug.Log("맵 없음");
         }
 
         // 투명화 지속시간
@@ -260,7 +310,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        
     }
 
 
@@ -318,6 +367,11 @@ public class Player : MonoBehaviour
 
         // 라이트 회전만 조절 (로컬 회전)
         lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+        if (photonView.IsMine)
+        {
+            lightAngle = angle; 
+        }
     }
 
 
@@ -516,6 +570,7 @@ public class Player : MonoBehaviour
     }
 
     //손전등 업그레이드
+    [PunRPC]
     private void UpGradeLight()
     {
         flashlight.pointLightOuterRadius = upgradedRadius;
@@ -545,10 +600,43 @@ public class Player : MonoBehaviour
 
     private void ToggleLight()
     {
+        if (!photonView.IsMine)
+            return; 
+
         isLightOn = !isLightOn;
         flashlight.enabled = isLightOn;
 
+        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, isLightOn);
+
         Debug.Log(isLightOn ? "손전등 켜짐" : "손전등 꺼짐");
+    }
+
+    private void OpenMap()
+    {
+        Debug.Log("맵 열기");
+        if (hasMap)
+        {
+            isInMap = true;
+            // 맵 UI 열기
+            // MapUIManager.OpenMap();
+        }
+        else
+        {
+            Debug.Log("맵 없음");
+        }
+    }
+    private void CloseMap()
+    {
+        isInMap = false;
+        Debug.Log("맵 닫기");
+        // mapUI.SetActive(false); 등
+    }
+
+    [PunRPC]
+    void RPC_SetFlashlight(bool turnOn)
+    {
+        isLightOn = turnOn;
+        flashlight.enabled = turnOn;
     }
 
     private void ScalePolygonCollider(float scale)
@@ -575,6 +663,60 @@ public class Player : MonoBehaviour
         Debug.Log("개구멍 사용");
         escapeState.SetEscapeType(EscapeType.Hatch);
         PlayerStateMachine.ChangeState(escapeState);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 내정보 보냄
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.localScale);
+            stream.SendNext(rb.linearVelocity);
+            stream.SendNext((int)PlayerStateMachine.currentState.StateType);
+            stream.SendNext((int)escapeType);
+            stream.SendNext(facingDir);
+            stream.SendNext(facingUpDir);
+            stream.SendNext(anim.GetBool("IsMoving"));
+            stream.SendNext(anim.GetFloat("DirX"));
+            stream.SendNext(anim.GetFloat("DirY"));
+            stream.SendNext(lightAngle);
+        }
+        else
+        {
+            //다른애 정보받기
+            networkedPosition = (Vector3)stream.ReceiveNext();
+            transform.localScale = (Vector3)stream.ReceiveNext();
+            networkedVelocity = (Vector2)stream.ReceiveNext();
+            PlayerStateType receivedState = (PlayerStateType)stream.ReceiveNext();
+            EscapeType receivedEscape = (EscapeType)stream.ReceiveNext();
+            facingDir = (int)stream.ReceiveNext();
+            facingUpDir = (int)stream.ReceiveNext();
+            networkedIsMoving = (bool)stream.ReceiveNext();
+            networkedDirX = (float)stream.ReceiveNext();
+            networkedDirY = (float)stream.ReceiveNext();
+            lightAngle = (float)stream.ReceiveNext();  
+
+            if (PlayerStateMachine.currentState.StateType != receivedState)
+            {
+                switch (receivedState)
+                {
+                    case PlayerStateType.Idle:
+                        PlayerStateMachine.ChangeState(idleState);
+                        break;
+                    case PlayerStateType.Move:
+                        PlayerStateMachine.ChangeState(moveState);
+                        break;
+                    case PlayerStateType.Dead:
+                        PlayerStateMachine.ChangeState(deadState);
+                        break;
+                    case PlayerStateType.Escape:
+                        escapeState.SetEscapeType(receivedEscape);
+                        PlayerStateMachine.ChangeState(escapeState);
+                        break;
+                }
+            }
+        }
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
