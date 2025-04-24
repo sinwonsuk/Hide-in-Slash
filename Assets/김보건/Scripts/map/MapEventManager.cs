@@ -9,6 +9,12 @@ public enum MapEventType
     miniGameSuccess,
     GeneratorSuccess,
     AllGeneratorSuccess,
+    PosirionFunction,
+    UseEnergyDrink,
+    UseInvisiblePotion,
+    UseUpgradedLight,
+    UsePrisonKey,
+    UseHatch
 }
 
 

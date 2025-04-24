@@ -34,12 +34,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public SpriteRenderer sr { get; private set; }
 
-    // 인벤토리 유니티 Action
-    public UnityAction useEnergyDrink;
-    public UnityAction useInvisiblePotion;
-    public UnityAction useUpgradedLight;
-    public UnityAction usePrisonKey;
-
     // 서버용 트랜스폼 스케일변수
     public float posX, posY, posZ;  
     public float scaleX, scaleY, scaleZ;
@@ -127,7 +121,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        sr = GetComponentInChildren<SpriteRenderer>();
 
         PlayerStateMachine = new PlayerStateMachine();
 
@@ -143,13 +137,29 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     }
 
+    private void OnEnable()
+    {
+        MapEventManager.RegisterEvent(MapEventType.UseEnergyDrink, BecomeBoost);
+        MapEventManager.RegisterEvent(MapEventType.UseInvisiblePotion, BecomeInvisible);
+        MapEventManager.RegisterEvent(MapEventType.UseUpgradedLight, UpGradeLight);
+        MapEventManager.RegisterEvent(MapEventType.UsePrisonKey, usePrisonKeyItem);
+        MapEventManager.RegisterEvent(MapEventType.UseHatch, useHatchItem);
+    }
+
+    private void OnDisable()
+    {
+        MapEventManager.RegisterEvent(MapEventType.UseEnergyDrink, BecomeBoost);
+        MapEventManager.RegisterEvent(MapEventType.UseInvisiblePotion, BecomeInvisible);
+        MapEventManager.RegisterEvent(MapEventType.UseUpgradedLight, ToggleLight);
+        MapEventManager.RegisterEvent(MapEventType.UsePrisonKey, usePrisonKeyItem);
+        MapEventManager.RegisterEvent(MapEventType.UseHatch, useHatchItem);
+    }
+
     private void Start()
     {
+        
+
         PlayerStateMachine.Initialize(idleState);
-        useEnergyDrink = BecomeBoost;
-        useInvisiblePotion = BecomeInvisible;
-        useUpgradedLight = UpGradeLight;
-        usePrisonKey = usePrisonKeyItem;
 
         if (photonView.IsMine)
         {
@@ -532,15 +542,21 @@ public class Player : MonoBehaviourPun, IPunObservable
     //투명 물약 관련
     public void BecomeInvisible()
     {
-        Color c = sr.color;
-        c.a = 0.5f;
-        sr.color = c;
+        if (!photonView.IsMine)
+        {
+            return;
+        }
 
-        hasInvisiblePotion = false;
-        isInvisible = true;
-        invisibleTimer = invisibleDuration;
+         Color c = sr.color;
+         c.a = 0.5f;
+         sr.color = c;
 
-        Debug.Log("투명 물약 사용");
+         hasInvisiblePotion = false;
+         isInvisible = true;
+         invisibleTimer = invisibleDuration;
+
+         Debug.Log("투명 물약 사용");
+        
     }
 
     private void ResetTransparency()
@@ -633,7 +649,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    void RPC_SetFlashlight(bool turnOn)
+    public void RPC_SetFlashlight(bool turnOn)
     {
         isLightOn = turnOn;
         flashlight.enabled = turnOn;
