@@ -47,14 +47,14 @@ public class PlayerNameInput : MonoBehaviour
     {
         string playerName = nameInputField.text;
 
+        GameReadyManager.Instance.Test(playerName);
+
         if (!string.IsNullOrEmpty(playerName))
         {
             if (playerName.Length < 7)
             {
-                Debug.Log("입력된 이름: " + playerName);
-                PlayerPrefs.SetString("PlayerName", playerName);
-				//SceneManager.LoadScene("RobbyScene");
-				SceneManager.Instance.LoadSceneAsync(SceneName.RobbyScene);
+                GameReadyManager.Instance.Connect();
+                SceneManager.Instance.LoadSceneAsync(SceneName.RobbyScene);
 			}
             else
             {

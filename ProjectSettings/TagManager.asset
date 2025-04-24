@@ -33,6 +33,7 @@ TagManager:
   - MiniMapWall
   - MiniMapLight
   - Global Light
+
   - 
   - 
   - 
@@ -57,15 +58,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer 1
-    uniqueID: 1406302845
-    locked: 0
-  - name: New Layer 2
-    uniqueID: 3213220047
-    locked: 0
-  - name: New Layer 3
-    uniqueID: 4126593697
     locked: 0
   m_RenderingLayers:
   - Default
