@@ -7,6 +7,7 @@ public enum SceneName
 	TitleScene,
 	LoginScene,
 	RobbyScene,
+	WaitingRoom,
 	GameScene,
 }
 
