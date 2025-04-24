@@ -460,13 +460,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapObjects:
-  - {fileID: 893751824531283271, guid: 85aad2e079dcf9146b5386ccf6c0d52c, type: 3}
-  - {fileID: 2856889341031219773, guid: e264264913d31264db6adeee2be12476, type: 3}
-  - {fileID: 2842947414534673375, guid: 3bd604dc3d7848447bc5da9a494b5055, type: 3}
-  - {fileID: 9074457513753299172, guid: e8511fb10f1f261478e42376248cebb9, type: 3}
-  - {fileID: 3511546581409082572, guid: 920950ed985551a46abec91300ec72f9, type: 3}
-  - {fileID: 2087135517141416217, guid: 1d441eee28dd74748ad50db67af035b4, type: 3}
-  miniGamePrefab: {fileID: 0}
+  - {fileID: 2499314955500059039, guid: 85aad2e079dcf9146b5386ccf6c0d52c, type: 3}
+  - {fileID: 3174321316306496372, guid: a646b2a424d16bb41aa85a5cb6cca3aa, type: 3}
+  - {fileID: 4537213267911762387, guid: e264264913d31264db6adeee2be12476, type: 3}
+  - {fileID: 7251893758139768275, guid: 3bd604dc3d7848447bc5da9a494b5055, type: 3}
+  - {fileID: 4481814142680105279, guid: e8511fb10f1f261478e42376248cebb9, type: 3}
+  - {fileID: 2696823540395605244, guid: 920950ed985551a46abec91300ec72f9, type: 3}
+  - {fileID: 5385479182039470127, guid: 1d441eee28dd74748ad50db67af035b4, type: 3}
 --- !u!1 &8886977999765951427
 GameObject:
   m_ObjectHideFlags: 0

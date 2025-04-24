@@ -6,8 +6,6 @@ using UnityEngine;
 public class MapManager : MonoBehaviourPunCallbacks
 {
     public List<GameObject> mapObjects;
-    public GameObject miniGamePrefab;
-    public GameObject playerPrefab;
 
     private Dictionary<string, GameObject> mapDic = new();
     private List<Transform> eventSpawnPoints = new();
@@ -18,20 +16,31 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+
+        PhotonNetwork.ConnectUsingSettings();
+        
+        
+
+        
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
+    }
+
+    public override void OnJoinedRoom()
+    {
         if (PhotonNetwork.IsMasterClient)
         {
             InitializeMap();
             AddSpawnPoints();
             espIndexs = MakeRandomValues(10, eventSpawnPoints.Count);
             pspIndexs = MakeRandomValues(5, playerSpawnPoints.Count);
-            GenerateMiniGames();
+            InitializeMiniGames();
+            InitializeGenerators();
         }
-        
-
-        
     }
-
-    
 
     public GameObject GetCurrentMap()
     {
@@ -53,7 +62,7 @@ public class MapManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < mapObjects.Count; i++)
         {
-            Instantiate(mapObjects[i]);
+            PhotonNetwork.Instantiate(mapObjects[i].name, mapObjects[i].transform.position, Quaternion.identity);
             mapDic.Add(mapObjects[i].name, mapObjects[i]);
         }
     }
@@ -63,11 +72,11 @@ public class MapManager : MonoBehaviourPunCallbacks
         {
             foreach (Transform child in mapObjects[i].transform)
             {
-                if (child.CompareTag("EventSpawnPoint"))
+                if (child.CompareTag("esp"))
                 {
                     eventSpawnPoints.Add(child);
                 }
-                else if (child.CompareTag("PlayerSpawnPoint"))
+                else if (child.CompareTag("psp"))
                 {
                     playerSpawnPoints.Add(child);
                 }
@@ -75,7 +84,7 @@ public class MapManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private List<int> MakeRandomValues(int count, int maxValue)
+    private List<int> MakeRandomValues(int count, int maxValue) // count: 생성할 랜덤 값의 개수, maxValue: 랜덤 값의 최대값+1
     {
         HashSet<int> randomValues = new HashSet<int>();
         while (randomValues.Count < count)
@@ -86,13 +95,23 @@ public class MapManager : MonoBehaviourPunCallbacks
         return new List<int>(randomValues);
     }
 
-    private void GenerateMiniGames()
+    private void InitializeMiniGames()
     {
-        for(int i = 0; i < espIndexs.Count; i++)
+        for(int i = 0; i < 5; i++)
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
-            GameObject miniGame = Instantiate(miniGamePrefab, spawnPoint.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("MiniGame", spawnPoint.position, Quaternion.identity);
+        }
+    }
+
+    private void InitializeGenerators()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            int index = espIndexs[9-i];
+            Transform spawnPoint = eventSpawnPoints[index];
+            PhotonNetwork.Instantiate("Generator", spawnPoint.position, Quaternion.identity);
         }
     }
 
@@ -102,7 +121,6 @@ public class MapManager : MonoBehaviourPunCallbacks
         {
             int index = pspIndexs[i];
             Transform spawnPoint = playerSpawnPoints[index];
-            GameObject player = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
         }
     }
 

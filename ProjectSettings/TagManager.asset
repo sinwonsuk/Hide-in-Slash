@@ -21,6 +21,8 @@ TagManager:
   - Shop
   - generatorMiniGameWall
   - generatorMiniGameStop
+  - psp
+  - esp
   layers:
   - Default
   - TransparentFX
@@ -33,7 +35,6 @@ TagManager:
   - MiniMapWall
   - MiniMapLight
   - Global Light
-
   - 
   - 
   - 
