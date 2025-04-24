@@ -47,6 +47,8 @@ public class PlayerNameInput : MonoBehaviour
     {
         string playerName = nameInputField.text;
 
+        GameReadyManager.Instance.Test(playerName);
+
         if (!string.IsNullOrEmpty(playerName))
         {
             if (playerName.Length < 7)

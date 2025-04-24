@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using RealtimePlayer = Photon.Realtime.Player;
 using TMPro;
 using UnityEngine.Windows;
+using System;
 
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
@@ -57,6 +58,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
         }
 
+        test = Test;
     }
 
     //void Start()
@@ -217,4 +219,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
+    public void Test(string _InputField)
+    {
+        NickNameInput.text = _InputField;
+    }
+
+
+    public Action<string> test;
+
 }

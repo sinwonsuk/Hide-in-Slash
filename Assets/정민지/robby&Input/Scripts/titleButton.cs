@@ -15,8 +15,6 @@ public class titleButton : MonoBehaviour
     public void OnClickStart()
     {
         Instantiate(login);
-
-
     }
 
     public void OnClickOption()
