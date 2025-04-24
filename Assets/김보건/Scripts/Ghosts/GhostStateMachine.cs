@@ -3,6 +3,7 @@ using UnityEngine;
 public class GhostStateMachine
 {
     public GhostState currentState { get; private set; }
+    public Vector2 CurrentStateMoveInput => currentState.GetMoveInput();
 
     public void Initialize(GhostState _startState)
     {

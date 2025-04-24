@@ -58,5 +58,20 @@ public class PukeGirl : Ghost
 
     }
 
-    //토관련 함수
+    public void OnVomitAnimEnd()
+    {
+        Debug.Log("토함 끝");
+        anim.SetBool("IsVomiting", false);
+
+        Vector2 input = MoveInput;
+
+        if (input == Vector2.zero)
+        {
+            ghostStateMachine.ChangeState(idleState);
+        }
+        else
+        {
+            ghostStateMachine.ChangeState(moveState);
+        }
+    }
 }
