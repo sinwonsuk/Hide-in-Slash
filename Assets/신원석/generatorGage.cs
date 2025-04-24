@@ -23,11 +23,19 @@ public class generatorGage : MonoBehaviour
     void Update()
     {        
         generatorInImage.fillAmount += Time.deltaTime * speed;
+
+        if (generatorInImage.fillAmount == 1)
+        {
+
+        }
+
     }
 
 
     [SerializeField]
     float speed = 0.5f;
 
-    Image generatorInImage;
+    public int asd;
+
+    public Image generatorInImage;
 }

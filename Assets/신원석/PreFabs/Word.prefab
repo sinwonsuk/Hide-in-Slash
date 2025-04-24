@@ -78,7 +78,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -172,7 +172,7 @@ MonoBehaviour:
   - "\uB3C4\uB11B  "
   - "\uCC9C\uB465"
   - "\uB2E4\uB78C\uC950"
-  speed: 10
+  speed: 5
   textMeshProUGUI: {fileID: 0}
 --- !u!61 &1743732017509533483
 BoxCollider2D:

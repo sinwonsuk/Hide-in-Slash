@@ -13462,7 +13462,7 @@ GameObject:
   - component: {fileID: 3541674411182487022}
   - component: {fileID: 4823279749820352236}
   - component: {fileID: 5663722417590242484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ColliderTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19624,7 +19624,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Origin: {x: -181, y: 0, z: 0}
   m_Size: {x: 181, y: 229, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}

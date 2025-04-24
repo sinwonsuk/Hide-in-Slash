@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Generator : MonoBehaviour
@@ -11,15 +12,28 @@ public class Generator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPlayerColilision ==true)
+        if (generatorMiniGame != null)
+        {
+            if(generatorMiniGame.IsCheck == true)
+            {
+                Destroy(generatorMiniGame);
+                StopGeneration();
+            }          
+        }
+
+        if (isPlayerColilision ==true)
         {
             if (Input.GetKey(KeyCode.E))
             {
                 canvas.gameObject.SetActive(true);
+
+                if (coroutine == null)
+                    coroutine = StartCoroutine(GenerateMiniGame());
             }
             else
             {
                 canvas.gameObject.SetActive(false);
+                StopGeneration();
             }
         }
      
@@ -46,8 +60,55 @@ public class Generator : MonoBehaviour
         }
     }
 
+    IEnumerator GenerateMiniGame()
+    {
+        while (true)
+        {
+            if (!isMiniGameRunning)
+            {
+                float waitTime = Random.Range(2f, 5f);
+                yield return new WaitForSeconds(waitTime);
+
+                if (!isMiniGameRunning)
+                {
+                    GameObject miniGame = Instantiate(miniGamePrefab, transform);
+
+                    generatorMiniGame = miniGame.GetComponent<GeneratorMiniGame>();
+
+                    isMiniGameRunning = true;
+
+                }
+            }
+            yield return null; // 매 프레임 체크
+        }
+    }
+    void StopGeneration()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        isMiniGameRunning = false;
+    }
+    IEnumerator EndMiniGameAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isMiniGameRunning = false;
+    }
+
+    bool isMiniGameRunning = false;
+
     bool isPlayerColilision;
 
     [SerializeField]
     Canvas canvas;
+
+    [SerializeField]
+    GameObject miniGamePrefab;
+
+    GeneratorMiniGame generatorMiniGame;
+
+    Coroutine coroutine;
 }
