@@ -3,42 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - DrawMiniGameWall
-  - DrawMiniGameCollision2
-  - DrawMiniGameCollision3
-  - DrawMiniGameCollision4
-  - DrawMiniGameCollision1
-  - MiniGame
-  - Ghost
-  - Prison
-  - Hatch
-  - ExitDoor
-  - PrisonDoor
-  - DeadPlayer
-  - PlayerSight
-  - Generator
-  - Shop
-<<<<<<< HEAD
-  - generatorMiniGameWall
-  - generatorMiniGameStop
-=======
-  - Bullet
-  - PlayerSpawnPoint
-  - EventSpawnPoint
->>>>>>> 175e8586bf103788997b17ad368c77701830712e
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - MiniGame
+  - 
   - Water
   - UI
-  - MiniGameBall
-  - MiniMapPlayer
-  - MiniMapWall
-  - MiniMapLight
-  - Global Light
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -63,15 +40,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer 1
-    uniqueID: 1406302845
-    locked: 0
-  - name: New Layer 2
-    uniqueID: 3213220047
-    locked: 0
-  - name: New Layer 3
-    uniqueID: 4126593697
     locked: 0
   m_RenderingLayers:
   - Default
