@@ -39,31 +39,38 @@ public class MapManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             InitializeMap();
-            AddSpawnPoints();
+        }
+        AddSpawnPoints();
+        if (PhotonNetwork.IsMasterClient)
+        {
             espIndexs = MakeRandomValues(10, eventSpawnPoints.Count);
-            pspIndexs = MakeRandomValues(5, playerSpawnPoints.Count);
-            
+
             InitializeMiniGames();
             InitializeGenerators();
             Debug.Log("방에서 마스터할일 완");
         }
-        Debug.Log("나 마스터 아냐?");
     }
 
 
     private void Update()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if(Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log("총"+ PhotonNetwork.PlayerList.Length);
+                Debug.Log("총" + PhotonNetwork.PlayerList.Length);
                 roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length);
+                for (int i = 0; i < roleIndexs.Count; i++)
+                {
+                    Debug.Log("roleIndexs = " + string.Join(", ", roleIndexs[i]));
+                }
                 AssignRole();
             }
         }
-        if(Input.GetKeyDown(KeyCode.E))
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
+
             InitializePlayers();
         }
     }
@@ -145,29 +152,23 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     private void AssignRole()
     {
+        pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count);
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Length)];
         ExitGames.Client.Photon.Hashtable monProp = new();
         monProp.Add("Role", monsterName);
+        monProp.Add("SpawnIndex", pspIndexs[0]);
         players[roleIndexs[0]].SetCustomProperties(monProp);
 
-        if(players.Length == 1)
-        {
-            Debug.Log("1명역할배정완료");
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                Debug.Log(i + PhotonNetwork.PlayerList[i].CustomProperties["Role"].ToString());
-            }
-            return;
-        }
+
         for (int i = 1; i < players.Length; i++)
         {
 
             string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Length)];
             ExitGames.Client.Photon.Hashtable playerProp = new ExitGames.Client.Photon.Hashtable();
             playerProp.Add("Role", playerName);
+            playerProp.Add("SpawnIndex", pspIndexs[i]);
             players[roleIndexs[i]].SetCustomProperties(playerProp);
-
         }
         Debug.Log("역할배정완료");
         for (int i = 0; i < players.Length; i++)
@@ -180,12 +181,10 @@ public class MapManager : MonoBehaviourPunCallbacks
     {
         ExitGames.Client.Photon.Hashtable prop = PhotonNetwork.LocalPlayer.CustomProperties;
         string playerName = prop["Role"].ToString();
-        int myIndex = Array.IndexOf(PhotonNetwork.PlayerList, PhotonNetwork.LocalPlayer);
-        Debug.Log("내역할: " + playerName + "내번호" + myIndex);
-        PhotonNetwork.Instantiate(playerName, playerSpawnPoints[roleIndexs[myIndex]].position, Quaternion.identity);
+        int spawnIndex = (int)prop["SpawnIndex"];
+        PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
     }
 
-    
 
 }
 
