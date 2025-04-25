@@ -29,7 +29,6 @@ public class Inventory : MonoBehaviour
         MoveInvenSelect();
         MoveSelectRender();
         UseItem();
-        //DeleteItem();
     }
 
     public void MoveSelectRender()
@@ -130,6 +129,7 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && ItemDictionary.Count > 0)
         {
+            MapEventManager.TriggerEvent(MapEventType.UseUpgradedLight);
             TryUseSelectedItem();
         }      
     }
