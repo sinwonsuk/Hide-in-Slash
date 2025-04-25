@@ -4,6 +4,7 @@ public class ProteinIdle : GhostState
 {
     public ProteinIdle(Ghost _ghost, GhostStateMachine _stateMachine, string _animBoolName) : base(_ghost, _stateMachine, _animBoolName)
     {
+        stateType = GhostStateType.Idle;
     }
 
     public override void Enter()

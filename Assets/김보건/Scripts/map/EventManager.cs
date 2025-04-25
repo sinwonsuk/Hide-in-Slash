@@ -2,29 +2,29 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-public enum MapEventType
+public enum EventType
 {
     OpenPrisonDoor,
     ClosePrisonDoor,
     miniGameSuccess,
     GeneratorSuccess,
-    AllGeneratorSuccess,
-    PosirionFunction,
+    AllGeneratorSuccess, 
     UseEnergyDrink,
     UseInvisiblePotion,
     UseUpgradedLight,
     UsePrisonKey,
-    UseHatch
+    UseHatch,
+    LightRestored
 }
 
 
 
-public class MapEventManager
+public class EventManager
 {
-    private static readonly Dictionary<MapEventType, Action> _eventMap = new();
+    private static readonly Dictionary<EventType, Action> _eventMap = new();
 
-    // ÀÌº¥Æ® µî·Ï
-    public static void RegisterEvent(MapEventType eventType, Action eventFunc)
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½
+    public static void RegisterEvent(EventType eventType, Action eventFunc)
     {
         if (!_eventMap.ContainsKey(eventType))
             _eventMap[eventType] = eventFunc;
@@ -32,15 +32,15 @@ public class MapEventManager
             _eventMap[eventType] += eventFunc;
     }
 
-    // ÀÌº¥Æ® µî·Ï ÇØÁ¦
-    public static void UnRegisterEvent(MapEventType eventType, Action eventFunc)
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void UnRegisterEvent(EventType eventType, Action eventFunc)
     {
         if (_eventMap.ContainsKey(eventType))
             _eventMap[eventType] -= eventFunc;
     }
 
-    // ÀÌº¥Æ® ½ÇÇà
-    public static void TriggerEvent(MapEventType eventType)
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+    public static void TriggerEvent(EventType eventType)
     {
         _eventMap.TryGetValue(eventType, out var action);
         action?.Invoke();

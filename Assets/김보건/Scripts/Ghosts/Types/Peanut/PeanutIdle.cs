@@ -4,6 +4,7 @@ public class PeanutIdle : GhostState
 {
     public PeanutIdle(Ghost _ghost, GhostStateMachine _stateMachine, string _animBoolName) : base(_ghost, _stateMachine, _animBoolName)
     {
+        stateType = GhostStateType.Idle;
     }
 
     public override void Enter()

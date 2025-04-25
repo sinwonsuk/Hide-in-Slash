@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum GhostStateType
+{
+    Idle,
+    Move,
+    Stunned,
+    Vomit
+}
 public class GhostState
 {
     protected GhostStateMachine stateMachine;
@@ -9,6 +16,9 @@ public class GhostState
 
     protected Vector2 moveInput;
     private string animBoolName;
+
+    protected GhostStateType stateType;
+    public GhostStateType StateType => stateType;
 
     protected float stateTimer;
     protected bool triggerCalled;

@@ -6,18 +6,19 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
+using UnityEditor.Rendering;
 
 public enum EscapeType
 {
-    Dead = 0,         // Å»Ãâ ¸øÇÔ
-    ExitDoor = 1,     // Å»Ãâ±¸ Å»Ãâ
-    Hatch = 2         // °³±¸¸Û Å»Ãâ
+    Dead = 0,         // Å»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ExitDoor = 1,     // Å»ï¿½â±¸ Å»ï¿½ï¿½
+    Hatch = 2         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å»ï¿½ï¿½
 }
 
 public class Player : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private GameObject spriteObject; // SpriteRenderer ÀÖ´Â ¿ÀºêÁ§Æ®
-    [SerializeField] private Transform lightObject;   // Light2D ÀÖ´Â ¿ÀºêÁ§Æ®
+    [SerializeField] private GameObject spriteObject; // SpriteRenderer ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    [SerializeField] private Transform lightObject;   // Light2D ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
@@ -25,25 +26,25 @@ public class Player : MonoBehaviourPun, IPunObservable
     private bool networkedIsMoving;
     private float networkedDirX;
     private float networkedDirY;
-    private float lightAngle; 
+    private float lightAngle;
 
-    private Vector2 lastDir = Vector2.right;   // ±âº»°ªÀº ¿À¸¥ÂÊ
+    private Vector2 lastDir = Vector2.right;   // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
 
     public SpriteRenderer sr { get; private set; }
 
-    // ¼­¹ö¿ë Æ®·£½ºÆû ½ºÄÉÀÏº¯¼ö
-    public float posX, posY, posZ;  
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½
+    public float posX, posY, posZ;
     public float scaleX, scaleY, scaleZ;
 
     public int facingDir { get; private set; } = 1;
-    public int facingUpDir { get; private set; } = 1;   // 1 = À§, -1 = ¾Æ·¡
+    public int facingUpDir { get; private set; } = 1;   // 1 = ï¿½ï¿½, -1 = ï¿½Æ·ï¿½
     protected bool facingRight = true;
     protected bool facingUp = true;
 
-    [Header("ÀÌµ¿")]
+    [Header("ï¿½Ìµï¿½")]
     public float moveSpeed = 5f;
 
     public PlayerStateMachine PlayerStateMachine { get; private set; }
@@ -56,63 +57,63 @@ public class Player : MonoBehaviourPun, IPunObservable
     public int EscapeCode => (int)escapeType;
 
 
-    private int countLife = 2;  //¸ñ¼û
+    private int countLife = 2;  //ï¿½ï¿½ï¿½
 
-    [Header("¿¡³ÊÁöµå¸µÅ©")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¸µÅ©")]
     [SerializeField] private float baseSpeed = 5f;
     [SerializeField] private float boostedSpeed = 10f;
     [SerializeField] private float boostDuration = 10f;
-    [SerializeField] private bool hasEnergyDrink = false;     //¿¡³ÊÁöµå¸µÅ© °¡Áö°í ÀÖ´ÂÁö
-    private bool isBoosted = false;           //¿¡³ÊÁöµå¸µÅ© »ç¿ëÁßÀÎÁö ¿©ºÎ
-    [SerializeField] private float boostTimer;        // ºÎ½ºÆ®Å¸ÀÌ¸Ó(µð¹ö±ë¿ë ½Ã¸®¾óÇÊµå)
+    [SerializeField] private bool hasEnergyDrink = false;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¸µÅ© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½
+    private bool isBoosted = false;           //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¸µÅ© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float boostTimer;        // ï¿½Î½ï¿½Æ®Å¸ï¿½Ì¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Êµï¿½)
 
-    [Header("Åõ¸íÆ÷¼Ç")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private float invisibleDuration = 5f;
-    [SerializeField] private bool hasInvisiblePotion = false;    //Åõ¸í¹°¾àÀ» °¡Áö°í ÀÖ´ÂÁö 
-    private bool isInvisible = false;           //Åõ¸í»óÅÂ ¿©ºÎ
-    [SerializeField] private float invisibleTimer;   // Åõ¸íÅ¸ÀÌ¸Ó(µð¹ö±ë¿ë ½Ã¸®¾óÇÊµå)
+    [SerializeField] private bool hasInvisiblePotion = false;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ 
+    private bool isInvisible = false;           //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float invisibleTimer;   // ï¿½ï¿½ï¿½ï¿½Å¸ï¿½Ì¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Êµï¿½)
 
-    [Header("¼ÕÀüµî¾÷±×·¹ÀÌµå")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½")]
     [SerializeField] private bool hasUpgradedFlashlight = false;
     [SerializeField] private Light2D flashlight;
-    [SerializeField] private float upgradedRadius = 8f; // ¾÷±×·¹ÀÌµå ½Ã ¹Ý°æ
-    [SerializeField] private float defaultRadius = 3.5f; // ±âº» ¹Ý°æ
+    [SerializeField] private float upgradedRadius = 8f; // ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ý°ï¿½
+    [SerializeField] private float defaultRadius = 3.5f; // ï¿½âº» ï¿½Ý°ï¿½
     [SerializeField] private float upgradeLightDuration = 10f;
-    [SerializeField] private PolygonCollider2D lightCollider;   // ¼ÕÀüµî ÄÝ¶óÀÌ´õ
+    [SerializeField] private PolygonCollider2D lightCollider;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½
     private bool isUpgradedLight = false;
-    [SerializeField] private float upgradedLightTimer; // µð¹ö±ë¿ë
-    private bool isLightOn = false; // ±âº»¼ÕÀüµî²¯´ÙÅ°±â
+    [SerializeField] private float upgradedLightTimer; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private bool isLightOn = false; // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½î²¯ï¿½ï¿½Å°ï¿½ï¿½
     private bool isBlinking = false;
     private float blinkTimer = 0f;
-    private float blinkInterval = 0.3f; // ±ôºýÀÌ´Â °£°Ý
+    private float blinkInterval = 0.3f; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½
     private Vector2[] defaultColliderPoints;
 
-    [Header("°¨¿ÁÅ°")]
-    [SerializeField] private bool hasPrisonKey = false; // °¨¿ÁÅ°¸¦ °¡Áö°í ÀÖ´ÂÁö
+    [Header("ï¿½ï¿½ï¿½ï¿½Å°")]
+    [SerializeField] private bool hasPrisonKey = false; // ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½
     private bool isInPrisonDoor = false;
 
-    [Header("³³Ä¡µÊ")]
+    [Header("ï¿½ï¿½Ä¡ï¿½ï¿½")]
     [SerializeField] private GameObject moveMap;
     [SerializeField] private string portalName = "CaughtPoint";
 
-    [Header("¹Ì´Ï°ÔÀÓ")]
+    [Header("ï¿½Ì´Ï°ï¿½ï¿½ï¿½")]
     [SerializeField] private GameObject miniGame;
-    private bool isInGame = false;      
-    private bool isInMiniGame = false; // ¹Ì´Ï°ÔÀÓ Áß
+    private bool isInGame = false;
+    private bool isInMiniGame = false; // ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-    [Header("¹ßÀü±â")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private GameObject generator;
-    private bool isInGenerator = false; // ¹ßÀü±â ÀÛµ¿Áß?
-    private bool isGenerator = false; // ¹ßÀü±â ÀÛµ¿°¡´É
+    private bool isInGenerator = false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½?
+    private bool isGenerator = false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½
 
-    [Header("»óÁ¡")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     private bool isInShop = false;
 
-    [Header("°³±¸¸Û")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private bool hasHatch = false;
     private bool isInHatch = false;
 
-    [Header("¸Ê")]
+    [Header("ï¿½ï¿½")]
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
 
@@ -139,25 +140,26 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnEnable()
     {
-        MapEventManager.RegisterEvent(MapEventType.UseEnergyDrink, BecomeBoost);
-        MapEventManager.RegisterEvent(MapEventType.UseInvisiblePotion, BecomeInvisible);
-        MapEventManager.RegisterEvent(MapEventType.UseUpgradedLight, UpGradeLight);
-        MapEventManager.RegisterEvent(MapEventType.UsePrisonKey, usePrisonKeyItem);
-        MapEventManager.RegisterEvent(MapEventType.UseHatch, useHatchItem);
+        EventManager.RegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
+        EventManager.RegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
+        EventManager.RegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.RegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
+        EventManager.RegisterEvent(EventType.UseHatch, useHatchItem);
+        EventManager.RegisterEvent(EventType.LightRestored, TurnOnLight);
     }
 
     private void OnDisable()
     {
-        MapEventManager.RegisterEvent(MapEventType.UseEnergyDrink, BecomeBoost);
-        MapEventManager.RegisterEvent(MapEventType.UseInvisiblePotion, BecomeInvisible);
-        MapEventManager.RegisterEvent(MapEventType.UseUpgradedLight, ToggleLight);
-        MapEventManager.RegisterEvent(MapEventType.UsePrisonKey, usePrisonKeyItem);
-        MapEventManager.RegisterEvent(MapEventType.UseHatch, useHatchItem);
+        EventManager.UnRegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
+        EventManager.UnRegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
+        EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.UnRegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
+        EventManager.UnRegisterEvent(EventType.UseHatch, useHatchItem);
+        EventManager.UnRegisterEvent(EventType.LightRestored, TurnOnLight);
     }
 
     private void Start()
     {
-        
 
         PlayerStateMachine.Initialize(idleState);
 
@@ -178,7 +180,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            // »ó´ë¹æ À§Ä¡¸¦ ºÎµå·´°Ô º¸°£
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
             rb.linearVelocity = networkedVelocity;
 
@@ -205,7 +207,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (!hasInvisiblePotion)
         {
-            Debug.Log("Åõ¸í ¹°¾à ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
         if (hasEnergyDrink && Input.GetKeyDown(KeyCode.Alpha2))
@@ -214,7 +216,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (!hasEnergyDrink)
         {
-            Debug.Log("¿¡³ÊÁöµå¸µÅ© ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¸µÅ© ï¿½ï¿½ï¿½ï¿½");
         }
 
         if (hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
@@ -223,7 +225,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (!hasUpgradedFlashlight)
         {
-            Debug.Log("¾÷±×·¹ÀÌµå ¼ÕÀüµî ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -237,7 +239,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (!hasPrisonKey && Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Debug.Log("°¨¿ÁÅ° ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½");
         }
 
         if (hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
@@ -246,11 +248,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (hasHatch && !isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
         {
-            Debug.Log("°³±¸¸ÛÀ» »ç¿ëÇÒ ¼ö ¾ø´Â Àå¼Ò");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
         }
         else
         {
-            Debug.Log("»óÈ£ÀÛ¿ë¾ÈµÊ");
+            Debug.Log("ï¿½ï¿½È£ï¿½Û¿ï¿½Èµï¿½");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
@@ -262,10 +264,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (!hasMap && Input.GetKeyDown(KeyCode.Alpha6))
         {
-            Debug.Log("¸Ê ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
-        // Åõ¸íÈ­ Áö¼Ó½Ã°£
+        // ï¿½ï¿½ï¿½ï¿½È­ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
 
         if (isInvisible)
         {
@@ -276,7 +278,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        // ¿¡³ÊÁöµå¸µÅ© Áö¼Ó½Ã°£
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¸µÅ© ï¿½ï¿½ï¿½Ó½Ã°ï¿½
         if (isBoosted)
         {
             boostTimer -= Time.deltaTime;
@@ -286,19 +288,19 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        // ¼ÕÀüµî ¾÷±×·¹ÀÌµå Áö¼Ó½Ã°£
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
         if (isUpgradedLight)
         {
             upgradedLightTimer -= Time.deltaTime;
 
-            // 5ÃÊ ³²¾ÒÀ» ¶§ºÎÅÍ ±ôºýÀÌ±â ½ÃÀÛ
+            // 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (upgradedLightTimer <= 5f && !isBlinking)
             {
                 isBlinking = true;
                 blinkTimer = blinkInterval;
             }
 
-            // ±ôºýÀÌ´Â ÁßÀÌ¸é ¶óÀÌÆ® On/Off ¹Ýº¹
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® On/Off ï¿½Ýºï¿½
             if (isBlinking)
             {
                 float timeRatio = upgradedLightTimer / 5f;
@@ -355,7 +357,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void UpdateAnimParam(Vector2 input)
     {
         if (input != Vector2.zero)
-            lastDir = input.normalized;   
+            lastDir = input.normalized;
 
         bool isMoving = input != Vector2.zero;
 
@@ -372,15 +374,15 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
 
-        // ¶óÀÌÆ® À§Ä¡ °íÁ¤
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         lightObject.localPosition = Vector3.zero;
 
-        // ¶óÀÌÆ® È¸Àü¸¸ Á¶Àý (·ÎÄÃ È¸Àü)
+        // ï¿½ï¿½ï¿½ï¿½Æ® È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½)
         lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
 
         if (photonView.IsMine)
         {
-            lightAngle = angle; 
+            lightAngle = angle;
         }
     }
 
@@ -396,16 +398,16 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         facingUpDir *= -1;
         facingUp = !facingUp;
-        transform.Rotate(180, 0, 0); 
+        transform.Rotate(180, 0, 0);
     }
 
     public void FlipController(float x, float y)
     {
-        // ÁÂ¿ì ¹ÝÀü
+        // ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (x > 0 && !facingRight) Flip();
         else if (x < 0 && facingRight) Flip();
 
-        // »óÇÏ ¹ÝÀü
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (y > 0 && !facingUp) FlipVertical();
         else if (y < 0 && facingUp) FlipVertical();
     }
@@ -413,56 +415,56 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 'PlayerSight' ÅÂ±× °¡Áø ¶óÀÌÆ® ¿ÀºêÁ§Æ®´Â ¹«½Ã
+        // 'PlayerSight' ï¿½Â±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (collision.CompareTag("PlayerSight"))
             return;
 
         if (collision.CompareTag("Prison"))
         {
             countLife--;
-            Debug.Log($"{countLife} ¹ø °¨¿Á¿¡ µé¾î¿È");
+            Debug.Log($"{countLife} ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             if (countLife <= 0)
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á~");
+                Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½~");
                 PlayerStateMachine.ChangeState(deadState);
             }
 
             if (hasPrisonKey)
             {
-                Debug.Log("°¨¿ÁÅ° »ç¿ë°¡´É");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ë°¡ï¿½ï¿½");
                 usePrisonKeyItem();
             }
         }
 
-        //±Í½Å¿¡°Ô ÀâÇûÀ» ¶§
-        if (collision.CompareTag("Ghost") )
+        //ï¿½Í½Å¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        if (collision.CompareTag("Ghost"))
         {
-            Debug.Log("±Í½Å¿¡°Ô ÀâÈû");
+            Debug.Log("ï¿½Í½Å¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
             Transform portal = moveMap.transform.Find(portalName);
             transform.position = portal.position;
         }
 
-        // ¹Ì´Ï°ÔÀÓ ÁøÀÔ
+        // ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (collision.CompareTag("MiniGame"))
         {
-            Debug.Log("¹Ì´Ï°ÔÀÓ °¡´É");
+            Debug.Log("ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             isInGame = true;
         }
 
         if (collision.CompareTag("ExitDoor"))
         {
-            Debug.Log("Å»Ãâ±¸ : Å»Ãâ°¡´É");
+            Debug.Log("Å»ï¿½â±¸ : Å»ï¿½â°¡ï¿½ï¿½");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
         }
 
         if (collision.CompareTag("PrisonDoor"))
         {
-            isInPrisonDoor = true; 
+            isInPrisonDoor = true;
             if (hasPrisonKey)
             {
-                Debug.Log("°¨¿ÁÅ° »ç¿ë°¡´É");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ë°¡ï¿½ï¿½");
             }
         }
 
@@ -471,17 +473,17 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = true;
         }
 
-        // ¹ßÀü±â µ¹¸®±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (collision.CompareTag("Generator"))
         {
-            Debug.Log("¹ßÀü±â ÀÛµ¿°¡´É");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½");
             isInGenerator = true;
         }
 
-        // »óÁ¡
+        // ï¿½ï¿½ï¿½ï¿½
         if (collision.CompareTag("Shop"))
         {
-            Debug.Log("»óÁ¡ »óÈ£ÀÛ¿ë °¡´É");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
             isInShop = true;
         }
     }
@@ -490,13 +492,13 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (collision.CompareTag("MiniGame"))
         {
-            Debug.Log("¹Ì´Ï°ÔÀÓ Á¾·á");
+            Debug.Log("ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             isInGame = false;
         }
 
         if (collision.CompareTag("Prison"))
         {
-            isInPrisonDoor = false; // °¨¿Á ¹üÀ§ ¹ÛÀ¸·Î ³ª°¨
+            isInPrisonDoor = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         if (collision.CompareTag("Hatch"))
@@ -506,13 +508,13 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Generator"))
         {
-            Debug.Log("¹ßÀü±â ÀÛµ¿ ºÒ°¡´É");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ ï¿½Ò°ï¿½ï¿½ï¿½");
             isInGenerator = false;
         }
 
         if (collision.CompareTag("Shop"))
         {
-            Debug.Log("»óÁ¡ ÀÌ¿ë ºÒ°¡´É");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½");
             isInShop = false;
         }
 
@@ -520,14 +522,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OpenMiniGame()
     {
-        Debug.Log("¹Ì´Ï°ÔÀÓ ½ÃÀÛ");
+        Debug.Log("ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         if (miniGame != null)
             miniGame.SetActive(true);
 
-        // ÇÃ·¹ÀÌ¾î Á¶ÀÛ Àá±Ý
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
 
-    //ÇÃ·¹ÀÌ¾îÁ×À½
+    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
     public void BecomeGhost()
     {
         Color c = sr.color;
@@ -539,7 +541,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     }
 
-    //Åõ¸í ¹°¾à °ü·Ã
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void BecomeInvisible()
     {
         if (!photonView.IsMine)
@@ -555,7 +557,7 @@ public class Player : MonoBehaviourPun, IPunObservable
          isInvisible = true;
          invisibleTimer = invisibleDuration;
 
-         Debug.Log("Åõ¸í ¹°¾à »ç¿ë");
+         Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
         
     }
 
@@ -566,26 +568,26 @@ public class Player : MonoBehaviourPun, IPunObservable
         sr.color = c;
 
         isInvisible = false;
-        Debug.Log("Åõ¸í»óÅÂ ÇØÁ¦");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
-    // ¿¡³ÊÁö µå¸µÅ© °ü·Ã
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å¸µÅ© ï¿½ï¿½ï¿½ï¿½
     public void BecomeBoost()
     {
         moveSpeed = boostedSpeed;
         hasEnergyDrink = false;
         isBoosted = true;
         boostTimer = boostDuration;
-        Debug.Log("¼Óµµ ¹öÇÁ");
+        Debug.Log("ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
     private void ResetMoveSpeed()
     {
         moveSpeed = baseSpeed;
         isBoosted = false;
-        Debug.Log("¼Óµµ ¹öÇÁ Á¾·á");
+        Debug.Log("ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
-    //¼ÕÀüµî ¾÷±×·¹ÀÌµå
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½
     [PunRPC]
     private void UpGradeLight()
     {
@@ -599,7 +601,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         float scaleRatio = upgradedRadius / defaultRadius;
         ScalePolygonCollider(scaleRatio);
 
-        Debug.Log("¼ÕÀüµî ¾÷±×·¹ÀÌµå");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½");
     }
 
     private void ResetFlashlight()
@@ -610,42 +612,53 @@ public class Player : MonoBehaviourPun, IPunObservable
         isBlinking = false;
         blinkTimer = 0f;
 
-        ScalePolygonCollider(1.0f); // ¿ø·¡ Å©±â·Î º¹±Í
-        Debug.Log("¼ÕÀüµî ¾÷±×·¹ÀÌµå ³¡");
+        ScalePolygonCollider(1.0f); // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½");
     }
 
     private void ToggleLight()
     {
         if (!photonView.IsMine)
-            return; 
+            return;
 
         isLightOn = !isLightOn;
         flashlight.enabled = isLightOn;
 
         photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, isLightOn);
 
-        Debug.Log(isLightOn ? "¼ÕÀüµî ÄÑÁü" : "¼ÕÀüµî ²¨Áü");
+        Debug.Log(isLightOn ? "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+    }
+
+    private void TurnOnLight()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        isLightOn = true;
+        flashlight.enabled = true;
+        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, true);
+
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
     private void OpenMap()
     {
-        Debug.Log("¸Ê ¿­±â");
+        Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         if (hasMap)
         {
             isInMap = true;
-            // ¸Ê UI ¿­±â
-            // MapUIManager.OpenMap();
+            // ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
+
         }
         else
         {
-            Debug.Log("¸Ê ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
     }
     private void CloseMap()
     {
         isInMap = false;
-        Debug.Log("¸Ê ´Ý±â");
-        // mapUI.SetActive(false); µî
+        Debug.Log("ï¿½ï¿½ ï¿½Ý±ï¿½");
     }
 
     [PunRPC]
@@ -665,18 +678,18 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.points = scaled;
     }
 
-    // °¨¿ÁÅ° »ç¿ë
+    // ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ï¿½
 
     private void usePrisonKeyItem()
     {
-        Debug.Log("°¨¿Á Å° »ç¿ë");
-        MapEventManager.TriggerEvent(MapEventType.OpenPrisonDoor);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ Å° ï¿½ï¿½ï¿½");
+        EventManager.TriggerEvent(EventType.OpenPrisonDoor);
         hasPrisonKey = false;
     }
-    
+
     private void useHatchItem()
     {
-        Debug.Log("°³±¸¸Û »ç¿ë");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
         escapeState.SetEscapeType(EscapeType.Hatch);
         PlayerStateMachine.ChangeState(escapeState);
     }
@@ -685,7 +698,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // ³»Á¤º¸ º¸³¿
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             stream.SendNext(transform.position);
             stream.SendNext(transform.localScale);
             stream.SendNext(rb.linearVelocity);
@@ -700,7 +713,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            //´Ù¸¥¾Ö Á¤º¸¹Þ±â
+            //ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Þ±ï¿½
             networkedPosition = (Vector3)stream.ReceiveNext();
             transform.localScale = (Vector3)stream.ReceiveNext();
             networkedVelocity = (Vector2)stream.ReceiveNext();
@@ -711,7 +724,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             networkedIsMoving = (bool)stream.ReceiveNext();
             networkedDirX = (float)stream.ReceiveNext();
             networkedDirY = (float)stream.ReceiveNext();
-            lightAngle = (float)stream.ReceiveNext();  
+            lightAngle = (float)stream.ReceiveNext();
 
             if (PlayerStateMachine.currentState.StateType != receivedState)
             {
