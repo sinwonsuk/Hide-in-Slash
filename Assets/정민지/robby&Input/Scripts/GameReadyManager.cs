@@ -31,7 +31,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Text[] ChatText;
     public TMP_InputField ChatInput;
     public GameObject roomButtonPrefab; //생성할 방
-    public Transform content; //스크롤 콘텐트
+    private Transform content; //스크롤 콘텐트
     public Text totalPlayersText;  // 인원수를 표시할 텍스트 UI (전체 인원수)
 
     [Header("ETC")]
@@ -59,6 +59,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
 
         test = Test;
+        Gc = GetContent;
     }
 
     //void Start()
@@ -68,6 +69,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
 
     #region 방리스트 갱신
+
 
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -87,12 +89,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
                 // 버튼을 생성하고 텍스트를 해당 방 이름으로 설정
                 GameObject newButton = Instantiate(roomButtonPrefab, content);
+                newButton.transform.SetParent(content, false); // false를 꼭 넣자!
                 newButton.GetComponentInChildren<Text>().text = room.Name;  // 방 이름 설정
 
                 // 인원수 텍스트 추가
                 int currentPlayerCount = room.PlayerCount;  // 현재 인원수
                 int maxPlayers = room.MaxPlayers;           // 최대 인원수
-               // newButton.transform.GetChild(1).GetComponent<Text>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
+                newButton.transform.GetChild(0).GetComponent<Text>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
 
             }
         }
@@ -163,9 +166,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        RoomRenewal();
-        ChatInput.text = "";
-        for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+        //RoomRenewal();
+        //ChatInput.text = "";
+        //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
@@ -186,10 +189,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     void RoomRenewal()
     {
-        ListText.text = "";
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
+        //ListText.text = "";
+        //for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        //    ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
+        //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
     #endregion
 
@@ -225,7 +228,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         NickNameInput.text = _InputField;
     }
 
+    public void GetContent(Transform _content)
+    {
+        content = _content;
+    }
+
 
     public Action<string> test;
+    public Action<Transform> Gc;
 
 }
