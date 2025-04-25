@@ -25,8 +25,6 @@ public class CatchMiniGame : MonoBehaviour
             bounce.transform.localPosition = new Vector2(posX, posY);
 
         }
-
-
     }
 
     public void CheckCircle()

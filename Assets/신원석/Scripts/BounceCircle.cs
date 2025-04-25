@@ -36,12 +36,17 @@ public class BounceCircle : MonoBehaviour
 
         if (col != null && col.gameObject == gameObject)
         {
-            if(Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Destroy(gameObject);
                 miniGame.CircleDeleteCheckAction.Invoke();
-            }          
+            }
         }
+        else if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("미니게임 실패");
+        }
+
     }
 
 

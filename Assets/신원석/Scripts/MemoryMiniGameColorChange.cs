@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,7 @@ public enum ColorState
     Green,
     Blue,
     Pink,
-    Black,
+    Yellow,
 
 }
 
@@ -31,7 +32,7 @@ public class MemoryMiniGameColorChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(light2D.intensity);
     }
 
     IEnumerator ColorCorution()
@@ -45,20 +46,31 @@ public class MemoryMiniGameColorChange : MonoBehaviour
     }
 
     IEnumerator ChangeColor(ColorState colorState)
-    {      
+    {
+
+        light2D.color = colors[(int)colorState];
+        float t = 0;
         while (true)
         {
             time += Time.deltaTime;
 
-            if (time > duration*2.0f)
+
+
+            if (time > duration* 2.0f && t < 0.05f)
             {
+                light2D.intensity = 0;
                 memoryMiniGame.colorChangeAction.Invoke(colorState);
                 time = 0;
                 yield break;
             }
-            float t = Mathf.PingPong(Time.time, duration) / duration;
-            Color currentColor = Color.Lerp(Color.white, colors[(int)colorState], t);
-            spriteRender.color = currentColor;
+
+           
+            t = Mathf.PingPong(Time.time, duration) / duration;
+
+            light2D.intensity =Mathf.Lerp(0, 12, t);
+
+
+            //Color currentColor = Color.Lerp(Color.white, colors[(int)colorState], t);        
             yield return null;
         }     
     }
@@ -69,6 +81,10 @@ public class MemoryMiniGameColorChange : MonoBehaviour
     MemoryMiniGame memoryMiniGame;
 
     public float duration = 2f;
+
+    [SerializeField]
+    Light2D light2D;
+
     SpriteRenderer spriteRender;
     float time;
 

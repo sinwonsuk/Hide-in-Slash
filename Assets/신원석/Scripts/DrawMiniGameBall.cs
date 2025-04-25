@@ -16,9 +16,14 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.CompareTag("DrawMiniGameUpWall"))
+        {
+            Debug.Log("미니게임 성공");
+        }
+
         if (other.CompareTag("DrawMiniGameWall"))
         {
-            Debug.Log("적이랑 충돌!");
+            Debug.Log("미니게임 실패");
         }
     }
 

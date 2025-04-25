@@ -21,6 +21,9 @@ TagManager:
   - Shop
   - generatorMiniGameWall
   - generatorMiniGameStop
+  - EventSpawnPoint
+  - PlayerSpawnPoint
+  - DrawMiniGameUpWall
   layers:
   - Default
   - TransparentFX
@@ -33,11 +36,10 @@ TagManager:
   - MiniMapWall
   - MiniMapLight
   - Global Light
-
-  - 
-  - 
-  - 
-  - 
+  - MiniGameLight
+  - DrawMiniGameWall
+  - DrawMiniGameBall
+  - DrawMiniGameUpWall
   - 
   - 
   - 

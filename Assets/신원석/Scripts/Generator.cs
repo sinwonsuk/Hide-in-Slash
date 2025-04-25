@@ -16,7 +16,7 @@ public class Generator : MonoBehaviour
         {
             if(generatorMiniGame.IsCheck == true)
             {
-                Destroy(generatorMiniGame);
+                Destroy(generatorMiniGame.gameObject);
                 StopGeneration();
             }          
         }
@@ -52,10 +52,9 @@ public class Generator : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isPlayerColilision = false;
-
         if (collision.CompareTag("Player"))
         {
+            isPlayerColilision = false;
             canvas.gameObject.SetActive(false);
         }
     }
