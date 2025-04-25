@@ -14,14 +14,14 @@ public class PrisonDoor : MonoBehaviour
  
     private void OnEnable()
     {
-        MapEventManager.RegisterEvent(MapEventType.OpenPrisonDoor, OpenDoor);
-        MapEventManager.RegisterEvent(MapEventType.ClosePrisonDoor, CloseDoor);
+        EventManager.RegisterEvent(EventType.OpenPrisonDoor, OpenDoor);
+        EventManager.RegisterEvent(EventType.ClosePrisonDoor, CloseDoor);
     }
 
     private void OnDisable()
     {
-        MapEventManager.UnRegisterEvent(MapEventType.OpenPrisonDoor, OpenDoor);
-        MapEventManager.UnRegisterEvent(MapEventType.ClosePrisonDoor, CloseDoor);
+        EventManager.UnRegisterEvent(EventType.OpenPrisonDoor, OpenDoor);
+        EventManager.UnRegisterEvent(EventType.ClosePrisonDoor, CloseDoor);
     }
 
     private void OpenDoor()

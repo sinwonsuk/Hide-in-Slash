@@ -4,6 +4,7 @@ public class GhostStateMachine
 {
     public GhostState currentState { get; private set; }
     public Vector2 CurrentStateMoveInput => currentState.GetMoveInput();
+    public GhostStateType CurrentStateTyper => currentState.StateType;
 
     public void Initialize(GhostState _startState)
     {

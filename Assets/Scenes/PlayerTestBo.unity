@@ -605,7 +605,7 @@ Transform:
   m_GameObject: {fileID: 841324102}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6, y: 193, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -699,7 +699,7 @@ Transform:
   m_GameObject: {fileID: 1037204531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6, y: 193, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1001,6 +1001,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5080591764710848872, guid: 2044b59cd5c105f47b12072cc451b815, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5166076135610873780, guid: 2044b59cd5c105f47b12072cc451b815, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 27
@@ -1101,6 +1105,10 @@ PrefabInstance:
     - target: {fileID: 184768319288710245, guid: 4eda7799ad6420347b0822ccd1ce8455, type: 3}
       propertyPath: m_Name
       value: Store
+      objectReference: {fileID: 0}
+    - target: {fileID: 184768319288710245, guid: 4eda7799ad6420347b0822ccd1ce8455, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2309914309650192294, guid: 4eda7799ad6420347b0822ccd1ce8455, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1300,7 +1308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8262519691792176364, guid: 4eda7799ad6420347b0822ccd1ce8455, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 9049269827561094925, guid: 4eda7799ad6420347b0822ccd1ce8455, type: 3}
       propertyPath: m_AnchorMax.y

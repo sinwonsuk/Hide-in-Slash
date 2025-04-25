@@ -4,6 +4,7 @@ public class PukeGirlMove : GhostState
 {
     public PukeGirlMove(Ghost _ghost, GhostStateMachine _stateMachine, string _animBoolName) : base(_ghost, _stateMachine, _animBoolName)
     {
+        stateType = GhostStateType.Move;
     }
 
     public override void Update()

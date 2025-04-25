@@ -41,7 +41,6 @@ public class PukeGirl : Ghost
 
     public override void UpdateAnimParam(Vector2 input)
     {
-        Debug.Log($"[Peanut] DirX: {input.x}, DirY: {input.y}");
         if (input != Vector2.zero)
             lastDir = input.normalized;
 

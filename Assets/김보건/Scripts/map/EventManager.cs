@@ -2,23 +2,30 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-public enum MapEventType
+public enum EventType
 {
     OpenPrisonDoor,
     ClosePrisonDoor,
     miniGameSuccess,
     GeneratorSuccess,
-    AllGeneratorSuccess,
+    AllGeneratorSuccess, 
+    UseEnergyDrink,
+    UseInvisiblePotion,
+    UseUpgradedLight,
+    UsePrisonKey,
+    UseHatch,
+    LightRestored
+
 }
 
 
 
-public class MapEventManager
+public class EventManager
 {
-    private static readonly Dictionary<MapEventType, Action> _eventMap = new();
+    private static readonly Dictionary<EventType, Action> _eventMap = new();
 
     // 이벤트 등록
-    public static void RegisterEvent(MapEventType eventType, Action eventFunc)
+    public static void RegisterEvent(EventType eventType, Action eventFunc)
     {
         if (!_eventMap.ContainsKey(eventType))
             _eventMap[eventType] = eventFunc;
@@ -27,14 +34,14 @@ public class MapEventManager
     }
 
     // 이벤트 등록 해제
-    public static void UnRegisterEvent(MapEventType eventType, Action eventFunc)
+    public static void UnRegisterEvent(EventType eventType, Action eventFunc)
     {
         if (_eventMap.ContainsKey(eventType))
             _eventMap[eventType] -= eventFunc;
     }
 
     // 이벤트 실행
-    public static void TriggerEvent(MapEventType eventType)
+    public static void TriggerEvent(EventType eventType)
     {
         _eventMap.TryGetValue(eventType, out var action);
         action?.Invoke();
