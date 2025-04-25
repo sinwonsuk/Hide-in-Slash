@@ -44,6 +44,8 @@ MonoBehaviour:
   - UpGradeLight
   - GetSpawnPoint
   - GetSpawnPointandSpawn
+  - SetTransparencyVisual
+  - SetGhostVisual
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
