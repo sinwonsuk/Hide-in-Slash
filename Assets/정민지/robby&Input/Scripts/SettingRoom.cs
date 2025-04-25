@@ -7,7 +7,6 @@ public class SettingRoom : MonoBehaviour
     public TMP_InputField passwordInput; //방비번 입력창
     public GameObject popupPanel; // 방 생성창
     public GameObject roomPanelPrefab; //생성할 방
-    public Transform roomListContent; //스크롤 콘텐트
 
     [Header("경고창")]
     [SerializeField] private GameObject nicknameIsNull;
@@ -57,10 +56,9 @@ public class SettingRoom : MonoBehaviour
         {
             if (roomName.Length < 14 && password.Length < 6)
             {
- 
 
                     GameReadyManager.Instance.CreateRoomWithPassword(roomName, password);
-                    SceneManager.Instance.LoadSceneAsync(SceneName.WaitingRoom);
+                    //SceneManager.Instance.LoadSceneAsync(SceneName.WaitingRoom);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
                 passwordInput.text = "";

@@ -8,6 +8,7 @@ using RealtimePlayer = Photon.Realtime.Player;
 using TMPro;
 using UnityEngine.Windows;
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
@@ -19,7 +20,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     [Header("로비판넬")]
     public GameObject LobbyPanel;
-    public Text WelcomeText;
+    public TMP_InputField WelcomeText;
     public Text LobbyInfoText;
     public Button[] CellBtn;
     public Button PreviousBtn;
@@ -31,7 +32,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Text[] ChatText;
     public TMP_InputField ChatInput;
     public GameObject roomButtonPrefab; //생성할 방
-    public Transform content; //스크롤 콘텐트
+    private Transform content; //스크롤 콘텐트
     public Text totalPlayersText;  // 인원수를 표시할 텍스트 UI (전체 인원수)
 
     [Header("ETC")]
@@ -46,6 +47,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+
+
         Screen.SetResolution(960, 540, false);
 
         if (Instance == null)
@@ -59,6 +62,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
 
         test = Test;
+        Gc = GetContent;
     }
 
     //void Start()
@@ -70,30 +74,45 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     #region 방리스트 갱신
 
 
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        // 기존 방 목록을 초기화
-        foreach (Transform child in content)
+        if(roomList.Count == 0)
         {
-            Destroy(child.gameObject);  // 기존에 생성된 버튼들을 삭제
+            return;
         }
+
 
         // 갱신된 방 리스트를 기반으로 UI 업데이트
         foreach (RoomInfo room in roomList)
         {
+
             if (!room.RemovedFromList)  // 제거된 방은 제외
-            {
-                myList.Add(room);  // 방 목록에 추가
+            {          
+                if(roomDic.ContainsKey(room))
+                {
+                    int currentPlayerCount = room.PlayerCount;  // 현재 인원수
+                    int maxPlayers = room.MaxPlayers;           // 최대 인원수
 
-                // 버튼을 생성하고 텍스트를 해당 방 이름으로 설정
-                GameObject newButton = Instantiate(roomButtonPrefab, content);
-                newButton.GetComponentInChildren<Text>().text = room.Name;  // 방 이름 설정
+                    roomDic[room].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
+                    roomDic[room].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
-                // 인원수 텍스트 추가
-                int currentPlayerCount = room.PlayerCount;  // 현재 인원수
-                int maxPlayers = room.MaxPlayers;           // 최대 인원수
-               // newButton.transform.GetChild(1).GetComponent<Text>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
 
+                }
+                else
+                {
+                    GameObject newButton = Instantiate(roomButtonPrefab, content);
+                    newButton.transform.SetParent(content, false); // false를 꼭 넣자!
+
+                    int currentPlayerCount = room.PlayerCount;  // 현재 인원수
+                    int maxPlayers = room.MaxPlayers;           // 최대 인원수
+
+                    newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
+                    newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
+
+                    roomDic.Add(room, newButton);
+                }
+                                      
             }
         }
     }
@@ -109,9 +128,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby() //로비로 가기
     {
-        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName + "님 환영합니다");
-        OnRoomListUpdate(myList);
+
+        //PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+
+        PhotonNetwork.LocalPlayer.NickName = "adadadad";
+        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
+
     }
 
     public void Disconnect() => PhotonNetwork.Disconnect(); //서버 접속 끊음
@@ -163,9 +185,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        RoomRenewal();
-        ChatInput.text = "";
-        for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+        //RoomRenewal();
+        //ChatInput.text = "";
+        //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
@@ -186,10 +208,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     void RoomRenewal()
     {
-        ListText.text = "";
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
+        //ListText.text = "";
+        //for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        //    ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
+        //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
     #endregion
 
@@ -223,9 +245,22 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public void Test(string _InputField)
     {
         NickNameInput.text = _InputField;
+
+        WelcomeText = NickNameInput;
     }
 
+    public void GetContent(Transform _content)
+    {
+        content = _content;
+    }
+
+    int keyCheck = 0;
 
     public Action<string> test;
+    public Action<Transform> Gc;
+
+    public List<int> keyManager = new List<int>();
+
+    public Dictionary<RoomInfo, GameObject> roomDic = new Dictionary<RoomInfo, GameObject>();
 
 }

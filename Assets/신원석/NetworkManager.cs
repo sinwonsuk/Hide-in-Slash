@@ -98,6 +98,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
 
+    public void CreateRoom() => PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 4 });
+
+
+
     public override void OnConnectedToMaster()
     {
         //PhotonNetwork.JoinLobby();
@@ -131,13 +135,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         //public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
-        //public override void OnJoinedRoom()
-        //{
-        //    RoomPanel.SetActive(true);
-        //    RoomRenewal();
-        //    ChatInput.text = "";
-        //    for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
-        //}
+        public override void OnJoinedRoom()
+        {
+
+        int a = 0;
+
+        }
 
         //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } 
 
