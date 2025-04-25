@@ -40,6 +40,7 @@ public class MapManager : MonoBehaviourPunCallbacks
         {
             InitializeMap();
         }
+        WriteDic();
         AddSpawnPoints();
         if (PhotonNetwork.IsMasterClient)
         {
@@ -98,6 +99,15 @@ public class MapManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < mapObjects.Count; i++)
         {
             PhotonNetwork.Instantiate(mapObjects[i].name, mapObjects[i].transform.position, Quaternion.identity);
+            mapDic.Add(mapObjects[i].name, mapObjects[i]);
+        }
+    }
+
+
+    private void WriteDic()
+    {
+        for (int i = 0; i < mapObjects.Count; i++)
+        {
             mapDic.Add(mapObjects[i].name, mapObjects[i]);
         }
     }

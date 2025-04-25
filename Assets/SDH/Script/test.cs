@@ -15,8 +15,8 @@ public class test : MonoBehaviour
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
-        rb.linearVelocityX = x*15f;
-        rb.linearVelocityY = y*15f;
+        rb.linearVelocityX = x*5f;
+        rb.linearVelocityY = y*5f;
         tf.position = new Vector3(tf.position.x, tf.position.y, tf.position.y);
     }
 }
