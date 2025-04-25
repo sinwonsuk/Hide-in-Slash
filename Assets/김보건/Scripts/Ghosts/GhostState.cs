@@ -33,8 +33,8 @@ public class GhostState
 
     public virtual void Enter()
     {
-        if (ghost.anim != null)
-            ghost.anim.SetBool(animBoolName, true);
+        //if (ghost.anim != null)
+        //    ghost.anim.SetBool(animBoolName, true);
         rb = ghost.rb;
         triggerCalled = false;
     }
@@ -50,8 +50,8 @@ public class GhostState
 
     public virtual void Exit()
     {
-        if (ghost.anim != null)
-            ghost.anim.SetBool(animBoolName, false);
+        //if (ghost.anim != null)
+        //    ghost.anim.SetBool(animBoolName, false);
     }
 
     public virtual void AnimationFinishTrigger()

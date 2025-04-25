@@ -46,6 +46,10 @@ MonoBehaviour:
   - GetSpawnPointandSpawn
   - SetTransparencyVisual
   - SetGhostVisual
+  - RPC_StartVomit
+  - activateProtein
+  - EndProtein
+  - ActivateProtein
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

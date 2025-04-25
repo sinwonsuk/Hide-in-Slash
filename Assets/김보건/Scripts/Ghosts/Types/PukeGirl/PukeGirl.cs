@@ -1,14 +1,33 @@
+using Photon.Pun;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
-public class PukeGirl : Ghost
+public class PukeGirl : Ghost, IPunObservable
 {
     public override GhostState moveState { get; protected set; }
     private GhostState vomitState;
-    private Vector2 lastDir = Vector2.right;   // ±‚∫ª∞™¿∫ ø¿∏•¬ 
+    private Vector2 lastDir = Vector2.right;   // Í∏∞Î≥∏Í∞íÏùÄ Ïò§Î•∏Ï™Ω
+
+    private PhotonView photonView;
+
+    private Vector3 networkedPosition;
+    private Vector3 networkedVelocity;
+    private float lerpSpeed = 10f;
+    private bool networkedIsMoving;
+    private bool networkedIsVomiting;
+    private float networkedDirX;
+    private float networkedDirY;
+
     protected override void Awake()
     {
 
         base.Awake();
+        photonView = GetComponent<PhotonView>(); 
+
+        if (ghostStateMachine == null)
+            ghostStateMachine = new GhostStateMachine();
+
         idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
         moveState = new PeanutMove(this, ghostStateMachine, "Move");
         vomitState = new PukeGirlVomit(this, ghostStateMachine, "Puking");
@@ -18,25 +37,66 @@ public class PukeGirl : Ghost
 
     protected override void Start()
     {
-        base.Start();
+        if (photonView.IsMine)
+        {
+            base.Start();
+            CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+            if (cam != null)
+                cam.Follow = transform;
+        }
+
+        if (!photonView.IsMine)
+        {
+            Light2D light = GetComponentInChildren<Light2D>();
+            if (light != null)
+                light.enabled = false;
+        }
     }
 
     protected override void Update()
     {
-        base.Update();
-
-        //≈‰∞¸∑√
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (photonView.IsMine)
         {
-           
-            ghostStateMachine.ChangeState(vomitState);
+            base.Update();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                photonView.RPC("RPC_StartVomit", RpcTarget.All);
+            }
+
+        }
+        else
+        {
+            //Ïù¥ÎèôÎ≥¥Í∞Ñ
+            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
+
+            anim.SetBool("IsMoving", networkedIsMoving);
+            anim.SetFloat("DirX", networkedDirX);
+            anim.SetFloat("DirY", networkedDirY);
+
+            if (Mathf.Abs(networkedDirX) >= Mathf.Abs(networkedDirY))
+            {
+                sr.flipX = networkedDirX < 0;
+            }
         }
 
     }
 
+    [PunRPC]
+    public void RPC_StartVomit()
+    {
+        ghostStateMachine.ChangeState(vomitState);
+    }
+
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        if (photonView.IsMine)
+        {
+            base.FixedUpdate();
+        }
+        else
+        {
+            rb.linearVelocity = networkedVelocity;
+        }
     }
 
     public override void UpdateAnimParam(Vector2 input)
@@ -59,7 +119,7 @@ public class PukeGirl : Ghost
 
     public void OnVomitAnimEnd()
     {
-        Debug.Log("≈‰«‘ ≥°");
+        Debug.Log("ÌÜ†Ìï® ÎÅù");
         anim.SetBool("IsVomiting", false);
 
         Vector2 input = MoveInput;
@@ -71,6 +131,55 @@ public class PukeGirl : Ghost
         else
         {
             ghostStateMachine.ChangeState(moveState);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting) // ÎÇ¥Í∞Ä Î≥¥ÎÉÑ
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.localScale);
+            stream.SendNext(rb.linearVelocity);
+            stream.SendNext((int)ghostStateMachine.CurrentStateType);
+            stream.SendNext(facingDir);
+            stream.SendNext(facingUpDir);
+            stream.SendNext(anim.GetBool("IsMoving"));
+            stream.SendNext(anim.GetFloat("DirX"));
+            stream.SendNext(anim.GetFloat("DirY"));
+            stream.SendNext(anim.GetBool("IsVomiting"));
+        }
+        else // ÏÉÅÎåÄÎ∞©Ïù¥ Î≥¥ÎÇ∏ Í≤É Î∞õÏùå
+        {
+            networkedPosition = (Vector3)stream.ReceiveNext();
+            transform.localScale = (Vector3)stream.ReceiveNext();
+            networkedVelocity = (Vector2)stream.ReceiveNext();
+            GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();
+            int receivedFacingDir = (int)stream.ReceiveNext();
+            int receivedFacingUpDir = (int)stream.ReceiveNext();
+            SetFacingDirection(receivedFacingDir, receivedFacingUpDir);
+            networkedIsMoving = (bool)stream.ReceiveNext();
+            networkedDirX = (float)stream.ReceiveNext();
+            networkedDirY = (float)stream.ReceiveNext();
+            networkedIsVomiting = (bool)stream.ReceiveNext();
+            anim.SetBool("IsVomiting", networkedIsVomiting);
+
+            // ÏÉÅÌÉú Î≥ÄÍ≤Ω Ïãú ÎèôÍ∏∞Ìôî
+            if (ghostStateMachine != null && ghostStateMachine.CurrentStateType != receivedState)
+            {
+                switch (receivedState)
+                {
+                    case GhostStateType.Idle:
+                        ghostStateMachine.ChangeState(idleState);
+                        break;
+                    case GhostStateType.Move:
+                        ghostStateMachine.ChangeState(moveState);
+                        break;
+                    case GhostStateType.Vomit:
+                        ghostStateMachine.ChangeState(vomitState);
+                        break;
+                }
+            }
         }
     }
 }

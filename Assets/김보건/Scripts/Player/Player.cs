@@ -21,7 +21,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
-    private float lerpSpeed = 15f;
+    private float lerpSpeed = 10f;
     private bool networkedIsMoving;
     private float networkedDirX;
     private float networkedDirY;
@@ -108,6 +108,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     private bool isInHatch = false;
 
     [Header("지도")]
+    [SerializeField] private GameObject mapUI;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
 
@@ -136,22 +137,22 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         EventManager.RegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
         EventManager.RegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
-        EventManager.RegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.RegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.RegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.RegisterEvent(EventType.UseHatch, useHatchItem);
         EventManager.RegisterEvent(EventType.LightRestored, TurnOnLight);
-        EventManager.RegisterEvent(EventType.UseMap, OpenMap);
+        EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
     }
 
     private void OnDisable()
     {
         EventManager.UnRegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
         EventManager.UnRegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
-        EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.UnRegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.UnRegisterEvent(EventType.UseHatch, useHatchItem);
         EventManager.UnRegisterEvent(EventType.LightRestored, TurnOnLight);
-        EventManager.UnRegisterEvent(EventType.UseMap, OpenMap);
+        EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
     }
 
     private void Start()
@@ -197,70 +198,24 @@ public class Player : MonoBehaviourPun, IPunObservable
             OpenMiniGame();
         }
 
-        if (hasInvisiblePotion && Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            BecomeInvisible();
-        }
-        else if (!hasInvisiblePotion)
-        {
-            Debug.Log("포션없음");
-        }
-
-        if (hasEnergyDrink && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            BecomeBoost();
-        }
-        else if (!hasEnergyDrink)
-        {
-            Debug.Log("에너지음료");
-        }
-
-        if (hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            photonView.RPC("UpGradeLight", RpcTarget.All);
-        }
-        else if (!hasUpgradedFlashlight)
-        {
-            Debug.Log("업그레이드라이트");
-        }
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ToggleLight();
         }
 
-        if (hasPrisonKey && isInPrisonDoor && Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            usePrisonKeyItem();
-        }
-        else if (!hasPrisonKey && Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Debug.Log("감옥키없음");
-        }
-
-        if (hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            useHatchItem();
-        }
-        else if (hasHatch && !isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            Debug.Log("개구멍 없음");
-        }
-        else
-        {
-            Debug.Log("");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            if (!isInMap)
-                OpenMap();
+            if (!hasMap)
+            {
+                Debug.Log("지도 없음");
+            }
             else
-                CloseMap();
-        }
-        else if (!hasMap && Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            Debug.Log("지도없음");
+            {
+                if (!isInMap)
+                    OpenMap();
+                else
+                    CloseMap();
+            }
         }
 
         // 투명물약지속시간
@@ -404,7 +359,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 'PlayerSight' �±� ���� ����Ʈ ������Ʈ�� ����
+        if (!photonView.IsMine) return;
+
         if (collision.CompareTag("PlayerSight"))
             return;
 
@@ -476,6 +432,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!photonView.IsMine) return;
         if (collision.CompareTag("MiniGame"))
         {
             Debug.Log("미니게임가능");
@@ -530,7 +487,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void SetGhostVisual()
     {
-        gameObject.SetActive(false); 
+        gameObject.SetActive(false);
     }
 
     //투명물약
@@ -610,7 +567,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("이속버프끝");
     }
 
+
     //손전등업글
+    private void UseUpgradedLightHandler()
+    {
+        // RPC 호출로 네트워크에 상태를 전파
+        photonView.RPC("UpGradeLight", RpcTarget.All);
+    }
+
     [PunRPC]
     private void UpGradeLight()
     {
@@ -626,6 +590,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         Debug.Log("손전등 업글");
     }
+
 
     private void ResetFlashlight()
     {
@@ -664,13 +629,20 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("손전등켜짐");
     }
 
+    private void HasTriggerMap()
+    {
+        hasMap = true;
+    }
+
     private void OpenMap()
     {
+        hasMap = true;
         Debug.Log(" 맵열림");
         if (hasMap)
         {
             isInMap = true;
-           
+            if (mapUI != null)
+                mapUI.SetActive(true);
 
         }
         else
@@ -681,6 +653,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void CloseMap()
     {
         isInMap = false;
+        if (mapUI != null)
+            mapUI.SetActive(false);
         Debug.Log("맵 닫음");
     }
 

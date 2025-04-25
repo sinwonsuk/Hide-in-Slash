@@ -13,11 +13,6 @@ public class Ghost : MonoBehaviour
     protected bool facingRight = true;
     protected bool facingUp = true;
 
-
-    // 서버 전송용 위치 및 스케일 변수
-    public float posX, posY, posZ;
-    public float scaleX, scaleY, scaleZ;
-
     [Header("이동 속도")]
     [SerializeField] protected float moveSpeed = 5f;
 
@@ -56,13 +51,6 @@ public class Ghost : MonoBehaviour
         Vector3 pos = transform.position;
         //transform.position = new Vector3(pos.x, pos.y, pos.y);
 
-        posX = transform.position.x;
-        posY = transform.position.y;
-        posZ = transform.position.z;
-
-        scaleX = transform.localScale.x;
-        scaleY = transform.localScale.y;
-        scaleZ = transform.localScale.z;
     }
 
     public void SetVelocity(Vector2 velocity)
@@ -99,6 +87,13 @@ public class Ghost : MonoBehaviour
         if (y > 0 && !facingUp) FlipVertical();
         else if (y < 0 && facingUp) FlipVertical();
     }
+
+    public void SetFacingDirection(int dir, int upDir)
+    {
+        this.facingDir = dir;
+        this.facingUpDir = upDir;
+    }
+
 
     public float GetMoveSpeed()
     {
