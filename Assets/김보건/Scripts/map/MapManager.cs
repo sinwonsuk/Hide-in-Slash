@@ -16,7 +16,7 @@ public class MapManager : MonoBehaviourPunCallbacks
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
     private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
-    private string[] pTypes = { "P1", "P2", "P3", "P4" }; // 플레이어 프리팹 이름
+    private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
 
     void Start()
@@ -99,7 +99,6 @@ public class MapManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < mapObjects.Count; i++)
         {
             PhotonNetwork.Instantiate(mapObjects[i].name, mapObjects[i].transform.position, Quaternion.identity);
-            mapDic.Add(mapObjects[i].name, mapObjects[i]);
         }
     }
 

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
-using UnityEditor.Rendering;
+//using UnityEditor.Rendering;
 
 public enum EscapeType
 {

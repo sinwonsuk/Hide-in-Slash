@@ -129,7 +129,7 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && ItemDictionary.Count > 0)
         {
-            MapEventManager.TriggerEvent(MapEventType.UseUpgradedLight);
+            EventManager.TriggerEvent(EventType.UseUpgradedLight);
             TryUseSelectedItem();
         }      
     }
