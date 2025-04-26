@@ -6,7 +6,6 @@ public class Store : MonoBehaviour
     private void Start()
     {
         storeWindow = GameObject.Find("StoreWindow");
-        storeWindow.SetActive(false);
     }
 
     private void Update()
@@ -42,7 +41,7 @@ public class Store : MonoBehaviour
     {
         if (storeWindow != null)
         {
-            storeWindow.SetActive(true);
+            storeWindow.GetComponent<StoreWindowMove>().isMove = true;
         }
     }
 
@@ -50,7 +49,7 @@ public class Store : MonoBehaviour
     {
         if (storeWindow != null)
         {
-            storeWindow.SetActive(false);
+            storeWindow.GetComponent<StoreWindowMove>().isMove = false;
         }
     }
 

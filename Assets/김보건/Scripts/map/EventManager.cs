@@ -16,10 +16,9 @@ public enum EventType
     UseHatch,
     UseMap,
     PlayerHpOne,
-    PlayerHpZero
+    PlayerHpZero,
     LightOn,
     LightOff,
-    UseMap,
     InEventPlayer,
     OutEventPlayer
 }

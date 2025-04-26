@@ -5,30 +5,55 @@ public class StoreWindowMove : MonoBehaviour
 {
     private void OnEnable()
     {
-        
+
     }
     private void OnDisable()
     {
+        isMove = false;
         uiElement.transform.position = firstPosition;
     }
 
     void Start()
     {
         uiElement = GetComponent<RectTransform>();
-        firstPosition = uiElement.transform.position;
+        firstPosition = uiElement.anchoredPosition;
         targetPosition = new Vector2(0, 60);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(uiElement.anchoredPosition.y < 60)
+        if(isMove ==true)
+        {
+            MoveStoreWindow();
+        }
+        else
+        {
+            MoveStoreWindowReverse();
+        }
+    }
+
+    public void MoveStoreWindowReverse()
+    {
+        if (uiElement.anchoredPosition.y >= 1002)
         {
             return;
         }
+        uiElement.anchoredPosition = Vector2.Lerp(uiElement.anchoredPosition, firstPosition, Time.deltaTime * speed);
 
+    }
+
+    public void MoveStoreWindow()
+    {
+        if (uiElement.anchoredPosition.y < targetPosition.y)
+        {
+            return;
+        }
         uiElement.anchoredPosition = Vector2.Lerp(uiElement.anchoredPosition, targetPosition, Time.deltaTime * speed);
     }
+
+    public bool isMove { get; set; }= false;
 
     RectTransform uiElement;
     Vector2 targetPosition;
