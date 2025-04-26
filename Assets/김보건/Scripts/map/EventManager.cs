@@ -14,10 +14,14 @@ public enum EventType
     UseUpgradedLight,
     UsePrisonKey,
     UseHatch,
-    LightRestored,
     UseMap,
     PlayerHpOne,
     PlayerHpZero
+    LightOn,
+    LightOff,
+    UseMap,
+    InEventPlayer,
+    OutEventPlayer
 }
 
 
