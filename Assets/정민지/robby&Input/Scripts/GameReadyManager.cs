@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine.Windows;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using System.Linq;
 
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
@@ -82,14 +83,20 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             return;
         }
 
+        Debug.Log(roomList.Count);
+        if (content == null)
+        {
+            Debug.LogWarning("Content가 아직 설정되지 않았습니다. GetContent 먼저 호출하세요!");
+            return;  // 여기서 바로 리턴
+        }
 
         // 갱신된 방 리스트를 기반으로 UI 업데이트
         foreach (RoomInfo room in roomList)
         {
 
             if (!room.RemovedFromList)  // 제거된 방은 제외
-            {          
-                if(roomDic.ContainsKey(room))
+            {
+                if (roomDic.ContainsKey(room))
                 {
                     int currentPlayerCount = room.PlayerCount;  // 현재 인원수
                     int maxPlayers = room.MaxPlayers;           // 최대 인원수
@@ -97,10 +104,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                     roomDic[room].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
                     roomDic[room].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
-
                 }
                 else
                 {
+
                     GameObject newButton = Instantiate(roomButtonPrefab, content);
                     newButton.transform.SetParent(content, false); // false를 꼭 넣자!
 
@@ -109,6 +116,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
                     newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
                     newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
+
+                    string capturedRoomName = room.Name;
+                    newButton.GetComponent<Button>().onClick.AddListener(() => {
+                        PhotonNetwork.JoinRoom(capturedRoomName);
+                    });
 
                     roomDic.Add(room, newButton);
                 }
@@ -129,9 +141,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby() //로비로 가기
     {
 
-        //PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+       PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
 
-        PhotonNetwork.LocalPlayer.NickName = "adadadad";
+       // PhotonNetwork.LocalPlayer.NickName = "adadadad";
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
 
     }
@@ -146,7 +158,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     //비번과 함께 방 생성
     public void CreateRoomWithPassword(string roomName, string password)
     {
-        if(PhotonNetwork.IsConnected&&PhotonNetwork.InLobby)
+         if(PhotonNetwork.IsConnected&&PhotonNetwork.InLobby)
         {
             ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
             roomProperties.Add("pw", password); // "pw"는 키, password는 값
@@ -165,19 +177,34 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
-    {
-        string roomPassword = (string)roomInfo.CustomProperties["pw"];
+    //public void OnSubmitPassword(string inputPassword)
+    //{
+    //   // RoomInfo[] roomList = myList;
+    //    RoomInfo roomInfo = myList.FirstOrDefault(r => r.Name == ClickRoom.selectedRoomName);
 
-        if (roomPassword == inputPassword)
-        {
-            PhotonNetwork.JoinRoom(roomInfo.Name);
-        }
-        else
-        {
-            Debug.Log("비밀번호가 틀렸습니다!");
-        }
-    }
+    //    if (roomInfo != null)
+    //    {
+    //        TryJoinRoom(roomInfo, inputPassword);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("방 정보를 찾을 수 없습니다.");
+    //    }
+    //}
+
+    //public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
+    //{
+    //    string roomPassword = (string)roomInfo.CustomProperties["pw"];
+
+    //    if (roomPassword == inputPassword)
+    //    {
+    //        PhotonNetwork.JoinRoom(roomInfo.Name);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("비밀번호가 틀렸습니다!");
+    //    }
+    //}
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
 
@@ -188,6 +215,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //RoomRenewal();
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+        PhotonNetwork.LoadLevel("WaitingRoom");
     }
 
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
