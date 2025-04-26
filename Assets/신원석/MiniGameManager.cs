@@ -42,12 +42,17 @@ public class MiniGameManager : MonoBehaviour
         LaunchRandomMinigame();
     }
 
-    private void LaunchRandomMinigame()
+    public void LaunchRandomMinigame()
     {
         List<MinigameState> keys = new List<MinigameState>(minigameDictory.Keys);
 
         MinigameState randomKey = keys[Random.Range(0, keys.Count)];
 
-        Instantiate(minigameDictory[randomKey]);
+        GameObject gameObject = Instantiate(minigameDictory[randomKey],transform);
+
+        Vector2 camera = Camera.main.transform.position;
+
+        gameObject.transform.position = new Vector2(camera.x,camera.y);
+
     }
 }

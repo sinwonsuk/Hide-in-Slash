@@ -407,6 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CircleCount: 5
   circle: {fileID: 3584390188211994577, guid: 261e51956553348448045358cb083695, type: 3}
+  sucessObject: {fileID: 2991484233814362913, guid: 8bab289ee1baf2f4689e82eb10471f6c, type: 3}
 --- !u!1 &6073591302536630794
 GameObject:
   m_ObjectHideFlags: 0

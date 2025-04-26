@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Generator : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        DeleteAction = Delete;
     }
 
     // Update is called once per frame
@@ -91,11 +92,13 @@ public class Generator : MonoBehaviour
 
         isMiniGameRunning = false;
     }
-    IEnumerator EndMiniGameAfterDelay(float delay)
+
+    void Delete()
     {
-        yield return new WaitForSeconds(delay);
-        isMiniGameRunning = false;
+        StopGeneration();
+        Destroy(gameObject);
     }
+  
 
     bool isMiniGameRunning = false;
 
@@ -110,4 +113,7 @@ public class Generator : MonoBehaviour
     GeneratorMiniGame generatorMiniGame;
 
     Coroutine coroutine;
+
+    public UnityAction DeleteAction;
+
 }

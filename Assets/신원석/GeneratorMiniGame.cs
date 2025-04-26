@@ -23,16 +23,15 @@ public class GeneratorMiniGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyUp(KeyCode.E))
+        {          
+           Destroy(gameObject);            
+        }
     }
 
     void CheckCollsion()
     {
         IsCheck = true;
-
-
-        // 뭐 석세스라도 내보낼까
-
 
         GameObject GeneratorGage = GameObject.Find("GeneratorGage");
 

@@ -16,6 +16,8 @@ public class generatorGage : MonoBehaviour
 
     void Start()
     {
+        generator = GetComponentInParent<Generator>();
+
         generatorInImage = GetComponent<Image>();
     }
 
@@ -26,16 +28,14 @@ public class generatorGage : MonoBehaviour
 
         if (generatorInImage.fillAmount == 1)
         {
-
+            generator.DeleteAction.Invoke();
         }
 
     }
-
-
     [SerializeField]
     float speed = 0.5f;
 
-    public int asd;
-
     public Image generatorInImage;
+
+    Generator generator;
 }

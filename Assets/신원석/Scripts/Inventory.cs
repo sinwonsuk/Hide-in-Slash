@@ -13,6 +13,7 @@ public enum InventoryType
     Flashlight,
     EngeryDrink,
     PrisonKey,
+    Map,
 }
 
 public class Inventory : MonoBehaviour
@@ -102,7 +103,14 @@ public class Inventory : MonoBehaviour
             }
             inventoryMoveIndex = 4;
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            if (ItemDictionary.Count < 6)
+            {
+                return;
+            }
+            inventoryMoveIndex = 5;
+        }
     }
 
 
@@ -110,10 +118,7 @@ public class Inventory : MonoBehaviour
     {
         if (ItemDictionary.TryGetValue((InventoryType)_type, out GameObject gameObject))
         {
-            gameObject.GetComponent<Item>().AddItemCount();
-
-            
-
+            gameObject.GetComponent<Item>().AddItemCount();           
         }
         else
         {
@@ -128,7 +133,7 @@ public class Inventory : MonoBehaviour
     public void UseItem()
     {
         if(Input.GetKeyDown(KeyCode.Space) && ItemDictionary.Count > 0)
-        {
+        {       
             MapEventManager.TriggerEvent(MapEventType.UseUpgradedLight);
             TryUseSelectedItem();
         }      
@@ -141,16 +146,60 @@ public class Inventory : MonoBehaviour
 
         if (ItemDictionary.TryGetValue(key, out GameObject go))
         {
+            
             Item item = go.GetComponent<Item>();
             item.MusItemCount();
 
-            if(item.GetItemCount() == 0)
+            UstItemPlayer(key);
+
+            if (item.GetItemCount() == 0)
             {
                 DeleteItem(go);
             }   
         }
     }
 
+    void UstItemPlayer(InventoryType key)
+    {
+        switch (key)
+        {
+            case InventoryType.Invisibility:
+                {
+                    MapEventManager.TriggerEvent(MapEventType.UseInvisiblePotion);
+                    break;
+                }
+            case InventoryType.Tunnel:
+                {
+                    // °³Âû±¸ ¸ô·ç?
+                    // MapEventManager.TriggerEvent(MapEventType.UseHatch);
+                    break;
+                }
+            case InventoryType.Flashlight:
+                {
+                    MapEventManager.TriggerEvent(MapEventType.UseUpgradedLight);
+                    break;
+                }
+            case InventoryType.EngeryDrink:
+                {
+                    MapEventManager.TriggerEvent(MapEventType.UseEnergyDrink);
+                    break;
+                }
+            case InventoryType.PrisonKey:
+                {
+                    // Å°¸ô·ç??
+                    MapEventManager.TriggerEvent(MapEventType.UsePrisonKey);
+                    break;
+                }
+            case InventoryType.Map:
+                {
+                    // ¸Ê¸ô·ç?
+                    //MapEventManager.TriggerEvent(MapEventType.PosirionFunction);
+                    break;
+                }
+            default:
+                break;
+        }
+    }
 
     public void DeleteItem(GameObject gameObject)
     {

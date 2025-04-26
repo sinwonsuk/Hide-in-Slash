@@ -67,7 +67,7 @@ public class MemoryMiniGameColorChange : MonoBehaviour
            
             t = Mathf.PingPong(Time.time, duration) / duration;
 
-            light2D.intensity =Mathf.Lerp(0, 12, t);
+            light2D.intensity =Mathf.Lerp(0, 18, t);
 
 
             //Color currentColor = Color.Lerp(Color.white, colors[(int)colorState], t);        

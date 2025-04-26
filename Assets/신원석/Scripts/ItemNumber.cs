@@ -27,6 +27,8 @@ public class ItemNumber : MonoBehaviour
             imageNumber.sprite = Resources.Load<Sprite>("FourthItem");
         if (num == 5)
             imageNumber.sprite = Resources.Load<Sprite>("FifthItem");
+        if (num == 5)
+            imageNumber.sprite = Resources.Load<Sprite>("FifthItem");
     }
 
 

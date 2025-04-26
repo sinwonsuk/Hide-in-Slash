@@ -2,28 +2,51 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
-   
-    void Start()
+    private void Update()
     {
-        
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            OpenStore();
+        }
+        else if (isPlayerInRange ==false && Input.GetKeyDown(KeyCode.E))
+        {
+            CloseStore();
+        }
     }
 
-
-    void Update()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Player"))
+        {
+            isPlayerInRange = true;
+        }
     }
 
-    public void BuyItem(string itemName)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        // 여기에 인보크 해줘야 겠는데 그럴려면 
-
-        Debug.Log("Item bought: " + itemName);
+        if (collision.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+            CloseStore();
+        }
     }
 
-    [SerializeField]
-    Inventory inventory;
+    private void OpenStore()
+    {
+        if (storeWindow != null)
+        {
+            storeWindow.SetActive(true);
+        }
+    }
 
+    private void CloseStore()
+    {
+        if (storeWindow != null)
+        {
+            storeWindow.SetActive(false);
+        }
+    }
 
-
+    [SerializeField] private GameObject storeWindow;
+    private bool isPlayerInRange = false;
 }

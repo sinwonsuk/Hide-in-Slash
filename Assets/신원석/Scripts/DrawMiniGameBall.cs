@@ -7,6 +7,7 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        drawMiniGame = GetComponentInParent<DrawMiniGame>();
     }
 
     private void Update()
@@ -18,12 +19,13 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if(other.CompareTag("DrawMiniGameUpWall"))
         {
-            Debug.Log("미니게임 성공");
+            Destroy(transform.parent.gameObject);
+            drawMiniGame.sucessObjectAction.Invoke();
         }
-
-        if (other.CompareTag("DrawMiniGameWall"))
+        else if (other.CompareTag("DrawMiniGameWall"))
         {
-            Debug.Log("미니게임 실패");
+            Destroy(transform.parent.gameObject);
+            drawMiniGame.failObjectAction.Invoke();
         }
     }
 
@@ -43,4 +45,7 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
     }
 
     private new Rigidbody2D rigidbody2D;
+
+    DrawMiniGame drawMiniGame;
+
 }

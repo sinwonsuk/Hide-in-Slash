@@ -11,6 +11,10 @@ public class MemoryMiniGame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Vector2 camera = Camera.main.transform.position;
+        transform.position = camera;
+
+
         colorChangeAction = MemoryMiniGame_OnColorChange;
         checkColorAction = CheckColor;
         activeButtonAction = ActiveButton;
@@ -47,10 +51,15 @@ public class MemoryMiniGame : MonoBehaviour
             {
                 if (colorcheck[i] == false)
                 {
+                    Destroy(gameObject);
+                    Instantiate(failObject);
                     Debug.Log("미니게임 실패");
                     return;
                 }
             }
+
+            Instantiate(sucessObject);
+            Destroy(gameObject);
             Debug.Log("미니게임 성공");
 
         }
@@ -72,4 +81,10 @@ public class MemoryMiniGame : MonoBehaviour
     List<bool> colorcheck = new List<bool>();
 
     List<ColorState> colors = new List<ColorState>();
+
+    [SerializeField]
+    GameObject sucessObject;
+
+    [SerializeField]
+    GameObject failObject;
 }

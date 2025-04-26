@@ -330,6 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83e8ba68b46e2546a45d9c43b648471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sucessObject: {fileID: 2991484233814362913, guid: 8bab289ee1baf2f4689e82eb10471f6c, type: 3}
+  failObject: {fileID: 1967457134575237859, guid: f25254bf0ae82fb4285cd140eb872e86, type: 3}
 --- !u!1 &2764209728803496968
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +615,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 1.44, y: 1.44, z: 1.44}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7617411731876248803}
@@ -662,8 +664,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6415094, g: 0.32378072, b: 0.32378072, a: 1}
+  m_Sprite: {fileID: -4321749633479426336, guid: 6de7edeea0a470f42a9f28a7640cbcb2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
