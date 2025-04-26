@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DrawMiniGame : MonoBehaviour
+public class DrawMiniGame : MiniGame
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Vector2 camera = Camera.main.transform.position;
@@ -22,14 +21,26 @@ public class DrawMiniGame : MonoBehaviour
 
     private void CreateSucessObject()
     {
+        Delete();
        Instantiate(sucessObject);
     }
     private void CreateFailObject()
     {
+        Delete();
         Instantiate(failObject);
     }
+
+
+    void Delete()
+    {
+        trigerAction.Invoke();
+        Destroy(gameObject);
+    }
+
     public UnityAction sucessObjectAction;
     public UnityAction failObjectAction;
+
+    public UnityAction Action;
 
     [SerializeField]
     GameObject sucessObject;

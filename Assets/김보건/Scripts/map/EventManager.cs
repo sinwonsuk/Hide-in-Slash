@@ -16,6 +16,8 @@ public enum EventType
     UseHatch,
     LightRestored,
     UseMap
+    PlayerHpOne,
+    PlayerHpZero
 }
 
 
@@ -23,6 +25,11 @@ public enum EventType
 public class EventManager
 {
     private static readonly Dictionary<EventType, Action> _eventMap = new();
+
+    public static Dictionary<EventType, Action> GeteventMap()
+    {
+        return _eventMap;
+    }
 
     // �̺�Ʈ ���
     public static void RegisterEvent(EventType eventType, Action eventFunc)
@@ -38,6 +45,11 @@ public class EventManager
     {
         if (_eventMap.ContainsKey(eventType))
             _eventMap[eventType] -= eventFunc;
+    }
+    public static void UnRegisterEvent(EventType eventType)
+    {
+        if (_eventMap.ContainsKey(eventType))
+            _eventMap[eventType] = null;
     }
 
     // �̺�Ʈ ����

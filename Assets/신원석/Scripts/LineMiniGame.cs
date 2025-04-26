@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class LineMiniGame : MonoBehaviour
+public class LineMiniGame : MiniGame
 {
 
     private void Awake()
@@ -56,6 +56,7 @@ public class LineMiniGame : MonoBehaviour
     
         if(lineChecks.Count == 4)
         {
+            trigerAction.Invoke();
             minigameSucess =Instantiate(minigameSucess);
             Destroy(gameObject);
         }

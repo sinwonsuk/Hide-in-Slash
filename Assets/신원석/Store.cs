@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
+
+    private void Start()
+    {
+        storeWindow = GameObject.Find("StoreWindow");
+    }
+
     private void Update()
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))

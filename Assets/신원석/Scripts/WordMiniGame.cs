@@ -14,10 +14,8 @@ enum adsasdsad
 
 
 
-public class WordMiniGame : MonoBehaviour
-{
-   
-
+public class WordMiniGame : MiniGame
+{ 
     void Start()
     {
         wordhandler = GetInputText;
@@ -33,7 +31,6 @@ public class WordMiniGame : MonoBehaviour
         if(correctCheck == 5)
         {
             Instantiate(minigameSucess);
-
             DeleteAll();
         }
 
@@ -123,6 +120,7 @@ public class WordMiniGame : MonoBehaviour
 
     void DeleteAll()
     {
+        trigerAction.Invoke();
         Destroy(transform.parent.gameObject);
 
         for (int i = 0; i < wordList.Count; i++)

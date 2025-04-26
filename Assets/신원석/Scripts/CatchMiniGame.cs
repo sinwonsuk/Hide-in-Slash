@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class CatchMiniGame : MonoBehaviour
+public class CatchMiniGame : MiniGame
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,13 +31,18 @@ public class CatchMiniGame : MonoBehaviour
         }
     }
 
+    void Delete()
+    {
+        trigerAction.Invoke();
+        Destroy(gameObject);
+    }
     public void CheckCircle()
     {
         check++;
 
         if(check == CircleCount)
         {
-            Destroy(gameObject);
+            Delete();
             Instantiate(sucessObject);
             Debug.Log("미니게임 승리");
         }

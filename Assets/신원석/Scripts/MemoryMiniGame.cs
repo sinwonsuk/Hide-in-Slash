@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MemoryMiniGame : MonoBehaviour
+public class MemoryMiniGame : MiniGame
 {
 
    
@@ -51,18 +51,24 @@ public class MemoryMiniGame : MonoBehaviour
             {
                 if (colorcheck[i] == false)
                 {
-                    Destroy(gameObject);
+                    Delete();
                     Instantiate(failObject);
                     Debug.Log("미니게임 실패");
                     return;
                 }
             }
 
+            Delete();
             Instantiate(sucessObject);
-            Destroy(gameObject);
             Debug.Log("미니게임 성공");
 
         }
+    }
+
+    void Delete()
+    {
+        trigerAction.Invoke();
+        Destroy(gameObject);
     }
 
 
