@@ -15,7 +15,7 @@ public enum EventType
     UsePrisonKey,
     UseHatch,
     PlayerHpOne,
-    PlayerHpZero
+    PlayerHpZero,
     LightOn,
     LightOff,
     UseMap,

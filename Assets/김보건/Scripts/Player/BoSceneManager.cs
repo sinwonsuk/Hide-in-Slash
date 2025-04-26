@@ -8,6 +8,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("OnJoinedRoom 호출됨!");
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
             Debug.LogError("스폰 포인트가 할당되지 않았습니다!");
@@ -26,7 +27,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         Vector3 spawnPos = playerSpawnPoints[playerIndex].position;
 
         // 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
         }

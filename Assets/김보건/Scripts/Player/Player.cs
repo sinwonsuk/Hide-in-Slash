@@ -90,19 +90,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject moveMap;
     [SerializeField] private string portalName = "CaughtPoint";
 
-    [Header("미니게임")]
-    [SerializeField] private GameObject miniGame;
-    private bool isInGame = false;
-    private bool isInMiniGame = false; 
-
-    [Header("발전기")]
-    [SerializeField] private GameObject generator;
-    private bool isInGenerator = false; 
-    private bool isGenerator = false; 
-
-    [Header("상점")]
-    private bool isInShop = false;
-
     [Header("개구멍")]
     [SerializeField] private bool hasHatch = false;
     private bool isInHatch = false;
@@ -197,11 +184,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             transform.localScale = scale;
 
             lightObject.localRotation = Quaternion.Euler(0f, 0f, lightAngle);
-        }
-
-        if (isInGame && Input.GetKeyDown(KeyCode.E))
-        {
-            OpenMiniGame();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -406,12 +388,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.CompareTag("MiniGame"))
-        {
-            Debug.Log("미니게임가능");
-            isInGame = true;
-        }
-
         if (collision.CompareTag("ExitDoor"))
         {
             Debug.Log("탈출구가능");
@@ -434,27 +410,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
 
 
-        if (collision.CompareTag("Generator"))
-        {
-            Debug.Log("발전기가능");
-            isInGenerator = true;
-        }
-
-        if (collision.CompareTag("Shop"))
-        {
-            Debug.Log("상점이용가능");
-            isInShop = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!photonView.IsMine) return;
-        if (collision.CompareTag("MiniGame"))
-        {
-            Debug.Log("미니게임가능");
-            isInGame = false;
-        }
 
         if (collision.CompareTag("Prison"))
         {
@@ -466,25 +425,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = false;
         }
 
-        if (collision.CompareTag("Generator"))
-        {
-            Debug.Log("발전기 작동불가");
-            isInGenerator = false;
-        }
-
-        if (collision.CompareTag("Shop"))
-        {
-            Debug.Log("상점이용불가");
-            isInShop = false;
-        }
-
-    }
-
-    private void OpenMiniGame()
-    {
-        Debug.Log("미니게임시작");
-        if (miniGame != null)
-            miniGame.SetActive(true);
 
     }
 
