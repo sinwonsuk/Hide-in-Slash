@@ -6,6 +6,7 @@ public class Store : MonoBehaviour
     private void Start()
     {
         storeWindow = GameObject.Find("StoreWindow");
+        storeWindow.SetActive(false);
     }
 
     private void Update()

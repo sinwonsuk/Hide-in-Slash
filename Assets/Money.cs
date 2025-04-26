@@ -3,25 +3,49 @@ using UnityEngine;
 
 public class Money : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static Money instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void useMoney()
+    public int GetMoney()
     {
-
+        return int.Parse(moneyCount.text);
     }
 
+    public void addMoney(int amount)
+    {
+        int money = int.Parse(moneyCount.text);
+        money += amount;
+        moneyCount.text = money.ToString();
+    }
+    public void MusMoney(int amount)
+    {
+        int money = int.Parse(moneyCount.text);
+        money -= amount;
+        moneyCount.text = money.ToString();
+    }
 
     [SerializeField]
-    TextMeshProUGUI money;
+    TextMeshProUGUI moneyCount;
 
 }

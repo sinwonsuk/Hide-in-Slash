@@ -116,6 +116,15 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(int _type,int price)
     {
+        if(Money.instance.GetMoney() < price)
+        {
+            Debug.Log("Not enough money to buy the item.");
+            return;
+        }
+
+
+        Money.instance.MusMoney(price);
+
         if (ItemDictionary.TryGetValue((InventoryType)_type, out GameObject gameObject))
         {
             gameObject.GetComponent<Item>().AddItemCount();           

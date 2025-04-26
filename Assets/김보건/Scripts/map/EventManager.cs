@@ -15,7 +15,7 @@ public enum EventType
     UsePrisonKey,
     UseHatch,
     LightRestored,
-    UseMap
+    UseMap,
     PlayerHpOne,
     PlayerHpZero
 }

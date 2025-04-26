@@ -16,7 +16,7 @@ public class MiniGameTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
         {
             isPlaying = true;
             OpenMiniGame();
@@ -25,9 +25,6 @@ public class MiniGameTrigger : MonoBehaviour
         {
             CloseMiniGame();
         }
-
-        
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
