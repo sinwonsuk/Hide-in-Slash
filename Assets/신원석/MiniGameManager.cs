@@ -12,17 +12,7 @@ public enum MinigameState
 
 public class MiniGameManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct MinigameEntry
-    {
-        public MinigameState state;
-        public GameObject prefab;
-    }
 
-    [SerializeField]
-    private List<MinigameEntry> minigameEntries;
-
-    private Dictionary<MinigameState, GameObject> minigameDictory;
 
     private void Awake()
     {
@@ -35,11 +25,13 @@ public class MiniGameManager : MonoBehaviour
                 minigameDictory.Add(entry.state, entry.prefab);
             }          
         }
+
+        LaunchRandomMinigame();
     }
 
     private void Start()
     {
-        LaunchRandomMinigame();
+        //LaunchRandomMinigame();
     }
 
     public void LaunchRandomMinigame()
@@ -48,11 +40,24 @@ public class MiniGameManager : MonoBehaviour
 
         MinigameState randomKey = keys[Random.Range(0, keys.Count)];
 
-        GameObject gameObject = Instantiate(minigameDictory[randomKey],transform);
+        choiceMiniGame = Instantiate(minigameDictory[randomKey],transform);
 
         Vector2 camera = Camera.main.transform.position;
 
-        gameObject.transform.position = new Vector2(camera.x,camera.y);
-
+        choiceMiniGame.transform.position = new Vector2(camera.x,camera.y);
     }
+
+    [System.Serializable]
+    public struct MinigameEntry
+    {
+        public MinigameState state;
+        public GameObject prefab;
+    }
+
+    [SerializeField]
+    private List<MinigameEntry> minigameEntries;
+
+    private Dictionary<MinigameState, GameObject> minigameDictory;
+
+    public GameObject choiceMiniGame { get; set; }
 }

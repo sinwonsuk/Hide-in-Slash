@@ -107,7 +107,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.JoinLobby();
         //PhotonNetwork.JoinRandomRoom();
         //PhotonNetwork.JoinLobby();
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 4 }, null);
+        //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 4 }, null);
     }
         //public override void OnJoinedLobby()
         //{

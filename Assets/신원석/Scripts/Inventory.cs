@@ -114,7 +114,7 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void AddItem(int _type)
+    public void AddItem(int _type,int price)
     {
         if (ItemDictionary.TryGetValue((InventoryType)_type, out GameObject gameObject))
         {
@@ -164,7 +164,7 @@ public class Inventory : MonoBehaviour
         {
             case InventoryType.Invisibility:
                 {
-                    MapEventManager.TriggerEvent(MapEventType.UseInvisiblePotion);
+                    EventManager.TriggerEvent(EventType.UseInvisiblePotion);
                     break;
                 }
             case InventoryType.Tunnel:
@@ -175,18 +175,18 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.Flashlight:
                 {
-                    MapEventManager.TriggerEvent(MapEventType.UseUpgradedLight);
+                    EventManager.TriggerEvent(EventType.UseUpgradedLight);
                     break;
                 }
             case InventoryType.EngeryDrink:
                 {
-                    MapEventManager.TriggerEvent(MapEventType.UseEnergyDrink);
+                    EventManager.TriggerEvent(EventType.UseEnergyDrink);
                     break;
                 }
             case InventoryType.PrisonKey:
                 {
                     // Ű����??
-                    MapEventManager.TriggerEvent(MapEventType.UsePrisonKey);
+                    EventManager.TriggerEvent(EventType.UsePrisonKey);
                     break;
                 }
             case InventoryType.Map:

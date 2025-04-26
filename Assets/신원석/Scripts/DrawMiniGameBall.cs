@@ -19,12 +19,10 @@ public class DrawMiniGameBall : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if(other.CompareTag("DrawMiniGameUpWall"))
         {
-            Destroy(transform.parent.gameObject);
             drawMiniGame.sucessObjectAction.Invoke();
         }
         else if (other.CompareTag("DrawMiniGameWall"))
         {
-            Destroy(transform.parent.gameObject);
             drawMiniGame.failObjectAction.Invoke();
         }
     }

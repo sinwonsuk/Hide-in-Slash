@@ -1,11 +1,16 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MiniGameTrigger : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        closeMiniGameAction = CloseMiniGame;
+
+
+
     }
 
     // Update is called once per frame
@@ -20,6 +25,9 @@ public class MiniGameTrigger : MonoBehaviour
         {
             CloseMiniGame();
         }
+
+        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,21 +52,27 @@ public class MiniGameTrigger : MonoBehaviour
         if (miniGameManager != null)
         {
             miniGameManager = Instantiate(miniGameManager);
+
+            GameObject choice = miniGameManager.GetComponent<MiniGameManager>().choiceMiniGame;
+            MiniGame MiniGame = choice.GetComponentInChildren<MiniGame>();
+            MiniGame.trigerAction = closeMiniGameAction;
         }
     }
 
     private void CloseMiniGame()
     {
-        if (miniGameManager != null && isPlaying ==true)
+        if (miniGameManager != null && isPlaying == true)
         {
             Destroy(gameObject);
             Destroy(miniGameManager.gameObject);
         }
-
     }
     bool isPlaying = false;
     bool isPlayerInRange = false;
 
     [SerializeField]
-    GameObject miniGameManager;    
+    GameObject miniGameManager;
+
+    UnityAction closeMiniGameAction;
 }
+
