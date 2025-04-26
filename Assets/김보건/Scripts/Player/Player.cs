@@ -140,8 +140,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.RegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.RegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.RegisterEvent(EventType.UseHatch, useHatchItem);
-        EventManager.RegisterEvent(EventType.LightRestored, TurnOnLight);
+        EventManager.RegisterEvent(EventType.LightOn, TurnOnLight);
+        EventManager.RegisterEvent(EventType.LightOff, TurnOffLight);
         EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
+        EventManager.RegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
+        EventManager.RegisterEvent(EventType.OutEventPlayer, ResumeMovement);
     }
 
     private void OnDisable()
@@ -151,8 +154,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.UnRegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.UnRegisterEvent(EventType.UseHatch, useHatchItem);
-        EventManager.UnRegisterEvent(EventType.LightRestored, TurnOnLight);
+        EventManager.UnRegisterEvent(EventType.LightOn, TurnOnLight);
+        EventManager.UnRegisterEvent(EventType.LightOff, TurnOffLight);
         EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
+        EventManager.UnRegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
+        EventManager.UnRegisterEvent(EventType.OutEventPlayer, ResumeMovement);
     }
 
     private void Start()
@@ -302,6 +308,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         rb.linearVelocity = Vector2.zero;
     }
 
+    public void ResumeMovement()
+    {
+        if (PlayerStateMachine != null)
+        {
+            PlayerStateMachine.ChangeState(idleState);
+        }
+    }
+
     public void UpdateAnimParam(Vector2 input)
     {
         if (input != Vector2.zero)
@@ -356,6 +370,17 @@ public class Player : MonoBehaviourPun, IPunObservable
         else if (y < 0 && facingUp) FlipVertical();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!photonView.IsMine) return;
+
+        if (collision.collider.CompareTag("Ghost"))
+        {
+            Debug.Log("고스트 충돌");
+            photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -379,14 +404,6 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("감옥문열기가능");
                 usePrisonKeyItem();
             }
-        }
-
-        if (collision.CompareTag("Ghost"))
-        {
-            Debug.Log("감옥으로이동");
-
-            Transform portal = moveMap.transform.Find(portalName);
-            transform.position = portal.position;
         }
 
         if (collision.CompareTag("MiniGame"))
@@ -469,6 +486,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (miniGame != null)
             miniGame.SetActive(true);
 
+    }
+
+    [PunRPC]
+    public void CaughtByGhost()
+    {
+        Transform portal = moveMap.transform.Find(portalName);
+        if (portal != null)
+            transform.position = portal.position;
     }
 
     public void BecomeGhost()
@@ -614,7 +639,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, isLightOn);
 
-        Debug.Log(isLightOn ? "������ ����" : "������ ����");
     }
 
     private void TurnOnLight()
@@ -627,6 +651,19 @@ public class Player : MonoBehaviourPun, IPunObservable
         photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, true);
 
         Debug.Log("손전등켜짐");
+    }
+
+    private void TurnOffLight()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        isLightOn = false;
+        flashlight.enabled = false;
+
+        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, false);
+
+        Debug.Log("손전등꺼짐");
     }
 
     private void HasTriggerMap()
