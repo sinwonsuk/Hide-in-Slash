@@ -15,16 +15,24 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         }
 
         int playerIndex = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-        Quaternion playerRotation = Quaternion.Euler(0, 0, 0);
+        Quaternion playerRotation = Quaternion.identity;
 
         if (playerIndex >= playerSpawnPoints.Length)
         {
             Debug.LogWarning("스폰 포인트 부족, 기본 위치에 스폰.");
-            PhotonNetwork.Instantiate("Player7", Vector3.zero, playerRotation);
+            playerIndex = 0; // 기본값
+        }
+
+        Vector3 spawnPos = playerSpawnPoints[playerIndex].position;
+
+        // 
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
         }
         else
         {
-            PhotonNetwork.Instantiate("Player7", playerSpawnPoints[playerIndex].position, playerRotation);
+            PhotonNetwork.Instantiate("PeanutGhost", spawnPos, playerRotation);
         }
     }
 }

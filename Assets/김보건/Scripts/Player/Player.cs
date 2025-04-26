@@ -6,19 +6,18 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
-using UnityEditor.Rendering;
 
 public enum EscapeType
 {
-    Dead = 0,         // Ż�� ����
-    ExitDoor = 1,     // Ż�ⱸ Ż��
-    Hatch = 2         // ������ Ż��
+    Dead = 0,         // 죽은상태
+    ExitDoor = 1,     // 탈출구
+    Hatch = 2         // 개구멍
 }
 
 public class Player : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private GameObject spriteObject; // SpriteRenderer �ִ� ������Ʈ
-    [SerializeField] private Transform lightObject;   // Light2D �ִ� ������Ʈ
+    [SerializeField] private GameObject spriteObject; 
+    [SerializeField] private Transform lightObject; 
 
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
@@ -28,16 +27,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     private float networkedDirY;
     private float lightAngle;
 
-    private Vector2 lastDir = Vector2.right;   // �⺻���� ������
+    private Vector2 lastDir = Vector2.right;   // 기본방향
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
 
     public SpriteRenderer sr { get; private set; }
-
-    // ������ Ʈ������ �����Ϻ���
-    public float posX, posY, posZ;
-    public float scaleX, scaleY, scaleZ;
 
     public int facingDir { get; private set; } = 1;
     public int facingUpDir { get; private set; } = 1;   // 1 = ��, -1 = �Ʒ�
@@ -56,64 +51,64 @@ public class Player : MonoBehaviourPun, IPunObservable
     public EscapeType escapeType { get; private set; } = EscapeType.Dead;
     public int EscapeCode => (int)escapeType;
 
+    private int countLife = 2;  //플레이어 수명
 
-    private int countLife = 2;  //���
-
-    [Header("�������帵ũ")]
+    [Header("이동물약")]
     [SerializeField] private float baseSpeed = 5f;
     [SerializeField] private float boostedSpeed = 10f;
     [SerializeField] private float boostDuration = 10f;
-    [SerializeField] private bool hasEnergyDrink = false;     //�������帵ũ ������ �ִ���
-    private bool isBoosted = false;           //�������帵ũ ��������� ����
-    [SerializeField] private float boostTimer;        // �ν�ƮŸ�̸�(������ �ø����ʵ�)
+    [SerializeField] private bool hasEnergyDrink = false;     
+    private bool isBoosted = false;         
+    [SerializeField] private float boostTimer;        //디버그용 시리얼라이즈필드
 
-    [Header("��������")]
+    [Header("투명물약")]
     [SerializeField] private float invisibleDuration = 5f;
-    [SerializeField] private bool hasInvisiblePotion = false;    //���������� ������ �ִ��� 
-    private bool isInvisible = false;           //�������� ����
-    [SerializeField] private float invisibleTimer;   // ����Ÿ�̸�(������ �ø����ʵ�)
+    [SerializeField] private bool hasInvisiblePotion = false;  
+    private bool isInvisible = false;           
+    [SerializeField] private float invisibleTimer;   //디버그용 시리얼라이즈필드
 
-    [Header("��������׷��̵�")]
+    [Header("손전등")]
     [SerializeField] private bool hasUpgradedFlashlight = false;
     [SerializeField] private Light2D flashlight;
-    [SerializeField] private float upgradedRadius = 8f; // ���׷��̵� �� �ݰ�
-    [SerializeField] private float defaultRadius = 3.5f; // �⺻ �ݰ�
+    [SerializeField] private float upgradedRadius = 8f; 
+    [SerializeField] private float defaultRadius = 3.5f;
     [SerializeField] private float upgradeLightDuration = 10f;
-    [SerializeField] private PolygonCollider2D lightCollider;   // ������ �ݶ��̴�
+    [SerializeField] private PolygonCollider2D lightCollider;   
     private bool isUpgradedLight = false;
-    [SerializeField] private float upgradedLightTimer; // ������
-    private bool isLightOn = false; // �⺻�������Ű��
+    [SerializeField] private float upgradedLightTimer; // 업글손전등 시간
+    private bool isLightOn = false; // 켜짐
     private bool isBlinking = false;
     private float blinkTimer = 0f;
-    private float blinkInterval = 0.3f; // �����̴� ����
+    private float blinkInterval = 0.3f; // 깜빡속도
     private Vector2[] defaultColliderPoints;
 
-    [Header("����Ű")]
-    [SerializeField] private bool hasPrisonKey = false; // ����Ű�� ������ �ִ���
+    [Header("감옥키")]
+    [SerializeField] private bool hasPrisonKey = false; 
     private bool isInPrisonDoor = false;
 
-    [Header("��ġ��")]
+    [Header("잡혀서 감옥감")]
     [SerializeField] private GameObject moveMap;
     [SerializeField] private string portalName = "CaughtPoint";
 
-    [Header("�̴ϰ���")]
+    [Header("미니게임")]
     [SerializeField] private GameObject miniGame;
     private bool isInGame = false;
-    private bool isInMiniGame = false; // �̴ϰ��� ��
+    private bool isInMiniGame = false; 
 
-    [Header("������")]
+    [Header("발전기")]
     [SerializeField] private GameObject generator;
-    private bool isInGenerator = false; // ������ �۵���?
-    private bool isGenerator = false; // ������ �۵�����
+    private bool isInGenerator = false; 
+    private bool isGenerator = false; 
 
-    [Header("����")]
+    [Header("상점")]
     private bool isInShop = false;
 
-    [Header("������")]
+    [Header("개구멍")]
     [SerializeField] private bool hasHatch = false;
     private bool isInHatch = false;
 
-    [Header("��")]
+    [Header("지도")]
+    [SerializeField] private GameObject mapUI;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
 
@@ -142,20 +137,22 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         EventManager.RegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
         EventManager.RegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
-        EventManager.RegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.RegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.RegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.RegisterEvent(EventType.UseHatch, useHatchItem);
         EventManager.RegisterEvent(EventType.LightRestored, TurnOnLight);
+        EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
     }
 
     private void OnDisable()
     {
         EventManager.UnRegisterEvent(EventType.UseEnergyDrink, BecomeBoost);
         EventManager.UnRegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
-        EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UpGradeLight);
+        EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.UnRegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
         EventManager.UnRegisterEvent(EventType.UseHatch, useHatchItem);
         EventManager.UnRegisterEvent(EventType.LightRestored, TurnOnLight);
+        EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
     }
 
     private void Start()
@@ -180,7 +177,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            // ���� ��ġ�� �ε巴�� ����
+            //이동보간
             transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
             rb.linearVelocity = networkedVelocity;
 
@@ -201,73 +198,27 @@ public class Player : MonoBehaviourPun, IPunObservable
             OpenMiniGame();
         }
 
-        if (hasInvisiblePotion && Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            BecomeInvisible();
-        }
-        else if (!hasInvisiblePotion)
-        {
-            Debug.Log("���� ���� ����");
-        }
-
-        if (hasEnergyDrink && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            BecomeBoost();
-        }
-        else if (!hasEnergyDrink)
-        {
-            Debug.Log("�������帵ũ ����");
-        }
-
-        if (hasUpgradedFlashlight && Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            photonView.RPC("UpGradeLight", RpcTarget.All);
-        }
-        else if (!hasUpgradedFlashlight)
-        {
-            Debug.Log("���׷��̵� ������ ����");
-        }
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ToggleLight();
         }
 
-        if (hasPrisonKey && isInPrisonDoor && Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            usePrisonKeyItem();
-        }
-        else if (!hasPrisonKey && Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Debug.Log("����Ű ����");
-        }
-
-        if (hasHatch && isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            useHatchItem();
-        }
-        else if (hasHatch && !isInHatch && Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            Debug.Log("�������� ����� �� ���� ���");
-        }
-        else
-        {
-            Debug.Log("��ȣ�ۿ�ȵ�");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            if (!isInMap)
-                OpenMap();
+            if (!hasMap)
+            {
+                Debug.Log("지도 없음");
+            }
             else
-                CloseMap();
-        }
-        else if (!hasMap && Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            Debug.Log("�� ����");
+            {
+                if (!isInMap)
+                    OpenMap();
+                else
+                    CloseMap();
+            }
         }
 
-        // ����ȭ ���ӽð�
+        // 투명물약지속시간
 
         if (isInvisible)
         {
@@ -278,7 +229,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        // �������帵ũ ���ӽð�
+        // 이동물약지속시간
         if (isBoosted)
         {
             boostTimer -= Time.deltaTime;
@@ -288,19 +239,18 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        // ������ ���׷��̵� ���ӽð�
+        // 손전등 지속시간
         if (isUpgradedLight)
         {
             upgradedLightTimer -= Time.deltaTime;
 
-            // 5�� ������ ������ �����̱� ����
+            // 5초지나면 깜빡
             if (upgradedLightTimer <= 5f && !isBlinking)
             {
                 isBlinking = true;
                 blinkTimer = blinkInterval;
             }
 
-            // �����̴� ���̸� ����Ʈ On/Off �ݺ�
             if (isBlinking)
             {
                 float timeRatio = upgradedLightTimer / 5f;
@@ -322,6 +272,12 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
+        // 테스트용
+        if (photonView.IsMine && PlayerStateMachine.currentState != deadState && Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("플레이어죽음");
+            PlayerStateMachine.ChangeState(deadState);
+        }
     }
 
 
@@ -330,14 +286,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         PlayerStateMachine.currentState.FixedUpdate();
         Vector3 pos = transform.position;
         //transform.position = new Vector3(pos.x, pos.y, pos.y);
-
-        posX = transform.position.x;
-        posY = transform.position.y;
-        posZ = transform.position.z;
-
-        scaleX = transform.localScale.x;
-        scaleY = transform.localScale.y;
-        scaleZ = transform.localScale.z;
     }
     public void SetEscapeType(EscapeType type)
     {
@@ -374,10 +322,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
 
-        // ����Ʈ ��ġ ����
         lightObject.localPosition = Vector3.zero;
 
-        // ����Ʈ ȸ���� ���� (���� ȸ��)
         lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
 
         if (photonView.IsMine)
@@ -403,11 +349,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void FlipController(float x, float y)
     {
-        // �¿� ����
         if (x > 0 && !facingRight) Flip();
         else if (x < 0 && facingRight) Flip();
 
-        // ���� ����
         if (y > 0 && !facingUp) FlipVertical();
         else if (y < 0 && facingUp) FlipVertical();
     }
@@ -415,46 +359,45 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 'PlayerSight' �±� ���� ����Ʈ ������Ʈ�� ����
+        if (!photonView.IsMine) return;
+
         if (collision.CompareTag("PlayerSight"))
             return;
 
         if (collision.CompareTag("Prison"))
         {
             countLife--;
-            Debug.Log($"{countLife} �� ������ ����");
+            Debug.Log($"{countLife} 번감옥이동");
             if (countLife <= 0)
             {
-                Debug.Log("�÷��̾� ���~");
+                Debug.Log("너죽음");
                 PlayerStateMachine.ChangeState(deadState);
             }
 
             if (hasPrisonKey)
             {
-                Debug.Log("����Ű ��밡��");
+                Debug.Log("감옥문열기가능");
                 usePrisonKeyItem();
             }
         }
 
-        //�ͽſ��� ������ ��
         if (collision.CompareTag("Ghost"))
         {
-            Debug.Log("�ͽſ��� ����");
+            Debug.Log("감옥으로이동");
 
             Transform portal = moveMap.transform.Find(portalName);
             transform.position = portal.position;
         }
 
-        // �̴ϰ��� ����
         if (collision.CompareTag("MiniGame"))
         {
-            Debug.Log("�̴ϰ��� ����");
+            Debug.Log("미니게임가능");
             isInGame = true;
         }
 
         if (collision.CompareTag("ExitDoor"))
         {
-            Debug.Log("Ż�ⱸ : Ż�Ⱑ��");
+            Debug.Log("탈출구가능");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
         }
@@ -464,7 +407,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInPrisonDoor = true;
             if (hasPrisonKey)
             {
-                Debug.Log("����Ű ��밡��");
+                Debug.Log("감옥해방가능");
             }
         }
 
@@ -473,32 +416,32 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = true;
         }
 
-        // ������ ������
+
         if (collision.CompareTag("Generator"))
         {
-            Debug.Log("������ �۵�����");
+            Debug.Log("발전기가능");
             isInGenerator = true;
         }
 
-        // ����
         if (collision.CompareTag("Shop"))
         {
-            Debug.Log("���� ��ȣ�ۿ� ����");
+            Debug.Log("상점이용가능");
             isInShop = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!photonView.IsMine) return;
         if (collision.CompareTag("MiniGame"))
         {
-            Debug.Log("�̴ϰ��� ����");
+            Debug.Log("미니게임가능");
             isInGame = false;
         }
 
         if (collision.CompareTag("Prison"))
         {
-            isInPrisonDoor = false; // ���� ���� ������ ����
+            isInPrisonDoor = false; 
         }
 
         if (collision.CompareTag("Hatch"))
@@ -508,13 +451,13 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Generator"))
         {
-            Debug.Log("������ �۵� �Ұ���");
+            Debug.Log("발전기 작동불가");
             isInGenerator = false;
         }
 
         if (collision.CompareTag("Shop"))
         {
-            Debug.Log("���� �̿� �Ұ���");
+            Debug.Log("상점이용불가");
             isInShop = false;
         }
 
@@ -522,26 +465,32 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OpenMiniGame()
     {
-        Debug.Log("�̴ϰ��� ����");
+        Debug.Log("미니게임시작");
         if (miniGame != null)
             miniGame.SetActive(true);
 
-        // �÷��̾� ���� ���
     }
 
-    //�÷��̾�����
     public void BecomeGhost()
     {
+        if(!photonView.IsMine)
+           return; 
+
         Color c = sr.color;
         c.a = 0.5f;
         sr.color = c;
 
-        Collider2D col = GetComponent<Collider2D>();
-        col.enabled = false;
+        photonView.RPC("SetGhostVisual", RpcTarget.Others);
 
     }
 
-    //���� ���� ����
+    [PunRPC]
+    public void SetGhostVisual()
+    {
+        gameObject.SetActive(false);
+    }
+
+    //투명물약
     public void BecomeInvisible()
     {
         if (!photonView.IsMine)
@@ -549,15 +498,17 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
         }
 
-         Color c = sr.color;
-         c.a = 0.5f;
-         sr.color = c;
+        Color c = sr.color;
+        c.a = 0.5f;
+        sr.color = c;
 
-         hasInvisiblePotion = false;
-         isInvisible = true;
-         invisibleTimer = invisibleDuration;
+        hasInvisiblePotion = false;
+        isInvisible = true;
+        invisibleTimer = invisibleDuration;
 
-         Debug.Log("���� ���� ���");
+        photonView.RPC("SetInvisibilityVisual", RpcTarget.Others, true);
+
+        Debug.Log("투명버프");
         
     }
 
@@ -568,26 +519,62 @@ public class Player : MonoBehaviourPun, IPunObservable
         sr.color = c;
 
         isInvisible = false;
-        Debug.Log("�������� ����");
+        photonView.RPC("SetInvisibilityVisual", RpcTarget.Others, false);
+        Debug.Log("투명버프끝");
     }
 
-    // ������ �帵ũ ����
+    [PunRPC]
+    public void SetTransparencyVisual(bool isInvisible)
+    {
+        if (!isInvisible)
+        {
+            Color visible = sr.color;
+            visible.a = 1f;
+            sr.color = visible;
+            return;
+        }
+
+        // RPC신호받는 사람기준에서 역할따라 "RPC"쏜 사람 투명도 조절
+        if (PhotonNetwork.LocalPlayer.CustomProperties["Role"].ToString().StartsWith("Mon"))  
+        {
+            // 아예 x
+            Color c = sr.color;
+            c.a = 0f;
+            sr.color = c;
+        }
+        else
+        {
+            // 아군은 반투명
+            Color c = sr.color;
+            c.a = 0.5f;
+            sr.color = c;
+        }
+    }
+
+    // 이동속도업글
     public void BecomeBoost()
     {
         moveSpeed = boostedSpeed;
         hasEnergyDrink = false;
         isBoosted = true;
         boostTimer = boostDuration;
-        Debug.Log("�ӵ� ����");
+        Debug.Log("이속버프");
     }
     private void ResetMoveSpeed()
     {
         moveSpeed = baseSpeed;
         isBoosted = false;
-        Debug.Log("�ӵ� ���� ����");
+        Debug.Log("이속버프끝");
     }
 
-    //������ ���׷��̵�
+
+    //손전등업글
+    private void UseUpgradedLightHandler()
+    {
+        // RPC 호출로 네트워크에 상태를 전파
+        photonView.RPC("UpGradeLight", RpcTarget.All);
+    }
+
     [PunRPC]
     private void UpGradeLight()
     {
@@ -601,8 +588,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         float scaleRatio = upgradedRadius / defaultRadius;
         ScalePolygonCollider(scaleRatio);
 
-        Debug.Log("������ ���׷��̵�");
+        Debug.Log("손전등 업글");
     }
+
 
     private void ResetFlashlight()
     {
@@ -612,8 +600,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         isBlinking = false;
         blinkTimer = 0f;
 
-        ScalePolygonCollider(1.0f); // ���� ũ��� ����
-        Debug.Log("������ ���׷��̵� ��");
+        ScalePolygonCollider(1.0f); // 손전등원래대로
+        Debug.Log("손전등업그레이드 종료");
     }
 
     private void ToggleLight()
@@ -638,27 +626,36 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashlight.enabled = true;
         photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, true);
 
-        Debug.Log("������ �ٽ� ����");
+        Debug.Log("손전등켜짐");
+    }
+
+    private void HasTriggerMap()
+    {
+        hasMap = true;
     }
 
     private void OpenMap()
     {
-        Debug.Log("�� ����");
+        hasMap = true;
+        Debug.Log(" 맵열림");
         if (hasMap)
         {
             isInMap = true;
-            // �� UI ����
+            if (mapUI != null)
+                mapUI.SetActive(true);
 
         }
         else
         {
-            Debug.Log("�� ����");
+            Debug.Log("맵 없음");
         }
     }
     private void CloseMap()
     {
         isInMap = false;
-        Debug.Log("�� �ݱ�");
+        if (mapUI != null)
+            mapUI.SetActive(false);
+        Debug.Log("맵 닫음");
     }
 
     [PunRPC]
@@ -678,18 +675,17 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.points = scaled;
     }
 
-    // ����Ű ���
 
     private void usePrisonKeyItem()
     {
-        Debug.Log("���� Ű ���");
+        Debug.Log("감옥 키");
         EventManager.TriggerEvent(EventType.OpenPrisonDoor);
         hasPrisonKey = false;
     }
 
     private void useHatchItem()
     {
-        Debug.Log("������ ���");
+        Debug.Log("개구멍사용");
         escapeState.SetEscapeType(EscapeType.Hatch);
         PlayerStateMachine.ChangeState(escapeState);
     }
@@ -698,7 +694,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // ������ ����
+            //신호보냄
             stream.SendNext(transform.position);
             stream.SendNext(transform.localScale);
             stream.SendNext(rb.linearVelocity);
@@ -713,7 +709,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            //�ٸ��� �����ޱ�
+            //신호받음
             networkedPosition = (Vector3)stream.ReceiveNext();
             transform.localScale = (Vector3)stream.ReceiveNext();
             networkedVelocity = (Vector2)stream.ReceiveNext();

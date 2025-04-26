@@ -36,8 +36,8 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        if (player.anim != null)
-            player.anim.SetBool(animBoolName, true);
+        //if (player.anim != null)
+        //    player.anim.SetBool(animBoolName, true);
         rb = player.rb;
         triggerCalled = false;
     }
@@ -53,8 +53,8 @@ public class PlayerState
 
     public virtual void Exit()
     {
-        if (player.anim != null)
-            player.anim.SetBool(animBoolName, false);
+        //if (player.anim != null)
+        //    player.anim.SetBool(animBoolName, false);
     }
 
     public virtual void AnimationFinishTrigger()

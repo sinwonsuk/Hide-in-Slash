@@ -134,6 +134,7 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && ItemDictionary.Count > 0)
         {
+            EventManager.TriggerEvent(EventType.UseMap);
             TryUseSelectedItem();
         }      
     }

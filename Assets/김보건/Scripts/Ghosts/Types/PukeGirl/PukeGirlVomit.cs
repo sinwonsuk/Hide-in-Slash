@@ -12,7 +12,6 @@ public class PukeGirlVomit : GhostState
         ghost.SetZeroVelocity();
 
         ghost.anim.SetBool("IsVomiting", true);
-        ghost.anim.SetBool("Move", false);
         ghost.anim.SetBool("IsMoving", false);
         Debug.Log("ลไวิ");
     }

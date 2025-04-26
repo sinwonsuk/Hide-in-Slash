@@ -1,8 +1,11 @@
+using Photon.Pun;
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
-public class Peanut : Ghost
+public class Peanut : Ghost, IPunObservable
 {
     public override GhostState moveState { get; protected set; }
     private GhostState stunnedState;
@@ -10,10 +13,24 @@ public class Peanut : Ghost
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
+    private PhotonView photonView;
+
+    private Vector3 networkedPosition;
+    private Vector3 networkedVelocity;
+    private float lerpSpeed = 10f;
+    private bool networkedIsMoving;
+    private float networkedDirX;
+    private float networkedDirY;
+
     protected override void Awake()
     {
 
         base.Awake();
+        photonView = GetComponent<PhotonView>();
+
+        if (ghostStateMachine == null)
+            ghostStateMachine = new GhostStateMachine();
+
         idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
         moveState = new PeanutMove(this, ghostStateMachine, "Move");
         stunnedState = new PeanutStunned(this, ghostStateMachine, "sturnned");
@@ -23,20 +40,55 @@ public class Peanut : Ghost
 
     protected override void Start()
     {
-        base.Start();
+
+        if (photonView.IsMine)
+        {
+            base.Start();
+            CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+            if (cam != null)
+                cam.Follow = transform;
+        }
+
+        if (!photonView.IsMine)
+        {
+            Light2D light = GetComponentInChildren<Light2D>();
+            if (light != null)
+                light.enabled = false;
+        }
     }
 
     protected override void Update()
     {
-        base.Update();
+        if (photonView.IsMine)
+        {
+            base.Update();
+        }
+        else
+        {
+            //이동보간
+            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
 
-        //플레이어의 빛 구간에 들어오면 멈추게
+            anim.SetBool("IsMoving", networkedIsMoving);
+            anim.SetFloat("DirX", networkedDirX);
+            anim.SetFloat("DirY", networkedDirY);
 
+            if (Mathf.Abs(networkedDirX) >= Mathf.Abs(networkedDirY))
+            {
+                sr.flipX = networkedDirX < 0;
+            }
+        }
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        if (photonView.IsMine)
+        {
+            base.FixedUpdate();
+        }
+        else
+        {
+            rb.linearVelocity = networkedVelocity; 
+        }
     }
 
     public override void UpdateAnimParam(Vector2 input)
@@ -72,6 +124,51 @@ public class Peanut : Ghost
         yield return new WaitForSeconds(time);
         isStunned = false;
         ghostStateMachine.ChangeState(idleState);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting) // 내가 보냄
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.localScale);
+            stream.SendNext(rb.linearVelocity);
+            stream.SendNext((int)ghostStateMachine.CurrentStateType);
+            stream.SendNext(facingDir);
+            stream.SendNext(facingUpDir);
+            stream.SendNext(anim.GetBool("IsMoving"));
+            stream.SendNext(anim.GetFloat("DirX"));
+            stream.SendNext(anim.GetFloat("DirY"));
+        }
+        else // 상대방이 보낸 것 받음
+        {
+            networkedPosition = (Vector3)stream.ReceiveNext();
+            transform.localScale = (Vector3)stream.ReceiveNext();
+            networkedVelocity = (Vector2)stream.ReceiveNext();
+            GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();
+            int receivedFacingDir = (int)stream.ReceiveNext();     
+            int receivedFacingUpDir = (int)stream.ReceiveNext();   
+            SetFacingDirection(receivedFacingDir, receivedFacingUpDir);
+            networkedIsMoving = (bool)stream.ReceiveNext();
+            networkedDirX = (float)stream.ReceiveNext();
+            networkedDirY = (float)stream.ReceiveNext();
+
+            if (ghostStateMachine != null && ghostStateMachine.CurrentStateType != receivedState)
+            {
+                switch (receivedState)
+                {
+                    case GhostStateType.Idle:
+                        ghostStateMachine.ChangeState(idleState);
+                        break;
+                    case GhostStateType.Move:
+                        ghostStateMachine.ChangeState(moveState);
+                        break;
+                    case GhostStateType.Stunned:
+                        ghostStateMachine.ChangeState(stunnedState);
+                        break;
+                }
+            }
+        }
     }
 }
 

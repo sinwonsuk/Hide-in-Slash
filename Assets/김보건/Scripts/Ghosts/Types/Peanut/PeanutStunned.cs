@@ -12,7 +12,6 @@ public class PeanutStunned : GhostState
         base.Enter();
         ghost.SetZeroVelocity();
 
-        ghost.anim.SetBool("Move", false);
         ghost.anim.SetBool("IsMoving", false);
         Debug.Log("Ω∫≈œ");
     }
