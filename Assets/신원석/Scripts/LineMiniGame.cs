@@ -10,6 +10,10 @@ public class LineMiniGame : MonoBehaviour
 
     private void Awake()
     {
+        Vector2 camera = Camera.main.transform.position;
+
+        transform.position = camera;
+
         action = CheckLineCount;
 
         LineMiniGameRightCollisions = GetComponentsInChildren<LineMiniGameRightCollision>();
@@ -52,7 +56,8 @@ public class LineMiniGame : MonoBehaviour
     
         if(lineChecks.Count == 4)
         {
-            Debug.Log("라인미니게임승리");
+            minigameSucess =Instantiate(minigameSucess);
+            Destroy(gameObject);
         }
 
     }
@@ -92,6 +97,9 @@ public class LineMiniGame : MonoBehaviour
     List<int> lineChecks = new List<int>();
 
     public Action<int> action;
+
+    [SerializeField]
+    GameObject minigameSucess;
 
 }
  

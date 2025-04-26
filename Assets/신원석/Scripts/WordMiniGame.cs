@@ -30,23 +30,28 @@ public class WordMiniGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(correctCheck == 5)
+        {
+            Instantiate(minigameSucess);
+
+            DeleteAll();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            DeleteAll();
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector2 adsd =transform.position;
-        Vector2 ssss = collision.transform.position;
-
-        Debug.Log(gameObject.name);
-        WordMiniGame ad = this;
-
         Destroy(collision.gameObject);
         wordList.Remove(collision.gameObject);                          
     }
 
 
-    void OnCollisionEnter2D(UnityEngine.Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(collision.gameObject);
         wordList.Remove(collision.gameObject);
@@ -79,11 +84,13 @@ public class WordMiniGame : MonoBehaviour
                 }
             }
 
+            correctCheck++;
             Destroy(temp.gameObject);
             wordList.Remove(temp.gameObject);
         }
         else if (sameStrings.Count == 1)
         {
+            correctCheck++;
             Destroy(sameStrings[0].gameObject);
             wordList.Remove(sameStrings[0].gameObject);
         }
@@ -94,26 +101,58 @@ public class WordMiniGame : MonoBehaviour
     {
         while (true)
         {
+            int RandomObeect = Random.Range(0, 8);
             float randomX = Random.Range(-340.0f, 340.0f);
+            // 8개중에 7개는 단어가 떨어지게 하고 나머지는 배터리 떨어지게 하기 위해서
 
-            GameObject word = Instantiate(miniGameWordDrop, rectTransform);
-
-            word.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 375.0f);
-
-            wordList.Add(word);
-
+            if (RandomObeect == 7)
+            {
+                GameObject betteryIns = Instantiate(bettery, rectTransform);
+                betteryIns.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 375.0f);
+                batteryList.Add(betteryIns);
+            }
+            else
+            {              
+                GameObject word = Instantiate(miniGameWordDrop, rectTransform);
+                word.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 375.0f);
+                wordList.Add(word);
+            }
             yield return new WaitForSeconds(1f);
+        }      
+    }
+
+    void DeleteAll()
+    {
+        Destroy(transform.parent.gameObject);
+
+        for (int i = 0; i < wordList.Count; i++)
+        {
+            Destroy(wordList[i].gameObject);
         }
-       
+        for (int i = 0; i < batteryList.Count; i++)
+        {
+            Destroy(batteryList[i].gameObject);
+        }
     }
 
     RectTransform rectTransform;    
 
     [SerializeField]
     GameObject miniGameWordDrop;
+    [SerializeField]
+    GameObject bettery;
+    [SerializeField]
+    GameObject minigameSucess;
 
     List<GameObject> wordList = new List<GameObject>();
+    List<GameObject> batteryList = new List<GameObject>();
 
     public Action<string> wordhandler;
+
+    [SerializeField]
+    int correctCount = 10;
+
+    int correctCheck = 0;
+
 
 }

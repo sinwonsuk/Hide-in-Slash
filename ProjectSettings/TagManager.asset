@@ -23,6 +23,9 @@ TagManager:
   - generatorMiniGameStop
   - psp
   - esp
+  - EventSpawnPoint
+  - PlayerSpawnPoint
+  - DrawMiniGameUpWall
   layers:
   - Default
   - TransparentFX
@@ -35,10 +38,10 @@ TagManager:
   - MiniMapWall
   - MiniMapLight
   - Global Light
-  - 
-  - 
-  - 
-  - 
+  - MiniGameLight
+  - DrawMiniGameWall
+  - DrawMiniGameBall
+  - DrawMiniGameUpWall
   - 
   - 
   - 
