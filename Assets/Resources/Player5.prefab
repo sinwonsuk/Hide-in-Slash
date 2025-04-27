@@ -576,12 +576,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 7990694987044568968}
   lightObject: {fileID: 1455033098636330922}
-  posX: 0
-  posY: 0
-  posZ: 0
-  scaleX: 0
-  scaleY: 0
-  scaleZ: 0
   moveSpeed: 5
   baseSpeed: 5
   boostedSpeed: 10
@@ -601,9 +595,8 @@ MonoBehaviour:
   hasPrisonKey: 0
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
   portalName: CaughtPoint
-  miniGame: {fileID: 0}
-  generator: {fileID: 0}
   hasHatch: 0
+  mapUI: {fileID: 0}
   hasMap: 0
 --- !u!50 &39344774638724576
 Rigidbody2D:

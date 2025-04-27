@@ -20,6 +20,9 @@ public class Ghost : MonoBehaviour
     public virtual GhostState idleState { get; protected set; }
     public virtual GhostState moveState { get; protected set; }
 
+    public virtual GhostState useSkillState { get; protected set; }
+    public virtual GhostState idleSkillState { get; protected set; }
+
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();

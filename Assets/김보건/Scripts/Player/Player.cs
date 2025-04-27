@@ -358,8 +358,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.collider.CompareTag("Ghost"))
         {
+            countLife--;
             Debug.Log("고스트 충돌");
             photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+            if (countLife <= 0)
+            {
+                Debug.Log("너죽음");
+                PlayerStateMachine.ChangeState(deadState);
+            }
         }
     }
 
@@ -371,22 +377,22 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (collision.CompareTag("PlayerSight"))
             return;
 
-        if (collision.CompareTag("Prison"))
-        {
-            countLife--;
-            Debug.Log($"{countLife} 번감옥이동");
-            if (countLife <= 0)
-            {
-                Debug.Log("너죽음");
-                PlayerStateMachine.ChangeState(deadState);
-            }
+        //if (collision.CompareTag("Prison"))
+        //{
+        //    countLife--;
+        //    Debug.Log($"{countLife} 번감옥이동");
+        //    if (countLife <= 0)
+        //    {
+        //        Debug.Log("너죽음");
+        //        PlayerStateMachine.ChangeState(deadState);
+        //    }
 
-            if (hasPrisonKey)
-            {
-                Debug.Log("감옥문열기가능");
-                usePrisonKeyItem();
-            }
-        }
+        //    if (hasPrisonKey)
+        //    {
+        //        Debug.Log("감옥문열기가능");
+        //        usePrisonKeyItem();
+        //    }
+        //}
 
         if (collision.CompareTag("ExitDoor"))
         {
@@ -536,6 +542,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     //손전등업글
     private void UseUpgradedLightHandler()
     {
+        if (!photonView.IsMine)
+            return;
         // RPC 호출로 네트워크에 상태를 전파
         photonView.RPC("UpGradeLight", RpcTarget.All);
     }
