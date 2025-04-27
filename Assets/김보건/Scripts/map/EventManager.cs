@@ -20,7 +20,7 @@ public enum EventType
     LightOn,
     LightOff,
     InEventPlayer,
-    OutEventPlayer
+    OutEventPlayer,
     LightRestored,
     SpawnMinigame,
     DestroyMiniGame

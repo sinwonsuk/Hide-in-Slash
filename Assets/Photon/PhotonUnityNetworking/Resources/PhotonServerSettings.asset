@@ -52,6 +52,7 @@ MonoBehaviour:
   - ActivateProtein
   - RPC_CaughtByGhost
   - CaughtByGhost
+  - SyncProfileState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -23,7 +23,7 @@ public class SpawnPlayerProfile : MonoBehaviour
 
     public void MakeProfileSlot(Photon.Realtime.Player targetPlayer)
     {
-        GameObject slot = Instantiate(profileSlotPrefab, profileSlotParent);
+        //GameObject slot = Instantiate(profileSlotPrefab, profileSlotParent);
         //OtherPlayerProfile profile = slot.GetComponent<OtherPlayerProfile>();
         //profile.SetPlayer(targetPlayer);
     }
