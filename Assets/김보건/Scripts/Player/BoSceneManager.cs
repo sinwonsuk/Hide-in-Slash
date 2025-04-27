@@ -94,11 +94,11 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player3", spawnPos, playerRotation);
         }
         else if (playerCount == 3)
         {
