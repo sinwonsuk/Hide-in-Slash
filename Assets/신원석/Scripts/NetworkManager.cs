@@ -39,44 +39,44 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // ◀버튼 -2 , ▶버튼 -1 , 셀 숫자
     public void MyListClick(int num)
     {
-        if (num == -2) --currentPage;
-        else if (num == -1) ++currentPage;
-        else PhotonNetwork.JoinRoom(myList[multiple + num].Name);
-        MyListRenewal();
+        //if (num == -2) --currentPage;
+        //else if (num == -1) ++currentPage;
+        //else PhotonNetwork.JoinRoom(myList[multiple + num].Name);
+        //MyListRenewal();
     }
 
     void MyListRenewal()
     {
-        // 최대페이지
-        maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
+        //// 최대페이지
+        //maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
 
-        // 이전, 다음버튼
-        PreviousBtn.interactable = (currentPage <= 1) ? false : true;
-        NextBtn.interactable = (currentPage >= maxPage) ? false : true;
+        //// 이전, 다음버튼
+        //PreviousBtn.interactable = (currentPage <= 1) ? false : true;
+        //NextBtn.interactable = (currentPage >= maxPage) ? false : true;
 
-        // 페이지에 맞는 리스트 대입
-        multiple = (currentPage - 1) * CellBtn.Length;
-        for (int i = 0; i < CellBtn.Length; i++)
-        {
-            CellBtn[i].interactable = (multiple + i < myList.Count) ? true : false;
-            CellBtn[i].transform.GetChild(0).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].Name : "";
-            CellBtn[i].transform.GetChild(1).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
-        }
+        //// 페이지에 맞는 리스트 대입
+        //multiple = (currentPage - 1) * CellBtn.Length;
+        //for (int i = 0; i < CellBtn.Length; i++)
+        //{
+        //    CellBtn[i].interactable = (multiple + i < myList.Count) ? true : false;
+        //    CellBtn[i].transform.GetChild(0).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].Name : "";
+        //    CellBtn[i].transform.GetChild(1).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
+        //}
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        int roomCount = roomList.Count;
-        for (int i = 0; i < roomCount; i++)
-        {
-            if (!roomList[i].RemovedFromList)
-            {
-                if (!myList.Contains(roomList[i])) myList.Add(roomList[i]);
-                else myList[myList.IndexOf(roomList[i])] = roomList[i];
-            }
-            else if (myList.IndexOf(roomList[i]) != -1) myList.RemoveAt(myList.IndexOf(roomList[i]));
-        }
-        MyListRenewal();
+        //int roomCount = roomList.Count;
+        //for (int i = 0; i < roomCount; i++)
+        //{
+        //    if (!roomList[i].RemovedFromList)
+        //    {
+        //        if (!myList.Contains(roomList[i])) myList.Add(roomList[i]);
+        //        else myList[myList.IndexOf(roomList[i])] = roomList[i];
+        //    }
+        //    else if (myList.IndexOf(roomList[i]) != -1) myList.RemoveAt(myList.IndexOf(roomList[i]));
+        //}
+        //MyListRenewal();
     }
     #endregion
 
@@ -105,7 +105,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         //PhotonNetwork.JoinLobby();
-        PhotonNetwork.JoinRandomRoom();
+        //PhotonNetwork.JoinRandomRoom();
         //PhotonNetwork.JoinLobby();
         //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 4 }, null);
     }
