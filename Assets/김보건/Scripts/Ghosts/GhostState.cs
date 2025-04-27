@@ -42,6 +42,7 @@ public class GhostState
 
     public virtual void Update()
     {
+        moveInput = ghost.MoveInput;
         stateTimer -= Time.deltaTime;
 
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
