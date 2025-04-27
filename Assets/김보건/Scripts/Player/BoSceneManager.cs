@@ -22,30 +22,50 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
             time += Time.deltaTime;
         }
     }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
+
+            //string name = prop["Role"].ToString();
+
+            if (player != PhotonNetwork.LocalPlayer)
+            {
+                profileSlotManager.CreateProfileSlot(player);
+            }
+        }
+    }
+
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             ExitGames.Client.Photon.Hashtable monProp = new();
 
-            monProp.Add("Role", "Monster");          
+            monProp.Add("Role", "Monster");
+            PhotonNetwork.LocalPlayer.SetCustomProperties(monProp);
         }
-
-        test();
-
-        foreach (var player in PhotonNetwork.PlayerList)
+        else
         {
-            
-
-            ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
-
-            string name = prop["Role"].ToString();
-
-            if (player != PhotonNetwork.LocalPlayer && name != "Monster")
-            {
-                profileSlotManager.CreateProfileSlot(player);
-            }         
+            ExitGames.Client.Photon.Hashtable humanProp = new();
+            humanProp.Add("Role", "Human");
+            PhotonNetwork.LocalPlayer.SetCustomProperties(humanProp);
         }
+        //test();
+
+        //foreach (var player in PhotonNetwork.PlayerList)
+        //{         
+        //    ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
+
+        //    string name = prop["Role"].ToString();
+
+        //    if (player != PhotonNetwork.LocalPlayer && name != "Monster")
+        //    {
+        //        profileSlotManager.CreateProfileSlot(player);
+        //    }         
+        //}
 
         Debug.Log(" OnJoinedRoom 호출됨!");
         Debug.Log($" 현재 방 이름: {PhotonNetwork.CurrentRoom.Name}");
@@ -74,10 +94,6 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            ExitGames.Client.Photon.Hashtable monProp = new();
-
-            monProp.Add("Role", "Monster");
-
             PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
@@ -90,27 +106,27 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         }
         else if (playerCount == 4)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 5)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 6)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 7)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 8)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
         else if (playerCount == 9)
         {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
         }
     }
 }
