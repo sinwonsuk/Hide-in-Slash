@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class MapManager : MonoBehaviourPunCallbacks
@@ -18,24 +19,37 @@ public class MapManager : MonoBehaviourPunCallbacks
     private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
     private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
+    private Transform shipTf;
 
+    private new void OnEnable()
+    {
+        EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+        Debug.Log("구독완");
+    }
     void Start()
     {
-
+        if (PhotonNetwork.OfflineMode)
+        {
+            Debug.Log("Photon이 현재 오프라인 모드입니다.");
+        }
+        Debug.Log("접속할거임");
         PhotonNetwork.ConnectUsingSettings();
 
 
 
+    }
+
+
+    private void RoomON()
+    {
+        
+        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
 
     }
 
-    public override void OnConnectedToMaster()
+    private void StartGame()
     {
-        //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
-    }
-
-    public override void OnJoinedRoom()
-    {
+        Debug.Log("방온");
         if (PhotonNetwork.IsMasterClient)
         {
             InitializeMap();
@@ -55,9 +69,21 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RoomON();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            StartGame();
+        }
+        if (PhotonNetwork.IsConnected)
+        {
+            Debug.Log("서버에 연결됨");
+        }
         if (PhotonNetwork.IsMasterClient)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Y))
             {
                 Debug.Log("총" + PhotonNetwork.PlayerList.Length);
                 roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length);
@@ -69,7 +95,7 @@ public class MapManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.U))
         {
 
             InitializePlayers();
@@ -123,6 +149,10 @@ public class MapManager : MonoBehaviourPunCallbacks
                 else if (child.CompareTag("psp"))
                 {
                     playerSpawnPoints.Add(child);
+                }
+                else if (child.name == "ShipSpawn")
+                {
+                    shipTf = child;
                 }
             }
         }
@@ -180,10 +210,6 @@ public class MapManager : MonoBehaviourPunCallbacks
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
         Debug.Log("역할배정완료");
-        for (int i = 0; i < players.Length; i++)
-        {
-            Debug.Log(i + PhotonNetwork.PlayerList[i].CustomProperties["Role"].ToString());
-        }
     }
 
     private void InitializePlayers()
@@ -192,8 +218,16 @@ public class MapManager : MonoBehaviourPunCallbacks
         string playerName = prop["Role"].ToString();
         int spawnIndex = (int)prop["SpawnIndex"];
         PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
+        confiner.BoundingShape2D = col;
     }
 
-
+    private void SpawnExit()
+    {
+        PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
+        EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+    }
 }
 

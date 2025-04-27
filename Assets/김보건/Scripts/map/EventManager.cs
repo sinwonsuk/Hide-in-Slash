@@ -6,8 +6,6 @@ public enum EventType
 {
     OpenPrisonDoor,
     ClosePrisonDoor,
-    miniGameSuccess,
-    GeneratorSuccess,
     AllGeneratorSuccess, 
     UseEnergyDrink,
     UseInvisiblePotion,
