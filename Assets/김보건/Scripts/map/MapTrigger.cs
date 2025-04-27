@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class MapTrigger : MonoBehaviour
 {
-    [Header("ÀÌµ¿ÇÒ ¸Ê")]
+    [Header("ì´ë™í•  ë§µ")]
     public GameObject moveMap;
 
-    [Header("ÀÌµ¿ÇÒ °÷ ÀÌ¸§")]
+    [Header("ì´ë™í•  ê³³ ì´ë¦„")]
     public string Portal;
 
     private static bool isTeleport = false;
@@ -47,8 +47,8 @@ public class MapTrigger : MonoBehaviour
     {
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
-        // ÇÑ ÇÁ·¹ÀÓ ´ë±â. »óÈ²¿¡ µû¶ó WaitForEndOfFrame() ´ë½Å WaitForFixedUpdate()µµ °í·ÁÇØº¸¼¼¿ä.
-        yield return new WaitForSeconds(0.2f);
+        // í•œ í”„ë ˆì„ ëŒ€ê¸°. ìƒí™©ì— ë”°ë¼ WaitForEndOfFrame() ëŒ€ì‹  WaitForFixedUpdate()ë„ ê³ ë ¤í•´ë³´ì„¸ìš”.
+        yield return new WaitForSeconds(0.3f);
         confiner.InvalidateBoundingShapeCache();
     }
 }
