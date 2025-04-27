@@ -1,3 +1,4 @@
+using Photon.Chat.UtilityScripts;
 using Photon.Pun;
 using UnityEngine;
 
@@ -7,6 +8,14 @@ public class BoScenesManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player != PhotonNetwork.LocalPlayer)
+            {
+                profileSlotManager.CreateProfileSlot(player);
+            }
+        }
+
         Debug.Log("OnJoinedRoom 호출됨!");
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
@@ -29,11 +38,24 @@ public class BoScenesManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
+
+            PhotonNetwork.Instantiate("generator1", spawnPos, playerRotation);
         }
         else
         {
             PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
         }
+
+
+
+
+        Debug.Log($" 현재 방 이름: {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($" 내 닉네임: {PhotonNetwork.NickName}");
+        Debug.Log($" 내 ActorNumber (플레이어 ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
+        Debug.Log($" 현재 방 접속 인원 수: {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
+
+    [SerializeField]
+    ProfileSlotManager profileSlotManager;
 }
 

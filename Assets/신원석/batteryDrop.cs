@@ -11,11 +11,20 @@ public class batteryDrop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rectTransform.Translate(Vector3.down * Time.deltaTime * speed);
+        if(wordRectTransform == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        rectTransform.anchoredPosition = wordRectTransform.anchoredPosition;
     }
 
     RectTransform rectTransform;
 
     [SerializeField]
+    RectTransform wordRectTransform;
+
+
     float speed = 5.0f;   
 }

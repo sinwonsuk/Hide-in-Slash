@@ -100,12 +100,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom() => PhotonNetwork.CreateRoom("Room" + Random.Range(0, 100), new RoomOptions { MaxPlayers = 4 });
 
+    
 
 
     public override void OnConnectedToMaster()
     {
         //PhotonNetwork.JoinLobby();
-        //PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.JoinRandomRoom();
         //PhotonNetwork.JoinLobby();
         //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 4 }, null);
     }
@@ -135,10 +136,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         //public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
-        public override void OnJoinedRoom()
-        {
+        //public override void OnJoinedRoom()
+        //{
 
-        }
+        //}
 
         //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } 
 

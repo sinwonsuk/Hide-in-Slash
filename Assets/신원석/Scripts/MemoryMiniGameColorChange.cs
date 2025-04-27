@@ -32,7 +32,7 @@ public class MemoryMiniGameColorChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(light2D.intensity);
+
     }
 
     IEnumerator ColorCorution()
