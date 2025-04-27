@@ -10,12 +10,24 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable monProp = new();
+
+            monProp.Add("Role", "Monster");          
+        }
+
+
         foreach (var player in PhotonNetwork.PlayerList)
         {
-            if (player != PhotonNetwork.LocalPlayer)
+            ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
+
+            string name = prop["Role"].ToString();
+
+            if (player != PhotonNetwork.LocalPlayer && name != "Monster")
             {
                 profileSlotManager.CreateProfileSlot(player);
-            }
+            }         
         }
 
         Debug.Log(" OnJoinedRoom »£√‚µ !");
@@ -45,7 +57,11 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
+            ExitGames.Client.Photon.Hashtable monProp = new();
+
+            monProp.Add("Role", "Monster");
+
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
         {
