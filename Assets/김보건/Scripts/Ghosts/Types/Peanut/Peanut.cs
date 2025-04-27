@@ -22,7 +22,13 @@ public class Peanut : Ghost, IPunObservable
     private float networkedDirX;
     private float networkedDirY;
 
-    protected override void Awake()
+	[Tooltip("머리 위에 띄울 ! 아이콘 Prefab")]
+	public GameObject exclamationPrefab;
+
+	private GameObject exclamationInstance;
+	private RegionTrigger currentRegion;
+
+	protected override void Awake()
     {
 
         base.Awake();
@@ -36,9 +42,16 @@ public class Peanut : Ghost, IPunObservable
         stunnedState = new PeanutStunned(this, ghostStateMachine, "sturnned");
 
         ghostStateMachine.Initialize(idleState);
-    }
 
-    protected override void Start()
+		if (exclamationPrefab != null)
+		{
+			exclamationInstance = Instantiate(exclamationPrefab, transform);
+			exclamationInstance.transform.localPosition = Vector3.up * 2f;
+			exclamationInstance.SetActive(false);
+		}
+	}
+
+	protected override void Start()
     {
 
         if (photonView.IsMine)
@@ -77,7 +90,12 @@ public class Peanut : Ghost, IPunObservable
                 sr.flipX = networkedDirX < 0;
             }
         }
-    }
+
+		if (currentRegion != null && currentRegion.HasAnySurvivor)
+			exclamationInstance?.SetActive(true);
+		else
+			exclamationInstance?.SetActive(false);
+	}
 
     protected override void FixedUpdate()
     {
@@ -115,9 +133,24 @@ public class Peanut : Ghost, IPunObservable
         {
             StartCoroutine(StunnedTime(5f));
         }
-    }
 
-    private IEnumerator StunnedTime(float time)
+		var rt = collision.GetComponent<RegionTrigger>();
+		if (rt != null)
+		{
+			currentRegion = rt;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		var rt = other.GetComponent<RegionTrigger>();
+		if (rt == currentRegion)
+		{
+			currentRegion = null;
+			exclamationInstance?.SetActive(false);
+		}
+	}
+	private IEnumerator StunnedTime(float time)
     {
         isStunned = true;
         ghostStateMachine.ChangeState(stunnedState);
