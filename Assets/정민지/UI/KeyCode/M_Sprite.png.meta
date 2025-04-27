@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e2ac5bae2cb8bf64db1d19ac1946a5f6
+guid: b65c207ac9fe85547b0eb725151172ac
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3683670221502162148
-    second: resetButton_Sprite_0
+      213: 1512873966457592627
+    second: M_Sprite_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: resetButton_Sprite_0
+      name: M_Sprite_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 6
-        width: 51
-        height: 51
+        x: 1
+        y: 1
+        width: 13
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e4225eac860f1330800000000000000
-      internalID: 3683670221502162148
+      spriteID: 33b14a06bdecef410800000000000000
+      internalID: 1512873966457592627
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      resetButton_Sprite_0: 3683670221502162148
+      M_Sprite_0: 1512873966457592627
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
