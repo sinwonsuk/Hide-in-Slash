@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3458021072828935634}
   - component: {fileID: 2049725832701283650}
-  m_Layer: 15
+  m_Layer: 7
   m_Name: MiniMapPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2544406255809028982}
   - component: {fileID: 1210392394019711056}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1740141513471083406}
   - component: {fileID: 7975500002509392749}
   - component: {fileID: 2483522706713530317}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475454859657184512}
   - component: {fileID: 4956552874386885806}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: CircleLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,7 +568,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 190172410042084554}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 5099970169357020267}
   - component: {fileID: 5197950284482944596}
   - component: {fileID: 1861245216844345740}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: DetectGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 5033199840657472670}
   - component: {fileID: 2420036142113666116}
   - component: {fileID: 3152072992325133386}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: FlashLight
   m_TagString: PlayerSight
   m_Icon: {fileID: 0}
@@ -864,7 +864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8797509407336298406}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -898,7 +898,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1711588587582342207, guid: 482c44742d45b8940b30484516f03419, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1898880132251811088, guid: 482c44742d45b8940b30484516f03419, type: 3}
       propertyPath: m_Pivot.x
@@ -986,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6949455025962509410, guid: 482c44742d45b8940b30484516f03419, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6949455025962509410, guid: 482c44742d45b8940b30484516f03419, type: 3}
       propertyPath: m_IsActive
