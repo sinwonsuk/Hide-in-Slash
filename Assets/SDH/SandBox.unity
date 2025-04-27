@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 121313537}
   - component: {fileID: 121313536}
   - component: {fileID: 121313535}
+  - component: {fileID: 121313538}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -162,7 +163,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0, y: 0, z: 0}
+  Damping: {x: 0.3, y: 0.3, z: 0.3}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -193,7 +194,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 12.34
+    OrthographicSize: 7.9
     NearClipPlane: 0.3
     FarClipPlane: 3000
     Dutch: 0
@@ -226,6 +227,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &121313538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121313534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoundingShape2D: {fileID: 0}
+  Damping: 0
+  SlowingDistance: 5
+  OversizeWindow:
+    Enabled: 1
+    MaxWindowSize: 0
+    Padding: 0
+  m_LegacyMaxWindowSize: -2
 --- !u!1 &1291564686
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,8 +284,8 @@ Camera:
   m_GameObject: {fileID: 1291564686}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -289,7 +310,7 @@ Camera:
   far clip plane: 3000
   field of view: 60
   orthographic: 1
-  orthographic size: 12.34
+  orthographic size: 7.9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -381,7 +402,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
+  UpdateMethod: 0
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -424,13 +445,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapObjects:
-  - {fileID: 2499314955500059039, guid: 85aad2e079dcf9146b5386ccf6c0d52c, type: 3}
-  - {fileID: 3174321316306496372, guid: a646b2a424d16bb41aa85a5cb6cca3aa, type: 3}
-  - {fileID: 4537213267911762387, guid: e264264913d31264db6adeee2be12476, type: 3}
-  - {fileID: 7251893758139768275, guid: 3bd604dc3d7848447bc5da9a494b5055, type: 3}
-  - {fileID: 4481814142680105279, guid: e8511fb10f1f261478e42376248cebb9, type: 3}
-  - {fileID: 2696823540395605244, guid: 920950ed985551a46abec91300ec72f9, type: 3}
-  - {fileID: 5385479182039470127, guid: 1d441eee28dd74748ad50db67af035b4, type: 3}
+  - {fileID: 2499314955500059039, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  - {fileID: 3174321316306496372, guid: 0b57e15e67aeaa147a18e7ad2491da5d, type: 3}
+  - {fileID: 4537213267911762387, guid: ba67a3cfd854c784ca44cef9cd271c55, type: 3}
+  - {fileID: 7251893758139768275, guid: eb9f3f095808bd44c8a0ee844198b25f, type: 3}
+  - {fileID: 4481814142680105279, guid: 2c18f3dbb5e59b949b96c42b1b2dbe88, type: 3}
+  - {fileID: 2696823540395605244, guid: d3beee755388d68479e418956b4a5217, type: 3}
+  - {fileID: 5385479182039470127, guid: 2f45afe827e8ec54ba563224bc405657, type: 3}
 --- !u!1 &8886977999765951427
 GameObject:
   m_ObjectHideFlags: 0

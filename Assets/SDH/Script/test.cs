@@ -18,5 +18,9 @@ public class test : MonoBehaviour
         rb.linearVelocityX = x*5f;
         rb.linearVelocityY = y*5f;
         tf.position = new Vector3(tf.position.x, tf.position.y, tf.position.y);
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            tf.position = new Vector3(50, 0, 0);
+        }
     }
 }

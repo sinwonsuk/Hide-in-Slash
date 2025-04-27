@@ -72,9 +72,8 @@ MonoBehaviour:
   hasPrisonKey: 0
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
   portalName: CaughtPoint
-  miniGame: {fileID: 0}
-  generator: {fileID: 0}
   hasHatch: 0
+  mapUI: {fileID: 0}
   hasMap: 0
 --- !u!50 &7583822937735463560
 Rigidbody2D:
