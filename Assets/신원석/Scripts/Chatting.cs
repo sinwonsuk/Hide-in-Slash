@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChattingManager : MonoBehaviour
+public class ChattingManager : MonoBehaviourPunCallbacks
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,10 +26,20 @@ public class ChattingManager : MonoBehaviour
         }
     }
 
+    public void Send()
+    {
+
+
+      
+    }
+
     public void CreateChat(string _text)
     {
-        //서버추가하면 이때 받으면 될듯
-
+        photonView.RPC("Craete", RpcTarget.All,_text);       
+    }
+    [PunRPC]
+    public void Craete(string _text)
+    {
         GameObject instantiate = Instantiate(chattingObject, transform);
 
         ChattingOutput chattingOutput = instantiate.GetComponent<ChattingOutput>();
@@ -36,7 +47,7 @@ public class ChattingManager : MonoBehaviour
         chattingOutput.textMeshProUGUI.text = _text;
 
         Canvas.ForceUpdateCanvases();
-        scrollRect.verticalNormalizedPosition = 0f; 
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 
     [SerializeField]

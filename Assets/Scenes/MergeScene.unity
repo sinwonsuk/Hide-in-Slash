@@ -1080,7 +1080,10 @@ PrefabInstance:
     - {fileID: 2143192135014995426, guid: 9833dcff6a6e7bf4f87c671b4eea6fcd, type: 3}
     - {fileID: 1731600764737441861, guid: 9833dcff6a6e7bf4f87c671b4eea6fcd, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3845158789088235611, guid: 9833dcff6a6e7bf4f87c671b4eea6fcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521319207}
   m_SourcePrefab: {fileID: 100100000, guid: 9833dcff6a6e7bf4f87c671b4eea6fcd, type: 3}
 --- !u!114 &370268291 stripped
 MonoBehaviour:
@@ -1225,6 +1228,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 51.440063, y: 24.88724}
   m_EdgeRadius: 0
+--- !u!1 &521319202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3845158789088235611, guid: 9833dcff6a6e7bf4f87c671b4eea6fcd, type: 3}
+  m_PrefabInstance: {fileID: 359020313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &521319207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521319202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &558881182
 GameObject:
   m_ObjectHideFlags: 0
