@@ -156,11 +156,11 @@ public class Protein : Ghost, IPunObservable
 
         if (input == Vector2.zero)
         {
-            ghostStateMachine.ChangeState(idleState);
+            ghostStateMachine.ChangeState(skillIdleState);
         }
         else
         {
-            ghostStateMachine.ChangeState(moveState);
+            ghostStateMachine.ChangeState(skillMoveState);
         }
     }
 
@@ -186,20 +186,7 @@ public class Protein : Ghost, IPunObservable
         transform.localScale = originalScale;
         Debug.Log("단백질 섭취 종료");
 
-        idleState = normalIdleState;
-        moveState = normalMoveState;
-
-        // 바로 현재 입력 상태에 맞게 상태 전환
-        Vector2 input = MoveInput;
-
-        if (input == Vector2.zero)
-        {
-            ghostStateMachine.ChangeState(idleState);
-        }
-        else
-        {
-            ghostStateMachine.ChangeState(moveState);
-        }
+        anim.SetBool("IsOriginal", true);
     }
 
     public override void UpdateAnimParam(Vector2 input)
@@ -218,6 +205,25 @@ public class Protein : Ghost, IPunObservable
             sr.flipX = lastDir.x < 0;
         }
 
+    }
+
+    public void EndProteinRelease()
+    {
+        anim.SetBool("IsOriginal", false);
+
+        idleState = normalIdleState;
+        moveState = normalMoveState;
+
+        Vector2 input = MoveInput;
+
+        if (input == Vector2.zero)
+        {
+            ghostStateMachine.ChangeState(idleState);
+        }
+        else
+        {
+            ghostStateMachine.ChangeState(moveState);
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -8,4 +8,9 @@ public class ProteinAnimEventHandler : MonoBehaviour
     {
         GetComponentInParent<Protein>().EndDrinkProtein();
     }
+
+    public void OnProteinReleaseAnimationEnd()
+    {
+        GetComponentInParent<Protein>().EndProteinRelease();
+    }
 }

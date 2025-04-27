@@ -4,7 +4,7 @@ using System.Collections;
 
 public class BoSceneManager : MonoBehaviourPunCallbacks
 {
-    public Transform[] playerSpawnPoints;  // ÇÃ·¹ÀÌ¾î ½ºÆù À§Ä¡
+    public Transform[] playerSpawnPoints;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 
     public ProfileSlotManager profileSlotManager;
 
@@ -47,15 +47,15 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
             }         
         }
 
-        Debug.Log(" OnJoinedRoom È£ÃâµÊ!");
-        Debug.Log($" ÇöÀç ¹æ ÀÌ¸§: {PhotonNetwork.CurrentRoom.Name}");
-        Debug.Log($" ³» ´Ð³×ÀÓ: {PhotonNetwork.NickName}");
-        Debug.Log($" ³» ActorNumber (ÇÃ·¹ÀÌ¾î ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
-        Debug.Log($" ÇöÀç ¹æ Á¢¼Ó ÀÎ¿ø ¼ö: {PhotonNetwork.CurrentRoom.PlayerCount}");
+        Debug.Log(" OnJoinedRoom È£ï¿½ï¿½ï¿½!");
+        Debug.Log($" ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½: {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($" ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½: {PhotonNetwork.NickName}");
+        Debug.Log($" ï¿½ï¿½ ActorNumber (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
+        Debug.Log($" ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ ï¿½ï¿½: {PhotonNetwork.CurrentRoom.PlayerCount}");
  
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
-            Debug.LogError("½ºÆù Æ÷ÀÎÆ®°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½!");
             return;
         }
 
@@ -64,8 +64,8 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (playerIndex >= playerSpawnPoints.Length)
         {
-            Debug.LogWarning("½ºÆù Æ÷ÀÎÆ® ºÎÁ·, ±âº» À§Ä¡¿¡ ½ºÆù.");
-            playerIndex = 0; // ±âº»°ª
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½âº» ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
+            playerIndex = 0; // ï¿½âº»ï¿½ï¿½
         }
 
         Vector3 spawnPos = playerSpawnPoints[playerIndex].position;
@@ -74,19 +74,15 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            ExitGames.Client.Photon.Hashtable monProp = new();
-
-            monProp.Add("Role", "Monster");
-
             PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
         {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 3)
         {
-            PhotonNetwork.Instantiate("Player3", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 4)
         {
