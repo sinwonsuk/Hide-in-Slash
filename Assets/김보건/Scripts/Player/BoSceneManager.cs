@@ -39,8 +39,6 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
             ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
 
-            string name = prop["Role"].ToString();
-
             if (player != PhotonNetwork.LocalPlayer && name != "Monster")
             {
                 profileSlotManager.CreateProfileSlot(player);

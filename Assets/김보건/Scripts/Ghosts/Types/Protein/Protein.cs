@@ -12,16 +12,16 @@ public class Protein : Ghost, IPunObservable
     private GhostState skillIdleState;
     private GhostState skillMoveState;
 
-    [Header("´Ü¹éÁú¼·Ãë(¹úÅ©¾÷)")]
-    [SerializeField] private float ProteinDuration = 10f; //¹úÅ©¾÷ Áö¼Ó½Ã°£
-    [SerializeField] private float ProteincooldownDuration = 5f;    //ÄğÅ¸ÀÓ
+    [Header("ë‹¨ë°±ì§ˆì„­ì·¨(ë²Œí¬ì—…)")]
+    [SerializeField] private float ProteinDuration = 10f; //ë²Œí¬ì—… ì§€ì†ì‹œê°„
+    [SerializeField] private float ProteincooldownDuration = 5f;    //ì¿¨íƒ€ì„
     [SerializeField] private float buffedSpeed = 2f;
-    private bool isProtein = false; //´Ü¹éÁú ¼·Ãë ¿©ºÎ
-    private bool isProteinCooldown = false; //´Ü¹éÁú ÄğÅ¸ÀÓ ¿©ºÎ
-    [SerializeField] private float proteinTimer; //Áö¼Ó½Ã°£ Å¸ÀÌ¸Ó
-    [SerializeField] private float proteinCooldownTimer; //ÄğÅ¸ÀÓ Å¸ÀÌ¸Ó
+    private bool isProtein = false; //ë‹¨ë°±ì§ˆ ì„­ì·¨ ì—¬ë¶€
+    private bool isProteinCooldown = false; //ë‹¨ë°±ì§ˆ ì¿¨íƒ€ì„ ì—¬ë¶€
+    [SerializeField] private float proteinTimer; //ì§€ì†ì‹œê°„ íƒ€ì´ë¨¸
+    [SerializeField] private float proteinCooldownTimer; //ì¿¨íƒ€ì„ íƒ€ì´ë¨¸
 
-    private Vector2 lastDir = Vector2.right;   // ±âº»°ªÀº ¿À¸¥ÂÊ
+    private Vector2 lastDir = Vector2.right;   // ê¸°ë³¸ê°’ì€ ì˜¤ë¥¸ìª½
 
     private float originalSpeed;
     private Vector3 originalScale;
@@ -93,7 +93,7 @@ public class Protein : Ghost, IPunObservable
         }
         else
         {
-            //ÀÌµ¿º¸°£
+            //ì´ë™ë³´ê°„
             transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
 
             anim.SetBool("IsMoving", networkedIsMoving);
@@ -172,7 +172,7 @@ public class Protein : Ghost, IPunObservable
         moveSpeed = buffedSpeed;
         transform.localScale = originalScale * 1.5f;
 
-        Debug.Log("´Ü¹éÁú ¼·Ãë");
+        Debug.Log("ë‹¨ë°±ì§ˆ ì„­ì·¨");
     }
 
     [PunRPC]
@@ -184,7 +184,7 @@ public class Protein : Ghost, IPunObservable
 
         moveSpeed = originalSpeed;
         transform.localScale = originalScale;
-        Debug.Log("´Ü¹éÁú ¼·Ãë Á¾·á");
+        Debug.Log("ë‹¨ë°±ì§ˆ ì„­ì·¨ ì¢…ë£Œ");
 
         anim.SetBool("IsOriginal", true);
     }
@@ -211,24 +211,22 @@ public class Protein : Ghost, IPunObservable
     {
         anim.SetBool("IsOriginal", false);
 
-        idleState = normalIdleState;
-        moveState = normalMoveState;
 
         Vector2 input = MoveInput;
 
         if (input == Vector2.zero)
         {
-            ghostStateMachine.ChangeState(idleState);
+            ghostStateMachine.ChangeState(normalIdleState);
         }
         else
         {
-            ghostStateMachine.ChangeState(moveState);
+            ghostStateMachine.ChangeState(normalMoveState);
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting) // ³»°¡ º¸³¿
+        if (stream.IsWriting) // ë‚´ê°€ ë³´ëƒ„
         {
             stream.SendNext(transform.position);
             stream.SendNext(transform.localScale);
@@ -240,7 +238,7 @@ public class Protein : Ghost, IPunObservable
             stream.SendNext(anim.GetFloat("DirX"));
             stream.SendNext(anim.GetFloat("DirY"));
         }
-        else // »ó´ë¹æÀÌ º¸³½ °Í ¹ŞÀ½
+        else // ìƒëŒ€ë°©ì´ ë³´ë‚¸ ê²ƒ ë°›ìŒ
         {
             networkedPosition = (Vector3)stream.ReceiveNext();
             transform.localScale = (Vector3)stream.ReceiveNext();
