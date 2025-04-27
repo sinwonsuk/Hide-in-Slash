@@ -327,7 +327,7 @@ MonoBehaviour:
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
   portalName: CaughtPoint
   hasHatch: 0
-  mapUI: {fileID: 0}
+  mapUI: {fileID: 1364655585632331874}
   hasMap: 0
 --- !u!50 &9179863960893515495
 Rigidbody2D:
@@ -909,6 +909,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 482c44742d45b8940b30484516f03419, type: 3}
+--- !u!1 &1364655585632331874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6949455025962509410, guid: 482c44742d45b8940b30484516f03419, type: 3}
+  m_PrefabInstance: {fileID: 8250972203400711168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7555767951907369232 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1898880132251811088, guid: 482c44742d45b8940b30484516f03419, type: 3}
