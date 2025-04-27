@@ -707,25 +707,25 @@ public class Player : MonoBehaviourPun, IPunObservable
             networkedDirY = (float)stream.ReceiveNext();
             lightAngle = (float)stream.ReceiveNext();
 
-            if (PlayerStateMachine.currentState.StateType != receivedState)
-            {
-                switch (receivedState)
-                {
-                    case PlayerStateType.Idle:
-                        PlayerStateMachine.ChangeState(idleState);
-                        break;
-                    case PlayerStateType.Move:
-                        PlayerStateMachine.ChangeState(moveState);
-                        break;
-                    case PlayerStateType.Dead:
-                        PlayerStateMachine.ChangeState(deadState);
-                        break;
-                    case PlayerStateType.Escape:
-                        escapeState.SetEscapeType(receivedEscape);
-                        PlayerStateMachine.ChangeState(escapeState);
-                        break;
-                }
-            }
+            //if (PlayerStateMachine.currentState.StateType != receivedState)
+            //{
+            //    switch (receivedState)
+            //    {
+            //        case PlayerStateType.Idle:
+            //            PlayerStateMachine.ChangeState(idleState);
+            //            break;
+            //        case PlayerStateType.Move:
+            //            PlayerStateMachine.ChangeState(moveState);
+            //            break;
+            //        case PlayerStateType.Dead:
+            //            PlayerStateMachine.ChangeState(deadState);
+            //            break;
+            //        case PlayerStateType.Escape:
+            //            escapeState.SetEscapeType(receivedEscape);
+            //            PlayerStateMachine.ChangeState(escapeState);
+            //            break;
+            //    }
+            //}
         }
     }
 
