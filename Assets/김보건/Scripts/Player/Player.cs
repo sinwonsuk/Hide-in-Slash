@@ -621,6 +621,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OpenMap()
     {
+        if (!photonView.IsMine)
+            return;
         hasMap = true;
         Debug.Log(" 맵열림");
         if (hasMap)
@@ -637,6 +639,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     private void CloseMap()
     {
+        if (!photonView.IsMine)
+            return;
         isInMap = false;
         if (mapUI != null)
             mapUI.SetActive(false);
