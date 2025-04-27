@@ -32,7 +32,7 @@ public enum EventType
 public class EventManager
 {
     private static readonly Dictionary<EventType, Action> _eventMap = new();
-    private static readonly Dictionary<EventType, Action<object>> _eventMapWithParam = new();
+    private static readonly Dictionary<EventType, Action<object>> _eventMapWithEventData = new();
 
     public static Dictionary<EventType, Action> GeteventMap()
     {
@@ -49,10 +49,10 @@ public class EventManager
     }
     public static void RegisterEvent(EventType eventType, Action<object> eventFunc)
     {
-        if (!_eventMapWithParam.ContainsKey(eventType))
-            _eventMapWithParam[eventType] = eventFunc;
+        if (!_eventMapWithEventData.ContainsKey(eventType))
+            _eventMapWithEventData[eventType] = eventFunc;
         else
-            _eventMapWithParam[eventType] += eventFunc;
+            _eventMapWithEventData[eventType] += eventFunc;
     }
 
     // 이벤트해제
@@ -68,8 +68,8 @@ public class EventManager
     }
     public static void UnRegisterEvent(EventType eventType, Action<object> eventFunc)
     {
-        if (_eventMapWithParam.ContainsKey(eventType))
-            _eventMapWithParam[eventType] -= eventFunc;
+        if (_eventMapWithEventData.ContainsKey(eventType))
+            _eventMapWithEventData[eventType] -= eventFunc;
     }
 
     // 이벤트발생
@@ -79,9 +79,9 @@ public class EventManager
         action?.Invoke();
     }
 
-    public static void TriggerEvent(EventType eventType, object param)
+    public static void TriggerEvent(EventType eventType, object eventData)
     {
-        if (_eventMapWithParam.TryGetValue(eventType, out var action))
-            action?.Invoke(param);
+        if (_eventMapWithEventData.TryGetValue(eventType, out var action))
+            action?.Invoke(eventData);
     }
 }

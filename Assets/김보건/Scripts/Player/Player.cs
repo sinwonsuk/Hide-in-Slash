@@ -515,7 +515,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         isLightOn = !isLightOn;
         flashlight.enabled = isLightOn;
 
-        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, isLightOn);
+        photonView.RPC("SetFlashlight", RpcTarget.Others, isLightOn);
 
     }
 
@@ -526,7 +526,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         isLightOn = true;
         flashlight.enabled = true;
-        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, true);
+        photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
         Debug.Log("손전등켜짐");
     }

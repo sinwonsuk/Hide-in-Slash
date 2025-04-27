@@ -19,7 +19,7 @@ public enum InventoryType
 public class Inventory : MonoBehaviour
 {
 
-    //private bool isInPrisonDoor = false; // 감옥트리거 판단bool저장
+    //private bool isInPrisonDoor = false; // player 감옥트리거 판단bool저장
 
     //private void OnEnable()
     //{
