@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RobbyScene.unity
     guid: 96a25db6af99c18458a5154c49fb53fd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlayerTestBo.unity
     guid: 4dd31041475dea848951bdaec06b4897
-  - enabled: 0
+  - enabled: 1
     path: Assets/SDH/SandBox.unity
     guid: b0751bc8c61ef2842857cc0e900919b9
   m_configObjects: {}

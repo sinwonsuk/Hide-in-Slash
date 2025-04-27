@@ -18,24 +18,31 @@ public class MapManager : MonoBehaviourPunCallbacks
     private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
     private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
+    private Transform shipTf;
 
+    private new void OnEnable()
+    {
+        EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+        Debug.Log("구독완");
+    }
     void Start()
     {
-
+        Debug.Log("접속할거임");
         PhotonNetwork.ConnectUsingSettings();
-
-
-
 
     }
 
+
     public override void OnConnectedToMaster()
     {
-        //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
+        Debug.Log("서버온");
+        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
+
     }
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("방온");
         if (PhotonNetwork.IsMasterClient)
         {
             InitializeMap();
@@ -124,6 +131,10 @@ public class MapManager : MonoBehaviourPunCallbacks
                 {
                     playerSpawnPoints.Add(child);
                 }
+                else if(child.name == "ShipSpawn")
+                {
+                    shipTf = child;
+                }
             }
         }
     }
@@ -194,6 +205,10 @@ public class MapManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
     }
 
-
+    private void SpawnExit()
+    {
+        PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
+        EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+    }
 }
 

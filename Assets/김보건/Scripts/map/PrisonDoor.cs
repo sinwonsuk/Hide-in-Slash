@@ -1,8 +1,9 @@
 using NUnit.Framework.Constraints;
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class PrisonDoor : MonoBehaviour
+public class PrisonDoor : MonoBehaviourPunCallbacks
 {
     private Animator anim;
     [SerializeField] private GameObject prisonDoor;
@@ -11,14 +12,14 @@ public class PrisonDoor : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
- 
-    private void OnEnable()
+
+    private new void OnEnable()
     {
         EventManager.RegisterEvent(EventType.OpenPrisonDoor, OpenDoor);
         EventManager.RegisterEvent(EventType.ClosePrisonDoor, CloseDoor);
     }
 
-    private void OnDisable()
+    private new void OnDisable()
     {
         EventManager.UnRegisterEvent(EventType.OpenPrisonDoor, OpenDoor);
         EventManager.UnRegisterEvent(EventType.ClosePrisonDoor, CloseDoor);
@@ -26,10 +27,7 @@ public class PrisonDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        Debug.Log("°¨¿Á ¹® ¿­¸²");
-        //anim.SetTrigger("Open");  ¾Ö´Ï¸ÞÀÌ¼Ç
-        prisonDoor.SetActive(false);
-        StartCoroutine(CloseDoorDelay(5f));
+        photonView.RPC("OpenDoorRPC", RpcTarget.All);
     }
 
     private void CloseDoor()
@@ -43,6 +41,20 @@ public class PrisonDoor : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        CloseDoor();
+        photonView.RPC("CloseDoorRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void OpenDoorRPC()
+    {
+        Debug.Log("°¨¿Á ¹® ¿­¸²");
+        prisonDoor.SetActive(false);
+        StartCoroutine(CloseDoorDelay(3f));
+    }
+
+    private void CloseDoorRPC()
+    {
+        Debug.Log("°¨¿Á ¹® ´ÝÈû");
+        prisonDoor.SetActive(true);
     }
 }
