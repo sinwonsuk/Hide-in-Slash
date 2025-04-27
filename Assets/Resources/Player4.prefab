@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3473344795628825297}
   - component: {fileID: 6849010772590772246}
   - component: {fileID: 4458784122293752582}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: FlashLight
   m_TagString: PlayerSight
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 3019803668408115940}
   - component: {fileID: 498803793348565230}
   - component: {fileID: 3013335737839806271}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: DetectGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5658140910470994779}
   - component: {fileID: 994792229877459621}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: CircleLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8566826285117081701}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9209552672692172944}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 660467634995979184}
   - component: {fileID: 1106466713364003123}
   - component: {fileID: 6319886921912043662}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

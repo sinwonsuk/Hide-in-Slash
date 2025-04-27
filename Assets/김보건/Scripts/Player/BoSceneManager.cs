@@ -6,9 +6,17 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 {
     public Transform[] playerSpawnPoints;  // 플레이어 스폰 위치
 
+    public ProfileSlotManager profileSlotManager;
+
     public override void OnJoinedRoom()
     {
-
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player != PhotonNetwork.LocalPlayer)
+            {
+                profileSlotManager.CreateProfileSlot(player);
+            }
+        }
 
         Debug.Log(" OnJoinedRoom 호출됨!");
         Debug.Log($" 현재 방 이름: {PhotonNetwork.CurrentRoom.Name}");

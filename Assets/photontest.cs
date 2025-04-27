@@ -4,7 +4,6 @@ using UnityEngine;
 public class photontest : MonoBehaviour
 {
     public ProfileSlotManager profileSlotManager;
-    public GameObject generator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
