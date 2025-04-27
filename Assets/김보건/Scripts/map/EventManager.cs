@@ -14,7 +14,9 @@ public enum EventType
     UseUpgradedLight,
     UsePrisonKey,
     UseHatch,
-    LightRestored
+    LightRestored,
+    SpawnMinigame,
+    DestroyMiniGame
 }
 
 
