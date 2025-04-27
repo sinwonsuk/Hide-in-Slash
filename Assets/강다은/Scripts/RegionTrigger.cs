@@ -7,7 +7,6 @@ public class RegionTrigger : MonoBehaviour
 	[Tooltip("Region Name")]
 	public string regionName;
 
-	// 생존자만 추적하도록 HashSet 사용
 	private readonly HashSet<GameObject> survivorsInside = new();
 	public bool HasAnySurvivor => survivorsInside.Count > 0;
 
