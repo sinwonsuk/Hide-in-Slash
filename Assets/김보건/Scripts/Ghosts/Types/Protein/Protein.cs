@@ -7,6 +7,10 @@ using UnityEngine.Rendering.Universal;
 public class Protein : Ghost, IPunObservable
 {
     public override GhostState moveState { get; protected set; }
+    private GhostState normalIdleState;
+    private GhostState normalMoveState;
+    private GhostState skillIdleState;
+    private GhostState skillMoveState;
 
     [Header("단백질섭취(벌크업)")]
     [SerializeField] private float ProteinDuration = 10f; //벌크업 지속시간
@@ -16,6 +20,8 @@ public class Protein : Ghost, IPunObservable
     private bool isProteinCooldown = false; //단백질 쿨타임 여부
     [SerializeField] private float proteinTimer; //지속시간 타이머
     [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
+
+    private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
     private float originalSpeed;
     private Vector3 originalScale;
@@ -39,8 +45,15 @@ public class Protein : Ghost, IPunObservable
         if (ghostStateMachine == null)
             ghostStateMachine = new GhostStateMachine();
 
-        idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
-        moveState = new PeanutMove(this, ghostStateMachine, "Move");
+        useSkillState = new ProteinSkill_State(this, ghostStateMachine, "ProteinSkill");
+
+        normalIdleState = new ProteinIdle(this, ghostStateMachine, "Idle");
+        normalMoveState = new ProteinMove(this, ghostStateMachine, "Move");
+        skillIdleState = new ProteinSkill_Idle(this, ghostStateMachine, "SkillIdle");
+        skillMoveState = new ProteinSkill_Move(this, ghostStateMachine, "SkillMove");
+
+        moveState = normalMoveState;
+        idleState = normalIdleState;
 
         ghostStateMachine.Initialize(idleState);
     }
@@ -75,7 +88,7 @@ public class Protein : Ghost, IPunObservable
             base.Update();
             if (Input.GetKeyDown(KeyCode.Alpha1) && !isProtein && !isProteinCooldown)
             {
-                photonView.RPC("ActivateProtein", RpcTarget.All);
+                photonView.RPC("DrinkProtein", RpcTarget.All);
             }
         }
         else
@@ -126,6 +139,32 @@ public class Protein : Ghost, IPunObservable
     }
 
     [PunRPC]
+    private void DrinkProtein()
+    {
+        ActivateProtein();
+        ghostStateMachine.ChangeState(useSkillState);
+    }
+
+    public void EndDrinkProtein()
+    {
+        anim.SetBool("IsProtein", false);
+
+        idleState = skillIdleState;
+        moveState = skillMoveState;
+
+        Vector2 input = MoveInput;
+
+        if (input == Vector2.zero)
+        {
+            ghostStateMachine.ChangeState(idleState);
+        }
+        else
+        {
+            ghostStateMachine.ChangeState(moveState);
+        }
+    }
+
+    [PunRPC]
     private void ActivateProtein()
     {
         isProtein = true;
@@ -146,6 +185,39 @@ public class Protein : Ghost, IPunObservable
         moveSpeed = originalSpeed;
         transform.localScale = originalScale;
         Debug.Log("단백질 섭취 종료");
+
+        idleState = normalIdleState;
+        moveState = normalMoveState;
+
+        // 바로 현재 입력 상태에 맞게 상태 전환
+        Vector2 input = MoveInput;
+
+        if (input == Vector2.zero)
+        {
+            ghostStateMachine.ChangeState(idleState);
+        }
+        else
+        {
+            ghostStateMachine.ChangeState(moveState);
+        }
+    }
+
+    public override void UpdateAnimParam(Vector2 input)
+    {
+        if (input != Vector2.zero)
+            lastDir = input.normalized;
+
+        bool isMoving = input != Vector2.zero;
+
+        anim.SetBool("IsMoving", isMoving);
+        anim.SetFloat("DirX", lastDir.x);
+        anim.SetFloat("DirY", lastDir.y);
+
+        if (Mathf.Abs(lastDir.x) >= Mathf.Abs(lastDir.y))
+        {
+            sr.flipX = lastDir.x < 0;
+        }
+
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -158,9 +230,9 @@ public class Protein : Ghost, IPunObservable
             stream.SendNext((int)ghostStateMachine.CurrentStateType);
             stream.SendNext(facingDir);
             stream.SendNext(facingUpDir);
-            //stream.SendNext(anim.GetBool("IsMoving"));
-            //stream.SendNext(anim.GetFloat("DirX"));
-            //stream.SendNext(anim.GetFloat("DirY"));
+            stream.SendNext(anim.GetBool("IsMoving"));
+            stream.SendNext(anim.GetFloat("DirX"));
+            stream.SendNext(anim.GetFloat("DirY"));
         }
         else // 상대방이 보낸 것 받음
         {
@@ -171,9 +243,9 @@ public class Protein : Ghost, IPunObservable
             int receivedFacingDir = (int)stream.ReceiveNext();
             int receivedFacingUpDir = (int)stream.ReceiveNext();
             SetFacingDirection(receivedFacingDir, receivedFacingUpDir);
-            //networkedIsMoving = (bool)stream.ReceiveNext();
-            //networkedDirX = (float)stream.ReceiveNext();
-            //networkedDirY = (float)stream.ReceiveNext();
+            networkedIsMoving = (bool)stream.ReceiveNext();
+            networkedDirX = (float)stream.ReceiveNext();
+            networkedDirY = (float)stream.ReceiveNext();
 
             if (ghostStateMachine != null && ghostStateMachine.CurrentStateType != receivedState)
             {

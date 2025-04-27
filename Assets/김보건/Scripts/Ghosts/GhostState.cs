@@ -5,7 +5,8 @@ public enum GhostStateType
     Idle,
     Move,
     Stunned,
-    Vomit
+    Vomit,
+    ProteinSkill
 }
 public class GhostState
 {

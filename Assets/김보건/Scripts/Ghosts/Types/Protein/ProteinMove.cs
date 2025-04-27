@@ -11,10 +11,7 @@ public class ProteinMove : GhostState
     {
         base.Update();
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-
-        moveInput = new Vector2(x, y).normalized;
+        ghost.UpdateAnimParam(moveInput);
 
         if (moveInput == Vector2.zero)
             stateMachine.ChangeState(ghost.idleState);
