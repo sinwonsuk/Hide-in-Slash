@@ -11,23 +11,12 @@ public class ProteinSkill_State : GhostState
         base.Enter();
         ghost.SetZeroVelocity();
         ghost.anim.SetBool("IsProtein", true);
-        ghost.anim.SetBool("IsMoving", false);
+        ghost.anim.SetBool("IsMoving", true);
         Debug.Log("단백질 스킬");
     }
     public override void Update()
     {
         base.Update();
-
-        ghost.UpdateAnimParam(moveInput);
-
-        if (moveInput != Vector2.zero)
-        {
-            ghost.anim.SetBool("IsMoving", true);
-        }
-        else
-        {
-            ghost.anim.SetBool("IsMoving", false);
-        }
     }
 }
 

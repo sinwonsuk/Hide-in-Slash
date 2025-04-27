@@ -10,7 +10,6 @@ public class ProteinSkill_Move : GhostState
     public override void Update()
     {
         base.Update();
-        Debug.Log($"[ProteinSkill_Move] moveInput: {moveInput}");
         ghost.UpdateAnimParam(moveInput);
 
         if (moveInput == Vector2.zero)

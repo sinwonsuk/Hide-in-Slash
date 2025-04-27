@@ -45,15 +45,15 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
         {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 3)
         {
-            PhotonNetwork.Instantiate("Player3", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 4)
         {
