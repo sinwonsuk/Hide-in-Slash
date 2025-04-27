@@ -8,6 +8,20 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
     public ProfileSlotManager profileSlotManager;
 
+    float time = 0;
+
+    void test()
+    {
+        while(true)
+        {
+            if (time > 1)
+            {
+                break;
+            }
+
+            time += Time.deltaTime;
+        }
+    }
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -17,9 +31,12 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
             monProp.Add("Role", "Monster");          
         }
 
+        test();
 
         foreach (var player in PhotonNetwork.PlayerList)
         {
+            
+
             ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
 
             string name = prop["Role"].ToString();
