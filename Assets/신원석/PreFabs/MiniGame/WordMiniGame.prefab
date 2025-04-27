@@ -609,8 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d5c4551fe28194080365b36bc646ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGameWordDrop: {fileID: 6816847378530438610, guid: 71f520ac63755ca4a992bada7cdd0f3f, type: 3}
-  bettery: {fileID: 8470971980815147807, guid: 2531d20111f8b7d40b659c3d6adbf929, type: 3}
+  miniGameWordDrop: {fileID: 3355315109733306669, guid: 71f520ac63755ca4a992bada7cdd0f3f, type: 3}
   minigameSucess: {fileID: 2991484233814362913, guid: 8bab289ee1baf2f4689e82eb10471f6c, type: 3}
   correctCount: 5
 --- !u!61 &1458185617502218786

@@ -60,7 +60,7 @@ public class WordMiniGame : MiniGame
 
         for (int i = 0; i < wordList.Count; i++)
         {
-            MiniGameWordDrop word = wordList[i].GetComponent<MiniGameWordDrop>();
+            MiniGameWordDrop word = wordList[i].GetComponentInChildren<MiniGameWordDrop>();
 
             if (word.textMeshProUGUI.text == _text)
             {
@@ -100,15 +100,7 @@ public class WordMiniGame : MiniGame
         {
             int RandomObeect = Random.Range(0, 8);
             float randomX = Random.Range(-340.0f, 340.0f);
-            // 8개중에 7개는 단어가 떨어지게 하고 나머지는 배터리 떨어지게 하기 위해서
 
-            if (RandomObeect == 7)
-            {
-                GameObject betteryIns = Instantiate(bettery, rectTransform);
-                betteryIns.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 375.0f);
-                batteryList.Add(betteryIns);
-            }
-            else
             {              
                 GameObject word = Instantiate(miniGameWordDrop, rectTransform);
                 word.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 375.0f);
@@ -127,10 +119,6 @@ public class WordMiniGame : MiniGame
         {
             Destroy(wordList[i].gameObject);
         }
-        for (int i = 0; i < batteryList.Count; i++)
-        {
-            Destroy(batteryList[i].gameObject);
-        }
     }
 
     RectTransform rectTransform;    
@@ -138,12 +126,9 @@ public class WordMiniGame : MiniGame
     [SerializeField]
     GameObject miniGameWordDrop;
     [SerializeField]
-    GameObject bettery;
-    [SerializeField]
     GameObject minigameSucess;
 
     List<GameObject> wordList = new List<GameObject>();
-    List<GameObject> batteryList = new List<GameObject>();
 
     public Action<string> wordhandler;
 

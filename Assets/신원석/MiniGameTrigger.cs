@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -60,7 +61,7 @@ public class MiniGameTrigger : MonoBehaviour
     {
         if (miniGameManager != null && isPlaying == true)
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
             Destroy(miniGameManager.gameObject);
         }
     }

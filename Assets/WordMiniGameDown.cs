@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class batteryDrop : MonoBehaviour
+public class WordMiniGameDown : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -11,20 +11,12 @@ public class batteryDrop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(wordRectTransform == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        rectTransform.anchoredPosition = wordRectTransform.anchoredPosition;
+        
+        rectTransform.Translate(Vector3.down * Time.deltaTime * speed);
     }
 
     RectTransform rectTransform;
 
     [SerializeField]
-    RectTransform wordRectTransform;
-
-
-    float speed = 5.0f;   
+    float speed = 3f;
 }

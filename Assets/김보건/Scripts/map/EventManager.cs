@@ -23,7 +23,7 @@ public enum EventType
     OutEventPlayer,
     LightRestored,
     SpawnMinigame,
-    DestroyMiniGame
+    DestroyMiniGame,
 }
 
 

@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Generator : MonoBehaviour
+public class Generator : MonoBehaviourPunCallbacks
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -95,8 +96,16 @@ public class Generator : MonoBehaviour
 
     void Delete()
     {
+        photonView.RPC("Sucess", RpcTarget.All);
+        PhotonNetwork.Destroy(gameObject);
         StopGeneration();
         Destroy(gameObject);
+    }
+
+    [PunRPC]
+    public void Sucess()
+    {
+        EventManager.TriggerEvent(EventType.GeneratorSuccess);
     }
   
 
