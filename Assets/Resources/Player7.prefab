@@ -75,6 +75,7 @@ MonoBehaviour:
   miniGame: {fileID: 0}
   generator: {fileID: 0}
   hasHatch: 0
+  mapUI: {fileID: 0}
   hasMap: 0
 --- !u!50 &7583822937735463560
 Rigidbody2D:
