@@ -18,6 +18,25 @@ public enum InventoryType
 
 public class Inventory : MonoBehaviour
 {
+
+    //private bool isInPrisonDoor = false; // 감옥트리거 판단bool저장
+
+    //private void OnEnable()
+    //{
+    //    EventManager.RegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor();
+    //}
+
+    //private void OnDisable()
+    //{
+    //    EventManager.UnRegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor);
+    //}
+
+    //private void CheckInPrisonDoor(object data)
+    //{
+    //    isInPrisonDoor = (bool)data;
+    //}
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created  
     void Start()
     {
@@ -170,7 +189,7 @@ public class Inventory : MonoBehaviour
             case InventoryType.Tunnel:
                 {
                     // ������ ����?
-                    // MapEventManager.TriggerEvent(MapEventType.UseHatch);
+                    EventManager.TriggerEvent(EventType.UseHatch);
                     break;
                 }
             case InventoryType.Flashlight:

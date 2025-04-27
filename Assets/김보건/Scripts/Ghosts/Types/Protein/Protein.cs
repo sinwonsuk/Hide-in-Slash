@@ -214,6 +214,7 @@ public class Protein : Ghost, IPunObservable
 
         Vector2 input = MoveInput;
 
+
         if (input == Vector2.zero)
         {
             ghostStateMachine.ChangeState(normalIdleState);

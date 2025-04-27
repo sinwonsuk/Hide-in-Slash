@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
+using System.Text.RegularExpressions;
 
 public enum EscapeType
 {
@@ -16,89 +17,6 @@ public enum EscapeType
 
 public class Player : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private GameObject spriteObject; 
-    [SerializeField] private Transform lightObject; 
-
-    private Vector3 networkedPosition;
-    private Vector3 networkedVelocity;
-    private float lerpSpeed = 10f;
-    private bool networkedIsMoving;
-    private float networkedDirX;
-    private float networkedDirY;
-    private float lightAngle;
-
-    private Vector2 lastDir = Vector2.right;   // 기본방향
-
-    public Animator anim { get; private set; }
-    public Rigidbody2D rb { get; private set; }
-
-    public SpriteRenderer sr { get; private set; }
-
-    public int facingDir { get; private set; } = 1;
-    public int facingUpDir { get; private set; } = 1;   // 1 = ��, -1 = �Ʒ�
-    protected bool facingRight = true;
-    protected bool facingUp = true;
-
-    [Header("�̵�")]
-    public float moveSpeed = 5f;
-
-    public PlayerStateMachine PlayerStateMachine { get; private set; }
-
-    public PlayerIdle idleState { get; private set; }
-    public PlayerMove moveState { get; private set; }
-    public PlayerDead deadState { get; private set; }
-    public PlayerEscapeState escapeState { get; private set; }
-    public EscapeType escapeType { get; private set; } = EscapeType.Dead;
-    public int EscapeCode => (int)escapeType;
-
-    private int countLife = 2;  //플레이어 수명
-
-    [Header("이동물약")]
-    [SerializeField] private float baseSpeed = 5f;
-    [SerializeField] private float boostedSpeed = 10f;
-    [SerializeField] private float boostDuration = 10f;
-    [SerializeField] private bool hasEnergyDrink = false;     
-    private bool isBoosted = false;         
-    [SerializeField] private float boostTimer;        //디버그용 시리얼라이즈필드
-
-    [Header("투명물약")]
-    [SerializeField] private float invisibleDuration = 5f;
-    [SerializeField] private bool hasInvisiblePotion = false;  
-    private bool isInvisible = false;           
-    [SerializeField] private float invisibleTimer;   //디버그용 시리얼라이즈필드
-
-    [Header("손전등")]
-    [SerializeField] private bool hasUpgradedFlashlight = false;
-    [SerializeField] private Light2D flashlight;
-    [SerializeField] private float upgradedRadius = 8f; 
-    [SerializeField] private float defaultRadius = 3.5f;
-    [SerializeField] private float upgradeLightDuration = 10f;
-    [SerializeField] private PolygonCollider2D lightCollider;   
-    private bool isUpgradedLight = false;
-    [SerializeField] private float upgradedLightTimer; // 업글손전등 시간
-    private bool isLightOn = false; // 켜짐
-    private bool isBlinking = false;
-    private float blinkTimer = 0f;
-    private float blinkInterval = 0.3f; // 깜빡속도
-    private Vector2[] defaultColliderPoints;
-
-    [Header("감옥키")]
-    [SerializeField] private bool hasPrisonKey = false; 
-    private bool isInPrisonDoor = false;
-
-    [Header("잡혀서 감옥감")]
-    [SerializeField] private GameObject moveMap;
-    [SerializeField] private string portalName = "CaughtPoint";
-
-    [Header("개구멍")]
-    [SerializeField] private bool hasHatch = false;
-    private bool isInHatch = false;
-
-    [Header("지도")]
-    [SerializeField] private GameObject mapUI;
-    [SerializeField] private bool hasMap = false;
-    private bool isInMap = false;
-
 
     private void Awake()
     {
@@ -126,7 +44,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.RegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
         EventManager.RegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.RegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
-        EventManager.RegisterEvent(EventType.UseHatch, useHatchItem);
+        EventManager.RegisterEvent(EventType.UseHatch, HasHatchItem);
         EventManager.RegisterEvent(EventType.LightOn, TurnOnLight);
         EventManager.RegisterEvent(EventType.LightOff, TurnOffLight);
         EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
@@ -140,7 +58,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.UnRegisterEvent(EventType.UseInvisiblePotion, BecomeInvisible);
         EventManager.UnRegisterEvent(EventType.UseUpgradedLight, UseUpgradedLightHandler);
         EventManager.UnRegisterEvent(EventType.UsePrisonKey, usePrisonKeyItem);
-        EventManager.UnRegisterEvent(EventType.UseHatch, useHatchItem);
+        EventManager.UnRegisterEvent(EventType.UseHatch, HasHatchItem);
         EventManager.UnRegisterEvent(EventType.LightOn, TurnOnLight);
         EventManager.UnRegisterEvent(EventType.LightOff, TurnOffLight);
         EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
@@ -203,6 +121,19 @@ public class Player : MonoBehaviourPun, IPunObservable
                     OpenMap();
                 else
                     CloseMap();
+            }
+        }
+
+        if(Input.GetKeyUp(KeyCode.R))
+        {
+            if (hasHatch && isInHatch)
+            {
+                useHatchItem();
+                Debug.Log("개구멍사용");
+            }
+            else
+            {
+                Debug.Log("사용못함");
             }
         }
 
@@ -358,13 +289,23 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.collider.CompareTag("Ghost"))
         {
+      
             countLife--;
             Debug.Log("고스트 충돌");
             photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
             if (countLife <= 0)
             {
                 Debug.Log("너죽음");
+                EventManager.TriggerEvent(EventType.PlayerHpZero);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Dead");
                 PlayerStateMachine.ChangeState(deadState);
+            }
+            else if (countLife == 1)
+            {
+                EventManager.TriggerEvent(EventType.PlayerHpOne);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Chatch");
+                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
+
             }
         }
     }
@@ -377,29 +318,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (collision.CompareTag("PlayerSight"))
             return;
 
-        //if (collision.CompareTag("Prison"))
-        //{
-        //    countLife--;
-        //    Debug.Log($"{countLife} 번감옥이동");
-        //    if (countLife <= 0)
-        //    {
-        //        Debug.Log("너죽음");
-        //        PlayerStateMachine.ChangeState(deadState);
-        //    }
-
-        //    if (hasPrisonKey)
-        //    {
-        //        Debug.Log("감옥문열기가능");
-        //        usePrisonKeyItem();
-        //    }
-        //}
-
         if (collision.CompareTag("ExitDoor"))
         {
             Debug.Log("탈출구가능");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
         }
+
 
         if (collision.CompareTag("PrisonDoor"))
         {
@@ -408,11 +333,14 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Debug.Log("감옥해방가능");
             }
+            // 이벤트로 isInPrisonDoor = true
+            EventManager.TriggerEvent(EventType.InPrisonDoor, true);
         }
 
         if (collision.CompareTag("Hatch"))
         {
-            isInHatch = true;
+                isInHatch = true;
+
         }
 
 
@@ -423,7 +351,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Prison"))
         {
-            isInPrisonDoor = false; 
+            isInPrisonDoor = false;
+            // 이벤트로 isInPrisonDoor = false
+            EventManager.TriggerEvent(EventType.InPrisonDoor, false);
         }
 
         if (collision.CompareTag("Hatch"))
@@ -544,7 +474,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
-        // RPC 호출로 네트워크에 상태를 전파
+      
         photonView.RPC("UpGradeLight", RpcTarget.All);
     }
 
@@ -554,7 +484,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashlight.pointLightOuterRadius = upgradedRadius;
         flashlight.enabled = true;
 
-        hasUpgradedFlashlight = false;
+        //hasUpgradedFlashlight = false;
         isUpgradedLight = true;
         upgradedLightTimer = upgradeLightDuration;
 
@@ -609,7 +539,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         isLightOn = false;
         flashlight.enabled = false;
 
-        photonView.RPC("RPC_SetFlashlight", RpcTarget.Others, false);
+        photonView.RPC("SetFlashlight", RpcTarget.Others, false);
 
         Debug.Log("손전등꺼짐");
     }
@@ -644,7 +574,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void RPC_SetFlashlight(bool turnOn)
+    public void SetFlashlight(bool turnOn)
     {
         isLightOn = turnOn;
         flashlight.enabled = turnOn;
@@ -660,12 +590,22 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.points = scaled;
     }
 
+    private void HasPrisonKey()
+    {
+        hasPrisonKey = true;
+        Debug.Log("감옥키획득");
+    }
 
     private void usePrisonKeyItem()
     {
         Debug.Log("감옥 키");
         EventManager.TriggerEvent(EventType.OpenPrisonDoor);
         hasPrisonKey = false;
+    }
+
+    private void HasHatchItem()
+    {
+        hasHatch = true;
     }
 
     private void useHatchItem()
@@ -730,4 +670,89 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
+
+    [SerializeField] private GameObject spriteObject;
+    [SerializeField] private Transform lightObject;
+
+    private Vector3 networkedPosition;
+    private Vector3 networkedVelocity;
+    private float lerpSpeed = 10f;
+    private bool networkedIsMoving;
+    private float networkedDirX;
+    private float networkedDirY;
+    private float lightAngle;
+
+    private Vector2 lastDir = Vector2.right;   // 기본방향
+
+    public ProfileSlotManager profileSlotManager;
+
+    public Animator anim { get; private set; }
+    public Rigidbody2D rb { get; private set; }
+
+    public SpriteRenderer sr { get; private set; }
+
+    public int facingDir { get; private set; } = 1;
+    public int facingUpDir { get; private set; } = 1;   // 1 = ��, -1 = �Ʒ�
+    protected bool facingRight = true;
+    protected bool facingUp = true;
+
+    [Header("�̵�")]
+    public float moveSpeed = 5f;
+
+    public PlayerStateMachine PlayerStateMachine { get; private set; }
+
+    public PlayerIdle idleState { get; private set; }
+    public PlayerMove moveState { get; private set; }
+    public PlayerDead deadState { get; private set; }
+    public PlayerEscapeState escapeState { get; private set; }
+    public EscapeType escapeType { get; private set; } = EscapeType.Dead;
+    public int EscapeCode => (int)escapeType;
+
+    private int countLife = 2;  //플레이어 수명
+
+    [Header("이동물약")]
+    [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private float boostedSpeed = 10f;
+    [SerializeField] private float boostDuration = 10f;
+    private bool hasEnergyDrink = false;
+    private bool isBoosted = false;
+    private float boostTimer;
+
+    [Header("투명물약")]
+    [SerializeField] private float invisibleDuration = 5f;
+    [SerializeField] private bool hasInvisiblePotion = false;
+    private bool isInvisible = false;
+    [SerializeField] private float invisibleTimer;   //디버그용 시리얼라이즈필드
+
+    [Header("손전등")]
+    [SerializeField] private Light2D flashlight;
+    [SerializeField] private float upgradedRadius = 8f;
+    [SerializeField] private float defaultRadius = 3.5f;
+    [SerializeField] private float upgradeLightDuration = 10f;
+    [SerializeField] private PolygonCollider2D lightCollider;
+    [SerializeField] private float upgradedLightTimer; // 업글손전등 시간
+    private bool isUpgradedLight = false;
+    private bool isLightOn = false; // 켜짐
+    private bool isBlinking = false;
+    private float blinkTimer = 0f;
+    private float blinkInterval = 0.3f; // 깜빡속도
+    private Vector2[] defaultColliderPoints;
+    //private bool hasUpgradedFlashlight = false;
+
+    [Header("감옥키")]
+    [SerializeField] private bool hasPrisonKey = false;
+    private bool isInPrisonDoor = false;
+
+    [Header("잡혀서 감옥감")]
+    [SerializeField] private GameObject moveMap;
+    [SerializeField] private string portalName = "CaughtPoint";
+
+    [Header("개구멍")]
+    [SerializeField] private bool hasHatch = false;
+    private bool isInHatch = false;
+
+    [Header("지도")]
+    [SerializeField] private GameObject mapUI;
+    [SerializeField] private bool hasMap = false;
+    private bool isInMap = false;
 }
