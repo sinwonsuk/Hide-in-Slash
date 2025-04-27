@@ -9,8 +9,8 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
 
-        Debug.Log(" OnJoinedRoom 호출됨!");
 
+        Debug.Log(" OnJoinedRoom 호출됨!");
         Debug.Log($" 현재 방 이름: {PhotonNetwork.CurrentRoom.Name}");
         Debug.Log($" 내 닉네임: {PhotonNetwork.NickName}");
         Debug.Log($" 내 ActorNumber (플레이어 ID): {PhotonNetwork.LocalPlayer.ActorNumber}");

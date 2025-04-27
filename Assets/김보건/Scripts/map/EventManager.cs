@@ -22,6 +22,7 @@ public enum EventType
     LightRestored,
     SpawnMinigame,
     DestroyMiniGame,
+    GeneratorSuccess,
 }
 
 
