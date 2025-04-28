@@ -1,5 +1,6 @@
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.UI;
 using Color = UnityEngine.Color;
 
 public class MiniGameFail : MonoBehaviour
@@ -7,11 +8,7 @@ public class MiniGameFail : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        Vector2 camera = Camera.main.transform.position;
-
-        transform.position = camera;
+        spriteRenderer = GetComponent<Image>();
 
         color = Color.white;
     }
@@ -19,11 +16,6 @@ public class MiniGameFail : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 camera = Camera.main.transform.position;
-
-        transform.position = camera;
-
-
 
         if (color.a > 0f)
         {
@@ -32,11 +24,11 @@ public class MiniGameFail : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 
-    SpriteRenderer spriteRenderer;
+    Image spriteRenderer;
     Color color;
     [SerializeField]
     float speed = 0.5f;

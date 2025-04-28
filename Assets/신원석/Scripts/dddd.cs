@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class BoScenesManager : MonoBehaviourPunCallbacks
 {
-    public Transform[] playerSpawnPoints;  // ÇÃ·¹ÀÌ¾î ½ºÆù À§Ä¡
+    public Transform[] playerSpawnPoints;  // í”Œë ˆì´ì–´ ìŠ¤í° ìœ„ì¹˜
 
     public override void OnJoinedRoom()
     {
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                profileSlotManager.CreateProfileSlot(player);
-            }
-        }
+        //foreach (var player in PhotonNetwork.PlayerList)
+        //{
+        //    if (player != PhotonNetwork.LocalPlayer)
+        //    {
+        //        profileSlotManager.CreateProfileSlot(player);
+        //    }
+        //}
 
-        Debug.Log("OnJoinedRoom È£ÃâµÊ!");
+        Debug.Log("OnJoinedRoom í˜¸ì¶œë¨!");
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
-            Debug.LogError("½ºÆù Æ÷ÀÎÆ®°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("ìŠ¤í° í¬ì¸íŠ¸ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
             return;
         }
 
@@ -28,8 +28,8 @@ public class BoScenesManager : MonoBehaviourPunCallbacks
 
         if (playerIndex >= playerSpawnPoints.Length)
         {
-            Debug.LogWarning("½ºÆù Æ÷ÀÎÆ® ºÎÁ·, ±âº» À§Ä¡¿¡ ½ºÆù.");
-            playerIndex = 0; // ±âº»°ª
+            Debug.LogWarning("ìŠ¤í° í¬ì¸íŠ¸ ë¶€ì¡±, ê¸°ë³¸ ìœ„ì¹˜ì— ìŠ¤í°.");
+            playerIndex = 0; // ê¸°ë³¸ê°’
         }
 
         Vector3 spawnPos = playerSpawnPoints[playerIndex].position;
@@ -49,10 +49,10 @@ public class BoScenesManager : MonoBehaviourPunCallbacks
 
 
 
-        Debug.Log($" ÇöÀç ¹æ ÀÌ¸§: {PhotonNetwork.CurrentRoom.Name}");
-        Debug.Log($" ³» ´Ğ³×ÀÓ: {PhotonNetwork.NickName}");
-        Debug.Log($" ³» ActorNumber (ÇÃ·¹ÀÌ¾î ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
-        Debug.Log($" ÇöÀç ¹æ Á¢¼Ó ÀÎ¿ø ¼ö: {PhotonNetwork.CurrentRoom.PlayerCount}");
+        Debug.Log($" í˜„ì¬ ë°© ì´ë¦„: {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($" ë‚´ ë‹‰ë„¤ì„: {PhotonNetwork.NickName}");
+        Debug.Log($" ë‚´ ActorNumber (í”Œë ˆì´ì–´ ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
+        Debug.Log($" í˜„ì¬ ë°© ì ‘ì† ì¸ì› ìˆ˜: {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
 
     [SerializeField]

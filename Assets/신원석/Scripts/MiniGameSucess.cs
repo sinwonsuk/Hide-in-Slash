@@ -1,28 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniGameSucess : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        Vector2 camera = Camera.main.transform.position;
-
-        transform.position = camera;
-
+        spriteRenderer = GetComponent<Image>();
+     
         color = Color.white;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 camera = Camera.main.transform.position;
-
-        transform.position = camera;
-
-
-
+       
         if (color.a > 0f)
         {
             color.a -= Time.deltaTime * speed; 
@@ -30,11 +22,11 @@ public class MiniGameSucess : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 
-    SpriteRenderer spriteRenderer;
+    Image spriteRenderer;
     Color color;
     [SerializeField]
     float speed = 0.5f;

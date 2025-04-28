@@ -45,12 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e41928fa3b6204a8bd57f1435bc50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profileSlotPrefab: {fileID: 0}
-  profileSlotParent: {fileID: 0}
-  profileTransforms:
-  - {x: 65, y: 64}
-  - {x: 216, y: 0}
-  - {x: 365, y: 56}
+  profileSlotPrefab: {fileID: 8564023092263681389, guid: c43cff76cd3a3134f8a5775de8d8074b, type: 3}
+  playerProfileSlotParent: {fileID: 0}
+  bossProfileSlotParent: {fileID: 0}
+  playerProfileTransforms:
+  - {x: 19, y: 25}
+  - {x: 162, y: 25}
+  - {x: 301, y: 25}
+  bossProfileTransforms:
+  - {x: 389, y: -357}
+  - {x: 535, y: -357}
+  - {x: 689, y: -357}
+  - {x: 836, y: -357}
 --- !u!114 &2827739390928435607
 MonoBehaviour:
   m_ObjectHideFlags: 0

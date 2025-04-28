@@ -1,12 +1,19 @@
 using Photon.Pun;
 using UnityEngine;
 using System.Collections;
+using Photon.Realtime;
 
 public class BoSceneManager : MonoBehaviourPunCallbacks
 {
     public Transform[] playerSpawnPoints;  // �÷��̾� ���� ��ġ
 
     public ProfileSlotManager profileSlotManager;
+
+    [SerializeField]
+    Canvas playerCanvas;
+
+    [SerializeField]
+    Canvas bossCanvas;
 
     float time = 0;
 
@@ -27,7 +34,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            SetRole("Monster");
+            SetRole("Boss");
         }
         else
         {
@@ -49,17 +56,27 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         // 기다려줘야 할 수도 있음
         yield return new WaitForSeconds(0.5f);
 
-        foreach (var player in PhotonNetwork.PlayerList)
+        string name;
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
         {
-            if (player.CustomProperties.TryGetValue("Role", out object roleObj))
+            name = selfRoleObj.ToString();
+
+            if(name == "Boss")
             {
-                string role = roleObj.ToString();
-                if (player != PhotonNetwork.LocalPlayer && role != "Monster")
-                {
-                    profileSlotManager.CreateProfileSlot(player);
-                }
+                bossCanvas.gameObject.SetActive(true);
+                playerCanvas.gameObject.SetActive(false);
+            }
+            else
+            {
+                bossCanvas.gameObject.SetActive(false);
+                playerCanvas.gameObject.SetActive(true);
             }
         }
+
+        profileSlotManager.CreateProfileSlot();
+
+
 
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
