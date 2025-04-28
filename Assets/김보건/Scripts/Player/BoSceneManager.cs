@@ -23,110 +23,85 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
-
-            //string name = prop["Role"].ToString();
-
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                profileSlotManager.CreateProfileSlot(player);
-            }
-        }
-    }
-
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            ExitGames.Client.Photon.Hashtable monProp = new();
-
-            monProp.Add("Role", "Monster");
-            PhotonNetwork.LocalPlayer.SetCustomProperties(monProp);
+            SetRole("Monster");
         }
         else
         {
-            ExitGames.Client.Photon.Hashtable humanProp = new();
-            humanProp.Add("Role", "Human");
-            PhotonNetwork.LocalPlayer.SetCustomProperties(humanProp);
+            SetRole("Human");
         }
-        //test();
 
-        //foreach (var player in PhotonNetwork.PlayerList)
-        //{         
-        //    ExitGames.Client.Photon.Hashtable prop = player.CustomProperties;
+        StartCoroutine(SetupProfileSlotsAndSpawn());
+    }
 
-        //    string name = prop["Role"].ToString();
+    private void SetRole(string role)
+    {
+        ExitGames.Client.Photon.Hashtable prop = new();
+        prop.Add("Role", role);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(prop);
+    }
 
-        //    if (player != PhotonNetwork.LocalPlayer && name != "Monster")
-        //    {
-        //        profileSlotManager.CreateProfileSlot(player);
-        //    }         
-        //}
+    private IEnumerator SetupProfileSlotsAndSpawn()
+    {
+        // 기다려줘야 할 수도 있음
+        yield return new WaitForSeconds(0.5f);
 
-        Debug.Log(" OnJoinedRoom ȣ���!");
-        Debug.Log($" ���� �� �̸�: {PhotonNetwork.CurrentRoom.Name}");
-        Debug.Log($" �� �г���: {PhotonNetwork.NickName}");
-        Debug.Log($" �� ActorNumber (�÷��̾� ID): {PhotonNetwork.LocalPlayer.ActorNumber}");
-        Debug.Log($" ���� �� ���� �ο� ��: {PhotonNetwork.CurrentRoom.PlayerCount}");
- 
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties.TryGetValue("Role", out object roleObj))
+            {
+                string role = roleObj.ToString();
+                if (player != PhotonNetwork.LocalPlayer && role != "Monster")
+                {
+                    profileSlotManager.CreateProfileSlot(player);
+                }
+            }
+        }
+
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
-            Debug.LogError("���� ����Ʈ�� �Ҵ���� �ʾҽ��ϴ�!");
-            return;
+            Debug.LogError("Spawn points missing!");
+            yield break;
         }
 
         int playerIndex = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-        Quaternion playerRotation = Quaternion.identity;
-
         if (playerIndex >= playerSpawnPoints.Length)
         {
-            Debug.LogWarning("���� ����Ʈ ����, �⺻ ��ġ�� ����.");
-            playerIndex = 0; // �⺻��
+            playerIndex = 0;
         }
 
         Vector3 spawnPos = playerSpawnPoints[playerIndex].position;
+        Quaternion playerRotation = Quaternion.identity;
 
-        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        if (PhotonNetwork.IsMasterClient)
+        string prefabName = GetPrefabName(PhotonNetwork.CurrentRoom.PlayerCount);
+        if (!string.IsNullOrEmpty(prefabName))
         {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate(prefabName, spawnPos, playerRotation);
         }
-        else if (playerCount == 2)
+        else
         {
-            PhotonNetwork.Instantiate("Player3", spawnPos, playerRotation);
-        }
-        else if (playerCount == 3)
-        {
-            PhotonNetwork.Instantiate("ProteinGhost", spawnPos, playerRotation);
-        }
-        else if (playerCount == 4)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 5)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 6)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 7)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 8)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 9)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
+            Debug.LogError("Prefab name not found for player count: " + PhotonNetwork.CurrentRoom.PlayerCount);
         }
     }
+
+    private string GetPrefabName(int playerCount)
+    {
+        switch (playerCount)
+        {
+            case 1: return "ProteinGhost";
+            case 2: return "Player";
+            case 3: return "Player2";
+            case 4: return "Player3";
+            case 5: return "Player3";
+            case 6: return "Player3";
+            case 7: return "Player3";
+            case 8:
+            case 9: return "Player2";
+            default: return null;
+        }
+    }
+
 }
