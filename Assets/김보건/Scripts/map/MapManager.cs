@@ -58,8 +58,9 @@ public class MapManager : MonoBehaviourPunCallbacks
         AddSpawnPoints();
         if (PhotonNetwork.IsMasterClient)
         {
+            pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count);
             espIndexs = MakeRandomValues(10, eventSpawnPoints.Count);
-
+            roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length);
             InitializeMiniGames();
             InitializeGenerators();
             Debug.Log("방에서 마스터할일 완");
@@ -191,21 +192,35 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     private void AssignRole()
     {
-        pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count);
+
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Length)];
         ExitGames.Client.Photon.Hashtable monProp = new();
         monProp.Add("Role", monsterName);
+        players[roleIndexs[0]].SetCustomProperties(monProp);
+
+
+        for (int i = 1; i < players.Length; i++)
+        {
+            string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Length)];
+            ExitGames.Client.Photon.Hashtable playerProp = new ExitGames.Client.Photon.Hashtable();
+            playerProp.Add("Role", playerName);
+            players[roleIndexs[i]].SetCustomProperties(playerProp);
+        }
+        Debug.Log("역할배정완료");
+    }
+
+    private void AssignSpawnPoint()
+    {
+        Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
+        ExitGames.Client.Photon.Hashtable monProp = new();
         monProp.Add("SpawnIndex", pspIndexs[0]);
         players[roleIndexs[0]].SetCustomProperties(monProp);
 
 
         for (int i = 1; i < players.Length; i++)
         {
-
-            string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Length)];
             ExitGames.Client.Photon.Hashtable playerProp = new ExitGames.Client.Photon.Hashtable();
-            playerProp.Add("Role", playerName);
             playerProp.Add("SpawnIndex", pspIndexs[i]);
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
