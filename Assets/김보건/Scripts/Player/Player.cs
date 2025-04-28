@@ -36,6 +36,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashlight.pointLightOuterRadius = defaultRadius;
         defaultColliderPoints = lightCollider.points;
 
+        // 인스펙터창에 무조건 있어야함 긴급 땜빵
+        GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
+        profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
+
         flashlight.enabled = false;
 
     }
@@ -79,6 +83,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (cam != null)
                 cam.Follow = transform;
         }
+
+        // 초기화 되기전에 아무것도 되지 마라 
+        isInitialized = true;
     }
 
     private void Update()
@@ -630,12 +637,20 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if(isInitialized ==false)
+        {
+            return;
+        }
+
         if (stream.IsWriting)
         {
             //신호보냄
             stream.SendNext(transform.position);
             stream.SendNext(transform.localScale);
             stream.SendNext(rb.linearVelocity);
+
+
+
             stream.SendNext((int)PlayerStateMachine.currentState.StateType);
             stream.SendNext((int)escapeType);
             stream.SendNext(facingDir);
@@ -660,25 +675,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             networkedDirY = (float)stream.ReceiveNext();
             lightAngle = (float)stream.ReceiveNext();
 
-            //if (PlayerStateMachine.currentState.StateType != receivedState)
-            //{
-            //    switch (receivedState)
-            //    {
-            //        case PlayerStateType.Idle:
-            //            PlayerStateMachine.ChangeState(idleState);
-            //            break;
-            //        case PlayerStateType.Move:
-            //            PlayerStateMachine.ChangeState(moveState);
-            //            break;
-            //        case PlayerStateType.Dead:
-            //            PlayerStateMachine.ChangeState(deadState);
-            //            break;
-            //        case PlayerStateType.Escape:
-            //            escapeState.SetEscapeType(receivedEscape);
-            //            PlayerStateMachine.ChangeState(escapeState);
-            //            break;
-            //    }
-            //}
         }
     }
 
@@ -768,4 +764,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject mapUI;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
+
+    bool isInitialized = false;
 }

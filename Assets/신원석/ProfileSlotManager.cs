@@ -4,8 +4,8 @@ using Photon.Realtime;
 
 public class ProfileSlotManager : MonoBehaviourPunCallbacks
 {
-    public GameObject profileSlotPrefab;  // ÇÁ·ÎÇÊ ½½·Ô ÇÁ¸®ÆÕ
-    public Transform profileSlotParent;   // ÇÁ·ÎÇÊ ½½·ÔÀ» Ãß°¡ÇÒ ºÎ¸ğ °´Ã¼
+    public GameObject profileSlotPrefab;  // í”„ë¡œí•„ ìŠ¬ë¡¯ í”„ë¦¬íŒ¹
+    public Transform profileSlotParent;   // í”„ë¡œí•„ ìŠ¬ë¡¯ì„ ì¶”ê°€í•  ë¶€ëª¨ ê°ì²´
 
     public Vector2[] profileTransforms;
 
@@ -13,7 +13,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // ¹æ¿¡ ÀÔÀåÇÑ ÈÄ, ´Ù¸¥ ÇÃ·¹ÀÌ¾îµéÀÇ ÇÁ·ÎÇÊÀ» »ı¼º
+        // ë°©ì— ì…ì¥í•œ í›„, ë‹¤ë¥¸ í”Œë ˆì´ì–´ë“¤ì˜ í”„ë¡œí•„ì„ ìƒì„±
         foreach (var player in PhotonNetwork.PlayerList)
         {
             CreateProfileSlot(player);
@@ -22,7 +22,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
 
     public void CreateProfileSlot(Photon.Realtime.Player targetPlayer)
     {
-        // ÇÁ·ÎÇÊ ½½·Ô »ı¼º
+        // í”„ë¡œí•„ ìŠ¬ë¡¯ ìƒì„±
         GameObject slot = Instantiate(profileSlotPrefab, profileSlotParent);
 
         slot.GetComponent<RectTransform>().anchoredPosition = profileTransforms[check];
@@ -31,25 +31,39 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
 
         check++;
 
-        // ÇÁ·ÎÇÊ¿¡ »óÅÂ¸¦ µ¿±âÈ­
-        //photonView.RPC("SyncProfileState", RpcTarget.AllBuffered, targetPlayer.UserId, "Alive");  // ÃÊ±â »óÅÂ´Â 'Alive'·Î ¼³Á¤
+        // í”„ë¡œí•„ì— ìƒíƒœë¥¼ ë™ê¸°í™”
+        //photonView.RPC("SyncProfileState", RpcTarget.AllBuffered, targetPlayer.UserId, "Alive");  // ì´ˆê¸° ìƒíƒœëŠ” 'Alive'ë¡œ ì„¤ì •
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ ¹æ¿¡ µé¾î¿Ã ¶§ ÇÁ·ÎÇÊ ½½·ÔÀ» »ı¼º
+    // í”Œë ˆì´ì–´ê°€ ë°©ì— ë“¤ì–´ì˜¬ ë•Œ í”„ë¡œí•„ ìŠ¬ë¡¯ì„ ìƒì„±
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        CreateProfileSlot(newPlayer);
+        if (newPlayer.CustomProperties.TryGetValue("Role", out object roleObj))
+        {
+            string role = roleObj.ToString();
+            if (newPlayer != PhotonNetwork.LocalPlayer && role != "Monster")
+            {
+                CreateProfileSlot(newPlayer);
+            }
+        }
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ ¹æÀ» ³ª°¥ ¶§ ÇÁ·ÎÇÊ ½½·ÔÀ» Á¦°Å
+    // í”Œë ˆì´ì–´ê°€ ë°©ì„ ë‚˜ê°ˆ ë•Œ í”„ë¡œí•„ ìŠ¬ë¡¯ì„ ì œê±°
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        RemoveProfileSlot(otherPlayer);
+        if (otherPlayer.CustomProperties.TryGetValue("Role", out object roleObj))
+        {
+            string role = roleObj.ToString();
+            if (otherPlayer != PhotonNetwork.LocalPlayer && role != "Monster")
+            {
+                RemoveProfileSlot(otherPlayer);
+            }
+        }
     }
 
     public void RemoveProfileSlot(Photon.Realtime.Player targetPlayer)
     {
-        // ÇÁ·ÎÇÊ ½½·Ô Á¦°Å ·ÎÁ÷ (¿¹½Ã·Î ÁÖ¼® Ã³¸®µÈ ºÎºĞ »ç¿ë °¡´É)
+        // í”„ë¡œí•„ ìŠ¬ë¡¯ ì œê±° ë¡œì§ (ì˜ˆì‹œë¡œ ì£¼ì„ ì²˜ë¦¬ëœ ë¶€ë¶„ ì‚¬ìš© ê°€ëŠ¥)
         foreach (Transform child in profileSlotParent)
         {
             OtherPlayerProfile profile = child.GetComponent<OtherPlayerProfile>();
@@ -61,18 +75,18 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // ÇÁ·ÎÇÊ »óÅÂ µ¿±âÈ­ (RPC)
+    // í”„ë¡œí•„ ìƒíƒœ ë™ê¸°í™” (RPC)
     [PunRPC]
     public void SyncProfileState(Photon.Realtime.Player targetPlayer, string state)
     {
-        // playerId¸¦ ÅëÇØ Æ¯Á¤ ÇÃ·¹ÀÌ¾îÀÇ ÇÁ·ÎÇÊ »óÅÂ¸¦ ¾÷µ¥ÀÌÆ®
-        // ¿¹½Ã·Î UIÀÇ ÇÁ·ÎÇÊ »óÅÂ¸¦ 'Alive', 'Dead' µîÀ¸·Î º¯°æÇÒ ¼ö ÀÖÀ½
+        // playerIdë¥¼ í†µí•´ íŠ¹ì • í”Œë ˆì´ì–´ì˜ í”„ë¡œí•„ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸
+        // ì˜ˆì‹œë¡œ UIì˜ í”„ë¡œí•„ ìƒíƒœë¥¼ 'Alive', 'Dead' ë“±ìœ¼ë¡œ ë³€ê²½í•  ìˆ˜ ìˆìŒ
         foreach (Transform child in profileSlotParent)
         {
             OtherPlayerProfile profile = child.GetComponent<OtherPlayerProfile>();
             if (profile != null && profile.targetPlayer == targetPlayer)
             {
-                profile.UpdateProfileState(state);  // »óÅÂ¿¡ ¸Â´Â ÇÁ·ÎÇÊ »óÅÂ ¾÷µ¥ÀÌÆ®
+                profile.UpdateProfileState(state);  // ìƒíƒœì— ë§ëŠ” í”„ë¡œí•„ ìƒíƒœ ì—…ë°ì´íŠ¸
             }
         }
     }
