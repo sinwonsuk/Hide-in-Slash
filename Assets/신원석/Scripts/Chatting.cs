@@ -52,14 +52,25 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Craete(string _text)
     {
-        GameObject instantiate = Instantiate(chattingObject, transform);
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
+        {
+            if (selfRoleObj is string selfRole)
+            {
+                name = selfRole;
+            }
+        }
 
-        ChattingOutput chattingOutput = instantiate.GetComponent<ChattingOutput>();
+        if(name != "Boss")
+        {
+            GameObject instantiate = Instantiate(chattingObject, transform);
 
-        chattingOutput.textMeshProUGUI.text = _text;
+            ChattingOutput chattingOutput = instantiate.GetComponent<ChattingOutput>();
 
-        Canvas.ForceUpdateCanvases();
-        scrollRect.verticalNormalizedPosition = 0f;
+            chattingOutput.textMeshProUGUI.text = _text;
+
+            Canvas.ForceUpdateCanvases();
+            scrollRect.verticalNormalizedPosition = 0f;
+        }    
     }
 
     [SerializeField]
@@ -75,4 +86,5 @@ public class ChattingManager : MonoBehaviourPunCallbacks
 
     bool isActiveInputWindow;
 
+    string name;
 }
