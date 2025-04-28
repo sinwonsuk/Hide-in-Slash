@@ -12,6 +12,12 @@ public class MapTrigger : MonoBehaviour
     public string Portal;
 
     private static bool isTeleport = false;
+    private Canvas canvas;
+    private void Start()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Dark").GetComponent<Canvas>();
+        canvas.enabled = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -47,8 +53,11 @@ public class MapTrigger : MonoBehaviour
     {
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
-        // 한 프레임 대기. 상황에 따라 WaitForEndOfFrame() 대신 WaitForFixedUpdate()도 고려해보세요.
-        yield return new WaitForSeconds(0.3f);
+        canvas.enabled = true;
+        yield return new WaitForSeconds(0.05f);
         confiner.InvalidateBoundingShapeCache();
+        yield return new WaitForSeconds(0.1f);
+        canvas.enabled = false;
+
     }
 }

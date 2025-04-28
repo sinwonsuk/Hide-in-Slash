@@ -16,23 +16,23 @@ public class MapManager : MonoBehaviourPunCallbacks
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
-    private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //¸ó½ºÅÍ ÇÁ¸®ÆÕ ÀÌ¸§
-    private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // ÇÃ·¹ÀÌ¾î ÇÁ¸®ÆÕ ÀÌ¸§
+    private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ ì´ë¦„
+    private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // í”Œë ˆì´ì–´ í”„ë¦¬íŒ¹ ì´ë¦„
     private string currentMap;
     private Transform shipTf;
 
     private new void OnEnable()
     {
         EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
-        Debug.Log("±¸µ¶¿Ï");
+        Debug.Log("êµ¬ë…ì™„");
     }
     void Start()
     {
         if (PhotonNetwork.OfflineMode)
         {
-            Debug.Log("PhotonÀÌ ÇöÀç ¿ÀÇÁ¶óÀÎ ¸ğµåÀÔ´Ï´Ù.");
+            Debug.Log("Photonì´ í˜„ì¬ ì˜¤í”„ë¼ì¸ ëª¨ë“œì…ë‹ˆë‹¤.");
         }
-        Debug.Log("Á¢¼ÓÇÒ°ÅÀÓ");
+        Debug.Log("ì ‘ì†í• ê±°ì„");
         PhotonNetwork.ConnectUsingSettings();
 
 
@@ -49,7 +49,7 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     private void StartGame()
     {
-        Debug.Log("¹æ¿Â");
+        Debug.Log("ë°©ì˜¨");
         if (PhotonNetwork.IsMasterClient)
         {
             InitializeMap();
@@ -62,7 +62,7 @@ public class MapManager : MonoBehaviourPunCallbacks
 
             InitializeMiniGames();
             InitializeGenerators();
-            Debug.Log("¹æ¿¡¼­ ¸¶½ºÅÍÇÒÀÏ ¿Ï");
+            Debug.Log("ë°©ì—ì„œ ë§ˆìŠ¤í„°í• ì¼ ì™„");
         }
     }
 
@@ -79,13 +79,13 @@ public class MapManager : MonoBehaviourPunCallbacks
         }
         if (PhotonNetwork.IsConnected)
         {
-            Debug.Log("¼­¹ö¿¡ ¿¬°áµÊ");
+            Debug.Log("ì„œë²„ì— ì—°ê²°ë¨");
         }
         if (PhotonNetwork.IsMasterClient)
         {
             if (Input.GetKeyDown(KeyCode.Y))
             {
-                Debug.Log("ÃÑ" + PhotonNetwork.PlayerList.Length);
+                Debug.Log("ì´" + PhotonNetwork.PlayerList.Length);
                 roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length);
                 for (int i = 0; i < roleIndexs.Count; i++)
                 {
@@ -158,7 +158,7 @@ public class MapManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private List<int> MakeRandomValues(int count, int maxValue) // count: »ı¼ºÇÒ ·£´ı °ªÀÇ °³¼ö, maxValue: ·£´ı °ªÀÇ ÃÖ´ë°ª+1
+    private List<int> MakeRandomValues(int count, int maxValue) // count: ìƒì„±í•  ëœë¤ ê°’ì˜ ê°œìˆ˜, maxValue: ëœë¤ ê°’ì˜ ìµœëŒ€ê°’+1
     {
         HashSet<int> randomValues = new HashSet<int>();
         while (randomValues.Count < count)
@@ -209,7 +209,7 @@ public class MapManager : MonoBehaviourPunCallbacks
             playerProp.Add("SpawnIndex", pspIndexs[i]);
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
-        Debug.Log("¿ªÇÒ¹èÁ¤¿Ï·á");
+        Debug.Log("ì—­í• ë°°ì •ì™„ë£Œ");
     }
 
     private void InitializePlayers()
@@ -220,14 +220,23 @@ public class MapManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
-        Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
+        Collider2D col = playerSpawnPoints[spawnIndex].parent.GetComponent<Collider2D>();
         confiner.BoundingShape2D = col;
+        StartCoroutine(RefreshCamCache());
     }
 
     private void SpawnExit()
     {
         PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
         EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+    }
+
+    IEnumerator RefreshCamCache()
+    {
+        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        yield return new WaitForSeconds(0.2f);
+        confiner.InvalidateBoundingShapeCache();
     }
 }
 
