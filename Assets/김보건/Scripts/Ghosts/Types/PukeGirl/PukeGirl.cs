@@ -19,7 +19,11 @@ public class PukeGirl : Ghost, IPunObservable
     private float networkedDirX;
     private float networkedDirY;
 
-    protected override void Awake()
+	[Header("뿌릴 Puddle Prefab")]
+	[SerializeField] private GameObject puddlePrefab;
+	[SerializeField] private float puddleDuration = 10f;
+
+	protected override void Awake()
     {
 
         base.Awake();
@@ -30,7 +34,7 @@ public class PukeGirl : Ghost, IPunObservable
 
         idleState = new PeanutIdle(this, ghostStateMachine, "Idle");
         moveState = new PeanutMove(this, ghostStateMachine, "Move");
-        vomitState = new PukeGirlVomit(this, ghostStateMachine, "Puking");
+        vomitState = new PukeGirlVomit(this, ghostStateMachine, "IsVomiting");
 
         ghostStateMachine.Initialize(idleState);
     }
@@ -85,7 +89,8 @@ public class PukeGirl : Ghost, IPunObservable
     public void RPC_StartVomit()
     {
         ghostStateMachine.ChangeState(vomitState);
-    }
+		anim.SetBool("IsVomiting", true);
+	}
 
     protected override void FixedUpdate()
     {
@@ -120,7 +125,10 @@ public class PukeGirl : Ghost, IPunObservable
     public void OnVomitAnimEnd()
     {
         Debug.Log("토함 끝");
-        anim.SetBool("IsVomiting", false);
+
+		var puddle = Instantiate(puddlePrefab, transform.position, Quaternion.identity);
+		Destroy(puddle, puddleDuration);
+		anim.SetBool("IsVomiting", false);
 
         Vector2 input = MoveInput;
 

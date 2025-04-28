@@ -322,6 +322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  puddlePrefab: {fileID: 1992948655862707270, guid: 8c9f9605fa9ada640947b27593fbca98, type: 3}
+  puddleDuration: 10
 --- !u!61 &7202515897409173102
 BoxCollider2D:
   m_ObjectHideFlags: 0
