@@ -12,7 +12,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
     void test()
     {
-        while(true)
+        while (true)
         {
             if (time > 1)
             {
@@ -83,7 +83,6 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate(prefabName, spawnPos, playerRotation);
         }
-       
     }
 
     private string GetPrefabName(int playerCount)

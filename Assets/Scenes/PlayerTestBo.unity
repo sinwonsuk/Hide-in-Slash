@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1399215784990500606, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8987453083692292974, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
       propertyPath: m_Name
       value: Store
@@ -1224,6 +1228,7 @@ MonoBehaviour:
   - {fileID: 1414008612}
   - {fileID: 1694160174}
   - {fileID: 707971314}
+  profileSlotManager: {fileID: 0}
 --- !u!4 &1232674134
 Transform:
   m_ObjectHideFlags: 0
