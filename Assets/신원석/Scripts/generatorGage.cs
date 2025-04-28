@@ -10,7 +10,6 @@ public class generatorGage : MonoBehaviour
     {
         generator = GetComponentInParent<Generator>();
 
-        generatorInImage = GetComponent<Image>();
     }
 
     // Update is called once per frame

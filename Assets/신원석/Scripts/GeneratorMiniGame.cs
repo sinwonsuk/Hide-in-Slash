@@ -10,14 +10,15 @@ public class GeneratorMiniGame : MonoBehaviour
     {
         GameObject instantiate = Instantiate(generatorStopObject, transform);
 
-        float posX = Random.Range(-1.44f, 0.88f);
-        float posY = 1.47f;
+        float posX = Random.Range(-1.57f, 0.98f);
+        float posY = 1.45f;
 
         instantiate.transform.localPosition = new Vector2(posX, posY);
 
         generatorStopObject = instantiate;
       
         stopSquareCheckAction = CheckCollsion;
+        stopSquareCheckFlaseAction = NotCheckCollsion;
     }
 
     // Update is called once per frame
@@ -40,8 +41,21 @@ public class GeneratorMiniGame : MonoBehaviour
         generatorGage.generatorInImage.fillAmount += 0.2f;
 
     }
+    void NotCheckCollsion()
+    {
+        IsCheck = true;
 
-   public Action stopSquareCheckAction;
+        GameObject GeneratorGage = GameObject.Find("GeneratorGage");
+
+        generatorGage generatorGage = GeneratorGage.GetComponent<generatorGage>();
+
+        generatorGage.generatorInImage.fillAmount -= 0.2f;
+
+    }
+
+
+    public Action stopSquareCheckAction;
+    public Action stopSquareCheckFlaseAction;
 
     public bool IsCheck { get; set; } = false;
 

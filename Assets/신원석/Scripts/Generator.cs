@@ -9,11 +9,15 @@ public class Generator : MonoBehaviourPunCallbacks
     void Start()
     {
         DeleteAction = Delete;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isUpdate == false)
+            return;
+
         if (generatorMiniGame != null)
         {
             if(generatorMiniGame.IsCheck == true)
@@ -80,7 +84,7 @@ public class Generator : MonoBehaviourPunCallbacks
 
                 }
             }
-            yield return null; // ∏≈ «¡∑π¿” √º≈©
+            yield return null; // Îß§ ÌîÑÎ†àÏûÑ Ï≤¥ÌÅ¨
         }
     }
     void StopGeneration()
@@ -97,17 +101,18 @@ public class Generator : MonoBehaviourPunCallbacks
     void Delete()
     {
         photonView.RPC("Sucess", RpcTarget.All);
-        PhotonNetwork.Destroy(gameObject);
         StopGeneration();
-        Destroy(gameObject);
     }
 
     [PunRPC]
     public void Sucess()
     {
+        isUpdate = false;
+        animator.SetTrigger("Sucess");
         EventManager.TriggerEvent(EventType.GeneratorSuccess);
     }
-  
+
+    bool isUpdate = true;
 
     bool isMiniGameRunning = false;
 
@@ -122,6 +127,8 @@ public class Generator : MonoBehaviourPunCallbacks
     GeneratorMiniGame generatorMiniGame;
 
     Coroutine coroutine;
+
+    Animator animator;
 
     public UnityAction DeleteAction;
 

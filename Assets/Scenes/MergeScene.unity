@@ -1007,6 +1007,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPlayerProfile
       objectReference: {fileID: 0}
+    - target: {fileID: 2470162407326764676, guid: 53b8b6a51418600458d007e255a2cc0a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2827739390928435607, guid: 53b8b6a51418600458d007e255a2cc0a, type: 3}
       propertyPath: sceneViewId
       value: 2
@@ -2093,6 +2097,10 @@ PrefabInstance:
     - target: {fileID: 5528791022029366891, guid: a542a40fb7d827f4486d84b2fa6a8bfe, type: 3}
       propertyPath: sceneViewId
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5528791022029366891, guid: a542a40fb7d827f4486d84b2fa6a8bfe, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

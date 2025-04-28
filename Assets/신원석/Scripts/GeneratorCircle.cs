@@ -17,6 +17,10 @@ public class GeneratorCircle : MonoBehaviour
         {
             miniGame.stopSquareCheckAction.Invoke();
         }
+        else if(Input.GetKeyDown(KeyCode.Space))
+        {
+            miniGame.stopSquareCheckFlaseAction.Invoke();
+        }
           
     }
 

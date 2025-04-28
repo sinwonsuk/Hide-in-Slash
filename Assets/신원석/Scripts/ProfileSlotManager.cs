@@ -156,14 +156,29 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncProfileState(Photon.Realtime.Player targetPlayer, string state)
     {
-        // playerId를 통해 특정 플레이어의 프로필 상태를 업데이트
-        // 예시로 UI의 프로필 상태를 'Alive', 'Dead' 등으로 변경할 수 있음
-        foreach (Transform child in playerProfileSlotParent)
+        if (gameName == "Boss")
         {
-            OtherPlayerProfile profile = child.GetComponent<OtherPlayerProfile>();
-            if (profile != null && profile.targetPlayer == targetPlayer)
+
+            foreach (Transform child in bossProfileSlotParent)
             {
-                profile.UpdateProfileState(state);  // 상태에 맞는 프로필 상태 업데이트
+                OtherPlayerProfile profile = child.GetComponent<OtherPlayerProfile>();
+                if (profile != null && profile.targetPlayer == targetPlayer)
+                {
+                    profile.UpdateProfileState(state);  // 상태에 맞는 프로필 상태 업데이트
+                }
+            }
+        }
+        else
+        {
+            // playerId를 통해 특정 플레이어의 프로필 상태를 업데이트
+            // 예시로 UI의 프로필 상태를 'Alive', 'Dead' 등으로 변경할 수 있음
+            foreach (Transform child in playerProfileSlotParent)
+            {
+                OtherPlayerProfile profile = child.GetComponent<OtherPlayerProfile>();
+                if (profile != null && profile.targetPlayer == targetPlayer)
+                {
+                    profile.UpdateProfileState(state);  // 상태에 맞는 프로필 상태 업데이트
+                }
             }
         }
     }
