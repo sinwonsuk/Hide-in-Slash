@@ -277,7 +277,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: -7508117340687331651, guid: 14889586aeb11dc4abc455e7b4caa32c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -450,16 +450,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 7700676960411733606}
   lightObject: {fileID: 5745120180975334999}
+  profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
   boostedSpeed: 10
   boostDuration: 10
-  hasEnergyDrink: 0
-  boostTimer: 0
   invisibleDuration: 5
   hasInvisiblePotion: 0
   invisibleTimer: 0
-  hasUpgradedFlashlight: 1
   flashlight: {fileID: 8665228054635758513}
   upgradedRadius: 15
   defaultRadius: 9

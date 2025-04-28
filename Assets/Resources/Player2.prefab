@@ -307,16 +307,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 8384527742370795021}
   lightObject: {fileID: 3649686950590782016}
+  profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
   boostedSpeed: 10
   boostDuration: 10
-  hasEnergyDrink: 0
-  boostTimer: 0
   invisibleDuration: 5
   hasInvisiblePotion: 0
   invisibleTimer: 0
-  hasUpgradedFlashlight: 1
   flashlight: {fileID: 4024310183347873568}
   upgradedRadius: 15
   defaultRadius: 9
@@ -766,7 +764,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: -3506267031051071500, guid: 14889586aeb11dc4abc455e7b4caa32c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
