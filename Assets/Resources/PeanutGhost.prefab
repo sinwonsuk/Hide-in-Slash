@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 2191573428496805871}
   - component: {fileID: 5926006382409986361}
   - component: {fileID: 720339782849012603}
+  - component: {fileID: -1139680372390726970}
   m_Layer: 0
   m_Name: PeanutGhost
   m_TagString: Ghost
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47102c21a1a7f0b4f92c200027739699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 30
   isStunned: 0
   exclamationPrefab: {fileID: 7838346147354192671, guid: 3d5c9ed01e7510f4aaae0d2d381862ff, type: 3}
 --- !u!50 &2191573428496805871
@@ -261,9 +262,26 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7982802329301648843}
+  - {fileID: -1139680372390726970}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-1139680372390726970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5294631675466029837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &5706920290196834609
 GameObject:
   m_ObjectHideFlags: 0

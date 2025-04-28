@@ -106,7 +106,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
     {
         switch (playerCount)
         {
-            case 1: return "ProteinGhost";
+            case 1: return "PeanutGhost";
             case 2: return "Player";
             case 3: return "Player2";
             case 4: return "Player3";

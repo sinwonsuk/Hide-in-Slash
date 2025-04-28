@@ -7,22 +7,24 @@ using UnityEngine.Rendering.Universal;
 
 public class Peanut : Ghost, IPunObservable
 {
+
+    bool isInitialized =true;
     public override GhostState moveState { get; protected set; }
     private GhostState stunnedState;
     [SerializeField] private bool isStunned = false;
 
-    private Vector2 lastDir = Vector2.right;   // ±‚∫ª∞™¿∫ ø¿∏•¬ 
+    private Vector2 lastDir = Vector2.right;   // Í∏∞Î≥∏Í∞íÏùÄ Ïò§Î•∏Ï™Ω
 
     private PhotonView photonView;
 
     private Vector3 networkedPosition;
-    private Vector3 networkedVelocity;
+    private Vector2 networkedVelocity;
     private float lerpSpeed = 10f;
     private bool networkedIsMoving;
     private float networkedDirX;
     private float networkedDirY;
 
-	[Tooltip("∏”∏Æ ¿ßø° ∂ÁøÔ ! æ∆¿Ãƒ‹ Prefab")]
+	[Tooltip("Î®∏Î¶¨ ÏúÑÏóê ÎùÑÏö∏ ! ÏïÑÏù¥ÏΩò Prefab")]
 	public GameObject exclamationPrefab;
 
 	private GameObject exclamationInstance;
@@ -68,6 +70,8 @@ public class Peanut : Ghost, IPunObservable
             if (light != null)
                 light.enabled = false;
         }
+
+        isInitialized = false;
     }
 
     protected override void Update()
@@ -78,7 +82,7 @@ public class Peanut : Ghost, IPunObservable
         }
         else
         {
-            //¿Ãµø∫∏∞£
+            //Ïù¥ÎèôÎ≥¥Í∞Ñ
             transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
 
             anim.SetBool("IsMoving", networkedIsMoving);
@@ -161,11 +165,13 @@ public class Peanut : Ghost, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting) // ≥ª∞° ∫∏≥ø
+        if (!isInitialized)
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.localScale);
-            stream.SendNext(rb.linearVelocity);
+            return;
+        }
+
+        if (stream.IsWriting) // ÎÇ¥Í∞Ä Î≥¥ÎÇ¥Îäî Ï™Ω
+        {
             stream.SendNext((int)ghostStateMachine.CurrentStateType);
             stream.SendNext(facingDir);
             stream.SendNext(facingUpDir);
@@ -173,22 +179,67 @@ public class Peanut : Ghost, IPunObservable
             stream.SendNext(anim.GetFloat("DirX"));
             stream.SendNext(anim.GetFloat("DirY"));
         }
-        else // ªÛ¥ÎπÊ¿Ã ∫∏≥Ω ∞Õ πﬁ¿Ω
+        else // Î∞õÎäî Ï™Ω
         {
-            networkedPosition = (Vector3)stream.ReceiveNext();
-            transform.localScale = (Vector3)stream.ReceiveNext();
-            networkedVelocity = (Vector2)stream.ReceiveNext();
-            GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();
-            int receivedFacingDir = (int)stream.ReceiveNext();     
-            int receivedFacingUpDir = (int)stream.ReceiveNext();   
-            SetFacingDirection(receivedFacingDir, receivedFacingUpDir);
-            networkedIsMoving = (bool)stream.ReceiveNext();
-            networkedDirX = (float)stream.ReceiveNext();
-            networkedDirY = (float)stream.ReceiveNext();
 
-            if (ghostStateMachine != null && ghostStateMachine.CurrentStateType != receivedState)
+
+   
+            object receivedState = stream.ReceiveNext();
+            GhostStateType ghostState = GhostStateType.Idle;
+            if (receivedState is int stateInt)
             {
-                switch (receivedState)
+                ghostState = (GhostStateType)stateInt;
+            }
+            else
+            {
+                Debug.LogError($"Expected int for ghost state but got {receivedState?.GetType()}");
+            }
+
+            object receivedFacingDir = stream.ReceiveNext();
+            object receivedFacingUpDir = stream.ReceiveNext();
+            if (receivedFacingDir is int dir && receivedFacingUpDir is int upDir)
+            {
+                SetFacingDirection(dir, upDir);
+            }
+            else
+            {
+                Debug.LogError("FacingDir or FacingUpDir receive error.");
+            }
+
+            object receivedIsMoving = stream.ReceiveNext();
+            if (receivedIsMoving is bool isMoving)
+            {
+                networkedIsMoving = isMoving;
+            }
+            else
+            {
+                Debug.LogError("Expected bool for IsMoving.");
+            }
+
+            object receivedDirX = stream.ReceiveNext();
+            if (receivedDirX is float dirX)
+            {
+                networkedDirX = dirX;
+            }
+            else
+            {
+                Debug.LogError("Expected float for DirX.");
+            }
+
+            object receivedDirY = stream.ReceiveNext();
+            if (receivedDirY is float dirY)
+            {
+                networkedDirY = dirY;
+            }
+            else
+            {
+                Debug.LogError("Expected float for DirY.");
+            }
+
+            // ÏÉÅÌÉú Î≥ÄÍ≤Ω
+            if (ghostStateMachine != null && ghostStateMachine.CurrentStateType != ghostState)
+            {
+                switch (ghostState)
                 {
                     case GhostStateType.Idle:
                         ghostStateMachine.ChangeState(idleState);
@@ -198,6 +249,9 @@ public class Peanut : Ghost, IPunObservable
                         break;
                     case GhostStateType.Stunned:
                         ghostStateMachine.ChangeState(stunnedState);
+                        break;
+                    default:
+                        Debug.LogWarning($"Unhandled ghost state: {ghostState}");
                         break;
                 }
             }

@@ -637,7 +637,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(isInitialized ==false)
+        if (isInitialized == false)
         {
             return;
         }
@@ -648,8 +648,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             stream.SendNext(transform.position);
             stream.SendNext(transform.localScale);
             stream.SendNext(rb.linearVelocity);
-
-
 
             stream.SendNext((int)PlayerStateMachine.currentState.StateType);
             stream.SendNext((int)escapeType);
@@ -662,21 +660,104 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            //신호받음
-            networkedPosition = (Vector3)stream.ReceiveNext();
-            transform.localScale = (Vector3)stream.ReceiveNext();
-            networkedVelocity = (Vector2)stream.ReceiveNext();
-            PlayerStateType receivedState = (PlayerStateType)stream.ReceiveNext();
-            EscapeType receivedEscape = (EscapeType)stream.ReceiveNext();
-            facingDir = (int)stream.ReceiveNext();
-            facingUpDir = (int)stream.ReceiveNext();
-            networkedIsMoving = (bool)stream.ReceiveNext();
-            networkedDirX = (float)stream.ReceiveNext();
-            networkedDirY = (float)stream.ReceiveNext();
-            lightAngle = (float)stream.ReceiveNext();
 
+            networkedPosition = (Vector3)stream.ReceiveNext();
+
+            // 로컬 스케일 처리
+            transform.localScale = (Vector3)stream.ReceiveNext();
+
+            // 속도 처리
+            networkedVelocity = (Vector2)stream.ReceiveNext();
+
+
+            // PlayerStateType 형변환 안전 체크
+            object receivedStateObject = stream.ReceiveNext();
+            if (receivedStateObject is int)
+            {
+                PlayerStateType receivedState = (PlayerStateType)(int)receivedStateObject;
+            }
+            else
+            {
+                Debug.LogError("Received state is not of type int");
+            }
+
+            // EscapeType 형변환 안전 체크
+            object receivedEscapeObject = stream.ReceiveNext();
+            if (receivedEscapeObject is int)
+            {
+                EscapeType receivedEscape = (EscapeType)(int)receivedEscapeObject;
+            }
+            else
+            {
+                Debug.LogError("Received escape type is not of type int");
+            }
+
+            // facingDir, facingUpDir 형변환 안전 체크
+            object receivedFacingDir = stream.ReceiveNext();
+            if (receivedFacingDir is int)
+            {
+                facingDir = (int)receivedFacingDir;
+            }
+            else
+            {
+                Debug.LogError("Received facingDir is not of type int");
+            }
+
+            object receivedFacingUpDir = stream.ReceiveNext();
+            if (receivedFacingUpDir is int)
+            {
+                facingUpDir = (int)receivedFacingUpDir;
+            }
+            else
+            {
+                Debug.LogError("Received facingUpDir is not of type int");
+            }
+
+            // networkedIsMoving 형변환 안전 체크
+            object receivedIsMoving = stream.ReceiveNext();
+            if (receivedIsMoving is bool)
+            {
+                networkedIsMoving = (bool)receivedIsMoving;
+            }
+            else
+            {
+                Debug.LogError("Received isMoving is not of type bool");
+            }
+
+            // networkedDirX, networkedDirY 형변환 안전 체크
+            object receivedDirX = stream.ReceiveNext();
+            if (receivedDirX is float)
+            {
+                networkedDirX = (float)receivedDirX;
+            }
+            else
+            {
+                Debug.LogError("Received DirX is not of type float");
+            }
+
+            object receivedDirY = stream.ReceiveNext();
+            if (receivedDirY is float)
+            {
+                networkedDirY = (float)receivedDirY;
+            }
+            else
+            {
+                Debug.LogError("Received DirY is not of type float");
+            }
+
+            // lightAngle 형변환 안전 체크
+            object receivedLightAngle = stream.ReceiveNext();
+            if (receivedLightAngle is float)
+            {
+                lightAngle = (float)receivedLightAngle;
+            }
+            else
+            {
+                Debug.LogError("Received lightAngle is not of type float");
+            }
         }
     }
+
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
 
