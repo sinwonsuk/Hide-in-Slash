@@ -15,8 +15,6 @@ public class photontest : MonoBehaviour
     void Update()
     {
 
-
-
         if(Input.GetKeyDown(KeyCode.O))
         {
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Dead");

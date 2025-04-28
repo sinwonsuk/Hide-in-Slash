@@ -10,6 +10,7 @@ public enum EventType
     UseEnergyDrink,
     UseInvisiblePotion,
     UseUpgradedLight,
+    HasPrisonKey,
     UsePrisonKey,
     UseHatch,
     UseMap,
@@ -23,6 +24,7 @@ public enum EventType
     SpawnMinigame,
     DestroyMiniGame,
     GeneratorSuccess,
+    InPrisonDoor
 }
 
 
@@ -30,13 +32,14 @@ public enum EventType
 public class EventManager
 {
     private static readonly Dictionary<EventType, Action> _eventMap = new();
+    private static readonly Dictionary<EventType, Action<object>> _eventMapWithEventData = new();
 
     public static Dictionary<EventType, Action> GeteventMap()
     {
         return _eventMap;
     }
 
-    // �̺�Ʈ ���
+    // 이벤트구독
     public static void RegisterEvent(EventType eventType, Action eventFunc)
     {
         if (!_eventMap.ContainsKey(eventType))
@@ -44,8 +47,15 @@ public class EventManager
         else
             _eventMap[eventType] += eventFunc;
     }
+    public static void RegisterEvent(EventType eventType, Action<object> eventFunc)
+    {
+        if (!_eventMapWithEventData.ContainsKey(eventType))
+            _eventMapWithEventData[eventType] = eventFunc;
+        else
+            _eventMapWithEventData[eventType] += eventFunc;
+    }
 
-    // �̺�Ʈ ��� ����
+    // 이벤트해제
     public static void UnRegisterEvent(EventType eventType, Action eventFunc)
     {
         if (_eventMap.ContainsKey(eventType))
@@ -56,11 +66,22 @@ public class EventManager
         if (_eventMap.ContainsKey(eventType))
             _eventMap[eventType] = null;
     }
+    public static void UnRegisterEvent(EventType eventType, Action<object> eventFunc)
+    {
+        if (_eventMapWithEventData.ContainsKey(eventType))
+            _eventMapWithEventData[eventType] -= eventFunc;
+    }
 
-    // �̺�Ʈ ����
+    // 이벤트발생
     public static void TriggerEvent(EventType eventType)
     {
         _eventMap.TryGetValue(eventType, out var action);
         action?.Invoke();
+    }
+
+    public static void TriggerEvent(EventType eventType, object eventData)
+    {
+        if (_eventMapWithEventData.TryGetValue(eventType, out var action))
+            action?.Invoke(eventData);
     }
 }

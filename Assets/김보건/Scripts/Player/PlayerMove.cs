@@ -3,7 +3,8 @@ using UnityEngine.Windows;
 
 public class PlayerMove : PlayerState
 {
-    public PlayerMove(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+	private float speedMultiplier = 1f;
+	public PlayerMove(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
         stateType = PlayerStateType.Move;
     }
@@ -21,7 +22,7 @@ public class PlayerMove : PlayerState
 
         if (moveInput != Vector2.zero)
         {
-            player.RotateLight(moveInput); // ¶óÀÌÆ® È¸Àü
+            player.RotateLight(moveInput); // ë¼ì´íŠ¸ íšŒì „
         }
 
         if (moveInput == Vector2.zero)
@@ -33,7 +34,7 @@ public class PlayerMove : PlayerState
         player.SetVelocity(moveInput * player.moveSpeed);
     }
 
-    public override void Exit()
+	public override void Exit()
     {
         base.Exit();
     }
