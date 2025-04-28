@@ -45,7 +45,7 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("Player", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate("PukeGirlGhost", spawnPos, playerRotation);
         }
         else if (playerCount == 2)
         {
