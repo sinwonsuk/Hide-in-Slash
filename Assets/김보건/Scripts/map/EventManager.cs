@@ -27,6 +27,7 @@ public enum EventType
     InPrisonDoor,
     ChattingActiveOff,
     ChattingActiveOn,
+    AddItem,
 }
 
 
