@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,11 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        EventManager.RegisterEvent(EventType.ChattingActiveOff, ActiveOff);
+        EventManager.RegisterEvent(EventType.ChattingActiveOn, ActiveOn);
         wordhandler = CreateChat;
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -31,6 +35,14 @@ public class ChattingManager : MonoBehaviourPunCallbacks
 
 
       
+    }
+    public void ActiveOff()
+    {
+        gameObject.SetActive(false);
+    }
+    public void ActiveOn()
+    {
+        gameObject.SetActive(true);
     }
 
     public void CreateChat(string _text)

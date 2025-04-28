@@ -7,6 +7,10 @@ public class ShopButtonHandle : MonoBehaviour
 
     void Start()
     {
+        GameObject inventoryObject = GameObject.Find("Inventory");
+
+        inventory = inventoryObject.GetComponentInChildren<Inventory>();
+
         myButton.onClick.AddListener(() => MyFunction(type));
 
         price = int.Parse(priceString.text);

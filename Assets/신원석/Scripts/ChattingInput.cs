@@ -4,12 +4,17 @@ using UnityEngine.UI;
 
 public class ChattingInput : MonoBehaviour
 {
+    private void Awake()
+    {
+        
+    }
+
     private void OnEnable()
     {
         inputField = GetComponent<InputField>();
         inputField.ActivateInputField();
     }
-
+    
     void Start()
     {
     }
@@ -21,7 +26,7 @@ public class ChattingInput : MonoBehaviour
     public void OnEnter(string text)
     {
         string texts = inputField.text;
-        Debug.Log("À¯Àú ÀÔ·Â: " + text);
+        Debug.Log("ìœ ì € ìž…ë ¥: " + text);
         inputField.text = "";
         inputField.ActivateInputField();
         chattingManager.wordhandler.Invoke(text);

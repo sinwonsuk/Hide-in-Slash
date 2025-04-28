@@ -19,22 +19,22 @@ public enum InventoryType
 public class Inventory : MonoBehaviour
 {
 
-    //private bool isInPrisonDoor = false; // player 감옥트리거 판단bool저장
+    private bool isInPrisonDoor = false; // player 감옥트리거 판단bool저장
 
-    //private void OnEnable()
-    //{
-    //    EventManager.RegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor();
-    //}
+    private void OnEnable()
+    {
+        EventManager.RegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor);
+    }
 
-    //private void OnDisable()
-    //{
-    //    EventManager.UnRegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor);
-    //}
+    private void OnDisable()
+    {
+        EventManager.UnRegisterEvent(EventType.InPrisonDoor, CheckInPrisonDoor);
+    }
 
-    //private void CheckInPrisonDoor(object data)
-    //{
-    //    isInPrisonDoor = (bool)data;
-    //}
+    private void CheckInPrisonDoor(object data)
+    {
+        isInPrisonDoor = (bool)data;
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created  
@@ -204,7 +204,7 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.PrisonKey:
                 {
-                    // Ű����??
+                    if(isInPrisonDoor ==true)
                     EventManager.TriggerEvent(EventType.UsePrisonKey);
                     break;
                 }

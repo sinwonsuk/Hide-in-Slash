@@ -15,13 +15,15 @@ public class MiniGameChat : MonoBehaviour
 
     public void OnSubmit(string eventData)
     {
+        EventManager.TriggerEvent(EventType.ChattingActiveOff);
+
         string text = inputField.text;
-        Debug.Log("ÀÔ·Â ¿Ï·á: " + text);
+        Debug.Log("ì…ë ¥ ì™„ë£Œ: " + text);
 
         inputField.text = "";
         inputField.ActivateInputField();
 
-        // ÀÌº¥Æ®
+        // ì´ë²¤íŠ¸
         wordMiniGame.wordhandler.Invoke(text);
     }
 
@@ -35,9 +37,9 @@ public class MiniGameChat : MonoBehaviour
     public void OnEnter(string text)
     {       
         string texts = inputField.text;
-        Debug.Log("À¯Àú ÀÔ·Â: " + text);
-        inputField.text = "";            // ÀÔ·Â ³»¿ë »èÁ¦
-        inputField.ActivateInputField(); // Æ÷Ä¿½º ´Ù½Ã ÁÖ±â
+        Debug.Log("ìœ ì € ì…ë ¥: " + text);
+        inputField.text = "";            // ì…ë ¥ ë‚´ìš© ì‚­ì œ
+        inputField.ActivateInputField(); // í¬ì»¤ìŠ¤ ë‹¤ì‹œ ì£¼ê¸°
         wordMiniGame.wordhandler.Invoke(texts);       
     }
     WordMiniGame wordMiniGame;

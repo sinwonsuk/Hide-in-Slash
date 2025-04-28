@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class MiniGameTrigger : MonoBehaviourPunCallbacks
 {
@@ -51,6 +52,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         {
             miniGameManager = Instantiate(miniGameManager);
 
+            EventManager.TriggerEvent(EventType.LightOff);
             GameObject choice = miniGameManager.GetComponent<MiniGameManager>().choiceMiniGame;
             MiniGame MiniGame = choice.GetComponentInChildren<MiniGame>();
             MiniGame.trigerAction = closeMiniGameAction;
@@ -61,6 +63,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (miniGameManager != null && isPlaying == true)
         {
+            EventManager.TriggerEvent(EventType.LightOn);
             PhotonNetwork.Destroy(gameObject);
             Destroy(miniGameManager.gameObject);
         }

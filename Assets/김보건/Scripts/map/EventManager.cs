@@ -24,7 +24,9 @@ public enum EventType
     SpawnMinigame,
     DestroyMiniGame,
     GeneratorSuccess,
-    InPrisonDoor
+    InPrisonDoor,
+    ChattingActiveOff,
+    ChattingActiveOn,
 }
 
 

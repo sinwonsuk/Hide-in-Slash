@@ -77,42 +77,13 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         Quaternion playerRotation = Quaternion.identity;
 
         string prefabName = GetPrefabName(PhotonNetwork.CurrentRoom.PlayerCount);
+
+
         if (!string.IsNullOrEmpty(prefabName))
         {
-            PhotonNetwork.Instantiate("PukeGirlGhost", spawnPos, playerRotation);
+            PhotonNetwork.Instantiate(prefabName, spawnPos, playerRotation);
         }
-        else
-        {
-            PhotonNetwork.Instantiate("Player3", spawnPos, playerRotation);
-        }
-        else if (playerCount == 3)
-        {
-            PhotonNetwork.Instantiate("PukeGirlGhost", spawnPos, playerRotation);
-        }
-        else if (playerCount == 4)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 5)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 6)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 7)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 8)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
-        else if (playerCount == 9)
-        {
-            PhotonNetwork.Instantiate("Player2", spawnPos, playerRotation);
-        }
+       
     }
 
     private string GetPrefabName(int playerCount)

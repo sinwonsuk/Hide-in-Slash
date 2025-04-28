@@ -23,6 +23,9 @@ public class WordMiniGame : MiniGame
         rectTransform = GetComponent<RectTransform>();
 
         StartCoroutine(StartWordMiniGame());
+
+        EventManager.TriggerEvent(EventType.ChattingActiveOff);
+
     }
 
     // Update is called once per frame
@@ -68,10 +71,10 @@ public class WordMiniGame : MiniGame
             }
         }
 
-        // ∞∞¿∫ ¿Ã∏ß¡ﬂø° vector2 ¿€¿∫∞≈ ∫Ò±≥ 
+        // Í∞ôÏùÄ Ïù¥Î¶ÑÏ§ëÏóê vector2 ÏûëÏùÄÍ±∞ ÎπÑÍµê 
         if (sameStrings.Count > 1)
         {
-            MiniGameWordDrop temp = sameStrings[0]; // √≥¿Ω ∞≈∑Œ √ ±‚»≠
+            MiniGameWordDrop temp = sameStrings[0]; // Ï≤òÏùå Í±∞Î°ú Ï¥àÍ∏∞Ìôî
 
             for (int i = 1; i < sameStrings.Count; i++)
             {
@@ -82,14 +85,14 @@ public class WordMiniGame : MiniGame
             }
 
             correctCheck++;
-            Destroy(temp.gameObject);
-            wordList.Remove(temp.gameObject);
+            Destroy(temp.transform.parent.parent.gameObject);
+            wordList.Remove(temp.transform.parent.parent.gameObject);
         }
         else if (sameStrings.Count == 1)
         {
             correctCheck++;
-            Destroy(sameStrings[0].gameObject);
-            wordList.Remove(sameStrings[0].gameObject);
+            Destroy(sameStrings[0].transform.parent.parent.gameObject);
+            wordList.Remove(sameStrings[0].transform.parent.parent.gameObject);
         }
     }
 
@@ -112,6 +115,8 @@ public class WordMiniGame : MiniGame
 
     void DeleteAll()
     {
+        EventManager.TriggerEvent(EventType.ChattingActiveOn);
+
         trigerAction.Invoke();
         Destroy(transform.parent.gameObject);
 

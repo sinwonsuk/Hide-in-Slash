@@ -38,6 +38,7 @@ public class StoreWindowMove : MonoBehaviour
     {
         if (uiElement.anchoredPosition.y >= 1002)
         {
+            Destroy(gameObject);
             return;
         }
         uiElement.anchoredPosition = Vector2.Lerp(uiElement.anchoredPosition, firstPosition, Time.deltaTime * speed);
