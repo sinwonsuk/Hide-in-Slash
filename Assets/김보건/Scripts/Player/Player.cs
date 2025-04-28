@@ -24,6 +24,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
 
+        originalSpeed = moveSpeed;
+
         PlayerStateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdle(this, PlayerStateMachine, "Idle");
@@ -206,6 +208,17 @@ public class Player : MonoBehaviourPun, IPunObservable
         Vector3 pos = transform.position;
         //transform.position = new Vector3(pos.x, pos.y, pos.y);
     }
+
+    public void ApplySlow(float factor)
+    {
+        moveSpeed = originalSpeed * factor;
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = originalSpeed;
+    }
+
     public void SetEscapeType(EscapeType type)
     {
         escapeType = type;
@@ -698,7 +711,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     [Header("�̵�")]
     public float moveSpeed = 5f;
-
+    private float originalSpeed;
     public PlayerStateMachine PlayerStateMachine { get; private set; }
 
     public PlayerIdle idleState { get; private set; }

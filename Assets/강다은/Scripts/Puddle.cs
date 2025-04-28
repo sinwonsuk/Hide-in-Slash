@@ -1,25 +1,34 @@
+using Photon.Realtime;
+using System.Collections;
 using UnityEngine;
 
 public class Puddle : MonoBehaviour
 {
 	[Range(0.1f, 1f)] public float slowFactor = 0.5f;
 
-	private void OnTriggerEnter2D(Collider2D col)
-	{
-		if (!col.CompareTag("Player")) return;
+    [Tooltip("ë°Ÿì•˜ì„ ë•Œ ëŠë ¤ì§€ëŠ” ì‹œê°„(ì´ˆ)")]
+    [SerializeField]
+    private float slowDuration = 5f;
 
-		// PlayerMove ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ½½·Î¿ì Àû¿ë
-		var mover = col.GetComponent<PlayerMove>();
-		if (mover != null)
-			mover.SetSpeedMultiplier(slowFactor);
-	}
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (!col.CompareTag("Player"))
+            return;
 
-	private void OnTriggerExit2D(Collider2D col)
-	{
-		if (!col.CompareTag("Player")) return;
+        var player = col.GetComponent<Player>();
+        if (player != null)
+            StartCoroutine(ApplySlowTemporarily(player));
+    }
 
-		var mover = col.GetComponent<PlayerMove>();
-		if (mover != null)
-			mover.SetSpeedMultiplier(1f);
-	}
+    private IEnumerator ApplySlowTemporarily(Player player)
+    {
+        // 1) ì†ë„ ëŠë ¤ì§€ê¸°
+        player.ApplySlow(slowFactor);
+
+        // 2) slowDurationì´ˆë§Œí¼ ëŒ€ê¸°
+        yield return new WaitForSeconds(slowDuration);
+
+        // 3) ì›ë˜ ì†ë„ë¡œ ë³µê·€
+        player.ResetSpeed();
+    }
 }

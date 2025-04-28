@@ -336,16 +336,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 4876948440901442100}
   lightObject: {fileID: 8797509407336298406}
+  profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
   boostedSpeed: 10
   boostDuration: 10
-  hasEnergyDrink: 0
-  boostTimer: 0
   invisibleDuration: 5
   hasInvisiblePotion: 0
   invisibleTimer: 0
-  hasUpgradedFlashlight: 1
   flashlight: {fileID: 5033199840657472670}
   upgradedRadius: 15
   defaultRadius: 9

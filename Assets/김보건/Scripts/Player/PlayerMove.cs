@@ -22,7 +22,7 @@ public class PlayerMove : PlayerState
 
         if (moveInput != Vector2.zero)
         {
-            player.RotateLight(moveInput); // ¶óÀÌÆ® È¸Àü
+            player.RotateLight(moveInput); // ë¼ì´íŠ¸ íšŒì „
         }
 
         if (moveInput == Vector2.zero)
@@ -31,13 +31,8 @@ public class PlayerMove : PlayerState
 
     public override void FixedUpdate()
     {
-        player.SetVelocity(moveInput * player.moveSpeed * speedMultiplier);
+        player.SetVelocity(moveInput * player.moveSpeed);
     }
-
-	public void SetSpeedMultiplier(float mul)
-	{
-		speedMultiplier = mul;
-	}
 
 	public override void Exit()
     {
