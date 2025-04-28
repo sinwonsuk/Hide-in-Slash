@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -85,9 +85,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Awake()
     {
         PhotonNetwork.ConnectUsingSettings();
-                  
+
         //else PhotonNetwork.ConnectUsingSettings();
-        //PhotonNetwork.AutomaticallySyncScene = true; // 씬전환시 자동으로 모든 플레이어에게 씬전환
+        PhotonNetwork.AutomaticallySyncScene = true; // 씬전환시 자동으로 모든 플레이어에게 씬전환
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
