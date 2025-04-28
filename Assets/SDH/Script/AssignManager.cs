@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class MapManager : MonoBehaviourPunCallbacks
+public class AssignManager : MonoBehaviourPunCallbacks
 {
-    public List<GameObject> mapObjects;
-
+    private List<GameObject> mapObjects = new();
+    private string[] maps = { "HouseMain", "hunthouse", "Main", "miro", "Room", "UnderGround", "WC" };
     private Dictionary<string, GameObject> mapDic = new();
     private List<Transform> eventSpawnPoints = new();
     private List<Transform> playerSpawnPoints = new();
@@ -26,82 +26,53 @@ public class MapManager : MonoBehaviourPunCallbacks
         EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
         Debug.Log("구독완");
     }
-    void Start()
+
+    private void StartGame() //메모장
     {
-        if (PhotonNetwork.OfflineMode)
-        {
-            Debug.Log("Photon이 현재 오프라인 모드입니다.");
-        }
-        Debug.Log("접속할거임");
-        PhotonNetwork.ConnectUsingSettings();
 
+        //사람이 다 모였다는 가정 하에
+        //대기실
 
-
-    }
-
-
-    private void RoomON()
-    {
-        
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
-
-    }
-
-    private void StartGame()
-    {
-        Debug.Log("방온");
         if (PhotonNetwork.IsMasterClient)
         {
-            InitializeMap();
+            roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
+            AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
         }
+
+
+        //게임으로 넘어가면
+        //게임내부임
+
+        if (PhotonNetwork.IsMasterClient) //마스터만
+        {
+            InitializeMap(); // 맵 만들기
+        }
+        //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
         WriteDic();
         AddSpawnPoints();
+
+        //다시 마스터만 진행
         if (PhotonNetwork.IsMasterClient)
         {
-            pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count);
-            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count);
-            roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length);
-            InitializeMiniGames();
-            InitializeGenerators();
+            pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
+            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
+            InitializeMiniGames(); // 미니게임 뿌리기
+            InitializeGenerators(); // 발전기 뿌리기
+            AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
             Debug.Log("방에서 마스터할일 완");
         }
+
+        //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
+        //
+        //여기쯤에 시간 한 0.5초정도 코루틴 넣고
+        //
+        //밑에 서버 정보 활용하는거 넣어야함
+
+        InitializePlayers(); // 각 클라이언트에서 플레이어 생성
     }
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RoomON();
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StartGame();
-        }
-        if (PhotonNetwork.IsConnected)
-        {
-            Debug.Log("서버에 연결됨");
-        }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                Debug.Log("총" + PhotonNetwork.PlayerList.Length);
-                
-                for (int i = 0; i < roleIndexs.Count; i++)
-                {
-                    Debug.Log("roleIndexs = " + string.Join(", ", roleIndexs[i]));
-                }
-                AssignRole();
-            }
-        }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-
-            InitializePlayers();
-        }
-    }
 
 
 
@@ -123,9 +94,10 @@ public class MapManager : MonoBehaviourPunCallbacks
 
     private void InitializeMap()
     {
-        for (int i = 0; i < mapObjects.Count; i++)
+        for (int i = 0; i < maps.Length; i++)
         {
-            PhotonNetwork.Instantiate(mapObjects[i].name, mapObjects[i].transform.position, Quaternion.identity);
+            GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right*200*i , Quaternion.identity);
+            mapObjects.Add(go);
         }
     }
 
