@@ -21,12 +21,22 @@ public class PukeGirl : Ghost, IPunObservable
 
 	[Header("뿌릴 Puddle Prefab")]
 	[SerializeField] private GameObject puddlePrefab;
-	[SerializeField] private float puddleDuration = 10f;
+	[SerializeField] private float puddleDuration = 40f;
+    private Vector2 pukeDir;
 
-	protected override void Awake()
+    [Header("토 후 부스트")]
+    [SerializeField] private float boostMultiplier = 1.5f;
+    [SerializeField] private float boostDuration = 3f;
+
+    private float originalSpeed;
+    private bool isBoosted = false;
+    private float boostTimer = 0f;
+
+    protected override void Awake()
     {
-
         base.Awake();
+        originalSpeed = moveSpeed;
+
         photonView = GetComponent<PhotonView>(); 
 
         if (ghostStateMachine == null)
@@ -83,11 +93,23 @@ public class PukeGirl : Ghost, IPunObservable
             }
         }
 
+        if (isBoosted)
+        {
+            boostTimer -= Time.deltaTime;
+            if (boostTimer <= 0f)
+            {
+                isBoosted = false;
+                moveSpeed = originalSpeed;
+            }
+        }
+
     }
 
     [PunRPC]
     public void RPC_StartVomit()
     {
+        pukeDir = lastDir;
+
         ghostStateMachine.ChangeState(vomitState);
 		anim.SetBool("IsVomiting", true);
 	}
@@ -126,20 +148,28 @@ public class PukeGirl : Ghost, IPunObservable
     {
         Debug.Log("토함 끝");
 
-		var puddle = Instantiate(puddlePrefab, transform.position, Quaternion.identity);
-		Destroy(puddle, puddleDuration);
-		anim.SetBool("IsVomiting", false);
+        Vector2 dir = pukeDir;
+
+        float signX = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Mathf.Sign(dir.x) : 0f;
+
+        float xOffset = 1.5f;
+        float yOffset = -1.2f;
+
+        Vector3 spawnPos = transform.position + new Vector3(signX * xOffset, yOffset, 0f);
+
+        var puddle = Instantiate(puddlePrefab, spawnPos, Quaternion.identity);
+        Destroy(puddle, puddleDuration);
+
+        anim.SetBool("IsVomiting", false);
+
+        isBoosted = true;
+        boostTimer = boostDuration;
+        moveSpeed = originalSpeed * boostMultiplier;
 
         Vector2 input = MoveInput;
 
-        if (input == Vector2.zero)
-        {
-            ghostStateMachine.ChangeState(idleState);
-        }
-        else
-        {
-            ghostStateMachine.ChangeState(moveState);
-        }
+        anim.SetBool("IsVomiting", false);
+        ghostStateMachine.ChangeState(moveState);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
