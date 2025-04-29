@@ -24,7 +24,7 @@ public class MapTrigger : MonoBehaviour
         if (!(other.CompareTag("Player") || other.CompareTag("Ghost"))) return;
         if (isTeleport) return;
 
-        MapManager mapManager = Object.FindFirstObjectByType<MapManager>();
+        AssignManager mapManager = GameReadyManager.Instance.assignManager;
         if (mapManager == null) return;
         isTeleport = true;
         GameObject newMap = mapManager.MoveMap(moveMap);
