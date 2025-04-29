@@ -200,7 +200,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(RPC_LoadMergeScene), RpcTarget.All);
+            photonView.RPC("RPC_LoadMergeScene", RpcTarget.All);
         }
     }
 
