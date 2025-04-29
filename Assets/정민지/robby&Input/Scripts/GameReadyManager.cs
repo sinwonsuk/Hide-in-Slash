@@ -334,8 +334,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         //RoomRenewal();
         //ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
-
-        RemoveSlot(otherPlayer);
+        //RemoveSlot(otherPlayer);
     }
     public override void OnPlayerPropertiesUpdate(RealtimePlayer target, PHashtable changedProps)
     {
