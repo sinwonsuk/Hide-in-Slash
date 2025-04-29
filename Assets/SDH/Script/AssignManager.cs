@@ -87,10 +87,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         gameObject.SetActive(true);
 
-        int a = 0;
-        StartCoroutine(Wait1());
-        
-   
+        GameReadyManager.Instance.StartCoroutine(Wait1());
+
+          
 
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
