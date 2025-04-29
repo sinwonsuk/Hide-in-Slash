@@ -76,15 +76,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
             InitializeMap(); // 맵 만들기
         }
         //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
-
-
+        
+        
         //다시 마스터만 진행
+        
 
-
-
-        Wait1();
-
-        //StartCoroutine(Wait1()); // 대기시간 넣기
+        StartCoroutine(Wait1()); // 대기시간 넣기
 
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
@@ -92,12 +89,13 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //
         //밑에 서버 정보 활용하는거 넣어야함
 
-        // 각 클라이언트에서 플레이어 생성
+         // 각 클라이언트에서 플레이어 생성
     }
 
-    void Wait1()
+    IEnumerator Wait1()
     {
-      
+        yield return new WaitForSeconds(0.5f);
+
         Debug.Log("대기끝");
         WriteDic();
         AddSpawnPoints();
@@ -111,6 +109,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
             Debug.Log("방에서 마스터할일 완");
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         Debug.Log("대기끝");
         InitializePlayers();
@@ -234,14 +234,15 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC("RPC_LoadMergeScene", RpcTarget.All);
+            PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.LoadLevel("MergeScene");
         }
     }
 
     [PunRPC]
     public void RPC_LoadMergeScene()
     {
-        PhotonNetwork.LoadLevel("MergeScene");
+        //PhotonNetwork.LoadLevel("MergeScene");
     }
 
     private void AssignSpawnPoint()
