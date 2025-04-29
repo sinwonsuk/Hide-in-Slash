@@ -79,7 +79,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
 
-            GameObject go = Instantiate(assignManager, new Vector3(0, 0, 0),Quaternion.identity);
+            
              
         }
         else
@@ -302,6 +302,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        GameObject go = PhotonNetwork.Instantiate("assignManager", new Vector3(0, 0, 0), Quaternion.identity);
+        assignManager = go;
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
         lobbyPanel.SetActive(false);
