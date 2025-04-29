@@ -21,7 +21,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
-    PhotonView photonView;
 
     public static AssignManager instance;
 
@@ -33,13 +32,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
-
-        photonView = GetComponent<PhotonView>();
-
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-
         DontDestroyOnLoad(gameObject);
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDestroy()
@@ -49,9 +49,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MergeScene")
+        if (scene.name == "SandBox")
         {
-            StartCoroutine(CallAssignDelayed());
+            AssignManager.instance.asbvasdf();
         }
     }
 
@@ -70,7 +70,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     public void asbvasdf()
     {
-        gameObject.SetActive(true);
 
         //게임으로 넘어가면
         //게임내부임
@@ -79,7 +78,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             InitializeMap(); // 맵 만들기
         }
+        
         //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
+
+
+        //다시 마스터만 진행
+
 
 
         //다시 마스터만 진행
@@ -105,7 +109,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         yield return null;
 
         yield return new WaitForSeconds(0.5f);
-
+        AddMapObjects();
         Debug.Log("대기끝");
         WriteDic();
         AddSpawnPoints();
@@ -151,12 +155,16 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < maps.Length; i++)
         {
-            GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right*200*i , Quaternion.identity);
+            GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right * 200 * i, Quaternion.identity);
+        }
+    }
 
-            int viewID = go.GetComponent<PhotonView>().ViewID;
-
-            photonView.RPC("AAA", RpcTarget.All, viewID);
-            
+    private void AddMapObjects()
+    {
+        Array a = GameObject.FindGameObjectsWithTag("Maps");
+        foreach (GameObject obj in a)
+        {
+            mapObjects.Add(obj);
         }
     }
     [PunRPC]
@@ -252,7 +260,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
 
-        photonView = GetComponent<PhotonView>();
 
         if (photonView == null)
         {
@@ -261,7 +268,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MergeScene");
+            PhotonNetwork.LoadLevel("SandBox");
         }
     }
 

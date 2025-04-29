@@ -54,9 +54,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private RectTransform[] slotPoints; // length=5
     [SerializeField] private GameObject playerSlotPrefab;
 
-    [Header("Role Assignment")]
-    public GameObject assignManager;
-
     [Header("Other UI")]
     [SerializeField] private Button leaveButton;
 
@@ -304,12 +301,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-            GameObject go = PhotonNetwork.Instantiate("AssignManager", new Vector3(0, 0, 0), Quaternion.identity);
-            assignManager = go;
-        }      
+  
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
         lobbyPanel.SetActive(false);
@@ -426,7 +418,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 5 && allReady)
         {
-            assignManager.GetComponent<AssignManager>().StartGame();
+            AssignManager.instance.StartGame();
         }
     }
 

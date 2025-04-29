@@ -16,28 +16,18 @@ public class MapTrigger : MonoBehaviour
     private Canvas canvas;
     private void Start()
     {
-        //GameObject @object = GameObject.Find("Dark");
-
-        
-
-        //canvas = GameObject.Find("Dark").GetComponent<Canvas>();
+        canvas = GameObject.FindGameObjectWithTag("Dark").GetComponent<Canvas>();
+        canvas.enabled = false;
     }
 
-    private void Update()
-    {
-        GameObject @object = GameObject.Find("Dark");
-
-        Canvas casnvas = @object.GetComponent<Canvas>();
-
-        canvas = casnvas;
-    }
+ 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!(other.CompareTag("Player") || other.CompareTag("Ghost"))) return;
         if (isTeleport) return;
 
-        AssignManager mapManager = GameReadyManager.Instance.assignManager.GetComponent<AssignManager>();
+        AssignManager mapManager = AssignManager.instance;
         if (mapManager == null) return;
         isTeleport = true;
         GameObject newMap = mapManager.MoveMap(moveMap);

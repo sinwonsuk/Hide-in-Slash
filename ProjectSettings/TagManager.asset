@@ -27,6 +27,7 @@ TagManager:
   - PlayerSpawnPoint
   - DrawMiniGameUpWall
   - Dark
+  - Maps
   layers:
   - Default
   - TransparentFX
