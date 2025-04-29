@@ -21,7 +21,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
-
+    PhotonView photonView;
 
     private new void OnEnable()
     {
@@ -31,6 +31,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
+
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
         DontDestroyOnLoad(gameObject);
