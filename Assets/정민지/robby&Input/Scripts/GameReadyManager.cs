@@ -304,7 +304,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            GameObject go = Instantiate(assignManager, new Vector3(0, 0, 0), Quaternion.identity);
+
+            GameObject go = PhotonNetwork.Instantiate("AssignManager", new Vector3(0, 0, 0), Quaternion.identity);
             assignManager = go;
         }      
         occupied = new bool[slotPoints.Length];
