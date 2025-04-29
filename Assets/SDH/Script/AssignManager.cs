@@ -209,6 +209,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
 
+        if(photonView == null)
+        {
+            Debug.Log("포톤뷰없음");
+        }
+
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("RPC_LoadMergeScene", RpcTarget.All);
