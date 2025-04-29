@@ -15,7 +15,7 @@ public class MapTrigger : MonoBehaviour
     private Canvas canvas;
     private void Start()
     {
-        canvas = GameObject.FindGameObjectWithTag("Dark").GetComponent<Canvas>();
+        canvas = GameObject.Find("Dark").GetComponent<Canvas>();
         canvas.enabled = false;
     }
 
