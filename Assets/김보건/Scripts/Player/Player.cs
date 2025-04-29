@@ -37,8 +37,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         defaultColliderPoints = lightCollider.points;
 
         // 인스펙터창에 무조건 있어야함 긴급 땜빵
-        GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
-        profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
+        //GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
+        //profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
 
         flashlight.enabled = false;
 

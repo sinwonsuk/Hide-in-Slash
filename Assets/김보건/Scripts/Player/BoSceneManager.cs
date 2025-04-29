@@ -30,19 +30,19 @@ public class BoSceneManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnJoinedRoom()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            SetRole("Boss");
-        }
-        else
-        {
-            SetRole("Human");
-        }
+    //public override void OnJoinedRoom()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        SetRole("Boss");
+    //    }
+    //    else
+    //    {
+    //        SetRole("Human");
+    //    }
 
-        StartCoroutine(SetupProfileSlotsAndSpawn());
-    }
+    //    StartCoroutine(SetupProfileSlotsAndSpawn());
+    //}
 
     private void SetRole(string role)
     {

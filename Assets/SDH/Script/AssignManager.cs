@@ -97,13 +97,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //
         //밑에 서버 정보 활용하는거 넣어야함
 
-        InitializePlayers(); // 각 클라이언트에서 플레이어 생성
+         // 각 클라이언트에서 플레이어 생성
     }
 
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(0.5f);
         Debug.Log("대기끝");
+        InitializePlayers();
     }
 
 
