@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerNameInput : MonoBehaviour
 {
-    [Header("°æ°íÃ¢")]
+    [Header("ê²½ê³ ì°½")]
     [SerializeField] private GameObject nicknameIsNull;
     [SerializeField] private GameObject lengthExceeded;
 
     private int warning=0;
     public TMP_InputField nameInputField;
 
-    private GameObject currentWarning;  // °æ°íÃ¢ ÀÎ½ºÅÏ½º¸¦ ÀúÀåÇÒ º¯¼ö
+    private GameObject currentWarning;  // ê²½ê³ ì°½ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì €ì¥í•  ë³€ìˆ˜
 
 
 
@@ -54,13 +54,12 @@ public class PlayerNameInput : MonoBehaviour
             if (playerName.Length < 7)
             {
                 GameReadyManager.Instance.Connect();
-                SceneManager.Instance.LoadSceneAsync(SceneName.RobbyScene);
 			}
             else
             {
                 if(currentWarning==null)
                 {
-                    currentWarning = Instantiate(lengthExceeded); // ÇöÀç °æ°í = ±æÀÌ ÃÊ°ú
+                    currentWarning = Instantiate(lengthExceeded); // í˜„ì¬ ê²½ê³  = ê¸¸ì´ ì´ˆê³¼
                 }
                 warning = 2;
             }
@@ -69,7 +68,7 @@ public class PlayerNameInput : MonoBehaviour
         {
             warning = 1;
             if(currentWarning==null)
-            currentWarning = Instantiate(nicknameIsNull); // ÇöÀç °æ°í = ÅØ½ºÆ® ºö
+            currentWarning = Instantiate(nicknameIsNull); // í˜„ì¬ ê²½ê³  = í…ìŠ¤íŠ¸ ë¹”
         }
     }
 

@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class SettingRoom : MonoBehaviour
 {
-    public TMP_InputField roomNameInput; //¹æÀÌ¸§ ÀÔ·ÂÃ¢
-    public TMP_InputField passwordInput; //¹æºñ¹ø ÀÔ·ÂÃ¢
-    public GameObject popupPanel; // ¹æ »ı¼ºÃ¢
-    public GameObject roomPanelPrefab; //»ı¼ºÇÒ ¹æ
+    public TMP_InputField roomNameInput; //ë°©ì´ë¦„ ì…ë ¥ì°½
+    public GameObject popupPanel; // ë°© ìƒì„±ì°½
+    public GameObject roomPanelPrefab; //ìƒì„±í•  ë°©
 
-    [Header("°æ°íÃ¢")]
+    [Header("ê²½ê³ ì°½")]
     [SerializeField] private GameObject nicknameIsNull;
     [SerializeField] private GameObject lengthExceeded;
 
     private int warning = 0;
 
-    private GameObject currentWarning;  // °æ°íÃ¢ ÀÎ½ºÅÏ½º¸¦ ÀúÀåÇÒ º¯¼ö
+    private GameObject currentWarning;  // ê²½ê³ ì°½ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì €ì¥í•  ë³€ìˆ˜
 
     void Update()
     {
@@ -25,7 +24,7 @@ public class SettingRoom : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && warning == 0)
         {
             Time.timeScale = 1;
-            popupPanel.SetActive(false); // ÆË¾÷ ´İ±â
+            popupPanel.SetActive(false); // íŒì—… ë‹«ê¸°
         }
 
 
@@ -50,24 +49,22 @@ public class SettingRoom : MonoBehaviour
     {
         Time.timeScale = 1;
         string roomName = roomNameInput.text;
-        string password = passwordInput.text; 
 
-        if (!string.IsNullOrEmpty(roomName) && !string.IsNullOrEmpty(password))
+        if (!string.IsNullOrEmpty(roomName))
         {
-            if (roomName.Length < 14 && password.Length < 6)
+            if (roomName.Length < 14)
             {
 
-                    GameReadyManager.Instance.CreateRoomWithPassword(roomName, password);
+                    GameReadyManager.Instance.CreateRoomWithPassword(roomName);
                     //SceneManager.Instance.LoadSceneAsync(SceneName.WaitingRoom);
-                popupPanel.SetActive(false); // ÆË¾÷ ´İ±â
+                popupPanel.SetActive(false); // íŒì—… ë‹«ê¸°
                 roomNameInput.text = "";
-                passwordInput.text = "";
             }
             else
             {
                 if (currentWarning == null)
                 {
-                    currentWarning = Instantiate(lengthExceeded); // ÇöÀç °æ°í = ±æÀÌ ÃÊ°ú
+                    currentWarning = Instantiate(lengthExceeded); // í˜„ì¬ ê²½ê³  = ê¸¸ì´ ì´ˆê³¼
                 }
                 warning = 2;
             }
@@ -77,7 +74,7 @@ public class SettingRoom : MonoBehaviour
         {
             warning = 1;
             if (currentWarning == null)
-                currentWarning = Instantiate(nicknameIsNull); // ÇöÀç °æ°í = ÅØ½ºÆ® ºö
+                currentWarning = Instantiate(nicknameIsNull); // í˜„ì¬ ê²½ê³  = í…ìŠ¤íŠ¸ ë¹”
         }
     }
 

@@ -15,11 +15,11 @@ using System.Linq;
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
 
-    [Header("´Ğ³×ÀÓ")]
+    [Header("ë‹‰ë„¤ì„")]
    // public GameObject loginchang;
-    public TMP_InputField NickNameInput; // Å¬·¡½º ¸â¹ö º¯¼ö·Î ¼±¾ğ
+    public TMP_InputField NickNameInput; // í´ë˜ìŠ¤ ë©¤ë²„ ë³€ìˆ˜ë¡œ ì„ ì–¸
 
-    [Header("·ÎºñÆÇ³Ú")]
+    [Header("ë¡œë¹„íŒë„¬")]
     public GameObject LobbyPanel;
     public TMP_InputField WelcomeText;
     public Text LobbyInfoText;
@@ -27,14 +27,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Button PreviousBtn;
     public Button NextBtn;
 
-    [Header("´ë±â½Ç")]
+    [Header("ëŒ€ê¸°ì‹¤")]
     public Text ListText;
-    public Text RoomInfoText; //¹æ ÀÎ¿ø¼ö
+    public Text RoomInfoText; //ë°© ì¸ì›ìˆ˜
     public Text[] ChatText;
     public TMP_InputField ChatInput;
-    public GameObject roomButtonPrefab; //»ı¼ºÇÒ ¹æ
-    private Transform content; //½ºÅ©·Ñ ÄÜÅÙÆ®
-    public Text totalPlayersText;  // ÀÎ¿ø¼ö¸¦ Ç¥½ÃÇÒ ÅØ½ºÆ® UI (ÀüÃ¼ ÀÎ¿ø¼ö)
+    public GameObject roomButtonPrefab; //ìƒì„±í•  ë°©
+    private Transform content; //ìŠ¤í¬ë¡¤ ì½˜í…íŠ¸
+    public Text totalPlayersText;  // ì¸ì›ìˆ˜ë¥¼ í‘œì‹œí•  í…ìŠ¤íŠ¸ UI (ì „ì²´ ì¸ì›ìˆ˜)
 
     [Header("ETC")]
     public Text StatusText;
@@ -72,7 +72,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     //}
 
 
-    #region ¹æ¸®½ºÆ® °»½Å
+    #region ë°©ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
 
 
 
@@ -86,22 +86,22 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         Debug.Log(roomList.Count);
         if (content == null)
         {
-            Debug.LogWarning("Content°¡ ¾ÆÁ÷ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù. GetContent ¸ÕÀú È£ÃâÇÏ¼¼¿ä!");
-            return;  // ¿©±â¼­ ¹Ù·Î ¸®ÅÏ
+            Debug.LogWarning("Contentê°€ ì•„ì§ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. GetContent ë¨¼ì € í˜¸ì¶œí•˜ì„¸ìš”!");
+            return;  // ì—¬ê¸°ì„œ ë°”ë¡œ ë¦¬í„´
         }
 
-        // °»½ÅµÈ ¹æ ¸®½ºÆ®¸¦ ±â¹İÀ¸·Î UI ¾÷µ¥ÀÌÆ®
+        // ê°±ì‹ ëœ ë°© ë¦¬ìŠ¤íŠ¸ë¥¼ ê¸°ë°˜ìœ¼ë¡œ UI ì—…ë°ì´íŠ¸
         foreach (RoomInfo room in roomList)
         {
 
-            if (!room.RemovedFromList)  // Á¦°ÅµÈ ¹æÀº Á¦¿Ü
+            if (!room.RemovedFromList)  // ì œê±°ëœ ë°©ì€ ì œì™¸
             {
                 if (roomDic.ContainsKey(room))
                 {
-                    int currentPlayerCount = room.PlayerCount;  // ÇöÀç ÀÎ¿ø¼ö
-                    int maxPlayers = room.MaxPlayers;           // ÃÖ´ë ÀÎ¿ø¼ö
+                    int currentPlayerCount = room.PlayerCount;  // í˜„ì¬ ì¸ì›ìˆ˜
+                    int maxPlayers = room.MaxPlayers;           // ìµœëŒ€ ì¸ì›ìˆ˜
 
-                    roomDic[room].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // ÀÎ¿ø¼ö ÅØ½ºÆ® ¼³Á¤
+                    roomDic[room].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // ì¸ì›ìˆ˜ í…ìŠ¤íŠ¸ ì„¤ì •
                     roomDic[room].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
                 }
@@ -109,12 +109,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                 {
 
                     GameObject newButton = Instantiate(roomButtonPrefab, content);
-                    newButton.transform.SetParent(content, false); // false¸¦ ²À ³ÖÀÚ!
+                    newButton.transform.SetParent(content, false); // falseë¥¼ ê¼­ ë„£ì!
 
-                    int currentPlayerCount = room.PlayerCount;  // ÇöÀç ÀÎ¿ø¼ö
-                    int maxPlayers = room.MaxPlayers;           // ÃÖ´ë ÀÎ¿ø¼ö
+                    int currentPlayerCount = room.PlayerCount;  // í˜„ì¬ ì¸ì›ìˆ˜
+                    int maxPlayers = room.MaxPlayers;           // ìµœëŒ€ ì¸ì›ìˆ˜
 
-                    newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // ÀÎ¿ø¼ö ÅØ½ºÆ® ¼³Á¤
+                    newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // ì¸ì›ìˆ˜ í…ìŠ¤íŠ¸ ì„¤ì •
                     newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
                     string capturedRoomName = room.Name;
@@ -131,48 +131,46 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-        #region ¼­¹ö¿¬°á
+        #region ì„œë²„ì—°ê²°
 
 
-    public void Connect() => PhotonNetwork.ConnectUsingSettings(); //Á¢¼Ó
+    public void Connect() => PhotonNetwork.ConnectUsingSettings(); //ì ‘ì†
 
-    public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby(); //´ë±â½Ç¿¡ Á¶ÀÎ
+    public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby(); //ëŒ€ê¸°ì‹¤ì— ì¡°ì¸
 
-    public override void OnJoinedLobby() //·Îºñ·Î °¡±â
+    public override void OnJoinedLobby() //ë¡œë¹„ë¡œ ê°€ê¸°
     {
 
        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
 
        // PhotonNetwork.LocalPlayer.NickName = "adadadad";
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "´Ô È¯¿µÇÕ´Ï´Ù";
+        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤";
+        PhotonNetwork.LoadLevel("RobbyScene");
 
     }
 
-    public void Disconnect() => PhotonNetwork.Disconnect(); //¼­¹ö Á¢¼Ó ²÷À½
+    public void Disconnect() => PhotonNetwork.Disconnect(); //ì„œë²„ ì ‘ì† ëŠìŒ
 
     #endregion
 
 
-    #region ¹æ
+    #region ë°©
 
-    //ºñ¹ø°ú ÇÔ²² ¹æ »ı¼º
-    public void CreateRoomWithPassword(string roomName, string password)
+    //ë¹„ë²ˆê³¼ í•¨ê»˜ ë°© ìƒì„±
+    public void CreateRoomWithPassword(string roomName)
     {
          if(PhotonNetwork.IsConnected&&PhotonNetwork.InLobby)
         {
-            ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
-            roomProperties.Add("pw", password); // "pw"´Â Å°, password´Â °ª
 
-            RoomOptions roomOptions = new RoomOptions(); //»õ·Î¿î ·ë ¿É¼Ç
+            RoomOptions roomOptions = new RoomOptions(); //ìƒˆë¡œìš´ ë£¸ ì˜µì…˜
 
-            roomOptions.MaxPlayers = 5; //¿É¼Ç¿¡¼­ ÃÖ´ëÀÎ¿ø
-            roomOptions.CustomRoomProperties = roomProperties; //ºñ¹ø¼³Á¤
-            PhotonNetwork.CreateRoom(roomName, roomOptions); //¼­¹ö¿¡¼­ ·ë »ı¼º
-            Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}´ÔÀÌ {roomName}ÀÌ¶ó´Â ¹æÀ» »ı¼ºÇÏ¼Ì½À´Ï´Ù! pw : {password}");
+            roomOptions.MaxPlayers = 5; //ì˜µì…˜ì—ì„œ ìµœëŒ€ì¸ì›
+            PhotonNetwork.CreateRoom(roomName, roomOptions); //ì„œë²„ì—ì„œ ë£¸ ìƒì„±
+            Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}ë‹˜ì´ {roomName}ì´ë¼ëŠ” ë°©ì„ ìƒì„±í•˜ì…¨ìŠµë‹ˆë‹¤!");
         }
         else
         {
-            Debug.Log("¾ÆÁ÷ Á¢¼ÓµÇÁö ¾ÊÀ½");
+            Debug.Log("ì•„ì§ ì ‘ì†ë˜ì§€ ì•ŠìŒ");
         }
 
     }
@@ -188,7 +186,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     //    }
     //    else
     //    {
-    //        Debug.LogError("¹æ Á¤º¸¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+    //        Debug.LogError("ë°© ì •ë³´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
     //    }
     //}
 
@@ -202,7 +200,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     //    }
     //    else
     //    {
-    //        Debug.Log("ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù!");
+    //        Debug.Log("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤!");
     //    }
     //}
 
@@ -218,20 +216,20 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("WaitingRoom");
     }
 
-    //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //¹æ »ı¼º
+    //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //ë°© ìƒì„±
 
-   // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //·£´ı Âü°¡
+   // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //ëœë¤ ì°¸ê°€
 
-    public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //¹æ Âü°¡ (Æ÷Åæ¿¡¼­ ÀÚµ¿À¸·Î Ã³¸®)
+    public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //ë°© ì°¸ê°€ (í¬í†¤ì—ì„œ ìë™ìœ¼ë¡œ ì²˜ë¦¬)
     {
-        RoomRenewal(); //¹æ Á¤º¸ ¸®´º¾ó
-        ChatRPC("<color=yellow>" + newPlayer.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+        RoomRenewal(); //ë°© ì •ë³´ ë¦¬ë‰´ì–¼
+        ChatRPC("<color=yellow>" + newPlayer.NickName + "ë‹˜ì´ ì°¸ê°€í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + "´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù</color>");
+        ChatRPC("<color=yellow>" + otherPlayer.NickName + "ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
     }
 
     void RoomRenewal()
@@ -239,19 +237,19 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //ListText.text = "";
         //for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         //    ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "¸í / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ÃÖ´ë";
+        //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "ëª… / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ìµœëŒ€";
     }
     #endregion
 
 
-    #region Ã¤ÆÃ
+    #region ì±„íŒ…
     public void Send()
     {
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
         ChatInput.text = "";
     }
 
-    [PunRPC] // RPC´Â ÇÃ·¹ÀÌ¾î°¡ ¼ÓÇØÀÖ´Â ¹æ ¸ğµç ÀÎ¿ø¿¡°Ô Àü´ŞÇÑ´Ù
+    [PunRPC] // RPCëŠ” í”Œë ˆì´ì–´ê°€ ì†í•´ìˆëŠ” ë°© ëª¨ë“  ì¸ì›ì—ê²Œ ì „ë‹¬í•œë‹¤
     void ChatRPC(string msg)
     {
         bool isInput = false;
@@ -262,7 +260,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                 ChatText[i].text = msg;
                 break;
             }
-        if (!isInput) // ²ËÂ÷¸é ÇÑÄ­¾¿ À§·Î ¿Ã¸²
+        if (!isInput) // ê½‰ì°¨ë©´ í•œì¹¸ì”© ìœ„ë¡œ ì˜¬ë¦¼
         {
             for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
             ChatText[ChatText.Length - 1].text = msg;
