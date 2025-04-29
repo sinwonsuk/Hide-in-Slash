@@ -125,7 +125,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
         InitializePlayers();
     }
 
-
+    private void Update()
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(Wait1());
+    }
 
     public GameObject GetCurrentMap()
     {
