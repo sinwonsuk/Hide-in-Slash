@@ -49,7 +49,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MergeScene" && PhotonNetwork.IsMasterClient)
+        if (scene.name == "MergeScene")
         {
             GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
         }
@@ -75,21 +75,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
             InitializeMap(); // 맵 만들기
         }
         //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
-        WriteDic();
-        AddSpawnPoints();
-
+        
+        
         //다시 마스터만 진행
-        if (PhotonNetwork.IsMasterClient)
-        {
-            pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
-            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
-            InitializeMiniGames(); // 미니게임 뿌리기
-            InitializeGenerators(); // 발전기 뿌리기
-            AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
-            Debug.Log("방에서 마스터할일 완");
-        }
+        
 
-        StartCoroutine(Wait()); // 대기시간 넣기
+        StartCoroutine(Wait1()); // 대기시간 넣기
 
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
@@ -100,15 +91,29 @@ public class AssignManager : MonoBehaviourPunCallbacks
          // 각 클라이언트에서 플레이어 생성
     }
 
-    IEnumerator Wait()
+    IEnumerator Wait1()
     {
         yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("대기끝");
+        WriteDic();
+        AddSpawnPoints();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
+            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
+            InitializeMiniGames(); // 미니게임 뿌리기
+            InitializeGenerators(); // 발전기 뿌리기
+            AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
+            Debug.Log("방에서 마스터할일 완");
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
         Debug.Log("대기끝");
         InitializePlayers();
     }
-
-
-
 
 
 
