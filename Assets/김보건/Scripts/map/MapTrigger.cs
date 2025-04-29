@@ -15,8 +15,18 @@ public class MapTrigger : MonoBehaviour
     private Canvas canvas;
     private void Start()
     {
-        canvas = GameObject.Find("Dark").GetComponent<Canvas>();
-        canvas.enabled = false;
+        GameObject @object = GameObject.Find("Dark");
+
+        Canvas casnvas = @object.GetComponent<Canvas>();
+
+        canvas = casnvas;
+
+        //canvas = GameObject.Find("Dark").GetComponent<Canvas>();
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
