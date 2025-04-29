@@ -412,11 +412,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void TryAssignRoles()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (PhotonNetwork.CurrentRoom.PlayerCount == slotPoints.Length &&
-            PhotonNetwork.PlayerList.All(p =>
-                p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v))
+        bool allReady = PhotonNetwork.PlayerList.All(p =>
+            p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 5 && allReady)
         {
-            assignManager.AssignRole();
+            assignManager.StartGame();    // 여기서 대기실→게임 준비 로직 진입
         }
     }
 

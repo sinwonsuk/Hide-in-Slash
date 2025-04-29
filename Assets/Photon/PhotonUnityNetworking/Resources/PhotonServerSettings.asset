@@ -61,6 +61,7 @@ MonoBehaviour:
   - SetFlashlight
   - OnClickToggleReady
   - TryAssignRoles
+  - RPC_LoadMergeScene
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

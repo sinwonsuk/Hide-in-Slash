@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -27,12 +28,26 @@ public class AssignManager : MonoBehaviourPunCallbacks
         Debug.Log("구독완");
     }
 
-    private void StartGame() //메모장
+    private void Awake()
     {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        //사람이 다 모였다는 가정 하에
-        //대기실
+    private void OnDestroy()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MergeScene" && PhotonNetwork.IsMasterClient)
+        {
+            StartGame(); 
+        }
+    }
+
+    public void StartGame() //메모장
+    {
         if (PhotonNetwork.IsMasterClient)
         {
             roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
@@ -181,10 +196,18 @@ public class AssignManager : MonoBehaviourPunCallbacks
         }
         Debug.Log("역할배정완료");
 
+        //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
+
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MergeScene");
+            photonView.RPC(nameof(RPC_LoadMergeScene), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void RPC_LoadMergeScene()
+    {
+        PhotonNetwork.LoadLevel("MergeScene");
     }
 
     private void AssignSpawnPoint()
