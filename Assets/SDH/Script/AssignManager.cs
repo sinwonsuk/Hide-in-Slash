@@ -129,8 +129,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        gameObject.SetActive(true);
-        StartCoroutine(Wait1());
+
     }
 
     public GameObject GetCurrentMap()
