@@ -216,7 +216,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void RPC_LoadMergeScene()
+    public void RPC_LoadMergeScene()
     {
         PhotonNetwork.LoadLevel("MergeScene");
     }
