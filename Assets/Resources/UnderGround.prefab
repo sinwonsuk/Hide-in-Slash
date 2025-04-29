@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3627244598374607141}
   - component: {fileID: 8309790455869723666}
   - component: {fileID: 9126139830985542306}
+  - component: {fileID: -658615110495592265}
   m_Layer: 0
   m_Name: UnderGround
   m_TagString: Untagged
@@ -127,6 +128,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 54.801758, y: 24.636078}
   m_EdgeRadius: 0
+--- !u!114 &-658615110495592265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177732890849530240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4ccf8cbb436674880b53920779d2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionName: UnderGround
 --- !u!1 &950145333959222998
 GameObject:
   m_ObjectHideFlags: 0

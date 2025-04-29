@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4345585732337471366}
   - component: {fileID: 2792380279289265808}
   - component: {fileID: 587744757953576706}
+  - component: {fileID: -5724050939800867603}
   m_Layer: 0
   m_Name: miro
   m_TagString: Untagged
@@ -157,6 +158,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 53.74298, y: 58.231018}
   m_EdgeRadius: 0
+--- !u!114 &-5724050939800867603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317726548184330814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4ccf8cbb436674880b53920779d2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionName: Miro
 --- !u!1 &4863848419646630942
 GameObject:
   m_ObjectHideFlags: 0

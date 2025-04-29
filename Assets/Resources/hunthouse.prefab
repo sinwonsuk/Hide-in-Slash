@@ -20528,6 +20528,7 @@ GameObject:
   - component: {fileID: 8008964847252550659}
   - component: {fileID: -5997476866189858375}
   - component: {fileID: 5180222983985625918}
+  - component: {fileID: -8252135123455177341}
   m_Layer: 0
   m_Name: hunthouse
   m_TagString: Untagged
@@ -20642,6 +20643,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 41.903656, y: 35.357407}
   m_EdgeRadius: 0
+--- !u!114 &-8252135123455177341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174321316306496372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4ccf8cbb436674880b53920779d2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionName: HunterHouse
 --- !u!1 &3819272060532820331
 GameObject:
   m_ObjectHideFlags: 0
