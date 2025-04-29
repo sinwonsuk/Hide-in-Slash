@@ -23,6 +23,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private Transform shipTf;
     PhotonView photonView;
 
+    public static AssignManager instance;
+
     private new void OnEnable()
     {
         EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
@@ -31,6 +33,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        instance = this;
+
         photonView = GetComponent<PhotonView>();
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
