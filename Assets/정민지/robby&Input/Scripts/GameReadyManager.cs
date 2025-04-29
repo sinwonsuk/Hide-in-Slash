@@ -320,10 +320,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
-
+    IEnumerator CallAssignDelayed()
+    {
+        yield return null; // 한 프레임 기다림
+        GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
+    }
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
 
-   // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //랜덤 참가
+    // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //랜덤 참가
 
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {

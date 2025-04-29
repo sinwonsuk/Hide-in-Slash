@@ -51,7 +51,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         if (scene.name == "MergeScene")
         {
-            GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
+            StartCoroutine(CallAssignDelayed());
         }
     }
 
@@ -63,7 +63,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
             AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
         }
     }
-
+    IEnumerator CallAssignDelayed()
+    {
+        yield return null; // 한 프레임 기다림
+        GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
+    }
     public void asbvasdf()
     {
         gameObject.SetActive(true);
@@ -76,19 +80,15 @@ public class AssignManager : MonoBehaviourPunCallbacks
             InitializeMap(); // 맵 만들기
         }
         //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
-        
-        
-        //다시 마스터만 진행
-        
 
-        if (gameObject.activeInHierarchy)
-        {
-            StartCoroutine(Wait1());
-        }
-        else
-        {
-            Debug.Log("코루틴 안됨");
-        }
+
+        //다시 마스터만 진행
+
+
+        gameObject.SetActive(true);
+        StartCoroutine(Wait1());
+        
+   
 
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
@@ -101,6 +101,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     IEnumerator Wait1()
     {
+        yield return null;
+
         yield return new WaitForSeconds(0.5f);
 
         Debug.Log("대기끝");
