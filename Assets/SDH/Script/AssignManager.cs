@@ -162,7 +162,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void AssignRole()
+    public void AssignRole()
     {
 
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
@@ -180,6 +180,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
         Debug.Log("역할배정완료");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("MergeScene");
+        }
     }
 
     private void AssignSpawnPoint()
