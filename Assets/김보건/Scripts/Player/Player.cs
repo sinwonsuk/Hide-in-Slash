@@ -315,16 +315,16 @@ public class Player : MonoBehaviourPun, IPunObservable
             photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
             if (countLife <= 0)
             {
-                Debug.Log("너죽음");
-                EventManager.TriggerEvent(EventType.PlayerHpZero);
-                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Dead");
-                PlayerStateMachine.ChangeState(deadState);
+                //Debug.Log("너죽음");
+                //EventManager.TriggerEvent(EventType.PlayerHpZero);
+                //profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Dead");
+                //PlayerStateMachine.ChangeState(deadState);
             }
             else if (countLife == 1)
             {
-                EventManager.TriggerEvent(EventType.PlayerHpOne);
-                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Chatch");
-                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
+                //EventManager.TriggerEvent(EventType.PlayerHpOne);
+                //profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, "Chatch");
+                //Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
 
             }
         }
