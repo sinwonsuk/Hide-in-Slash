@@ -63,6 +63,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private Dictionary<Photon.Realtime.Player, PlayerSlot> slotMap = new Dictionary<Photon.Realtime.Player, PlayerSlot>();
     private bool[] occupied = new bool[5];
 
+    int count = 1;
 
     public static GameReadyManager Instance { get; private set; }
 
@@ -315,10 +316,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {
-        //RoomRenewal(); //방 정보 리뉴얼
-        //ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
 
-        SpawnSlot(newPlayer, -1, animate: true);
+        int idx = GetNextFreeIndex(count++);
+        SpawnSlot(newPlayer, idx, animate: true);
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
@@ -337,6 +337,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             TryAssignRoles();
         }
     }
+
     public override void OnLeftRoom()
     {
         // 방 나가기 시 로비로 돌아가기
@@ -352,7 +353,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         // 나머지는 빈 자리 찾아서
         var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer);
-        int count = 1;
+
         foreach (var p in others)
         {
             int idx = GetNextFreeIndex(count++);
@@ -363,6 +364,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void SpawnSlot(RealtimePlayer p, int index, bool animate)
     {
         if (slotMap.ContainsKey(p)) return;
+
+        if (occupied[index]) return;
 
         var go = Instantiate(playerSlotPrefab, slotPoints[index], false);
         go.transform.SetAsLastSibling();
