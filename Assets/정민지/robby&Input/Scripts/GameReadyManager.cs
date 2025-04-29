@@ -78,8 +78,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
-            // Corrected the assignment to avoid modifying the read-only 'gameObject' property  
-            AssignManager.instance = Instantiate(assignManager).GetComponent<AssignManager>();
+
+            GameObject go = Instantiate(assignManager, new Vector3(0, 0, 0),Quaternion.identity);
+             
         }
         else
         {

@@ -22,8 +22,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private string currentMap;
     private Transform shipTf;
 
-    public static AssignManager instance;
-
 
     private new void OnEnable()
     {
@@ -33,8 +31,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        instance = this;
-
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
         DontDestroyOnLoad(gameObject);
