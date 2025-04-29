@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -15,18 +16,20 @@ public class MapTrigger : MonoBehaviour
     private Canvas canvas;
     private void Start()
     {
-        GameObject @object = GameObject.Find("Dark");
+        //GameObject @object = GameObject.Find("Dark");
 
-        Canvas casnvas = @object.GetComponent<Canvas>();
-
-        canvas = casnvas;
+        
 
         //canvas = GameObject.Find("Dark").GetComponent<Canvas>();
     }
 
     private void Update()
     {
-        
+        GameObject @object = GameObject.Find("Dark");
+
+        Canvas casnvas = @object.GetComponent<Canvas>();
+
+        canvas = casnvas;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
