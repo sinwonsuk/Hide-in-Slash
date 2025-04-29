@@ -81,7 +81,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //다시 마스터만 진행
         
 
-        StartCoroutine(Wait1()); // 대기시간 넣기
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(Wait1());
+        }
+        else
+        {
+            Debug.Log("코루틴 안됨");
+        }
 
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
@@ -89,7 +96,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //
         //밑에 서버 정보 활용하는거 넣어야함
 
-         // 각 클라이언트에서 플레이어 생성
+        // 각 클라이언트에서 플레이어 생성
     }
 
     IEnumerator Wait1()
