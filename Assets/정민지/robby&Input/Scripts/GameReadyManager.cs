@@ -55,7 +55,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject playerSlotPrefab;
 
     [Header("Role Assignment")]
-    [SerializeField] private AssignManager assignManager;
+    public AssignManager assignManager;
 
     [Header("Other UI")]
     [SerializeField] private Button leaveButton;

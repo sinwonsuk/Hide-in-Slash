@@ -42,7 +42,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         if (scene.name == "MergeScene" && PhotonNetwork.IsMasterClient)
         {
-            StartGame(); 
+            GameReadyManager.Instance.assignManager.asbvasdf(); 
         }
     }
 
@@ -53,7 +53,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
             roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
             AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
         }
+    }
 
+    public void asbvasdf()
+    { 
 
         //게임으로 넘어가면
         //게임내부임
@@ -77,6 +80,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
             Debug.Log("방에서 마스터할일 완");
         }
 
+        StartCoroutine(Wait()); // 대기시간 넣기
+
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
         //여기쯤에 시간 한 0.5초정도 코루틴 넣고
@@ -84,6 +89,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //밑에 서버 정보 활용하는거 넣어야함
 
         InitializePlayers(); // 각 클라이언트에서 플레이어 생성
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("대기끝");
     }
 
 
