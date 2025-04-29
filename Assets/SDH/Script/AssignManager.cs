@@ -42,7 +42,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         if (scene.name == "MergeScene" && PhotonNetwork.IsMasterClient)
         {
-            GameReadyManager.Instance.assignManager.asbvasdf(); 
+            GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
         }
     }
 

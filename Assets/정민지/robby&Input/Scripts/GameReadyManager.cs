@@ -416,7 +416,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 5 && allReady)
         {
-            assignManager.StartGame();    // 여기서 대기실→게임 준비 로직 진입
+            assignManager.GetComponent<AssignManager>().StartGame();
         }
     }
 
