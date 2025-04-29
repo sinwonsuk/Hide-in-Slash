@@ -153,15 +153,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right*200*i , Quaternion.identity);
 
-            photonView.RPC("AAA", RpcTarget.All,go);
+            int viewID = go.GetComponent<PhotonView>().ViewID;
 
+            photonView.RPC("AAA", RpcTarget.All, viewID);
             
         }
     }
     [PunRPC]
-    public void AAA(GameObject gameObject)
+    public void AAA(int viewID)
     {
-        mapObjects.Add(gameObject);
+        GameObject go = PhotonView.Find(viewID).gameObject;
+        mapObjects.Add(go);
     }
 
 
