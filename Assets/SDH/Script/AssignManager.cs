@@ -86,6 +86,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
 
         gameObject.SetActive(true);
+
+        int a = 0;
         StartCoroutine(Wait1());
         
    
