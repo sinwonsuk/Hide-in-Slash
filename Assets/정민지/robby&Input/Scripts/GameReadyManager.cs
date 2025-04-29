@@ -302,7 +302,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        if(PhotonNetwork.IsMasterClient)
+        PhotonNetwork.AutomaticallySyncScene = true;
+
+        if (PhotonNetwork.IsMasterClient)
         {
 
             GameObject go = PhotonNetwork.Instantiate("AssignManager", new Vector3(0, 0, 0), Quaternion.identity);

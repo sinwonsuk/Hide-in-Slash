@@ -234,7 +234,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.LoadLevel("MergeScene");
         }
     }
