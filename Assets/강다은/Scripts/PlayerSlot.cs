@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Realtime;
 using System.Collections;
-using ExitGames.Client.Photon;
+using PHashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 
 public class PlayerSlot : MonoBehaviour
@@ -16,7 +16,7 @@ public class PlayerSlot : MonoBehaviour
     [SerializeField] private TMP_Text nameText;          // 닉네임 텍스트
     [SerializeField] private Image leverImage;        // 손잡이 이미지
     [SerializeField] private Image buttonImage;       // 준비 버튼 이미지
-    [SerializeField] private Button slotReadyButton; // 슬롯 안의 준비 버튼
+    [SerializeField] private Button readyButton; // 슬롯 안의 준비 버튼
 
     [Header("Sprites")]
     [SerializeField] private Sprite[] profileSprites;   // 5개 프로필 스프라이트
@@ -32,7 +32,7 @@ public class PlayerSlot : MonoBehaviour
     {
         owner = p;
         SlotIndex = index;
-        nameText.text = "다니";
+        nameText.text = p.NickName;
 
         // 프로필 스프라이트 세팅
         if (p.CustomProperties.TryGetValue("ProfileIndex", out object idxObj))
@@ -49,17 +49,6 @@ public class PlayerSlot : MonoBehaviour
 
         // 드롭 애니메이션
         StartCoroutine(DropAnimation(tweenDuration));
-
-        if (p.IsLocal)
-        {
-            slotReadyButton.onClick.RemoveAllListeners();
-            slotReadyButton.onClick.AddListener(OnClickToggleReady);
-        }
-        else
-        {
-            // 다른 사람 슬롯에는 버튼 비활성화
-            slotReadyButton.interactable = false;
-        }
     }
 
     public void PlayDropAnimation()
@@ -100,7 +89,7 @@ public class PlayerSlot : MonoBehaviour
         float elapsed = 0f;
 
         if (Mathf.Abs(toZ - fromZ) > 180f)
-            fromZ = fromZ > toZ ? fromZ - 360f : fromZ + 360f;
+            fromZ += (fromZ < toZ ? 360f : -360f);
 
         while (elapsed < duration)
         {
@@ -113,6 +102,13 @@ public class PlayerSlot : MonoBehaviour
         }
         rt.localRotation = Quaternion.Euler(0, 0, toZ);
     }
+    public void BindReadyButton()
+    {
+        // 슬롯 내부 준비 버튼 활성화
+        readyButton.gameObject.SetActive(true);
+        readyButton.onClick.RemoveAllListeners();
+        readyButton.onClick.AddListener(OnClickToggleReady);
+    }
 
     private void OnClickToggleReady()
     {
@@ -122,9 +118,8 @@ public class PlayerSlot : MonoBehaviour
         bool next = !curr;
 
         // 서버에 준비 상태 전송
-        PhotonNetwork.LocalPlayer.SetCustomProperties(
-            new ExitGames.Client.Photon.Hashtable { { "Ready", next } }
-        );
+        var hash = new PHashtable { { "Ready", next } };
+        owner.SetCustomProperties(hash);
 
         // 즉시 UI 반영
         SetReadyState(next);

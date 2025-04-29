@@ -687,7 +687,7 @@ MonoBehaviour:
   nameText: {fileID: 1870865268364411942}
   leverImage: {fileID: 6930304764849340718}
   buttonImage: {fileID: 1021961999117878933}
-  slotReadyButton: {fileID: 7118494064284560896}
+  readyButton: {fileID: 7118494064284560896}
   profileSprites:
   - {fileID: 7292318028781869364, guid: a213d7dc7e0bb6e49b82df87a890d2fc, type: 3}
   - {fileID: -3559140709809704221, guid: 7ef920c1d1708d249b715b6881ecb440, type: 3}

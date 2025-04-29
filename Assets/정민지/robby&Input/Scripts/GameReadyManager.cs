@@ -5,12 +5,14 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using RealtimePlayer = Photon.Realtime.Player;
+using PHashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using UnityEngine.Windows;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System.Linq;
-
+using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
@@ -36,26 +38,45 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private Transform content; //스크롤 콘텐트
     public Text totalPlayersText;  // 인원수를 표시할 텍스트 UI (전체 인원수)
 
+    List<RoomInfo> myList = new List<RoomInfo>();
+    int currentPage = 1, maxPage, multiple;
+
     [Header("ETC")]
     public Text StatusText;
     public PhotonView PV;
 
+    [Header("UI Panels")]
+    [SerializeField] private GameObject lobbyPanel;
+    [SerializeField] private GameObject hands;    
+    [SerializeField] private GameObject waitingPanel;
 
-    List<RoomInfo> myList = new List<RoomInfo>();
-    int currentPage = 1, maxPage, multiple;
+    [Header("Slot UI")]
+    [SerializeField] private RectTransform[] slotPoints; // length=5
+    [SerializeField] private GameObject playerSlotPrefab;
+
+    [Header("Role Assignment")]
+    [SerializeField] private AssignManager assignManager;
+
+    [Header("Other UI")]
+    [SerializeField] private Button leaveButton;
+
+    private Dictionary<Photon.Realtime.Player, PlayerSlot> slotMap = new Dictionary<Photon.Realtime.Player, PlayerSlot>();
+    private bool[] occupied = new bool[5];
+
 
     public static GameReadyManager Instance { get; private set; }
 
     private void Awake()
     {
-
-
         Screen.SetResolution(960, 540, false);
 
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+
         }
         else
         {
@@ -65,11 +86,78 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         test = Test;
         Gc = GetContent;
     }
+    private void OnDestroy()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
-    //void Start()
-    //{
-    //    NickNameInput = loginchang.GetComponentInChildren<TMP_InputField>();
-    //}
+    void Start()
+    {
+        // 시작 시 로비만 보이도록
+        //lobbyPanel.SetActive(true);
+        //hands.SetActive(true);
+        //waitingPanel.SetActive(false);
+
+        // 대기실 나가기
+        //leaveButton.onClick.AddListener(() =>
+        //{
+        //    PhotonNetwork.LeaveRoom();
+        //    ClearSlots();
+        //    waitingPanel.SetActive(false);
+        //    lobbyPanel.SetActive(true);
+        //});
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "RobbyScene") return;
+
+        // RobbyScene 에 있는 UI를 찾아서 바인딩
+        lobbyPanel = GameObject.Find("robby");
+        waitingPanel = GameObject.Find("WaitingUI");
+        hands = GameObject.Find("RobbyHands");
+        leaveButton = GameObject.Find("Exit").GetComponent<Button>();
+        playerSlotPrefab = Resources.Load<GameObject>("PlayerSlot");
+
+        slotPoints = new RectTransform[5];
+        var waitingUI = GameObject.Find("WaitingUI");
+        if (waitingUI == null)
+            Debug.LogError("❌ WaitingUI 오브젝트를 찾을 수 없습니다!");
+        else
+        {
+            var roomUI = waitingUI.transform.Find("RoomUI");
+            if (roomUI == null)
+                Debug.LogError("❌ WaitingUI/RoomUI 경로를 찾을 수 없습니다!");
+            else
+            {
+                var slotContainer = roomUI.Find("SlotContainer");
+                if (slotContainer == null)
+                    Debug.LogError("❌ WaitingUI/RoomUI/SlotContainer 를 찾을 수 없습니다!");
+                else
+                {
+                    // 3) SlotPoint0~4 채우기
+                    slotPoints = new RectTransform[5];
+                    for (int i = 0; i < slotPoints.Length; i++)
+                    {
+                        var p = slotContainer.Find($"SlotPoint{i}");
+                        if (p == null)
+                            Debug.LogError($"❌ SlotPoint{i} 를 찾을 수 없습니다!");
+                        else
+                            slotPoints[i] = p.GetComponent<RectTransform>();
+                    }
+                }
+            }
+        }
+
+        // 초기 UI 상태
+        lobbyPanel.SetActive(true);
+        hands.SetActive(true);
+        waitingPanel.SetActive(false);
+
+        // leaveButton 클릭 리스너
+        //leaveButton.onClick.RemoveAllListeners();
+        //leaveButton.onClick.AddListener(OnLeaveClicked);
+    }
 
 
     #region 방리스트 갱신
@@ -210,10 +298,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        //RoomRenewal();
+        occupied = new bool[slotPoints.Length];
+        Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
+        lobbyPanel.SetActive(false);
+        hands.SetActive(false);
+        waitingPanel.SetActive(true);
+        RoomRenewal();
+        SpawnAllSlots();
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
-        PhotonNetwork.LoadLevel("WaitingRoom");
     }
 
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
@@ -222,14 +315,106 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {
-        RoomRenewal(); //방 정보 리뉴얼
-        ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
+        //RoomRenewal(); //방 정보 리뉴얼
+        //ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
+
+        SpawnSlot(newPlayer, -1, animate: true);
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
     {
-        RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
+        //RoomRenewal();
+        //ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
+
+        RemoveSlot(otherPlayer);
+    }
+    public override void OnPlayerPropertiesUpdate(RealtimePlayer target, PHashtable changedProps)
+    {
+        if (changedProps.ContainsKey("Ready") &&
+            slotMap.TryGetValue(target, out var slot))
+        {
+            slot.SetReadyState((bool)changedProps["Ready"]);
+            TryAssignRoles();
+        }
+    }
+    public override void OnLeftRoom()
+    {
+        // 방 나가기 시 로비로 돌아가기
+        ClearSlots();
+        waitingPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+    }
+
+    private void SpawnAllSlots()
+    {
+        // 로컬 플레이어는 0번 슬롯
+        SpawnSlot(PhotonNetwork.LocalPlayer, 0, false);
+
+        // 나머지는 빈 자리 찾아서
+        var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer);
+        int count = 1;
+        foreach (var p in others)
+        {
+            int idx = GetNextFreeIndex(count++);
+            SpawnSlot(p, idx, false);
+        }
+    }
+
+    private void SpawnSlot(RealtimePlayer p, int index, bool animate)
+    {
+        if (slotMap.ContainsKey(p)) return;
+
+        var go = Instantiate(playerSlotPrefab, slotPoints[index], false);
+        go.transform.SetAsLastSibling();
+
+        var slot = go.GetComponent<PlayerSlot>();
+        slot.Initialize(p, index);
+        slot.SetReadyState(false);
+
+        // 로컬 슬롯이면 버튼 바인딩
+        if (p.IsLocal)
+            slot.BindReadyButton();
+
+        slotMap[p] = slot;
+        occupied[index] = true;
+
+        if (animate) slot.PlayDropAnimation();
+    }
+
+    private void RemoveSlot(RealtimePlayer p)
+    {
+        if (!slotMap.TryGetValue(p, out var slot)) return;
+        occupied[slot.SlotIndex] = false;
+        Destroy(slot.gameObject);
+        slotMap.Remove(p);
+    }
+
+    private void ClearSlots()
+    {
+        foreach (var slot in slotMap.Values)
+            Destroy(slot.gameObject);
+        slotMap.Clear();
+        for (int i = 0; i < occupied.Length; i++) occupied[i] = false;
+    }
+
+    private int GetNextFreeIndex(int start)
+    {
+        for (int off = 0; off < occupied.Length; off++)
+        {
+            int i = (start + off) % occupied.Length;
+            if (!occupied[i]) return i;
+        }
+        return 0;
+    }
+    private void TryAssignRoles()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (PhotonNetwork.CurrentRoom.PlayerCount == slotPoints.Length &&
+            PhotonNetwork.PlayerList.All(p =>
+                p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v))
+        {
+            assignManager.AssignRole();
+        }
     }
 
     void RoomRenewal()

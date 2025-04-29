@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4424384947438334842
+--- !u!1 &5560222189584030320
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,67 +8,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4075998278966591984}
-  - component: {fileID: 6598445034034705575}
+  - component: {fileID: 764028453131791786}
+  - component: {fileID: 115132385692657426}
   m_Layer: 0
-  m_Name: GameReadyManager
+  m_Name: RoomManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4075998278966591984
+--- !u!4 &764028453131791786
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4424384947438334842}
+  m_GameObject: {fileID: 5560222189584030320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1056.419, y: 478.15396, z: -1.8418679}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6598445034034705575
+--- !u!114 &115132385692657426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4424384947438334842}
+  m_GameObject: {fileID: 5560222189584030320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b656a4cdf3f838488dcce5e4c2e75d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a981390b0f4b0c49a0e27e7da2e3332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NickNameInput: {fileID: 1555207737736466482, guid: 3cfabb881d0377e4881e1898d52fa0ad, type: 3}
-  LobbyPanel: {fileID: 0}
-  WelcomeText: {fileID: 0}
-  LobbyInfoText: {fileID: 0}
-  CellBtn: []
-  PreviousBtn: {fileID: 0}
-  NextBtn: {fileID: 0}
-  ListText: {fileID: 0}
-  RoomInfoText: {fileID: 0}
-  ChatText: []
-  ChatInput: {fileID: 0}
-  roomButtonPrefab: {fileID: 4149851345355714640, guid: 634fe46708900224abb459dbef4f39cc, type: 3}
-  totalPlayersText: {fileID: 0}
-  StatusText: {fileID: 0}
-  PV: {fileID: 0}
-  lobbyPanel: {fileID: 0}
-  hands: {fileID: 0}
-  waitingPanel: {fileID: 0}
   slotPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  playerSlotPrefab: {fileID: 0}
+  playerSlotPrefab: {fileID: 9046025660508467524, guid: 28bf48839ff4b0f49865ef0a2c7a07f1, type: 3}
+  readyButton: {fileID: 0}
+  readyButtonImage: {fileID: 0}
+  readyOffSprite: {fileID: 8277119212824540962, guid: 9df415cd2feba404a8b8b252c35def95, type: 3}
+  readyOnSprite: {fileID: 2517329508298850613, guid: 943bbc93c7b13954186808dd39bc1e1e, type: 3}
+  leaveButton: {fileID: 4934093900102417465, guid: 49d29c2d6ac783c4db602cf3bc77f616, type: 3}
   assignManager: {fileID: 9211541537270519163, guid: 84f1eb58ea67a9446acfb59c939bd1d9, type: 3}
-  leaveButton: {fileID: 0}
-  keyManager: 
