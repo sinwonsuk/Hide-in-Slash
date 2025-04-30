@@ -98,10 +98,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         gameObject.SetActive(true);
 
-        GameReadyManager.Instance.StartCoroutine(Wait1());
+        Wait1();
 
-          
-
+        
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
         //여기쯤에 시간 한 0.5초정도 코루틴 넣고
@@ -111,11 +110,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         // 각 클라이언트에서 플레이어 생성
     }
 
-    IEnumerator Wait1()
+    void Wait1()
     {
-        yield return null;
-
-        yield return new WaitForSeconds(0.5f);
         AddMapObjects();
         Debug.Log("대기끝");
         WriteDic();
@@ -131,11 +127,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
             Debug.Log("방에서 마스터할일 완");
         }
 
-        yield return new WaitForSeconds(0.5f);
-
         Debug.Log("대기끝");
         GameReadyManager.Instance.StartCoroutine(tttt());
-
     }
 
     private void Update()
@@ -373,7 +366,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
             }
         }
 
-        PhotonNetwork.Instantiate(playerName, new Vector3(0,0,0), Quaternion.identity);
+        PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
