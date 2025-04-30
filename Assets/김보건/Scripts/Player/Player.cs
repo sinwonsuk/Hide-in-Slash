@@ -82,6 +82,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
+
+            GameObject minimap = GameObject.Find("MiniMapRender");
+            if (minimap != null)
+            {
+                globalMapRender = minimap;
+                globalMapRender.SetActive(false);
+            }
         }
 
         // 초기화 되기전에 아무것도 되지 마라 
@@ -94,6 +101,92 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             PlayerStateMachine.currentState.Update();
 
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                ToggleLight();
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                if (!hasMap)
+                {
+                    Debug.Log("지도 없음");
+                }
+                else
+                {
+                    if (!isInMap)
+                        OpenMap();
+                    else
+                        CloseMap();
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                if (hasHatch && isInHatch)
+                {
+                    useHatchItem();
+                    Debug.Log("개구멍사용");
+                }
+                else
+                {
+                    Debug.Log("사용못함");
+                }
+            }
+
+            // 투명물약지속시간
+
+            if (isInvisible)
+            {
+                invisibleTimer -= Time.deltaTime;
+                if (invisibleTimer <= 0f)
+                {
+                    ResetTransparency();
+                }
+            }
+
+            // 이동물약지속시간
+            if (isBoosted)
+            {
+                boostTimer -= Time.deltaTime;
+                if (boostTimer <= 0f)
+                {
+                    ResetMoveSpeed();
+                }
+            }
+
+            // 손전등 지속시간
+            if (isUpgradedLight)
+            {
+                upgradedLightTimer -= Time.deltaTime;
+
+                // 5초지나면 깜빡
+                if (upgradedLightTimer <= 5f && !isBlinking)
+                {
+                    isBlinking = true;
+                    blinkTimer = blinkInterval;
+                }
+
+                if (isBlinking)
+                {
+                    float timeRatio = upgradedLightTimer / 5f;
+                    blinkInterval = Mathf.Lerp(0.05f, 0.3f, timeRatio);
+
+                    blinkTimer -= Time.deltaTime;
+                    if (blinkTimer <= 0f)
+                    {
+                        flashlight.enabled = !flashlight.enabled;
+                        blinkTimer = blinkInterval;
+                    }
+                }
+
+
+                if (upgradedLightTimer <= 0f)
+                {
+                    ResetFlashlight();
+                    flashlight.enabled = true;
+                }
+            }
         }
         else
         {
@@ -111,93 +204,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             transform.localScale = scale;
 
             lightObject.localRotation = Quaternion.Euler(0f, 0f, lightAngle);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ToggleLight();
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (!hasMap)
-            {
-                Debug.Log("지도 없음");
-            }
-            else
-            {
-                if (!isInMap)
-                    OpenMap();
-                else
-                    CloseMap();
-            }
-        }
-
-        if(Input.GetKeyUp(KeyCode.R))
-        {
-            if (hasHatch && isInHatch)
-            {
-                useHatchItem();
-                Debug.Log("개구멍사용");
-            }
-            else
-            {
-                Debug.Log("사용못함");
-            }
-        }
-
-        // 투명물약지속시간
-
-        if (isInvisible)
-        {
-            invisibleTimer -= Time.deltaTime;
-            if (invisibleTimer <= 0f)
-            {
-                ResetTransparency();
-            }
-        }
-
-        // 이동물약지속시간
-        if (isBoosted)
-        {
-            boostTimer -= Time.deltaTime;
-            if (boostTimer <= 0f)
-            {
-                ResetMoveSpeed();
-            }
-        }
-
-        // 손전등 지속시간
-        if (isUpgradedLight)
-        {
-            upgradedLightTimer -= Time.deltaTime;
-
-            // 5초지나면 깜빡
-            if (upgradedLightTimer <= 5f && !isBlinking)
-            {
-                isBlinking = true;
-                blinkTimer = blinkInterval;
-            }
-
-            if (isBlinking)
-            {
-                float timeRatio = upgradedLightTimer / 5f;
-                blinkInterval = Mathf.Lerp(0.05f, 0.3f, timeRatio);
-
-                blinkTimer -= Time.deltaTime;
-                if (blinkTimer <= 0f)
-                {
-                    flashlight.enabled = !flashlight.enabled;
-                    blinkTimer = blinkInterval;
-                }
-            }
-
-
-            if (upgradedLightTimer <= 0f)
-            {
-                ResetFlashlight();
-                flashlight.enabled = true;
-            }
         }
 
         // 테스트용
@@ -309,7 +315,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.collider.CompareTag("Ghost"))
         {
-      
+
             countLife--;
             Debug.Log("고스트 충돌");
             photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
@@ -317,7 +323,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Debug.Log("너죽음");
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
-                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer,ProfileState.deadSprite);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
                 PlayerStateMachine.ChangeState(deadState);
             }
             else if (countLife == 1)
@@ -359,7 +365,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Hatch"))
         {
-                isInHatch = true;
+            isInHatch = true;
 
         }
 
@@ -394,8 +400,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void BecomeGhost()
     {
-        if(!photonView.IsMine)
-           return; 
+        if (!photonView.IsMine)
+            return;
 
         Color c = sr.color;
         c.a = 0.5f;
@@ -430,7 +436,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         photonView.RPC("SetInvisibilityVisual", RpcTarget.Others, true);
 
         Debug.Log("투명버프");
-        
+
     }
 
     private void ResetTransparency()
@@ -456,7 +462,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
 
         // RPC신호받는 사람기준에서 역할따라 "RPC"쏜 사람 투명도 조절
-        if (PhotonNetwork.LocalPlayer.CustomProperties["Role"].ToString().StartsWith("Mon"))  
+        if (PhotonNetwork.LocalPlayer.CustomProperties["Role"].ToString().StartsWith("Mon"))
         {
             // 아예 x
             Color c = sr.color;
@@ -494,7 +500,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
-      
+
         photonView.RPC("UpGradeLight", RpcTarget.All);
     }
 
@@ -571,14 +577,13 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OpenMap()
     {
-        hasMap = true;
-        Debug.Log(" 맵열림");
-        if (hasMap)
-        {
-            isInMap = true;
-            if (mapUI != null)
-                mapUI.SetActive(true);
 
+        isInMap = true;
+        Debug.Log(" 맵열림");
+        if (hasMap && globalMapRender != null)
+        {
+
+            globalMapRender.SetActive(true);
         }
         else
         {
@@ -588,8 +593,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void CloseMap()
     {
         isInMap = false;
-        if (mapUI != null)
-            mapUI.SetActive(false);
+        if (globalMapRender != null)
+        {
+            globalMapRender.SetActive(false);
+        }
         Debug.Log("맵 닫음");
     }
 
@@ -842,7 +849,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     private bool isInHatch = false;
 
     [Header("지도")]
-    [SerializeField] private GameObject mapUI;
+    [SerializeField] private GameObject globalMapRender;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
 
