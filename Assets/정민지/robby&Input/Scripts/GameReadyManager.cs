@@ -17,7 +17,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
-    Action<Photon.Realtime.Player, Hashtable> PropertiesAction;
+    public Action<Photon.Realtime.Player, Hashtable> PropertiesAction;
 
     [Header("닉네임")]
    // public GameObject loginchang;
@@ -88,7 +88,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-        PropertiesAction -= HandleReadyChanged;
+        
     }
 
     void Start()
@@ -434,6 +434,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 5 && allReady)
         {
+            PropertiesAction -= HandleReadyChanged;
             AssignManager.instance.StartGame();
         }
     }
