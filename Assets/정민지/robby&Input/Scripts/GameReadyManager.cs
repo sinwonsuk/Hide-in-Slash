@@ -64,11 +64,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public static GameReadyManager Instance { get; private set; }
 
-    private void OnEnable()
-    {
-        PropertiesAction += HandleReadyChanged;
-    }
-
     private void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -79,10 +74,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             DontDestroyOnLoad(this.gameObject);
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+            PropertiesAction += HandleReadyChanged;
 
-
-            
-             
         }
         else
         {
