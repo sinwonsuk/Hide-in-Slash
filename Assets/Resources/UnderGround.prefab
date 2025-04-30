@@ -16454,7 +16454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 7251893758139768275, guid: eb9f3f095808bd44c8a0ee844198b25f, type: 3}
+  moveMap: {fileID: 2317726548184330814, guid: eb9f3f095808bd44c8a0ee844198b25f, type: 3}
   Portal: MiroToUnder
 --- !u!1 &3562780937753248704
 GameObject:
@@ -16547,7 +16547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 2499314955500059039, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  moveMap: {fileID: 351113243191304713, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
   Portal: HouseToUnder_L
 --- !u!1 &3961305232325494115
 GameObject:
@@ -16671,7 +16671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 2499314955500059039, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  moveMap: {fileID: 351113243191304713, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
   Portal: HouseToUnder_R
 --- !u!1 &5214839907053040588
 GameObject:

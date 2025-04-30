@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 4481814142680105279, guid: 2c18f3dbb5e59b949b96c42b1b2dbe88, type: 3}
+  moveMap: {fileID: 6602606589032893397, guid: 2c18f3dbb5e59b949b96c42b1b2dbe88, type: 3}
   Portal: RoomToWC
 --- !u!61 &2640651864971115246
 BoxCollider2D:

@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 5385479182039470127, guid: 2f45afe827e8ec54ba563224bc405657, type: 3}
+  moveMap: {fileID: 8910522595802352297, guid: 2f45afe827e8ec54ba563224bc405657, type: 3}
   Portal: WCToRoom
 --- !u!61 &4249101179415434244
 BoxCollider2D:
@@ -3525,7 +3525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 2499314955500059039, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  moveMap: {fileID: 351113243191304713, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
   Portal: HouseToRoom_L
 --- !u!61 &3505613997252939796
 BoxCollider2D:
@@ -20082,7 +20082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d38627d242c4046bb4367b69dd2994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveMap: {fileID: 2499314955500059039, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  moveMap: {fileID: 351113243191304713, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
   Portal: HouseToRoom_R
 --- !u!61 &4143890558785890298
 BoxCollider2D:
