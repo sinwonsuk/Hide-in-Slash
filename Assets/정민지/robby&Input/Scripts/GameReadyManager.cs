@@ -60,6 +60,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private Dictionary<Photon.Realtime.Player, PlayerSlot> slotMap = new Dictionary<Photon.Realtime.Player, PlayerSlot>();
     private bool[] occupied = new bool[5];
 
+    private Dictionary<int, int> _profileMap = new();
     private List<int> profileOrder;
     private int nextProfilePointer;
 
@@ -319,10 +320,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             nextProfilePointer = 0;
         }
 
-        SpawnSlot(PhotonNetwork.LocalPlayer, 0, animate: true);
-
         if (PhotonNetwork.IsMasterClient)
+        {
             AssignProfileIndex(PhotonNetwork.LocalPlayer);
+        }
+
+
+        SpawnSlot(PhotonNetwork.LocalPlayer, 0, animate: true);
 
         var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer).ToArray();
         int count = 1;
@@ -331,6 +335,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             int idx = GetNextFreeIndex(count++);
             SpawnSlot(p, idx, animate: false);
         }
+
 
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
@@ -347,8 +352,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         SpawnSlot(newPlayer, idx, animate: true);
 
         if (PhotonNetwork.IsMasterClient)
+        {
             AssignProfileIndex(newPlayer);
-        RoomRenewal();  //채팅 메시지
+        }
+            RoomRenewal();  //채팅 메시지
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
@@ -376,7 +383,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         if (changedProps.ContainsKey("ProfileIndex") && slotMap.TryGetValue(target, out var slot))
         {
+            Debug.Log($"[{target.NickName}] 프로필 동기화");
             int idx = (int)changedProps["ProfileIndex"];
+            _profileMap[target.ActorNumber] = idx;
             slot.SetProfileImage(idx);
         }
     }
@@ -465,7 +474,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             return;
 
         int idx = profileOrder[nextProfilePointer++];
-        p.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", idx } });
+        var cp = new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", idx } };
+        p.SetCustomProperties(cp);
+        HandleProfileIndexChanged(p, cp);
     }
 
     private List<int> MakeRandomValues(int count, int maxValue) // count: 생성할 랜덤 값의 개수, maxValue: 랜덤 값의 최대값+1
