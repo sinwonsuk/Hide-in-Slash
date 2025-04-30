@@ -211,16 +211,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1492609751942562870, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
+      propertyPath: duration
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6658862943256032205, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_Name
       value: titleBackGround_2_0
       objectReference: {fileID: 0}
     - target: {fileID: 6658862943256032205, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8171965519959140987, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
-      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8171965519959140987, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
@@ -264,7 +264,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8781485832542390779, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2582250246682409637, guid: fe473c79b632d2842add751d23c8c3e1, type: 3}
+    - target: {fileID: 8781485832542390779, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8781485832542390779, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
