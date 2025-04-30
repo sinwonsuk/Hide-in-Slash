@@ -19,8 +19,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
-    private string[] monTypes = { "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
-    private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
+    private List<string> monTypes = new List<string>{ "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
+    private List<string> pTypes = new List<string>{ "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
     string playerName;
@@ -292,7 +292,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
 
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-        string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Length)];
+        string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Count)];
         ExitGames.Client.Photon.Hashtable monProp = new();
         monProp.Add("Role", monsterName);
         players[roleIndexs[0]].SetCustomProperties(monProp);
@@ -300,9 +300,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         for (int i = 1; i < players.Length; i++)
         {
-            string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Length)];
+            string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Count)];
             ExitGames.Client.Photon.Hashtable playerProp = new ExitGames.Client.Photon.Hashtable();
             playerProp.Add("Role", playerName);
+            pTypes.Remove(playerName);
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
         Debug.Log("역할배정완료");
