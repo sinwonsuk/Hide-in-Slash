@@ -165,12 +165,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profileImage: {fileID: 7486398584524534867}
-  list:
+  sprites:
   - {fileID: 7292318028781869364, guid: a213d7dc7e0bb6e49b82df87a890d2fc, type: 3}
   - {fileID: -3559140709809704221, guid: 7ef920c1d1708d249b715b6881ecb440, type: 3}
   - {fileID: -4348535062984039790, guid: a1b2feb827c9d0642b898287de7e706d, type: 3}
   - {fileID: 6575689896886839075, guid: e941d1dac4270d94288ee6e21ec9dc4f, type: 3}
   - {fileID: 6122052484817168645, guid: 08151fa656022de4b80433da339d3945, type: 3}
-  - {fileID: -3976270893361626837, guid: 3baa86b6649af3a4daeb82810e2e2df0, type: 3}
-  - {fileID: 4666509345493544536, guid: 10bf17e687bda7a4aa72d584edb92d13, type: 3}
-  - {fileID: 324469172398960967, guid: 26995c704de6c1d459bb28de753c6dd9, type: 3}
+  - {fileID: -3976270893361626837, guid: 4c4cf6e54c826504ca1df8d342e8f9f2, type: 3}
+  - {fileID: 4666509345493544536, guid: e181c3301fdf9bb438f3fc6d031916b1, type: 3}
