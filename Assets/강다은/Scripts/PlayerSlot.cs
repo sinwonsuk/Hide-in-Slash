@@ -125,4 +125,16 @@ public class PlayerSlot : MonoBehaviour
         // 즉시 UI 반영
         SetReadyState(next);
     }
+
+    public void SetProfileImage(int idx)
+    {
+        if (idx >= 0 && idx < profileSprites.Length)
+        {
+            profileImage.sprite = profileSprites[idx];
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid ProfileIndex {idx}");
+        }
+    }
 }
