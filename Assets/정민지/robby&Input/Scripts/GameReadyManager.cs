@@ -54,8 +54,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private RectTransform[] slotPoints; // length=5
     [SerializeField] private GameObject playerSlotPrefab;
 
-    [Header("Other UI")]
-    [SerializeField] private Button leaveButton;
 
     private Dictionary<Photon.Realtime.Player, PlayerSlot> slotMap = new Dictionary<Photon.Realtime.Player, PlayerSlot>();
     private bool[] occupied = new bool[5];
@@ -117,7 +115,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel = GameObject.Find("robby");
         waitingPanel = GameObject.Find("WaitingUI");
         hands = GameObject.Find("RobbyHands");
-        leaveButton = GameObject.Find("Exit").GetComponent<Button>();
         playerSlotPrefab = Resources.Load<GameObject>("PlayerSlot");
 
         slotPoints = new RectTransform[5];
@@ -300,15 +297,35 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-
   
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
         lobbyPanel.SetActive(false);
         hands.SetActive(false);
         waitingPanel.SetActive(true);
-        RoomRenewal();
-        SpawnAllSlots();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (var p in PhotonNetwork.PlayerList)
+            {
+                if (!p.CustomProperties.ContainsKey("ProfileIndex"))
+                {
+                    int rnd = UnityEngine.Random.Range(0, 5);
+                    var cp = new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", rnd } };
+                    p.SetCustomProperties(cp);
+                }
+            }
+        }
+
+        SpawnSlot(PhotonNetwork.LocalPlayer, 0, animate: true);
+        var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer).ToArray();
+        int count = 1;
+        foreach (var p in others)
+        {
+            int idx = GetNextFreeIndex(count++);
+            SpawnSlot(p, idx, animate: false);
+        }
+
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
@@ -319,9 +336,17 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int rnd = UnityEngine.Random.Range(0, 5);
+            var cp = new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", rnd } };
+            newPlayer.SetCustomProperties(cp);
+        }
 
-        int idx = GetNextFreeIndex(count++);
+        int idx = GetNextFreeIndex(0);
         SpawnSlot(newPlayer, idx, animate: true);
+
+        RoomRenewal();  //채팅 메시지
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
@@ -338,61 +363,48 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             slot.SetReadyState((bool)changedProps["Ready"]);
             TryAssignRoles();
         }
+
+
     }
 
-    public override void OnLeftRoom()
-    {
-        // 방 나가기 시 로비로 돌아가기
-        ClearSlots();
-        waitingPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-    }
-
-    private void SpawnAllSlots()
-    {
-        // 로컬 플레이어는 0번 슬롯
-        SpawnSlot(PhotonNetwork.LocalPlayer, 0, false);
-
-        // 나머지는 빈 자리 찾아서
-        var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer);
-
-        foreach (var p in others)
-        {
-            int idx = GetNextFreeIndex(count++);
-            SpawnSlot(p, idx, false);
-        }
-    }
+    //public override void OnLeftRoom()
+    //{
+    //    // 방 나가기 시 로비로 돌아가기
+    //    ClearSlots();
+    //    waitingPanel.SetActive(false);
+    //    lobbyPanel.SetActive(true);
+    //}
 
     private void SpawnSlot(RealtimePlayer p, int index, bool animate)
     {
         if (slotMap.ContainsKey(p)) return;
-
         if (occupied[index]) return;
 
         var go = Instantiate(playerSlotPrefab, slotPoints[index], false);
-        go.transform.SetAsLastSibling();
-
         var slot = go.GetComponent<PlayerSlot>();
+
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchoredPosition = Vector2.zero;
+
         slot.Initialize(p, index);
-        slot.SetReadyState(false);
-
-        // 로컬 슬롯이면 버튼 바인딩
-        if (p.IsLocal)
-            slot.BindReadyButton();
-
+        
         slotMap[p] = slot;
         occupied[index] = true;
 
-        if (animate) slot.PlayDropAnimation();
+        if (animate)
+            slot.PlayDropAnimation();
+
+        if (p == PhotonNetwork.LocalPlayer)
+            slot.BindReadyButton();
     }
 
-    private void RemoveSlot(RealtimePlayer p)
-    {
-        if (!slotMap.TryGetValue(p, out var slot)) return;
-        occupied[slot.SlotIndex] = false;
-        Destroy(slot.gameObject);
-        slotMap.Remove(p);
-    }
+    //private void RemoveSlot(RealtimePlayer p)
+    //{
+    //    if (!slotMap.TryGetValue(p, out var slot)) return;
+    //    occupied[slot.SlotIndex] = false;
+    //    Destroy(slot.gameObject);
+    //    slotMap.Remove(p);
+    //}
 
     private void ClearSlots()
     {

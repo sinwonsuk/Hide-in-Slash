@@ -5,6 +5,7 @@ using Photon.Realtime;
 using System.Collections;
 using PHashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class PlayerSlot : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class PlayerSlot : MonoBehaviour
         if (p.CustomProperties.TryGetValue("ProfileIndex", out object idxObj))
         {
             int idx = (int)idxObj;
-            if (idx >= 0 && idx < profileSprites.Length)
+            if(idx >= 0 && idx < 5)
                 profileImage.sprite = profileSprites[idx];
         }
 
@@ -59,7 +60,7 @@ public class PlayerSlot : MonoBehaviour
     private IEnumerator DropAnimation(float duration)
     {
         var rt = GetComponent<RectTransform>();
-        Vector2 target = rt.anchoredPosition;
+        Vector2 target = Vector2.zero;
         Vector2 start = target + Vector2.up * 200f;
         float elapsed = 0f;
 

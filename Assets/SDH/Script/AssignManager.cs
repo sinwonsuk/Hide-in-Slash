@@ -63,11 +63,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
             AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
         }
     }
-    IEnumerator CallAssignDelayed()
-    {
-        yield return null; // 한 프레임 기다림
-        GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
-    }
+    //IEnumerator CallAssignDelayed()
+    //{
+    //    yield return null; // 한 프레임 기다림
+    //    GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
+    //}
     public void asbvasdf()
     {
 
