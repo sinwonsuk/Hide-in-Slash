@@ -64,6 +64,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public static GameReadyManager Instance { get; private set; }
 
+    private void OnEnable()
+    {
+        PropertiesAction += HandleReadyChanged;
+    }
+
     private void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -90,6 +95,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        PropertiesAction -= HandleReadyChanged;
     }
 
     void Start()
@@ -361,15 +367,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(RealtimePlayer target, PHashtable changedProps)
     {
         PropertiesAction.Invoke(target, changedProps);
+    }
 
-        if (changedProps.ContainsKey("Ready") &&
-            slotMap.TryGetValue(target, out var slot))
+    private void HandleReadyChanged(RealtimePlayer target, PHashtable changedProps)
+    {
+        if (changedProps.ContainsKey("Ready") && slotMap.TryGetValue(target, out var slot))
         {
             slot.SetReadyState((bool)changedProps["Ready"]);
             TryAssignRoles();
         }
-
-
     }
 
     //public override void OnLeftRoom()
