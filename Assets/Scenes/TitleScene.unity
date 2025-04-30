@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterNames: []
-  ProfileNames: []
+  ProfileNames: 
 --- !u!4 &517650322
 Transform:
   m_ObjectHideFlags: 0
