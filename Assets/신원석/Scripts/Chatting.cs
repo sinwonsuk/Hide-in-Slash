@@ -60,7 +60,7 @@ public class ChattingManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if(name != "Boss")
+        if(NetworkProperties.instance.GetMonsterStates(name) ==false)
         {
             GameObject instantiate = Instantiate(chattingObject, transform);
 
