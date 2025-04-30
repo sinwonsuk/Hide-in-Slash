@@ -60,7 +60,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private Dictionary<Photon.Realtime.Player, PlayerSlot> slotMap = new Dictionary<Photon.Realtime.Player, PlayerSlot>();
     private bool[] occupied = new bool[5];
 
-    int count = 1;
+    private List<int> profileOrder;
+    private int nextProfilePointer;
 
     public static GameReadyManager Instance { get; private set; }
 
@@ -308,20 +309,18 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         hands.SetActive(false);
         waitingPanel.SetActive(true);
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && profileOrder == null)
         {
-            foreach (var p in PhotonNetwork.PlayerList)
-            {
-                if (!p.CustomProperties.ContainsKey("ProfileIndex"))
-                {
-                    int rnd = UnityEngine.Random.Range(0, 5);
-                    var cp = new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", rnd } };
-                    p.SetCustomProperties(cp);
-                }
-            }
+            // 0,1,2,3,4를 중복 없이 랜덤 섞어서 profileOrder에 저장
+            profileOrder = MakeRandomValues(5, 5);
+            nextProfilePointer = 0;
         }
 
         SpawnSlot(PhotonNetwork.LocalPlayer, 0, animate: true);
+
+        if (PhotonNetwork.IsMasterClient)
+            AssignProfileIndex(PhotonNetwork.LocalPlayer);
+
         var others = PhotonNetwork.PlayerList.Where(p => p != PhotonNetwork.LocalPlayer).ToArray();
         int count = 1;
         foreach (var p in others)
@@ -340,16 +339,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            int rnd = UnityEngine.Random.Range(0, 5);
-            var cp = new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", rnd } };
-            newPlayer.SetCustomProperties(cp);
-        }
 
         int idx = GetNextFreeIndex(0);
         SpawnSlot(newPlayer, idx, animate: true);
 
+        if (PhotonNetwork.IsMasterClient)
+            AssignProfileIndex(newPlayer);
         RoomRenewal();  //채팅 메시지
     }
 
@@ -457,6 +452,27 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //    ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
         //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
+
+    private void AssignProfileIndex(RealtimePlayer p)
+    {
+        if (profileOrder == null || nextProfilePointer >= profileOrder.Count)
+            return;
+
+        int idx = profileOrder[nextProfilePointer++];
+        p.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "ProfileIndex", idx } });
+    }
+
+    private List<int> MakeRandomValues(int count, int maxValue) // count: 생성할 랜덤 값의 개수, maxValue: 랜덤 값의 최대값+1
+    {
+        HashSet<int> randomValues = new HashSet<int>();
+        while (randomValues.Count < count)
+        {
+            int randomValue = UnityEngine.Random.Range(0, maxValue);
+            randomValues.Add(randomValue);
+        }
+        return new List<int>(randomValues);
+    }
+
     #endregion
 
 
