@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: titleBackGround_2_0
       objectReference: {fileID: 0}
+    - target: {fileID: 6658862943256032205, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8171965519959140987, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3
