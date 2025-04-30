@@ -437,9 +437,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void TryAssignRoles()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+
         bool allReady = PhotonNetwork.PlayerList.All(p =>
             p.CustomProperties.TryGetValue("Ready", out var v) && (bool)v);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 5 && allReady)
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2 && allReady)
         {
             PropertiesAction -= HandleReadyChanged;
             AssignManager.instance.StartGame();
