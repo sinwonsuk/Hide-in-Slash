@@ -20,8 +20,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
-    private List<string> monTypes = new List<string>{ "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
-    private List<string> pTypes = new List<string>{ "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
+    private List<string> monTypes = new List<string> { "Mon1", "Mon2", "Mon3" }; //몬스터 프리팹 이름
+    private List<string> pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
     string playerName;
@@ -161,7 +161,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public GameObject MoveMap(GameObject mapPrefab)
     {
-        string mapName = mapPrefab.name+"Clone";
+        string mapName = mapPrefab.name + "(Clone)";
 
         currentMap = mapName;
         return mapDic[mapName];
@@ -283,11 +283,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         while (true)
         {
-            if(AllPlayersHaveRoles())
+            if (AllPlayersHaveRoles())
             {
-                if(InitializePlayers() == true)
+                if (InitializePlayers() == true)
                 {
-                     yield break;
+                    yield break;
                 }
             }
             yield return null;
@@ -370,7 +370,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private bool InitializePlayers()
     {
         ExitGames.Client.Photon.Hashtable prop = PhotonNetwork.LocalPlayer.CustomProperties;
-   
+
 
 
 
@@ -394,10 +394,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
         confiner.BoundingShape2D = col;
-        confiner.InvalidateBoundingShapeCache();
+        StartCoroutine(ResetCache());
         return true;
     }
 
+    IEnumerator ResetCache()
+    {
+        yield return new WaitForSeconds(0.2f);
+        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        confiner.InvalidateBoundingShapeCache();
+    }
     private void SpawnExit()
     {
         PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
