@@ -35,8 +35,7 @@ public class OtherPlayerProfile : MonoBehaviour
 
     string gameName = string.Empty;
 
-
-    private void Start()
+    private void Awake()
     {
         for (int i = 0; i < sprites.Count; i++)
         {
@@ -44,6 +43,11 @@ public class OtherPlayerProfile : MonoBehaviour
         }
 
         bg = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        
     }
     public void Init()
     {
