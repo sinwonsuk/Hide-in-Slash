@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class MiniGameTrigger : MonoBehaviourPunCallbacks
 {
+    bool isDestroyed = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -71,6 +73,9 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
     public void RequestDestroy()
     {
+        if (isDestroyed) return;
+        isDestroyed = true;
+
         if (PhotonNetwork.IsMasterClient)
         {
             // 마스터는 직접 제거 가능
@@ -83,7 +88,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    void DestroySelf(int viewID)
+    public void DestroySelf(int viewID)
     {
 
         PhotonView target = PhotonView.Find(viewID);
