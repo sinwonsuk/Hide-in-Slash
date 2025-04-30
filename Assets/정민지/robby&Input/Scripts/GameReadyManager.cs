@@ -75,6 +75,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
             PropertiesAction += HandleReadyChanged;
+            PropertiesAction += HandleProfileIndexChanged;
 
         }
         else
@@ -89,6 +90,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         PropertiesAction -= HandleReadyChanged;
+        PropertiesAction -= HandleProfileIndexChanged;
     }
 
     void Start()
@@ -218,7 +220,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-        #region 서버연결
+    #region 서버연결
 
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings(); //접속
@@ -359,7 +361,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(RealtimePlayer target, PHashtable changedProps)
     {
-        PropertiesAction.Invoke(target, changedProps);
+        base.OnPlayerPropertiesUpdate(target, changedProps);
+        PropertiesAction?.Invoke(target, changedProps);
     }
 
     private void HandleReadyChanged(RealtimePlayer target, PHashtable changedProps)
@@ -368,6 +371,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             slot.SetReadyState((bool)changedProps["Ready"]);
             TryAssignRoles();
+        }
+    }
+
+    private void HandleProfileIndexChanged(RealtimePlayer target, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("ProfileIndex") && slotMap.TryGetValue(target, out var slot))
+        {
+            int idx = (int)changedProps["ProfileIndex"];
+            slot.SetProfileImage(idx);
         }
     }
 
