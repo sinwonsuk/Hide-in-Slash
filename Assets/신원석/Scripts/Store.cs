@@ -59,7 +59,6 @@ public class Store : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject parentTransformObject;
 
-    [SerializeField]
     private GameObject currentStoreWindow;
 
     private bool isPlayerInRange = false;

@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profileImage: {fileID: 7486398584524534867}
-  list:
+  sprites:
   - {fileID: 7292318028781869364, guid: a213d7dc7e0bb6e49b82df87a890d2fc, type: 3}
   - {fileID: -3559140709809704221, guid: 7ef920c1d1708d249b715b6881ecb440, type: 3}
   - {fileID: -4348535062984039790, guid: a1b2feb827c9d0642b898287de7e706d, type: 3}

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 
 public class ProfileSlotManager : MonoBehaviourPunCallbacks
 {
@@ -18,7 +19,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
     public Vector2[] bossProfileTransforms;
 
     string gameName="";
-
+    string profileMonsterName;
     int playerCheck = 0;
     int bossCheck = 0;
 
@@ -28,8 +29,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
     [SerializeField]
     Canvas bossCanvas;
 
-
-    void Start()
+    private void Init()
     {
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
         {
@@ -39,7 +39,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
             }
         }
         // 만약 몬스터라면
-        if(NetworkProperties.instance.GetMonsterStates(gameName) ==true)
+        if (NetworkProperties.instance.GetMonsterStates(gameName) == true)
         {
             bossCanvas.gameObject.SetActive(true);
             playerCanvas.gameObject.SetActive(false);
@@ -50,19 +50,46 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
             playerCanvas.gameObject.SetActive(true);
         }
 
-        CreateProfileSlot();
     }
 
-    public void CreateProfileSlot()
-    {        
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
+    void Start()
+    {       
+        StartCoroutine(StartGame());
+    }
+    IEnumerator StartGame()
+    {
+        while (true)
         {
-            if (selfRoleObj is string selfRole)
+            if (AllPlayersHaveRoles())
             {
-                gameName = selfRole;  
+                Init();
+                CreateProfileSlot();            
+                 yield break;              
+            }
+            yield return null;
+        }
+    }
+
+    private bool AllPlayersHaveRoles()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (!player.CustomProperties.ContainsKey("Role"))
+            {
+                return false;
+            }
+
+            if (!player.CustomProperties.ContainsKey("SpawnIndex"))
+            {
+                return false;
             }
         }
+        return true;
+    }
 
+    public bool CreateProfileSlot()
+    {
+      
         if (NetworkProperties.instance.GetMonsterStates(gameName))
         {
             foreach (var player in PhotonNetwork.PlayerList)
@@ -83,20 +110,35 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
         // 내가 플레이어 라면 
         else
         {
+         
             foreach (var player in PhotonNetwork.PlayerList)
-            {               
-               if (player != PhotonNetwork.LocalPlayer && NetworkProperties.instance.GetMonsterStates(name) ==false)
-               {
-                   GameObject slot = Instantiate(profileSlotPrefab, playerProfileSlotParent);
-                   slot.GetComponent<RectTransform>().anchoredPosition = playerProfileTransforms[playerCheck];
-                   slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
-                   slot.GetComponent<OtherPlayerProfile>().Init();
+            {
+
+                if (player == PhotonNetwork.LocalPlayer)
+                    continue;
+
+
+                if (player.CustomProperties.TryGetValue("Role", out object selfRoleObj))
+                {
+                    if (selfRoleObj is string selfRole)
+                    {
+                        profileMonsterName = selfRole;
+                    }
+
+                }
+
+                if(NetworkProperties.instance.GetMonsterStates(profileMonsterName) ==false)
+                {
+                    GameObject slot = Instantiate(profileSlotPrefab, playerProfileSlotParent);
+                    slot.GetComponent<RectTransform>().anchoredPosition = playerProfileTransforms[playerCheck];
+                    slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
+                    slot.GetComponent<OtherPlayerProfile>().Init();
                     playerCheck++;
-               }
-              
+                }                       
             }
         }
-       
+
+        return true;
  
 
         // 프로필 슬롯 생성

@@ -18,7 +18,9 @@ public class generatorGage : MonoBehaviour
         generatorInImage.fillAmount += Time.deltaTime * speed;
 
         if (generatorInImage.fillAmount == 1)
-        {          
+        {
+            generatorInImage.enabled = false;
+            Destroy(gameObject);
             generator.DeleteAction.Invoke();
         }
     }

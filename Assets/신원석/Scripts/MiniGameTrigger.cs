@@ -64,10 +64,36 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (miniGameManager != null && isPlaying == true)
         {
             EventManager.TriggerEvent(EventType.LightOn);
-            PhotonNetwork.Destroy(gameObject);
+            RequestDestroy();
             Destroy(miniGameManager.gameObject);
         }
     }
+
+    public void RequestDestroy()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 마스터는 직접 제거 가능
+            PhotonNetwork.Destroy(gameObject);
+        }
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("DestroySelf", RpcTarget.MasterClient, photonView.ViewID);
+        }
+    }
+    [PunRPC]
+    void DestroySelf(int viewID)
+    {
+
+        PhotonView target = PhotonView.Find(viewID);
+        if (target != null)
+        {
+            PhotonNetwork.Destroy(target.gameObject);
+        }
+    }
+
+
     bool isPlaying = false;
     bool isPlayerInRange = false;
 

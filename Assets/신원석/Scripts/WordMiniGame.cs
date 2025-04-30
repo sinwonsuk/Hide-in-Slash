@@ -18,6 +18,7 @@ public class WordMiniGame : MiniGame
 { 
     void Start()
     {
+
         wordhandler = GetInputText;
 
         rectTransform = GetComponent<RectTransform>();

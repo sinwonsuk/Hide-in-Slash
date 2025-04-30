@@ -279,7 +279,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    IEnumerator tttt()
+    public IEnumerator tttt()
     {
         while (true)
         {

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,9 @@ public class OtherPlayerProfile : MonoBehaviour
 
     int intname = 0;
 
+    string gameName = string.Empty;
+
+
     private void Start()
     {
         for (int i = 0; i < sprites.Count; i++)
@@ -44,19 +48,21 @@ public class OtherPlayerProfile : MonoBehaviour
     public void Init()
     {
         // 보스 
-        
-            targetPlayer.CustomProperties.TryGetValue("ProfileIndex", out object selfRoleObj);
 
+
+        if (targetPlayer.CustomProperties.TryGetValue("ProfileIndex", out object selfRoleObj))
+        {
             if (selfRoleObj is int selfRole)
             {
                 intname = selfRole;
             }
 
-            if (keyValuePairs.TryGetValue((ProfileState)intname,out Sprite sprites))
-            {
-                profileImage.sprite = sprites;
-            }           
-        
+        }
+        if (keyValuePairs.TryGetValue((ProfileState)intname, out Sprite sprites))
+        {
+            profileImage.sprite = sprites;
+        }
+
         //else
         //{
         //    targetPlayer.CustomProperties.TryGetValue("Profile", out object selfRoleObj);
@@ -71,10 +77,7 @@ public class OtherPlayerProfile : MonoBehaviour
         //        profileImage.sprite = sprites;
         //    }
         //}
-
     }
-
-
     // 상태 변경에 따라 UI 업데이트
     public void UpdateProfileState(ProfileState _state)
     { 

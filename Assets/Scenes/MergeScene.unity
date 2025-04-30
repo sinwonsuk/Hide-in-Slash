@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterNames:
-  - mon1
-  - mon2
-  - mon3
+  - PeanutGhost
+  - ProteinGhost
+  - PukeGirlGhost
   ProfileNames: 0000000001000000020000000300000004000000
 --- !u!4 &7824621
 Transform:
@@ -976,7 +976,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 0.7
     CustomCurve:
       serializedVersion: 2
       m_Curve: []

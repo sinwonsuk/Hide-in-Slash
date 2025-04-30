@@ -100,6 +100,7 @@ public class Generator : MonoBehaviourPunCallbacks
 
     void Delete()
     {
+        Destroy(generatorMiniGame.gameObject);
         photonView.RPC("Sucess", RpcTarget.All);
         StopGeneration();
     }

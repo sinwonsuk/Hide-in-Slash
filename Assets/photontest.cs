@@ -14,11 +14,9 @@ public class photontest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(Input.GetKeyDown(KeyCode.O))
         {
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer,ProfileState.deadSprite);
-        }  
-        
+        }         
     }
 }
