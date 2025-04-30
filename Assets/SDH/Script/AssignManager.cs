@@ -8,6 +8,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using Photon.Pun.Demo.PunBasics;
 using Unity.VisualScripting;
+using ExitGames.Client.Photon;
 
 public class AssignManager : MonoBehaviourPunCallbacks
 {
@@ -25,6 +26,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private Transform shipTf;
     string playerName;
     int spawnIndex;
+
+    const byte EVENT_MAP_READY = 1;
+
     public static AssignManager instance;
 
     private new void OnEnable()
@@ -35,9 +39,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
         if (instance != null && instance != this)
         {
-
             Destroy(gameObject);
             return;
         }
@@ -53,7 +57,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "SandBox")
+        if (scene.name == "MergeScene")
         {
             AssignManager.instance.asbvasdf();
         }
@@ -81,11 +85,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //게임으로 넘어가면
         //게임내부임
 
-        if (PhotonNetwork.IsMasterClient) //마스터만
+        if (PhotonNetwork.IsMasterClient)
         {
-            InitializeMap(); // 맵 만들기
+            InitializeMap(); // 맵 생성 및 브로드캐스트
+            Wait1();         // 마스터는 직접 실행
         }
-        
+
+        gameObject.SetActive(true);
+
         //맵 만들고 생성된 맵에 대한 정보는 각 클라이언트에서 저장
 
 
@@ -96,11 +103,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //다시 마스터만 진행
 
 
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
 
-        Wait1();
+        //Wait1();
 
-        
+
         //위에 할당 후 아래에서 서버 정보 활용하려면 좀 기다려줘야함
         //
         //여기쯤에 시간 한 0.5초정도 코루틴 넣고
@@ -109,7 +116,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         // 각 클라이언트에서 플레이어 생성
     }
-
+    private void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == EVENT_MAP_READY)
+        {
+            Debug.Log("맵 생성 완료 신호 받음");
+            Wait1(); // 이제 안전하게 실행 가능
+        }
+    }
     void Wait1()
     {
         AddMapObjects();
@@ -130,6 +144,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         Debug.Log("대기끝");
         GameReadyManager.Instance.StartCoroutine(tttt());
     }
+
+
 
     private void Update()
     {
@@ -157,6 +173,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < maps.Length; i++)
         {
             GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right * 200 * i, Quaternion.identity);
+        }
+
+        // 맵 생성 완료 후 신호
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.RaiseEvent(EVENT_MAP_READY, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendReliable);
         }
     }
 
@@ -317,7 +339,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("SandBox");
+            PhotonNetwork.LoadLevel("MergeScene");
         }
     }
 

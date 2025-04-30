@@ -298,6 +298,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        AssignManager.instance.gameObject.AddComponent<PhotonView>();
+
+
         PhotonNetwork.AutomaticallySyncScene = true;
   
         occupied = new bool[slotPoints.Length];

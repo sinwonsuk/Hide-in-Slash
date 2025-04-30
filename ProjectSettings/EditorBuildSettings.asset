@@ -17,13 +17,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PlayerTestBo.unity
     guid: 4dd31041475dea848951bdaec06b4897
-  - enabled: 1
+  - enabled: 0
     path: Assets/SDH/SandBox.unity
     guid: b0751bc8c61ef2842857cc0e900919b9
   - enabled: 0
     path: "Assets/\uC2E0\uC6D0\uC11D/Scene/MySampleScene.unity"
     guid: cb8edc6ebf2f5d5478744c891c8d9717
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MergeScene.unity
     guid: cf31c957eb6a692479470327c5ddb886
   m_configObjects: {}

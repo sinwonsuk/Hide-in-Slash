@@ -1,38 +1,94 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ProfileState
+{
+    Player1Profile,
+    Player2Profile,
+    Player3Profile,
+    Player4Profile,
+    Player5Profile,
+    deadSprite,
+    prisonSprite,
+    Escape,
+}
+
+
 public class OtherPlayerProfile : MonoBehaviour
 {
-    public Photon.Realtime.Player targetPlayer;  // ÀÌ ÇÁ·ÎÇÊÀÌ ÇØ´çÇÏ´Â ÇÃ·¹ÀÌ¾î
-    Image profileImage;  // ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ·»´õ·¯
+    public Photon.Realtime.Player targetPlayer;  // ì´ í”„ë¡œí•„ì´ í•´ë‹¹í•˜ëŠ” í”Œë ˆì´ì–´
 
-    public Sprite aliveSprite;  // »ì¾ÆÀÖ´Â »óÅÂ ÀÌ¹ÌÁö
-    public Sprite deadSprite;   // Á×Àº »óÅÂ ÀÌ¹ÌÁö
-    public Sprite capturedSprite; // °¨±İ »óÅÂ ÀÌ¹ÌÁö
+    [SerializeField]
+    Image profileImage;  // í”„ë¡œí•„ ì´ë¯¸ì§€ ë Œë”ëŸ¬
 
+    Image bg;
+
+    Dictionary<ProfileState, Sprite> keyValuePairs = new Dictionary<ProfileState, Sprite>();
+
+    [SerializeField]
+    List<Sprite> sprites = new List<Sprite>();
+
+    int intname = 0;
 
     private void Start()
     {
-        profileImage = GetComponent<Image>();
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            keyValuePairs.Add((ProfileState)i, sprites[i]);
+        }
+
+        bg = GetComponent<Image>();
+    }
+    public void Init()
+    {
+        // ë³´ìŠ¤ 
+        
+            targetPlayer.CustomProperties.TryGetValue("ProfileIndex", out object selfRoleObj);
+
+            if (selfRoleObj is int selfRole)
+            {
+                intname = selfRole;
+            }
+
+            if (keyValuePairs.TryGetValue((ProfileState)intname,out Sprite sprites))
+            {
+                profileImage.sprite = sprites;
+            }           
+        
+        //else
+        //{
+        //    targetPlayer.CustomProperties.TryGetValue("Profile", out object selfRoleObj);
+
+        //    if (selfRoleObj is int selfRole)
+        //    {
+        //        intname = selfRole;
+        //    }
+
+        //    if (keyValuePairs.TryGetValue((ProfileState)intname, out Sprite sprites))
+        //    {
+        //        profileImage.sprite = sprites;
+        //    }
+        //}
+
     }
 
-    // »óÅÂ º¯°æ¿¡ µû¶ó UI ¾÷µ¥ÀÌÆ®
-    public void UpdateProfileState(string state)
-    {
-        switch (state)
+
+    // ìƒíƒœ ë³€ê²½ì— ë”°ë¼ UI ì—…ë°ì´íŠ¸
+    public void UpdateProfileState(ProfileState _state)
+    { 
+        if(keyValuePairs.TryGetValue(_state, out Sprite sprites))
         {
-            case "Alive":
-                profileImage.sprite = aliveSprite;
-                break;
-            case "Dead":
-                profileImage.sprite = deadSprite;
-                break;
-            case "Captured":
-                profileImage.sprite = capturedSprite;
-                break;
-            default:
-                profileImage.sprite = aliveSprite;
-                break;
+            if(_state == ProfileState.Escape)
+            {
+                bg.sprite = sprites;
+                profileImage.enabled = false;
+            }
+            else
+            {
+                profileImage.sprite = sprites;
+            }           
         }
     }
 }
