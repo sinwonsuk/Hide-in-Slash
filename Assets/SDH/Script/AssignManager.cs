@@ -161,7 +161,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public GameObject MoveMap(GameObject mapPrefab)
     {
-        string mapName = mapPrefab.name;
+        string mapName = mapPrefab.name+"Clone";
 
         currentMap = mapName;
         return mapDic[mapName];
@@ -394,7 +394,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
         confiner.BoundingShape2D = col;
-
+        confiner.InvalidateBoundingShapeCache();
         return true;
     }
 
