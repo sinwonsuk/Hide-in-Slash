@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 using UnityEngine;
+using Photon.Pun.Demo.PunBasics;
 
 public class AssignManager : MonoBehaviourPunCallbacks
 {
@@ -21,7 +22,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private string[] pTypes = { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
-
+    string playerName;
+    int spawnIndex;
     public static AssignManager instance;
 
     private new void OnEnable()
@@ -61,13 +63,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
             AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
+
         }
     }
-    IEnumerator CallAssignDelayed()
-    {
-        yield return null; // 한 프레임 기다림
-        GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
-    }
+    //IEnumerator CallAssignDelayed()
+    //{
+    //    yield return null; // 한 프레임 기다림
+    //    GameReadyManager.Instance.assignManager.GetComponent<AssignManager>().asbvasdf();
+    //}
     public void asbvasdf()
     {
 
@@ -239,6 +242,37 @@ public class AssignManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private bool AllPlayersHaveRoles()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (!player.CustomProperties.ContainsKey("Role"))
+            {
+                return false;
+            }
+
+            if (!player.CustomProperties.ContainsKey("SpawnIndex"))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void SetPlayerName(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
+    {
+
+        if (changedProps.ContainsKey("Role"))
+        {
+            Debug.Log($"{targetPlayer.NickName} 역할 설정됨: {changedProps["Role"]}");
+
+            // 모든 플레이어의 Role이 설정되었는지 확인
+            if (AllPlayersHaveRoles())
+            {
+                Debug.Log("모든 플레이어 역할 설정 완료!");
+                InitializePlayers();
+            }
+        }
+    }
     public void AssignRole()
     {
 
@@ -281,6 +315,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private void AssignSpawnPoint()
     {
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
+
         ExitGames.Client.Photon.Hashtable monProp = new();
         monProp.Add("SpawnIndex", pspIndexs[0]);
         players[roleIndexs[0]].SetCustomProperties(monProp);
@@ -297,9 +332,27 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private void InitializePlayers()
     {
         ExitGames.Client.Photon.Hashtable prop = PhotonNetwork.LocalPlayer.CustomProperties;
-        string playerName = prop["Role"].ToString();
-        int spawnIndex = (int)prop["SpawnIndex"];
-        PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+   
+
+
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
+        {
+            if (selfRoleObj is string selfRoles)
+            {
+                playerName = selfRoles;
+            }
+        }
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("SpawnIndex", out object index))
+        {
+            if (index is int selfRole)
+            {
+                spawnIndex = selfRole;
+            }
+        }
+
+
+        PhotonNetwork.Instantiate(playerName, new Vector3(0,0,0), Quaternion.identity);
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();

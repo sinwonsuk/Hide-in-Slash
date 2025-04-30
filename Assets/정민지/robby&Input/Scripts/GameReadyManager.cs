@@ -13,9 +13,11 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System.Linq;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
+    Action<Photon.Realtime.Player, Hashtable> PropertiesAction;
 
     [Header("닉네임")]
    // public GameObject loginchang;
@@ -232,6 +234,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
 
+
        // PhotonNetwork.LocalPlayer.NickName = "adadadad";
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
         PhotonNetwork.LoadLevel("RobbyScene");
@@ -332,6 +335,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(RealtimePlayer target, PHashtable changedProps)
     {
+        PropertiesAction.Invoke(target, changedProps);
+
         if (changedProps.ContainsKey("Ready") &&
             slotMap.TryGetValue(target, out var slot))
         {
