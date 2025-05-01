@@ -28,6 +28,10 @@ TagManager:
   - DrawMiniGameUpWall
   - Dark
   - Maps
+  - LinMiniGame1
+  - LinMiniGame2
+  - LinMiniGame3
+  - LinMiniGame4
   layers:
   - Default
   - TransparentFX
