@@ -47,10 +47,12 @@ public class ChattingManager : MonoBehaviourPunCallbacks
 
     public void CreateChat(string _text)
     {
-        photonView.RPC("Craete", RpcTarget.All,_text);       
+        string nickname = PhotonNetwork.NickName;
+
+        photonView.RPC("Craete", RpcTarget.All,_text, nickname);       
     }
     [PunRPC]
-    public void Craete(string _text)
+    public void Craete(string _text, string senderNickname)
     {
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
         {
@@ -66,7 +68,9 @@ public class ChattingManager : MonoBehaviourPunCallbacks
 
             ChattingOutput chattingOutput = instantiate.GetComponent<ChattingOutput>();
 
-            chattingOutput.textMeshProUGUI.text = _text;
+            string nickname = PhotonNetwork.NickName;
+
+            chattingOutput.textMeshProUGUI.text = senderNickname + " : "+  _text;
 
             Canvas.ForceUpdateCanvases();
             scrollRect.verticalNormalizedPosition = 0f;

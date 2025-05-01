@@ -67,6 +67,9 @@ MonoBehaviour:
   - ResetFlashlight
   - SetFlashlightBlink
   - CloseDoorRPC
+  - BroadcastSuecss
+  - RequestGeneratorComplete
+  - SyncFillAmount
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

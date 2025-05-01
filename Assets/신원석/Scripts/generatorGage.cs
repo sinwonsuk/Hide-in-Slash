@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class generatorGage : MonoBehaviour
+public class generatorGage : MonoBehaviourPunCallbacks
 {
 
     void Start()
@@ -17,14 +17,42 @@ public class generatorGage : MonoBehaviour
     {        
         generatorInImage.fillAmount += Time.deltaTime * speed;
 
-        if (generatorInImage.fillAmount == 1)
+        photonView.RPC("SyncFillAmount", RpcTarget.OthersBuffered, generatorInImage.fillAmount);
+
+        if (generatorInImage.fillAmount >= 1 && isCheck ==false)
         {
             generatorInImage.enabled = false;
             Destroy(gameObject);
-            generator.DeleteAction.Invoke();
+
+            if (PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
+            {
+                PhotonView pv = generator.GetComponent<PhotonView>();
+                if (pv != null)
+                {
+                    pv.RPC("RequestGeneratorComplete", RpcTarget.MasterClient);
+                }
+            }
+            // 마스터 클라일 경우 직접 호출
+            else if (PhotonNetwork.IsMasterClient)
+            {
+                generator.DeleteAction.Invoke();
+            }
+
+            isCheck = true;
         }
+
+
+        
     }
 
+    [PunRPC]
+    public void SyncFillAmount(float newFillAmount)
+    {
+        generatorInImage.fillAmount = newFillAmount;
+    }
+
+    bool isCheck = false;
+    
     [SerializeField]
     float speed = 0.5f;
 
