@@ -30,6 +30,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
+    [SerializeField] private roomClick roomClickScript;
+    public GameObject IncorrectPassword;
 
     [Header("대기실")]
     public Text ListText;
@@ -87,6 +89,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         test = Test;
         Gc = GetContent;
+        
     }
     private void OnDestroy()
     {
@@ -220,10 +223,16 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
                     string capturedRoomName = room.Name;
                     newButton.GetComponent<Button>().onClick.AddListener(() => {
-                        PhotonNetwork.JoinRoom(capturedRoomName);
+                        roomClickScript.OnRoomButtonClicked(capturedRoomName); // capturedRoomName 사용
                     });
 
-                    roomDic.Add(room.Name, newButton);
+
+
+                   // roomDic.Add(room.Name, newButton);
+                    //roomInfoDict.Add(room, newButton);
+
+                    roomDic[room.Name] = newButton;
+                    roomInfoDict[room.Name] = room;
                 }
                                       
             }
@@ -269,7 +278,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     #region 방
 
     //비번과 함께 방 생성
-    public void CreateRoomWithPassword(string roomName)
+    public void CreateRoomWithPassword(string roomName,string password)
     {
          if(PhotonNetwork.IsConnected&&PhotonNetwork.InLobby)
         {
@@ -278,6 +287,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
             roomOptions.MaxPlayers = 5; //옵션에서 최대인원
             roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
+
+            // 비밀번호 설정
+            Hashtable customProps = new Hashtable();
+            customProps.Add("pw", password);
+            roomOptions.CustomRoomProperties = customProps;
+            roomOptions.CustomRoomPropertiesForLobby = new string[] { "pw" };
+
             PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
             Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName}이라는 방을 생성하셨습니다!");
         }
@@ -287,6 +303,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
 
     }
+
+
+
 
     //public void OnSubmitPassword(string inputPassword)
     //{
@@ -303,20 +322,34 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
-    //public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
-    //{
-    //    string roomPassword = (string)roomInfo.CustomProperties["pw"];
+    public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
+    {
+        // Check if the room has a password set
+        if (roomInfo.CustomProperties.ContainsKey("pw"))
+        {
+            string roomPassword = (string)roomInfo.CustomProperties["pw"];
 
-    //    if (roomPassword == inputPassword)
-    //    {
-    //        PhotonNetwork.JoinRoom(roomInfo.Name);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("비밀번호가 틀렸습니다!");
-    //    }
-    //}
+            if (roomPassword == inputPassword)
+            {
+                PhotonNetwork.JoinRoom(roomInfo.Name);
+            }
+            else
+            {
+                GameObject currentWarning = Instantiate(IncorrectPassword);
 
+                if(UnityEngine.Input.GetKeyDown(KeyCode.Escape)&& currentWarning != null)
+                {
+                    Destroy(currentWarning);
+                }
+
+            }
+        }
+        else
+        {
+            Debug.Log("이 방은 비밀번호가 없습니다!"); // "This room does not have a password."
+            PhotonNetwork.JoinRoom(roomInfo.Name);
+        }
+    }
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
 
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
@@ -560,13 +593,34 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         content = _content;
     }
 
+    public RoomInfo GetRoomByName(string roomName)
+    {
+        if (string.IsNullOrEmpty(roomName))
+        {
+            Debug.LogError("Room name is null or empty");
+            return null;  // 또는 적절한 처리
+        }
+
+        if (roomDic.TryGetValue(roomName, out GameObject roomObject))
+        {
+            return roomInfoDict[roomName];
+        }
+        else
+        {
+            Debug.LogWarning($"Room {roomName} not found");
+            return null;
+        }
+    }
+
     int keyCheck = 0;
 
     public Action<string> test;
     public Action<Transform> Gc;
 
+
     public List<int> keyManager = new List<int>();
 
     public Dictionary<String, GameObject> roomDic = new Dictionary<String, GameObject>();
+    private Dictionary<string, RoomInfo> roomInfoDict = new Dictionary<string, RoomInfo>();
 
 }
