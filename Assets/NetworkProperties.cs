@@ -32,6 +32,17 @@ public class NetworkProperties : MonoBehaviour
         }
         return false;
     }
+
+    public string GetMonsterStatesName(string _name)
+    {
+        foreach (var name in monsterNames)
+        {
+            if (name == _name)
+                return _name;
+        }
+        return "";
+    }
+
     public bool GetPlayerStates(int _name)
     {
         foreach (var name in ProfileNames)
@@ -39,7 +50,6 @@ public class NetworkProperties : MonoBehaviour
             if (name == _name)
                 return true;
         }
-
         return false;
     }
 

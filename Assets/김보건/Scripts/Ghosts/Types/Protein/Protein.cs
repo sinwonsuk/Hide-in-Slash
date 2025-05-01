@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class Protein : Ghost, IPunObservable
 {
@@ -12,6 +13,8 @@ public class Protein : Ghost, IPunObservable
     private GhostState skillIdleState;
     private GhostState skillMoveState;
 
+
+
     [Header("단백질섭취(벌크업)")]
     [SerializeField] private float ProteinDuration = 10f; //벌크업 지속시간
     [SerializeField] private float ProteincooldownDuration = 5f;    //쿨타임
@@ -20,6 +23,13 @@ public class Protein : Ghost, IPunObservable
     private bool isProteinCooldown = false; //단백질 쿨타임 여부
     [SerializeField] private float proteinTimer; //지속시간 타이머
     [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
+    [Header("스킬쿨타임")]
+    [SerializeField] private float cooldownTime = 20f;
+    private float cooldownTimer = 0f;
+    private bool isCoolingDown = false;
+    [SerializeField]
+    Image skillImage;
+
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
@@ -37,9 +47,12 @@ public class Protein : Ghost, IPunObservable
 
 
     protected override void Awake()
-    {
-
+    {      
         base.Awake();
+
+        GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
+        skillImage = _skillImage.GetComponent<Image>();
+
         photonView = GetComponent<PhotonView>();
 
         if (ghostStateMachine == null)
@@ -78,10 +91,37 @@ public class Protein : Ghost, IPunObservable
         }
         
     }
+    // 업데이트에 돌리기
+    public void CollDownSkill()
+    {
+        if (isCoolingDown)
+        {
+            cooldownTimer += Time.deltaTime;
+            skillImage.fillAmount = 1f - (cooldownTimer / cooldownTime);
+
+            if (cooldownTimer >= cooldownTime)
+            {
+                isCoolingDown = false;
+                skillImage.fillAmount = 0f;
+            }
+        }
+    }    
+
+    // 스킬 사용
+    private void UseSkill()
+    {
+        isCoolingDown = true;
+        cooldownTimer = 0f;
+        skillImage.fillAmount = 1f;
+
+        // 스킬 로직 실행...
+    }
 
     protected override void Update()
     {
         base.Update();
+
+
 
         if (photonView.IsMine)
         {

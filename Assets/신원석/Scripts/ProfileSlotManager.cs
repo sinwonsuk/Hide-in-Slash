@@ -96,12 +96,13 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
             {
                 if (player != PhotonNetwork.LocalPlayer)
                 {
-                    // 슬롯 생성
-                    GameObject slot = Instantiate(profileSlotPrefab, bossProfileSlotParent);
-                    slot.GetComponent<RectTransform>().anchoredPosition = bossProfileTransforms[playerCheck];
-                    slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
-                    slot.GetComponent<OtherPlayerProfile>().Init();
-                    playerCheck++;
+
+                    //// 슬롯 생성
+                    //GameObject slot = Instantiate(profileSlotPrefab, bossProfileSlotParent);
+                    //slot.GetComponent<RectTransform>().anchoredPosition = bossProfileTransforms[playerCheck];
+                    //slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
+                    //slot.GetComponent<OtherPlayerProfile>().Init();
+                    //playerCheck++;
                 }
 
             }
@@ -122,6 +123,7 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
                     if (selfRoleObj is string selfRole)
                     {
                         profileMonsterName = selfRole;
+
                     }
 
                 }
@@ -168,6 +170,8 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+
     // 플레이어가 방을 나갈 때 프로필 슬롯을 제거
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
@@ -192,7 +196,6 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncProfileState(Photon.Realtime.Player targetPlayer, ProfileState state)
     {
-
         if (NetworkProperties.instance.GetMonsterStates(gameName))
         {
             foreach (Transform child in bossProfileSlotParent)
