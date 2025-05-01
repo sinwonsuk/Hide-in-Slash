@@ -187,13 +187,23 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
             if (!room.RemovedFromList)  // 제거된 방은 제외
             {
-                if (roomDic.ContainsKey(room))
+                if (roomDic.ContainsKey(room.Name))
                 {
                     int currentPlayerCount = room.PlayerCount;  // 현재 인원수
                     int maxPlayers = room.MaxPlayers;           // 최대 인원수
 
-                    roomDic[room].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
-                    roomDic[room].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
+                   
+
+                    if(currentPlayerCount==0)
+                    {
+                        GameObject roomUI = roomDic[room.Name];
+                        roomDic.Remove(room.Name);
+                        Destroy(roomUI);  // UI 오브젝트 파괴
+                        return;
+                    }
+
+                    roomDic[room.Name].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
+                    roomDic[room.Name].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
                 }
                 else
@@ -213,10 +223,20 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                         PhotonNetwork.JoinRoom(capturedRoomName);
                     });
 
-                    roomDic.Add(room, newButton);
+                    roomDic.Add(room.Name, newButton);
                 }
                                       
             }
+            else if (room.RemovedFromList || room.PlayerCount == 0)
+            {
+                if (roomDic.TryGetValue(room.Name, out GameObject go))
+                {
+                    Destroy(go);
+                    roomDic.Remove(room.Name);
+                }
+                continue;
+            }
+
         }
     }
     #endregion
@@ -257,6 +277,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             RoomOptions roomOptions = new RoomOptions(); //새로운 룸 옵션
 
             roomOptions.MaxPlayers = 5; //옵션에서 최대인원
+            roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
             PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
             Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName}이라는 방을 생성하셨습니다!");
         }
@@ -455,6 +476,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount >= 2 && allReady)
         {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            if (PhotonNetwork.CurrentRoom.IsOpen == false)
+                Debug.Log("이제 방에 못들어감");
+
+            if (PhotonNetwork.CurrentRoom.IsVisible == false)
+                Debug.Log("이제 방이 안보임");
+
             PropertiesAction -= HandleReadyChanged;
             AssignManager.instance.StartGame();
         }
@@ -538,6 +567,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public List<int> keyManager = new List<int>();
 
-    public Dictionary<RoomInfo, GameObject> roomDic = new Dictionary<RoomInfo, GameObject>();
+    public Dictionary<String, GameObject> roomDic = new Dictionary<String, GameObject>();
 
 }
