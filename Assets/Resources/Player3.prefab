@@ -467,7 +467,6 @@ MonoBehaviour:
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
   portalName: CaughtPoint
   hasHatch: 0
-  globalMapRender: {fileID: 0}
   hasMap: 0
 --- !u!50 &7010930786892485481
 Rigidbody2D:
@@ -719,7 +718,7 @@ Transform:
   m_GameObject: {fileID: 8817377925823690978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 76.5, y: -83.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

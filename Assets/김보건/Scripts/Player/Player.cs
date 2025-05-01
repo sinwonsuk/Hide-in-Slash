@@ -83,11 +83,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (cam != null)
                 cam.Follow = transform;
 
-            GameObject minimap = GameObject.Find("MiniMapRender");
-            if (minimap != null)
+            GameObject playerCanvas = GameObject.Find("PlayerCanvas");
+            if (playerCanvas != null)
             {
-                globalMapRender = minimap;
-                globalMapRender.SetActive(false);
+                Transform minimapObj = playerCanvas.transform.Find("MiniMapRender");
+                if (minimapObj != null)
+                {
+                    minimap = minimapObj.gameObject;
+                    minimap.SetActive(false); 
+                }
             }
         }
 
@@ -410,6 +414,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         c.a = 0.5f;
         sr.color = c;
 
+        gameObject.tag = "DeadPlayer";
+
         photonView.RPC("SetGhostVisual", RpcTarget.Others);
 
     }
@@ -601,10 +607,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         isInMap = true;
         Debug.Log(" 맵열림");
-        if (hasMap && globalMapRender != null)
+        if (hasMap && minimap != null)
         {
 
-            globalMapRender.SetActive(true);
+            minimap.SetActive(true);
         }
         else
         {
@@ -614,9 +620,9 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void CloseMap()
     {
         isInMap = false;
-        if (globalMapRender != null)
+        if (minimap != null)
         {
-            globalMapRender.SetActive(false);
+            minimap.SetActive(false);
         }
         Debug.Log("맵 닫음");
     }
@@ -871,7 +877,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     private bool isInHatch = false;
 
     [Header("지도")]
-    [SerializeField] private GameObject globalMapRender;
+    private GameObject minimap;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
 
