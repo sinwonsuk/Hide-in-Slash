@@ -23,7 +23,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
-
+        canvas = GameObject.FindGameObjectWithTag("Dark").GetComponent<Canvas>();
+        canvas.enabled = false;
         originalSpeed = moveSpeed;
 
         PlayerStateMachine = new PlayerStateMachine();
@@ -403,7 +404,22 @@ public class Player : MonoBehaviourPun, IPunObservable
         Transform portal = moveMap.transform.Find(portalName);
         if (portal != null)
             transform.position = portal.position;
+        StartCoroutine(UpdateCameraConfinerDelayed());
     }
+
+    private IEnumerator UpdateCameraConfinerDelayed()
+    {
+        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        confiner.BoundingShape2D = moveMap.GetComponent<Collider2D>();
+        canvas.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        confiner.InvalidateBoundingShapeCache();
+        yield return new WaitForSeconds(0.25f);
+        canvas.enabled = false;
+
+    }
+
 
     public void BecomeGhost()
     {
@@ -814,6 +830,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public Rigidbody2D rb { get; private set; }
 
     public SpriteRenderer sr { get; private set; }
+    private Canvas canvas;
 
     public int facingDir { get; private set; } = 1;
     public int facingUpDir { get; private set; } = 1;   // 1 = ��, -1 = �Ʒ�
