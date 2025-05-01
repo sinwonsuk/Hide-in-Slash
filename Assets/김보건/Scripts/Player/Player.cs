@@ -871,7 +871,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     [Header("잡혀서 감옥감")]
     [SerializeField] private GameObject moveMap;
-    [SerializeField] private string portalName = "CaughtPoint";
+    [SerializeField] private string portalName = "PrisonSpawnPoint";
 
     [Header("개구멍")]
     [SerializeField] private bool hasHatch = false;

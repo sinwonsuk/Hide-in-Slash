@@ -321,8 +321,8 @@ MonoBehaviour:
   lightCollider: {fileID: 4487070958369760633}
   upgradedLightTimer: 0
   hasPrisonKey: 0
-  moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
-  portalName: CaughtPoint
+  moveMap: {fileID: 351113243191304713, guid: 6e39683dfc8517e4fb337b9b66a88b0b, type: 3}
+  portalName: PrisonSpawnPoint
   hasHatch: 0
   hasMap: 0
 --- !u!50 &9179863960893515495
