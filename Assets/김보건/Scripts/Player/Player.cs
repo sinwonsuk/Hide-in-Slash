@@ -33,14 +33,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         deadState = new PlayerDead(this, PlayerStateMachine, "Dead");
         escapeState = new PlayerEscapeState(this, PlayerStateMachine, "Escape");
 
-        flashlight.pointLightOuterRadius = defaultRadius;
+        flashLight.pointLightOuterRadius = defaultRadius;
         defaultColliderPoints = lightCollider.points;
 
         // 인스펙터창에 무조건 있어야함 긴급 땜빵
         GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
         profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
 
-        flashlight.enabled = false;
+        flashLight.enabled = false;
 
     }
 
@@ -175,7 +175,10 @@ public class Player : MonoBehaviourPun, IPunObservable
                     blinkTimer -= Time.deltaTime;
                     if (blinkTimer <= 0f)
                     {
-                        flashlight.enabled = !flashlight.enabled;
+                        flashLight.enabled = !flashLight.enabled;
+
+                        photonView.RPC("SetFlashlightBlink", RpcTarget.Others, flashLight.enabled);
+
                         blinkTimer = blinkInterval;
                     }
                 }
@@ -183,8 +186,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
                 if (upgradedLightTimer <= 0f)
                 {
-                    ResetFlashlight();
-                    flashlight.enabled = true;
+                    photonView.RPC("ResetFlashlight", RpcTarget.All);
+                    flashLight.enabled = true;
                 }
             }
         }
@@ -433,7 +436,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         isInvisible = true;
         invisibleTimer = invisibleDuration;
 
-        photonView.RPC("SetInvisibilityVisual", RpcTarget.Others, true);
+        photonView.RPC("SetTransparencyVisual", RpcTarget.Others, true);
 
         Debug.Log("투명버프");
 
@@ -446,7 +449,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         sr.color = c;
 
         isInvisible = false;
-        photonView.RPC("SetInvisibilityVisual", RpcTarget.Others, false);
+        photonView.RPC("SetTransparencyVisual", RpcTarget.Others, false);
         Debug.Log("투명버프끝");
     }
 
@@ -455,26 +458,37 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!isInvisible)
         {
+            // 투명 해제
             Color visible = sr.color;
             visible.a = 1f;
             sr.color = visible;
+            flashLight.enabled = isLightOn;
+            circleLight.enabled = true;
             return;
         }
 
-        // RPC신호받는 사람기준에서 역할따라 "RPC"쏜 사람 투명도 조절
-        if (PhotonNetwork.LocalPlayer.CustomProperties["Role"].ToString().StartsWith("Mon"))
+        if (!PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object roleObj) || roleObj == null)
         {
-            // 아예 x
-            Color c = sr.color;
-            c.a = 0f;
-            sr.color = c;
+            Debug.LogWarning("Role 없음");
+            return;
+        }
+
+        string roleName = roleObj.ToString();
+
+        // 투명물약마시면 몬스터한테는 안보임
+        bool isReceiverMonster = NetworkProperties.instance.GetMonsterStates(roleName);
+
+        if (isReceiverMonster)
+        {
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f); // 완전 투명
+            flashLight.enabled = false;
+            circleLight.enabled = false;
         }
         else
         {
-            // 아군은 반투명
-            Color c = sr.color;
-            c.a = 0.5f;
-            sr.color = c;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f); // 반투명
+            flashLight.enabled = isLightOn;
+            circleLight.enabled = true;
         }
     }
 
@@ -507,8 +521,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     private void UpGradeLight()
     {
-        flashlight.pointLightOuterRadius = upgradedRadius;
-        flashlight.enabled = true;
+        flashLight.pointLightOuterRadius = upgradedRadius;
+        flashLight.enabled = true;
 
         //hasUpgradedFlashlight = false;
         isUpgradedLight = true;
@@ -521,9 +535,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
 
+    [PunRPC]
     private void ResetFlashlight()
     {
-        flashlight.pointLightOuterRadius = defaultRadius;
+        flashLight.pointLightOuterRadius = defaultRadius;
 
         isUpgradedLight = false;
         isBlinking = false;
@@ -533,13 +548,19 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("손전등업그레이드 종료");
     }
 
+    [PunRPC]
+    public void SetFlashlightBlink(bool turnOn)
+    {
+        flashLight.enabled = turnOn;
+    }
+
     private void ToggleLight()
     {
         if (!photonView.IsMine)
             return;
 
         isLightOn = !isLightOn;
-        flashlight.enabled = isLightOn;
+        flashLight.enabled = isLightOn;
 
         photonView.RPC("SetFlashlight", RpcTarget.Others, isLightOn);
 
@@ -551,7 +572,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
 
         isLightOn = true;
-        flashlight.enabled = true;
+        flashLight.enabled = true;
         photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
         Debug.Log("손전등켜짐");
@@ -563,7 +584,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
 
         isLightOn = false;
-        flashlight.enabled = false;
+        flashLight.enabled = false;
 
         photonView.RPC("SetFlashlight", RpcTarget.Others, false);
 
@@ -604,7 +625,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void SetFlashlight(bool turnOn)
     {
         isLightOn = turnOn;
-        flashlight.enabled = turnOn;
+        flashLight.enabled = turnOn;
     }
 
     private void ScalePolygonCollider(float scale)
@@ -822,7 +843,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private float invisibleTimer;   //디버그용 시리얼라이즈필드
 
     [Header("손전등")]
-    [SerializeField] private Light2D flashlight;
+    [SerializeField] private Light2D flashLight;
+    [SerializeField] private Light2D circleLight;
     [SerializeField] private float upgradedRadius = 8f;
     [SerializeField] private float defaultRadius = 3.5f;
     [SerializeField] private float upgradeLightDuration = 10f;
