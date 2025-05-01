@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 7369229791075493851}
   - component: {fileID: 5061610444881590957}
   - component: {fileID: 1048748652529889378}
+  - component: {fileID: 4933579722516162600}
   m_Layer: 5
   m_Name: room
   m_TagString: Untagged
@@ -257,7 +258,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5061610444881590957}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4933579722516162600}
+        m_TargetAssemblyTypeName: roomClick, Assembly-CSharp
+        m_MethodName: OnRoomButtonClicked
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4933579722516162600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149851345355714640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504753897eab34b41b2ad82e2bed8546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passwordPanelPrefab: {fileID: 3652881892550266672, guid: 819e4b07217d14842bf28510e5ec679e, type: 3}
 --- !u!1 &8764694741649238373
 GameObject:
   m_ObjectHideFlags: 0
