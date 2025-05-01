@@ -671,9 +671,10 @@ MonoBehaviour:
   invisibleDuration: 5
   hasInvisiblePotion: 0
   invisibleTimer: 0
-  flashlight: {fileID: 2393421639155754915}
+  flashLight: {fileID: 2393421639155754915}
+  circleLight: {fileID: 5797403259626437009}
   upgradedRadius: 15
-  defaultRadius: 9
+  defaultRadius: 5
   upgradeLightDuration: 10
   lightCollider: {fileID: 8744785124077992971}
   upgradedLightTimer: 0
