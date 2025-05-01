@@ -384,10 +384,14 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Prison"))
+        if (collision.CompareTag("PrisonDoor"))
         {
             isInPrisonDoor = false;
-            // 이벤트로 isInPrisonDoor = false
+            if (hasPrisonKey)
+            {
+                
+            }
+            // 이벤트로 isInPrisonDoor = true
             EventManager.TriggerEvent(EventType.InPrisonDoor, false);
         }
 
