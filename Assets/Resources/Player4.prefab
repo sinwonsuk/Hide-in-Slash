@@ -336,7 +336,6 @@ MonoBehaviour:
   moveMap: {fileID: 3918533680560818445, guid: fcc8db7065d7c464db5a9b268cb535f4, type: 3}
   portalName: CaughtPoint
   hasHatch: 0
-  globalMapRender: {fileID: 0}
   hasMap: 0
 --- !u!50 &362624439115721499
 Rigidbody2D:
