@@ -32,9 +32,7 @@ public class PrisonDoor : MonoBehaviourPunCallbacks
 
     private void CloseDoor()
     {
-        Debug.Log("∞®ø¡ πÆ ¥›»˚");
-        //anim.SetTrigger("Close");   
-        prisonDoor.SetActive(true);
+        photonView.RPC("CloseDoorRPC", RpcTarget.All);
     }
 
     private IEnumerator CloseDoorDelay(float delay)
@@ -47,14 +45,15 @@ public class PrisonDoor : MonoBehaviourPunCallbacks
     [PunRPC]
     private void OpenDoorRPC()
     {
-        Debug.Log("∞®ø¡ πÆ ø≠∏≤");
+        Debug.Log("Í∞êÏò• Î¨∏ Ïó¥Î¶º");
         prisonDoor.SetActive(false);
         StartCoroutine(CloseDoorDelay(3f));
     }
 
+    [PunRPC]
     private void CloseDoorRPC()
     {
-        Debug.Log("∞®ø¡ πÆ ¥›»˚");
+        Debug.Log("Í∞êÏò• Î¨∏ Îã´Ìûò");
         prisonDoor.SetActive(true);
     }
 }
