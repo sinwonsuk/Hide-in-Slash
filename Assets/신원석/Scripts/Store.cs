@@ -1,13 +1,12 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class Store : MonoBehaviourPunCallbacks
+public class Store : MonoBehaviour
 {
 
     private void Start()
     {
         parentTransformObject = GameObject.Find("StoreWindowManager");
-
     }
 
     private void Update()
