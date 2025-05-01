@@ -325,7 +325,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             countLife--;
             Debug.Log("고스트 충돌");
-            photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+         
             if (countLife <= 0)
             {
                 Debug.Log("너죽음");
@@ -335,6 +335,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             else if (countLife == 1)
             {
+                photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
                 EventManager.TriggerEvent(EventType.PlayerHpOne);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
                 Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
