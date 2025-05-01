@@ -101,7 +101,6 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
                     slot.GetComponent<RectTransform>().anchoredPosition = bossProfileTransforms[playerCheck];
                     slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
                     slot.GetComponent<OtherPlayerProfile>().Init();
-
                     playerCheck++;
                 }
 

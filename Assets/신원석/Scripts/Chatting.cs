@@ -85,6 +85,5 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     private GameObject chattingInputWindow;
 
     bool isActiveInputWindow;
-
-    string name;
+    new string name;
 }

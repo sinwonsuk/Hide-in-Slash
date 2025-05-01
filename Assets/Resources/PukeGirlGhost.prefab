@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72eed3dac736be49b0f9118e46d5d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 7
   puddlePrefab: {fileID: 1992948655862707270, guid: 8c9f9605fa9ada640947b27593fbca98, type: 3}
   puddleDuration: 10
   boostMultiplier: 1.5

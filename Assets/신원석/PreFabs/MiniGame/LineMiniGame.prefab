@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7949916942037365882}
   m_Layer: 0
   m_Name: RightCollision2
-  m_TagString: Untagged
+  m_TagString: LinMiniGame2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 8358972580870433597}
   m_Layer: 0
   m_Name: RightCollision4
-  m_TagString: Untagged
+  m_TagString: LinMiniGame4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 1301032642409671652}
   m_Layer: 0
   m_Name: RightCollision1
-  m_TagString: Untagged
+  m_TagString: LinMiniGame1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1030,9 +1030,10 @@ GameObject:
   - component: {fileID: 3464460508024648822}
   - component: {fileID: 7304778535793338615}
   - component: {fileID: 3294995423322092324}
+  - component: {fileID: 2317269629189186023}
   m_Layer: 0
   m_Name: LineEnd
-  m_TagString: Untagged
+  m_TagString: LinMiniGame4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1166,6 +1167,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   check: 2
+--- !u!50 &2317269629189186023
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636963120883552373}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &4486293612036753744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,9 +1377,10 @@ GameObject:
   - component: {fileID: 614765920283009008}
   - component: {fileID: 2159306642888843629}
   - component: {fileID: 5365227186808424594}
+  - component: {fileID: 5176004167128396856}
   m_Layer: 0
   m_Name: LineEnd
-  m_TagString: Untagged
+  m_TagString: LinMiniGame1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1486,6 +1515,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   check: 0
+--- !u!50 &5176004167128396856
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4873927849648010807}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5584061590541593018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,7 +1608,7 @@ GameObject:
   - component: {fileID: 4374458358440303783}
   m_Layer: 0
   m_Name: RightCollision3
-  m_TagString: Untagged
+  m_TagString: LinMiniGame3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2686,9 +2742,10 @@ GameObject:
   - component: {fileID: 8617328966158784341}
   - component: {fileID: 1103379005317750172}
   - component: {fileID: 4681663511027389917}
+  - component: {fileID: 8996428351796756668}
   m_Layer: 0
   m_Name: LineEnd
-  m_TagString: Untagged
+  m_TagString: LinMiniGame3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2822,6 +2879,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   check: 3
+--- !u!50 &8996428351796756668
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051904637591242721}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7350478790070578343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,9 +3146,10 @@ GameObject:
   - component: {fileID: 2786048431350290837}
   - component: {fileID: 4288342187747039180}
   - component: {fileID: 3595393380296668962}
+  - component: {fileID: 6393020949709367843}
   m_Layer: 0
   m_Name: LineEnd
-  m_TagString: Untagged
+  m_TagString: LinMiniGame2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3198,3 +3283,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   check: 1
+--- !u!50 &6393020949709367843
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958361340424705838}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

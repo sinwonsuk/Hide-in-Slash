@@ -25311,11 +25311,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 428762698809888936, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104.71
+      value: 105.11
       objectReference: {fileID: 0}
     - target: {fileID: 428762698809888936, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -35.73
+      value: -42.86
       objectReference: {fileID: 0}
     - target: {fileID: 428762698809888936, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -25347,6 +25347,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 428762698809888936, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399215784990500606, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}
+      propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8987453083692292974, guid: a7b5d642f56c9c7408fe9c26337cffef, type: 3}

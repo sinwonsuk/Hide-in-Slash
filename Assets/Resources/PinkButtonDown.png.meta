@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bbf2d8667a97ec04e8fdef8e1e616731
+guid: d72fd5872e3654544ad9fa6633a46369
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1539173950752918117
-    second: PupleButton - Layer 1 (3)_0
+      213: 6113791096107103391
+    second: YelloButton - Layer 1 (3)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PupleButton - Layer 1 (3)_0
+      name: YelloButton - Layer 1 (3)_0
       rect:
         serializedVersion: 2
         x: 1
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b9576d95271c3aae0800000000000000
-      internalID: -1539173950752918117
+      spriteID: f94f8621c9c88d450800000000000000
+      internalID: 6113791096107103391
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PupleButton - Layer 1 (3)_0: -1539173950752918117
+      YelloButton - Layer 1 (3)_0: 6113791096107103391
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
