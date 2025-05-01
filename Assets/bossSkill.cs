@@ -26,14 +26,15 @@ public class bossSkill : MonoBehaviour
         {
             image.sprite = bossSkillImages[0];
         }
-        else if (gameName == "ProteinGhost")
+        else if (gameName == "PukeGirlGhost")
         {
             image.sprite = bossSkillImages[1];
         }
-        else if(gameName == "PukeGirlGhost")
+        else if (gameName == "ProteinGhost")
         {
             image.sprite = bossSkillImages[2];
         }
+ 
     }
 
     // Update is called once per frame

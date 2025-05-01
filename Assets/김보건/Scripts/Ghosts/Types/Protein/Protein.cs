@@ -49,10 +49,7 @@ public class Protein : Ghost, IPunObservable
     protected override void Awake()
     {      
         base.Awake();
-
-        GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
-        skillImage = _skillImage.GetComponent<Image>();
-
+      
         photonView = GetComponent<PhotonView>();
 
         if (ghostStateMachine == null)
@@ -76,6 +73,8 @@ public class Protein : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Start();
+            GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
+            skillImage = _skillImage.GetComponent<Image>();
             originalSpeed = moveSpeed;
             originalScale = transform.localScale;
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();

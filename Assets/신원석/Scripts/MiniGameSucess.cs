@@ -6,6 +6,8 @@ public class MiniGameSucess : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Money.instance.addMoney(200);
+
         spriteRenderer = GetComponent<Image>();
      
         color = Color.white;

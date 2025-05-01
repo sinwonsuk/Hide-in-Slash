@@ -164,7 +164,9 @@ public class Inventory : MonoBehaviour
 
         if (ItemDictionary.TryGetValue(key, out GameObject go))
         {
-            
+            if (key == InventoryType.PrisonKey && isInPrisonDoor == false)
+                return;
+
             Item item = go.GetComponent<Item>();
             item.MusItemCount();
 
@@ -204,7 +206,7 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.PrisonKey:
                 {
-                    if(isInPrisonDoor ==true)
+
                     EventManager.TriggerEvent(EventType.UsePrisonKey);
                     break;
                 }
