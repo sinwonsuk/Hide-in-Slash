@@ -33,15 +33,19 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+
+        PhotonView pv = collision.GetComponent<PhotonView>();
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        PhotonView pv = collision.GetComponent<PhotonView>();
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
             CloseMiniGame();

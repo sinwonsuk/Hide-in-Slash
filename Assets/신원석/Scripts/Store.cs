@@ -13,8 +13,9 @@ public class Store : MonoBehaviour
     {
         Debug.Log("isPlayerInRange: " + isPlayerInRange);
 
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isCheck ==true)
         {
+            isCheck = false;
             OpenStore();
         }
         else if (!isPlayerInRange && Input.GetKeyDown(KeyCode.E))
@@ -25,19 +26,24 @@ public class Store : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        PhotonView pv = collision.GetComponent<PhotonView>();
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        PhotonView pv = collision.GetComponent<PhotonView>();
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
             CloseStore();
+            isCheck = true;
         }
+
     }
 
     private void OpenStore()
@@ -61,6 +67,8 @@ public class Store : MonoBehaviour
     private GameObject currentStoreWindow;
 
     private bool isPlayerInRange = false;
+
+    private bool isCheck = true;
 
     [SerializeField]
     private GameObject storeWindow;

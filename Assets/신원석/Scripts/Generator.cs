@@ -47,22 +47,25 @@ public class Generator : MonoBehaviourPunCallbacks
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                isPlayerColilision = true;
-            }
-        }     
+        PhotonView pv = collision.GetComponent<PhotonView>();
+
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
+        {            
+            isPlayerColilision = true;
+        }
+   
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        PhotonView pv = collision.GetComponent<PhotonView>();
+
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
             isPlayerColilision = false;
             canvas.gameObject.SetActive(false);
         }
+
     }
 
     IEnumerator GenerateMiniGame()
@@ -100,9 +103,14 @@ public class Generator : MonoBehaviourPunCallbacks
 
     void Delete()
     {
-        Destroy(generatorMiniGame.gameObject);
-        photonView.RPC("Sucess", RpcTarget.All);
-        StopGeneration();
+        if (!isMiniGameFinished && generatorMiniGame != null)
+        {
+            Destroy(generatorMiniGame.gameObject);
+            generatorMiniGame = null;
+            photonView.RPC("Sucess", RpcTarget.All);
+            StopGeneration();
+            isMiniGameFinished = true;
+        }
     }
 
     [PunRPC]
@@ -133,4 +141,5 @@ public class Generator : MonoBehaviourPunCallbacks
 
     public UnityAction DeleteAction;
 
+    bool isMiniGameFinished = false;
 }
