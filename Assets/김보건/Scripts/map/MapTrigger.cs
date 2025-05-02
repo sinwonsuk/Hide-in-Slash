@@ -32,7 +32,23 @@ public class MapTrigger : MonoBehaviour
         isTeleport = true;
         GameObject newMap = mapManager.MoveMap(moveMap);
         Transform returnTrigger = newMap.transform.Find(Portal);
-        other.transform.position = returnTrigger.position;
+        //other.transform.position = returnTrigger.position;
+
+        PhotonView otherView = other.GetComponent<PhotonView>();
+
+        if (otherView == null)
+        {
+            Debug.LogWarning($"{other.name}에 PhotonView가 없습니다!");
+            return;
+        }
+
+        if(otherView.IsMine)
+        {
+            int viewID = otherView.ViewID;
+            other.GetComponent<PhotonView>().RPC("TeleportPlayer", RpcTarget.All, viewID, returnTrigger.position);
+        }
+     
+        //photonView.RPC("TeleportPlayer", RpcTarget.All, other.GetComponent<PhotonView>(), returnTrigger.position);
 
         PhotonView pv = other.GetComponent<PhotonView>();
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
@@ -42,10 +58,12 @@ public class MapTrigger : MonoBehaviour
             confiner.BoundingShape2D = newMap.GetComponent<Collider2D>();
             StartCoroutine(UpdateCameraConfinerDelayed());
         }
-
-
         StartCoroutine(TeleportCooldown());
     }
+
+   
+
+
     private IEnumerator TeleportCooldown()
     {
         yield return new WaitForSeconds(0.5f);

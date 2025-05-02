@@ -814,6 +814,29 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashLight.enabled = turnOn;
         circleLight.enabled = turnOn;
     }
+    [PunRPC]
+    void TeleportPlayer(int viewID, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.position = pos;
+
+
+           
+            // 보간용 위치도 순간이동 위치로 맞춰줌
+            networkedPosition = pos;
+            rb.linearVelocity = Vector2.zero;
+            isTeleporting = true;
+            StartCoroutine(ResetTeleportFlag());
+            
+        }
+    }
+    public IEnumerator ResetTeleportFlag()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isTeleporting = false;
+    }
 
     private void ScalePolygonCollider(float scale)
     {
@@ -882,8 +905,17 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
+            if (!isTeleporting)
+            {
+                networkedPosition = (Vector3)stream.ReceiveNext();
+            }
+            else
+            {
+                stream.ReceiveNext(); // 데이터는 소모해야 순서 안 꼬임
+            }
 
-            networkedPosition = (Vector3)stream.ReceiveNext();
+
+            //networkedPosition = (Vector3)stream.ReceiveNext();
 
             // 로컬 스케일 처리
             transform.localScale = (Vector3)stream.ReceiveNext();
@@ -1101,6 +1133,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject deathPeanutUI;
     [SerializeField] private GameObject deathPuKeGirlUI;
     private bool isDead = false;
+
+    bool isTeleporting =false;
 
     bool isInitialized = false;
 }
