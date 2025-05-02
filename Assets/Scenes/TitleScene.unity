@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GeneratorAllClear
       objectReference: {fileID: 0}
+    - target: {fileID: 1417366570685174775, guid: afd0fbdbf70f3e34b99fa96759c1f0ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7397694981026238706, guid: afd0fbdbf70f3e34b99fa96759c1f0ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -278,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658862943256032205, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8171965519959140987, guid: e9b18c07412ef574587e968dcc898d21, type: 3}
       propertyPath: m_LocalPosition.x
@@ -480,7 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5704680997101461352, guid: d934efac69d9fab46a117d334048094d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6964107911653570835, guid: d934efac69d9fab46a117d334048094d, type: 3}
       propertyPath: m_Pivot.x
@@ -764,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2132431248
 SpriteRenderer:
   m_ObjectHideFlags: 0

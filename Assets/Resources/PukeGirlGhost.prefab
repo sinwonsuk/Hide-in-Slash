@@ -326,6 +326,8 @@ MonoBehaviour:
   puddleDuration: 10
   boostMultiplier: 1.5
   boostDuration: 5
+  cooldownTime: 5
+  skillImage: {fileID: 0}
 --- !u!61 &7202515897409173102
 BoxCollider2D:
   m_ObjectHideFlags: 0
