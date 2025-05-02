@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -116,10 +117,17 @@ public class Protein : Ghost, IPunObservable
             skillImage.fillAmount = 1f;
         }
 
-
+        
         // 스킬 로직 실행...
     }
 
+    IEnumerator StartDash()
+    {
+        rb.AddForce(new Vector2(facingDir, facingUpDir) * moveSpeed, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
+        rb.linearVelocity = Vector2.zero;
+        
+    }
     protected override void Update()
     {
         base.Update();
