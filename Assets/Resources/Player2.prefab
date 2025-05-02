@@ -326,6 +326,10 @@ MonoBehaviour:
   portalName: PrisonSpawnPoint
   hasHatch: 0
   hasMap: 0
+  useItemAndEscapeUI: {fileID: 4787706857007138734, guid: ff53048c3cd262948a3b9629e418903e, type: 3}
+  deathProteinUI: {fileID: 0}
+  deathPeanutUI: {fileID: 0}
+  deathPuKeGirlUI: {fileID: 0}
 --- !u!50 &9179863960893515495
 Rigidbody2D:
   serializedVersion: 5

@@ -67,6 +67,7 @@ MonoBehaviour:
   - ResetFlashlight
   - SetFlashlightBlink
   - CloseDoorRPC
+  - RPC_SetStartTime
   - BroadcastSuecss
   - RequestGeneratorComplete
   - SyncFillAmount
@@ -74,6 +75,8 @@ MonoBehaviour:
   - BroadCastGage
   - EndDrinkProtein
   - Blackout
+  - EscapeHatch
+  - SetFlashEntireLight
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

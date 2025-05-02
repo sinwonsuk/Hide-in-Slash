@@ -22,16 +22,30 @@ public class PlayerEscapeState : PlayerState
         player.SetZeroVelocity();
         player.SetEscapeType(currentEscapeType);
 
-        Debug.Log($"Å»Ãâ »óÅÂ: {StateType} (Code: {(int)StateType}), Å»Ãâ À¯Çü: {currentEscapeType} (Code: {(int)currentEscapeType})");
+        Debug.Log($"íƒˆì¶œ ìƒíƒœ: {StateType} (Code: {(int)StateType}), íƒˆì¶œ ìœ í˜•: {currentEscapeType} (Code: {(int)currentEscapeType})");
 
         switch (currentEscapeType)
         {
             case EscapeType.ExitDoor:
+
                 player.StartCoroutine(EscapeWithDelay(2f));
                 break;
 
             case EscapeType.Hatch:
-                player.StartCoroutine(EscapeWithDelay(0.1f));
+                if (player.UseItemAndEscapeUI != null)
+                {
+                    player.UseItemAndEscapeUI.SetActive(true);
+
+                    Transform black = player.UseItemAndEscapeUI.transform.Find("Black");
+                    if (black != null)
+                    {
+                        playerDeath fadeEffect = black.GetComponent<playerDeath>();
+                        if (fadeEffect != null)
+                            fadeEffect.TriggerFade(); 
+                    }
+                }
+
+                player.StartCoroutine(EscapeWithDelay(7f));
                 break;
 
             default:
@@ -41,9 +55,15 @@ public class PlayerEscapeState : PlayerState
 
     private IEnumerator EscapeWithDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
-        Debug.Log($"{player.name} Å»Ãâ ¿Ï·á, Å»Ãâ ¹æ¹ı: {player.escapeType}");
-        //Å»ÃâÃ³¸®
-        player.gameObject.SetActive(false); 
+
+        yield return new WaitForSeconds(delay);   // UI ë³´ì—¬ì£¼ëŠ” ì‹œê°„
+
+        //if (player.UseItemAndEscapeUI != null)
+        //{
+        //    player.UseItemAndEscapeUI.SetActive(false);
+        //}
+
+        //// íƒˆì¶œ ì²˜ë¦¬ (í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”)
+        //player.gameObject.SetActive(false);
     }
 }

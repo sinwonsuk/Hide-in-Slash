@@ -7,9 +7,20 @@ public class playerDeath : MonoBehaviour
     [SerializeField] private float fadeDuration = 2f; // 서서히 투명해지는 시간(초)
     [SerializeField] private Image imageToFade;   // 투명하게 만들 이미지
 
-    private void Start()
+    public void TriggerFade()
     {
+        StopAllCoroutines(); 
+        ResetAlpha();        
         StartCoroutine(FadeOut());
+    }
+
+    private void ResetAlpha()
+    {
+        if (imageToFade != null)
+        {
+            Color c = imageToFade.color;
+            imageToFade.color = new Color(c.r, c.g, c.b, 1f);
+        }
     }
 
     public IEnumerator FadeOut()

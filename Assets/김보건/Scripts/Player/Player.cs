@@ -58,7 +58,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
         EventManager.RegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
         EventManager.RegisterEvent(EventType.OutEventPlayer, ResumeMovement);
-        PhotonNetwork.AddCallbackTarget(this);
+        EventManager.RegisterEvent(EventType.HasPrisonKey, HasPrisonKey);
+        EventManager.RegisterEvent(EventType.EntireLightOn, TurnOnEntireLight);
+        EventManager.RegisterEvent(EventType.EntireLightOff, TurnOffEntireLight);
     }
 
     private void OnDisable()
@@ -73,7 +75,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
         EventManager.UnRegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
         EventManager.UnRegisterEvent(EventType.OutEventPlayer, ResumeMovement);
-        PhotonNetwork.RemoveCallbackTarget(this);
+        EventManager.UnRegisterEvent(EventType.EntireLightOn, TurnOnEntireLight);
+        EventManager.UnRegisterEvent(EventType.EntireLightOff, TurnOffEntireLight);
     }
 
     private void Start()
@@ -95,6 +98,50 @@ public class Player : MonoBehaviourPun, IPunObservable
                 {
                     minimap = minimapObj.gameObject;
                     minimap.SetActive(false); 
+                }
+
+                Transform escapeUIObj = playerCanvas.transform.Find("UseItemAndEscape");
+                if (escapeUIObj != null)
+                {
+                    useItemAndEscapeUI = escapeUIObj.gameObject;   
+                    useItemAndEscapeUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("UseItemAndEscape 오브젝트없음");
+                }
+
+                Transform deathProtein = playerCanvas.transform.Find("ProteinDeathAnim");
+                if (deathProtein != null)
+                {
+                    deathProteinUI = deathProtein.gameObject;
+                    deathProteinUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("ProteinDeathAnim 못 찾음");
+                }
+
+                Transform deathPeanut = playerCanvas.transform.Find("PeanutDeathAnim");
+                if (deathPeanut != null)
+                {
+                    deathPeanutUI = deathPeanut.gameObject;
+                    deathPeanutUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("deathPeanutUI 못 찾음");
+                }
+
+                Transform deathPukeGirl = playerCanvas.transform.Find("PukeGirlDeathAnim");
+                if (deathPukeGirl != null)
+                {
+                    deathPuKeGirlUI = deathPukeGirl.gameObject;
+                    deathPuKeGirlUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("deathPuKeGirlUI 못 찾음");
                 }
             }
         }
@@ -324,18 +371,58 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine) return;
 
-        if (collision.collider.CompareTag("Ghost"))
+        if (collision.collider.CompareTag("Peanut"))
         {
 
             countLife--;
-            Debug.Log("고스트 충돌");
+            Debug.Log("땅콩 충돌");
          
-            if (countLife <= 0)
+            if (countLife <= 0 && !isDead)
             {
                 Debug.Log("너죽음");
+                isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
-                PlayerStateMachine.ChangeState(deadState);
+
+                if (deathPeanutUI != null)
+                {
+                    deathPeanutUI.SetActive(true);
+                    StartCoroutine(DeathUIDeleteDelay(deathPeanutUI, 3f));
+                }
+
+                StartCoroutine(GhostDeathSequence(2f));
+            }
+            else if (countLife == 1)
+            {
+                photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+                if(photonView.IsMine)
+                    StartCoroutine(UpdateCameraConfinerDelayed());
+                EventManager.TriggerEvent(EventType.PlayerHpOne);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
+                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
+
+            }
+        }
+
+        if (collision.collider.CompareTag("Protein"))
+        {
+
+            countLife--;
+            Debug.Log("프로틴 충돌");
+
+            if (countLife <= 0 && !isDead)
+            {
+                Debug.Log("너죽음");
+                isDead = true;
+                EventManager.TriggerEvent(EventType.PlayerHpZero);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
+
+                if (deathProteinUI != null)
+                {
+                    deathProteinUI.SetActive(true);
+                    StartCoroutine(DeathUIDeleteDelay(deathProteinUI, 3f));
+                }
+                StartCoroutine(GhostDeathSequence(2f));
             }
             else if (countLife == 1)
             {
@@ -346,6 +433,50 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             }
         }
+
+        if (collision.collider.CompareTag("PukeGirl"))
+        {
+
+            countLife--;
+            Debug.Log("토하는애 충돌");
+
+            if (countLife <= 0 && !isDead)
+            {
+                Debug.Log("너죽음");
+                isDead = true;
+                EventManager.TriggerEvent(EventType.PlayerHpZero);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
+
+                if (deathPuKeGirlUI != null)
+                {
+                    deathPuKeGirlUI.SetActive(true);
+                    StartCoroutine(DeathUIDeleteDelay(deathPuKeGirlUI, 3f));
+                }
+
+                StartCoroutine(GhostDeathSequence(2f));
+            }
+            else if (countLife == 1)
+            {
+                photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+                EventManager.TriggerEvent(EventType.PlayerHpOne);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
+                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
+
+            }
+        }
+    }
+
+    private IEnumerator DeathUIDeleteDelay(GameObject ui, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ui.SetActive(false);
+    }
+
+    private IEnumerator GhostDeathSequence(float delay)
+    {
+        yield return new WaitForSeconds(delay); 
+
+        PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
     }
 
 
@@ -412,7 +543,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         Transform portal = moveMap.transform.Find(portalName);
         if (portal != null)
             transform.position = portal.position;
-        StartCoroutine(UpdateCameraConfinerDelayed());
+        
     }
 
     private IEnumerator UpdateCameraConfinerDelayed()
@@ -620,6 +751,24 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("손전등꺼짐");
     }
 
+    private void TurnOnEntireLight()
+    {
+        if (!photonView.IsMine)
+            return;
+        isLightOn = true;
+        flashLight.enabled = true;
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
+    }
+
+    private void TurnOffEntireLight()
+    {
+        if (!photonView.IsMine)
+            return;
+        isLightOn = false;
+        flashLight.enabled = false;
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
+    }
+
     private void HasTriggerMap()
     {
         hasMap = true;
@@ -657,6 +806,15 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashLight.enabled = turnOn;
     }
 
+    [PunRPC]
+    public void SetFlashEntireLight(bool turnOn)
+    {
+        isLightOn = turnOn;
+        isCircleLightOn = turnOn;
+        flashLight.enabled = turnOn;
+        circleLight.enabled = turnOn;
+    }
+
     private void ScalePolygonCollider(float scale)
     {
         Vector2[] scaled = new Vector2[defaultColliderPoints.Length];
@@ -687,7 +845,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void useHatchItem()
     {
-        Debug.Log("개구멍사용");
+        if (!photonView.IsMine) return;
+
+        photonView.RPC("EscapeHatch", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void EscapeHatch()
+    {
         escapeState.SetEscapeType(EscapeType.Hatch);
         PlayerStateMachine.ChangeState(escapeState);
     }
@@ -902,6 +1067,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private float upgradedLightTimer; // 업글손전등 시간
     private bool isUpgradedLight = false;
     private bool isLightOn = false; // 켜짐
+    private bool isCircleLightOn = false; // 켜짐
     private bool isBlinking = false;
     private float blinkTimer = 0f;
     private float blinkInterval = 0.3f; // 깜빡속도
@@ -925,6 +1091,16 @@ public class Player : MonoBehaviourPun, IPunObservable
     private GameObject minimap;
     [SerializeField] private bool hasMap = false;
     private bool isInMap = false;
+
+    [Header("탈출")]
+    [SerializeField] private GameObject useItemAndEscapeUI;
+    public GameObject UseItemAndEscapeUI => useItemAndEscapeUI;
+
+    [Header("잡힘")]
+    [SerializeField] private GameObject deathProteinUI;
+    [SerializeField] private GameObject deathPeanutUI;
+    [SerializeField] private GameObject deathPuKeGirlUI;
+    private bool isDead = false;
 
     bool isInitialized = false;
 }

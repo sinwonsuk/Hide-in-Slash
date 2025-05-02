@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class Protein : Ghost, IPunObservable
     [SerializeField] private float ProteinDuration = 10f; //벌크업 지속시간
     [SerializeField] private float ProteincooldownDuration = 5f;    //쿨타임
     [SerializeField] private float buffedSpeed = 2f;
+    private bool isDashing = false; //대쉬 여부
     private bool isProtein = false; //단백질 섭취 여부
     private bool isProteinCooldown = false; //단백질 쿨타임 여부
     [SerializeField] private float proteinTimer; //지속시간 타이머
@@ -47,9 +49,9 @@ public class Protein : Ghost, IPunObservable
 
 
     protected override void Awake()
-    {      
+    {
         base.Awake();
-      
+
         photonView = GetComponent<PhotonView>();
 
         if (ghostStateMachine == null)
@@ -88,7 +90,7 @@ public class Protein : Ghost, IPunObservable
             if (light != null)
                 light.enabled = false;
         }
-        
+
     }
     // 업데이트에 돌리기
     public void CooldownSkill()
@@ -104,7 +106,7 @@ public class Protein : Ghost, IPunObservable
                 skillImage.fillAmount = 0f;
             }
         }
-    }    
+    }
 
     // 스킬 사용
     private void UseSkill()
@@ -115,13 +117,22 @@ public class Protein : Ghost, IPunObservable
         {
             skillImage.fillAmount = 1f;
         }
-
-
-        // 스킬 로직 실행...
+        //StartCoroutine(StartDash());
     }
 
+    //IEnumerator StartDash()
+    //{
+    //    isDashing = true;
+
+    //    rb.AddForce(new Vector2(facingDir, facingUpDir) * moveSpeed * 10f, ForceMode2D.Impulse);
+    //    yield return new WaitForSeconds(0.5f);
+    //    rb.linearVelocity = Vector2.zero;
+    //    isDashing = false;
+    //}
     protected override void Update()
     {
+        if (isDashing)
+            return;
         base.Update();
 
         if (photonView.IsMine)
@@ -157,7 +168,7 @@ public class Protein : Ghost, IPunObservable
             }
         }
 
-        if(isProteinCooldown)
+        if (isProteinCooldown)
         {
             proteinCooldownTimer -= Time.deltaTime;
             if (proteinCooldownTimer <= 0)
