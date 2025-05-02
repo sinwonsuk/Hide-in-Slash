@@ -573,6 +573,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         sr.color = c;
 
         gameObject.tag = "DeadPlayer";
+        gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
 
         photonView.RPC("SetGhostVisual", RpcTarget.Others);
 
