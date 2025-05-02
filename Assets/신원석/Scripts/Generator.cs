@@ -143,6 +143,22 @@ public class Generator : MonoBehaviourPunCallbacks
         EventManager.TriggerEvent(EventType.GeneratorSuccess);
     }
 
+    [PunRPC]
+    public void AddGage(float _gege)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        gage += _gege;
+
+        photonView.RPC("BroadCastGage", RpcTarget.AllBuffered, gage);
+    }
+
+    [PunRPC]
+    public void BroadCastGage(float _gege)
+    {
+        generatorGage.generatorInImage.fillAmount = _gege;
+    }
     bool isUpdate = true;
 
     bool isMiniGameRunning = false;
@@ -155,6 +171,9 @@ public class Generator : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject miniGamePrefab;
 
+    [SerializeField]
+    generatorGage generatorGage;
+
     GeneratorMiniGame generatorMiniGame;
 
     Coroutine coroutine;
@@ -164,4 +183,9 @@ public class Generator : MonoBehaviourPunCallbacks
     public UnityAction DeleteAction;
 
     bool isMiniGameFinished = false;
+
+
+
+    public float gage { get; set; } = 0;
+
 }

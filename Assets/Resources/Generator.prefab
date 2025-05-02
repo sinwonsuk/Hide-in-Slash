@@ -340,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 8423373895489509877}
   miniGamePrefab: {fileID: 5760586981407681973, guid: 57a5cb69eda554143a2e4100b4f54021, type: 3}
+  generatorGage: {fileID: 4348203845219654620}
 --- !u!95 &6859917870915265951
 Animator:
   serializedVersion: 7

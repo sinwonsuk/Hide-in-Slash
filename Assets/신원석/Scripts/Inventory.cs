@@ -190,7 +190,7 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.Tunnel:
                 {
-                    // ������ ����?
+                    ExitItemUI.SetActive(true);
                     EventManager.TriggerEvent(EventType.UseHatch);
                     break;
                 }
@@ -212,7 +212,7 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.Map:
                 {
-                    // �ʸ���?
+                    MapUI.SetActive(true);
                     EventManager.TriggerEvent(EventType.UseMap);
                     break;
                 }
@@ -256,6 +256,11 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     List<GameObject> itemNumbersRenders = new List<GameObject>();
+
+    [SerializeField]
+    GameObject ExitItemUI;
+    [SerializeField]
+    GameObject MapUI;
 
     private int inventoryMoveIndex = 0;
 

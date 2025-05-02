@@ -9,15 +9,17 @@ public class generatorGage : MonoBehaviourPunCallbacks
     void Start()
     {
         generator = GetComponentInParent<Generator>();
-
+        pv = generator.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {        
-        generatorInImage.fillAmount += Time.deltaTime * speed;
 
-        photonView.RPC("SyncFillAmount", RpcTarget.OthersBuffered, generatorInImage.fillAmount);
+        //photonView.RPC("SyncFillAmount", RpcTarget.OthersBuffered, Time.deltaTime * speed);
+
+        pv.RPC("AddGage", RpcTarget.MasterClient, Time.deltaTime * speed);
+
 
         if (generatorInImage.fillAmount >= 1 && isCheck ==false)
         {
@@ -45,12 +47,7 @@ public class generatorGage : MonoBehaviourPunCallbacks
         
     }
 
-    [PunRPC]
-    public void SyncFillAmount(float newFillAmount)
-    {
-        generatorInImage.fillAmount = newFillAmount;
-    }
-
+    public PhotonView pv { get; private set; }
     bool isCheck = false;
     
     [SerializeField]

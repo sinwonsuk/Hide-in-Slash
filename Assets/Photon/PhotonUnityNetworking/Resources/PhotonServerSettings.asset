@@ -70,6 +70,8 @@ MonoBehaviour:
   - BroadcastSuecss
   - RequestGeneratorComplete
   - SyncFillAmount
+  - AddGage
+  - BroadCastGage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
