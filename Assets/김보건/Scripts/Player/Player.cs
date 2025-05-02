@@ -425,7 +425,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         confiner.InvalidateBoundingShapeCache();
         yield return new WaitForSeconds(0.25f);
         canvas.enabled = false;
-
     }
 
 

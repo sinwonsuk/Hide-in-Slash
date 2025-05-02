@@ -127,6 +127,7 @@ public class PukeGirl : Ghost, IPunObservable
         cooldownTimer -= Time.deltaTime;
         if (skillImage != null)
             skillImage.fillAmount = cooldownTimer / cooldownTime;
+
         if (cooldownTimer <= 0f)
         {
             isCoolingDown = false;
