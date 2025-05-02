@@ -256,11 +256,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BossPanel: {fileID: 6826447424483298778}
   RunnerPanel: {fileID: 4694064420495080757}
-  slotContainer: {fileID: 8140272663887489557}
+  runnerSlotContainer: {fileID: 8140272663887489557}
   profileSlotPrefab: {fileID: 9046025660508467524, guid: 28bf48839ff4b0f49865ef0a2c7a07f1, type: 3}
   bossChoiceButtons: []
-  bossChoiceImages: []
-  bossSprites: []
+  bossChoiceImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bossSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   startButton: {fileID: 7434862654459033098}
 --- !u!1 &3105768988177426739
 GameObject:

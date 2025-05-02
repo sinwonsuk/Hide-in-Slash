@@ -849,18 +849,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2133267683 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7434862654459033098, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
-  m_PrefabInstance: {fileID: 866019106303276614}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &866019106303276614
+--- !u!1001 &1968097945
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -871,10 +860,6 @@ PrefabInstance:
     - target: {fileID: 1038985457142590588, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
       propertyPath: m_Name
       value: BossSelectionUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1038985457142590588, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1320889713734889592, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
       propertyPath: m_Pivot.x
@@ -956,14 +941,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4106676185456629005, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
-      propertyPath: startButton
-      value: 
-      objectReference: {fileID: 2133267683}
-    - target: {fileID: 7611212560414588987, guid: 6777adf639f4dc64dbbc85da79460d61, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1040,6 +1017,6 @@ SceneRoots:
   - {fileID: 3415473245419147753}
   - {fileID: 1228572434}
   - {fileID: 1331583080}
-  - {fileID: 866019106303276614}
+  - {fileID: 1968097945}
   - {fileID: 1595542513}
   - {fileID: 428936065}

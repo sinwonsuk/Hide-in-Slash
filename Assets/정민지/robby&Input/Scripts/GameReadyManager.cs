@@ -82,6 +82,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
             PropertiesAction += HandleReadyChanged;
             PropertiesAction += HandleProfileIndexChanged;
+            //PropertiesAction += HandleRoleChanged;
 
         }
         else
@@ -98,6 +99,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         PropertiesAction -= HandleReadyChanged;
         PropertiesAction -= HandleProfileIndexChanged;
+        //PropertiesAction -= HandleRoleChanged;
     }
 
     void Start()
@@ -447,6 +449,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             slot.SetProfileImage(idx);
         }
     }
+
+    //private void HandleRoleChanged(RealtimePlayer target, Hashtable changedProps)
+    //{
+    //    // 내 Role 프로퍼티가 세팅되는 순간에만 UI 띄우기
+    //    if (target == PhotonNetwork.LocalPlayer && changedProps.ContainsKey("Role"))
+    //    {
+    //        ShowRolePanel();
+    //    }
+    //}
 
     //public override void OnLeftRoom()
     //{

@@ -317,7 +317,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     public void AssignRole()
     {
-
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Count)];
         ExitGames.Client.Photon.Hashtable monProp = new();
@@ -336,7 +335,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
         Debug.Log("역할배정완료");
 
         //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
-        //photonView.RPC(nameof(RPC_NotifyRole), RpcTarget.AllBuffered);
 
         if (photonView == null)
         {
@@ -349,11 +347,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
-    private void RPC_NotifyRole()
-    {
-        //GameReadyManager.Instance.ShowRolePanel();
-    }
 
     [PunRPC]
     public void RPC_LoadMergeScene()
