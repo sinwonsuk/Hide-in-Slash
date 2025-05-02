@@ -67,6 +67,7 @@ MonoBehaviour:
   - ResetFlashlight
   - SetFlashlightBlink
   - CloseDoorRPC
+  - RPC_SetStartTime
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

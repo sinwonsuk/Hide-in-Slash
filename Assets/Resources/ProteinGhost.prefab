@@ -263,6 +263,8 @@ MonoBehaviour:
   buffedSpeed: 2
   proteinTimer: 5
   proteinCooldownTimer: 5
+  cooldownTime: 20
+  skillImage: {fileID: 0}
 --- !u!61 &7302908158727069583
 BoxCollider2D:
   m_ObjectHideFlags: 0
