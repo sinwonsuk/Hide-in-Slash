@@ -352,7 +352,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_NotifyRole()
     {
-        GameReadyManager.Instance.ShowRolePanel();
+        //GameReadyManager.Instance.ShowRolePanel();
     }
 
     [PunRPC]

@@ -556,17 +556,17 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         return new List<int>(randomValues);
     }
 
-    public void ShowRolePanel()
-    {
-        roleSelectionUIPrefab.SetActive(true);
-        if (_roleUIInstance == null)
-            _roleUIInstance = Instantiate(roleSelectionUIPrefab);
-        else
-            _roleUIInstance.SetActive(true);
-
-        var mgr = _roleUIInstance.GetComponent<RoleSelectionManager>();
-        if (mgr != null) mgr.Initialize();
-    }
+    //public void ShowRolePanel()
+    //{
+    //    roleSelectionUIPrefab.SetActive(true);
+    //    if (_roleUIInstance == null)
+    //        _roleUIInstance = Instantiate(roleSelectionUIPrefab);
+    //    else
+    //        _roleUIInstance.SetActive(true);
+    //
+    //    var mgr = _roleUIInstance.GetComponent<RoleSelectionManager>();
+    //    if (mgr != null) mgr.Initialize();
+    //}
 
     #endregion
 
