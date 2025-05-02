@@ -23,12 +23,12 @@ public class Protein : Ghost, IPunObservable
     private bool isProteinCooldown = false; //단백질 쿨타임 여부
     [SerializeField] private float proteinTimer; //지속시간 타이머
     [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
+
     [Header("스킬쿨타임")]
     [SerializeField] private float cooldownTime = 20f;
     private float cooldownTimer = 0f;
     private bool isCoolingDown = false;
-    [SerializeField]
-    Image skillImage;
+    [SerializeField] private Image skillImage;
 
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
@@ -91,7 +91,7 @@ public class Protein : Ghost, IPunObservable
         
     }
     // 업데이트에 돌리기
-    public void CollDownSkill()
+    public void CooldownSkill()
     {
         if (isCoolingDown)
         {
@@ -111,7 +111,11 @@ public class Protein : Ghost, IPunObservable
     {
         isCoolingDown = true;
         cooldownTimer = 0f;
-        skillImage.fillAmount = 1f;
+        if (photonView.IsMine && skillImage != null)
+        {
+            skillImage.fillAmount = 1f;
+        }
+
 
         // 스킬 로직 실행...
     }
@@ -120,15 +124,14 @@ public class Protein : Ghost, IPunObservable
     {
         base.Update();
 
-
-
         if (photonView.IsMine)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !isProtein && !isProteinCooldown)
+            if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isProteinCooldown)
             {
                 photonView.RPC("DrinkProtein", RpcTarget.All);
             }
+            CooldownSkill();
         }
         else
         {
@@ -180,13 +183,32 @@ public class Protein : Ghost, IPunObservable
     [PunRPC]
     private void DrinkProtein()
     {
-        ActivateProtein();
+        isProtein = true;
+        proteinTimer = ProteinDuration;
+        moveSpeed = buffedSpeed;
+        transform.localScale = originalScale * 1.5f;
+
+        Debug.Log("단백질 섭취");
+
+        if (photonView.IsMine)
+            UseSkill();
+
         ghostStateMachine.ChangeState(useSkillState);
     }
 
+    [PunRPC]
     public void EndDrinkProtein()
     {
+        isProtein = false;
+        isProteinCooldown = true;
+        proteinCooldownTimer = ProteincooldownDuration;
+
+        moveSpeed = originalSpeed;
+        transform.localScale = originalScale;
+        Debug.Log("단백질 섭취 종료");
+
         anim.SetBool("IsProtein", false);
+        anim.SetBool("IsOriginal", true);
 
         idleState = skillIdleState;
         moveState = skillMoveState;
@@ -201,31 +223,6 @@ public class Protein : Ghost, IPunObservable
         {
             ghostStateMachine.ChangeState(skillMoveState);
         }
-    }
-
-    [PunRPC]
-    private void ActivateProtein()
-    {
-        isProtein = true;
-        proteinTimer = ProteinDuration;
-        moveSpeed = buffedSpeed;
-        transform.localScale = originalScale * 1.5f;
-
-        Debug.Log("단백질 섭취");
-    }
-
-    [PunRPC]
-    private void EndProtein()
-    {
-        isProtein = false;
-        isProteinCooldown = true;
-        proteinCooldownTimer = ProteincooldownDuration;
-
-        moveSpeed = originalSpeed;
-        transform.localScale = originalScale;
-        Debug.Log("단백질 섭취 종료");
-
-        anim.SetBool("IsOriginal", true);
     }
 
     public override void UpdateAnimParam(Vector2 input)
