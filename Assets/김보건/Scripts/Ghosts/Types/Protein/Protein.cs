@@ -46,7 +46,7 @@ public class Protein : Ghost, IPunObservable
     private bool networkedIsMoving;
     private float networkedDirX;
     private float networkedDirY;
-
+    bool isTeleporting = false;
 
     protected override void Awake()
     {
@@ -92,6 +92,31 @@ public class Protein : Ghost, IPunObservable
         }
 
     }
+
+    [PunRPC]
+    void TeleportPlayer(int viewID, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.position = pos;
+
+
+
+            // 보간용 위치도 순간이동 위치로 맞춰줌
+            networkedPosition = pos;
+            rb.linearVelocity = Vector2.zero;
+            isTeleporting = true;
+            StartCoroutine(ResetTeleportFlag());
+
+        }
+    }
+    public IEnumerator ResetTeleportFlag()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isTeleporting = false;
+    }
+
     // 업데이트에 돌리기
     public void CooldownSkill()
     {
@@ -138,7 +163,7 @@ public class Protein : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isProteinCooldown)
+            if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
             {
                 photonView.RPC("DrinkProtein", RpcTarget.All);
             }
@@ -288,7 +313,15 @@ public class Protein : Ghost, IPunObservable
         }
         else // 상대방이 보낸 것 받음
         {
-            networkedPosition = (Vector3)stream.ReceiveNext();
+            if (!isTeleporting)
+            {
+                networkedPosition = (Vector3)stream.ReceiveNext();
+            }
+            else
+            {
+                stream.ReceiveNext(); // 데이터는 소모해야 순서 안 꼬임
+            }
+
             transform.localScale = (Vector3)stream.ReceiveNext();
             networkedVelocity = (Vector2)stream.ReceiveNext();
             GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();

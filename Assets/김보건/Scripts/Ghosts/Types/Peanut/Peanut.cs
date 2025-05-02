@@ -23,8 +23,8 @@ public class Peanut : Ghost, IPunObservable
     private bool networkedIsMoving;
     private float networkedDirX;
     private float networkedDirY;
-
-	[Tooltip("머리 위에 띄울 ! 아이콘 Prefab")]
+    bool isTeleporting = false;
+    [Tooltip("머리 위에 띄울 ! 아이콘 Prefab")]
 	public GameObject exclamationPrefab;
 
 	private GameObject exclamationInstance;
@@ -82,6 +82,31 @@ public class Peanut : Ghost, IPunObservable
                 light.enabled = false;
         }
     }
+
+    [PunRPC]
+    void TeleportPlayer(int viewID, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.position = pos;
+
+
+
+            // 보간용 위치도 순간이동 위치로 맞춰줌
+            networkedPosition = pos;
+            rb.linearVelocity = Vector2.zero;
+            isTeleporting = true;
+            StartCoroutine(ResetTeleportFlag());
+
+        }
+    }
+    public IEnumerator ResetTeleportFlag()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isTeleporting = false;
+    }
+
 
     protected override void Update()
     {
@@ -222,7 +247,15 @@ public class Peanut : Ghost, IPunObservable
         }
         else // 상대방이 보낸 것 받음
         {
-            networkedPosition = (Vector3)stream.ReceiveNext();
+            if (!isTeleporting)
+            {
+                networkedPosition = (Vector3)stream.ReceiveNext();
+            }
+            else
+            {
+                stream.ReceiveNext(); // 데이터는 소모해야 순서 안 꼬임
+            }
+
             transform.localScale = (Vector3)stream.ReceiveNext();
             networkedVelocity = (Vector2)stream.ReceiveNext();
             GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();

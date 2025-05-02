@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 public class PukeGirl : Ghost, IPunObservable
 {
+    bool isTeleporting = false;
     public override GhostState moveState { get; protected set; }
     private GhostState vomitState;
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
@@ -121,6 +123,29 @@ public class PukeGirl : Ghost, IPunObservable
             skillImage.fillAmount = 1f;
     }
 
+    [PunRPC]
+    void TeleportPlayer(int viewID, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.position = pos;
+
+
+
+            // 보간용 위치도 순간이동 위치로 맞춰줌
+            networkedPosition = pos;
+            rb.linearVelocity = Vector2.zero;
+            isTeleporting = true;
+            StartCoroutine(ResetTeleportFlag());
+
+        }
+    }
+    public IEnumerator ResetTeleportFlag()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isTeleporting = false;
+    }
     private void UpdateSkillCooldown()
     {
         if (!isCoolingDown) return;
@@ -220,7 +245,15 @@ public class PukeGirl : Ghost, IPunObservable
         }
         else // 상대방이 보낸 것 받음
         {
-            networkedPosition = (Vector3)stream.ReceiveNext();
+            if (!isTeleporting)
+            {
+                networkedPosition = (Vector3)stream.ReceiveNext();
+            }
+            else
+            {
+                stream.ReceiveNext(); // 데이터는 소모해야 순서 안 꼬임
+            }
+
             transform.localScale = (Vector3)stream.ReceiveNext();
             networkedVelocity = (Vector2)stream.ReceiveNext();
             GhostStateType receivedState = (GhostStateType)stream.ReceiveNext();
