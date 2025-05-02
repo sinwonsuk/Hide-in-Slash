@@ -65,7 +65,7 @@ MonoBehaviour:
   flashLight: {fileID: 2949623545291194700}
   circleLight: {fileID: 5741585136279623164}
   upgradedRadius: 15
-  defaultRadius: 5
+  defaultRadius: 10
   upgradeLightDuration: 10
   lightCollider: {fileID: 4022241645058626784}
   upgradedLightTimer: 0
