@@ -9,7 +9,6 @@ public class ProteinSkill_State : GhostState
     public override void Enter()
     {
         base.Enter();
-        ghost.SetZeroVelocity();
         ghost.anim.SetBool("IsProtein", true);
         ghost.anim.SetBool("IsMoving", true);
         
