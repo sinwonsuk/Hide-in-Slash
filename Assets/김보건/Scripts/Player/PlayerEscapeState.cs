@@ -22,6 +22,10 @@ public class PlayerEscapeState : PlayerState
         player.SetZeroVelocity();
         player.SetEscapeType(currentEscapeType);
 
+        if (!player.photonView.IsMine)
+            return;
+
+
         Debug.Log($"탈출 상태: {StateType} (Code: {(int)StateType}), 탈출 유형: {currentEscapeType} (Code: {(int)currentEscapeType})");
 
         switch (currentEscapeType)
