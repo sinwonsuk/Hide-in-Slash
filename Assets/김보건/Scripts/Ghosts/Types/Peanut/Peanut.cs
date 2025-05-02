@@ -1,9 +1,11 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using Unity.Cinemachine;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class Peanut : Ghost, IPunObservable
 {
@@ -28,7 +30,18 @@ public class Peanut : Ghost, IPunObservable
 	private GameObject exclamationInstance;
 	private RegionTrigger currentRegion;
 
-	protected override void Awake()
+    private const byte EVENT_BLACKOUT = 1;
+
+    [Header("스킬 쿨타임")]
+    [SerializeField] private float cooldownTime = 20f;
+    private float cooldownTimer = 0f;
+    private bool isCoolingDown = false;
+    [SerializeField] private Image skillImage;
+
+    [Header("블랙아웃 지속시간")]
+    [SerializeField] private float blackoutDuration = 5f;
+
+    protected override void Awake()
     {
 
         base.Awake();
@@ -75,6 +88,12 @@ public class Peanut : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Update();
+
+            if (Input.GetKeyDown(KeyCode.E) && !isCoolingDown)
+            {
+                //스킬 사용
+            }
+
         }
         else
         {
@@ -107,6 +126,34 @@ public class Peanut : Ghost, IPunObservable
         {
             rb.linearVelocity = networkedVelocity; 
         }
+    }
+    public void CooldownSkill()
+    {
+        if (isCoolingDown)
+        {
+            cooldownTimer += Time.deltaTime;
+            skillImage.fillAmount = 1f - (cooldownTimer / cooldownTime);
+
+            if (cooldownTimer >= cooldownTime)
+            {
+                isCoolingDown = false;
+                skillImage.fillAmount = 0f;
+            }
+        }
+    }
+
+    // 스킬 사용
+    private void UseSkill()
+    {
+        isCoolingDown = true;
+        cooldownTimer = 0f;
+        if (photonView.IsMine && skillImage != null)
+        {
+            skillImage.fillAmount = 1f;
+        }
+
+
+        // 스킬 로직 실행...
     }
 
     public override void UpdateAnimParam(Vector2 input)

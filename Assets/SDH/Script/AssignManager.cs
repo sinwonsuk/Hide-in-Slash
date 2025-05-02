@@ -206,7 +206,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < mapObjects.Count; i++)
         {
-            mapDic.Add(mapObjects[i].name, mapObjects[i]);
+            // 중복 등록 방지
+            var key = mapObjects[i].name;
+            if (!mapDic.ContainsKey(key))
+            {
+                mapDic.Add(key, mapObjects[i]);
+            }
         }
     }
     private void AddSpawnPoints()
