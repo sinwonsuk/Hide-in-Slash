@@ -74,6 +74,8 @@ MonoBehaviour:
   - AddGage
   - BroadCastGage
   - EndDrinkProtein
+  - EscapeHatch
+  - SetFlashEntireLight
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
