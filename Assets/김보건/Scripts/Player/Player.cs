@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
 using System.Text.RegularExpressions;
+using ExitGames.Client.Photon;
 
 public enum EscapeType
 {
@@ -57,6 +58,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.RegisterEvent(EventType.UseMap, HasTriggerMap);
         EventManager.RegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
         EventManager.RegisterEvent(EventType.OutEventPlayer, ResumeMovement);
+        PhotonNetwork.AddCallbackTarget(this);
     }
 
     private void OnDisable()
@@ -71,6 +73,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.UnRegisterEvent(EventType.UseMap, HasTriggerMap);
         EventManager.UnRegisterEvent(EventType.InEventPlayer, SetZeroVelocity);
         EventManager.UnRegisterEvent(EventType.OutEventPlayer, ResumeMovement);
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 
     private void Start()
@@ -384,10 +387,14 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Prison"))
+        if (collision.CompareTag("PrisonDoor"))
         {
             isInPrisonDoor = false;
-            // 이벤트로 isInPrisonDoor = false
+            if (hasPrisonKey)
+            {
+                
+            }
+            // 이벤트로 isInPrisonDoor = true
             EventManager.TriggerEvent(EventType.InPrisonDoor, false);
         }
 
@@ -809,6 +816,26 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
     }
 
+    public void OnEvent(EventData data)
+    {
+        if (data.Code != EVENT_BLACKOUT) return;
+
+        float duration = (float)data.CustomData;
+        if (photonView.IsMine)
+        {
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+            StartCoroutine(DelayedTurnOn(duration));
+        }
+    }
+
+    private IEnumerator DelayedTurnOn(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        flashLight.enabled = true;
+        circleLight.enabled = true;
+    }
+
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
 
@@ -881,6 +908,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     private float blinkInterval = 0.3f; // 깜빡속도
     private Vector2[] defaultColliderPoints;
     //private bool hasUpgradedFlashlight = false;
+    private const byte EVENT_BLACKOUT = 1;
 
     [Header("감옥키")]
     [SerializeField] private bool hasPrisonKey = false;

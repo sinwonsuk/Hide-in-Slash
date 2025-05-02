@@ -164,7 +164,9 @@ public class Inventory : MonoBehaviour
 
         if (ItemDictionary.TryGetValue(key, out GameObject go))
         {
-            
+            if (key == InventoryType.PrisonKey && isInPrisonDoor == false)
+                return;
+
             Item item = go.GetComponent<Item>();
             item.MusItemCount();
 
@@ -188,7 +190,7 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.Tunnel:
                 {
-                    // ������ ����?
+                    ExitItemUI.SetActive(true);
                     EventManager.TriggerEvent(EventType.UseHatch);
                     break;
                 }
@@ -204,13 +206,13 @@ public class Inventory : MonoBehaviour
                 }
             case InventoryType.PrisonKey:
                 {
-                    if(isInPrisonDoor ==true)
+
                     EventManager.TriggerEvent(EventType.UsePrisonKey);
                     break;
                 }
             case InventoryType.Map:
                 {
-                    // �ʸ���?
+                    MapUI.SetActive(true);
                     EventManager.TriggerEvent(EventType.UseMap);
                     break;
                 }
@@ -254,6 +256,11 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     List<GameObject> itemNumbersRenders = new List<GameObject>();
+
+    [SerializeField]
+    GameObject ExitItemUI;
+    [SerializeField]
+    GameObject MapUI;
 
     private int inventoryMoveIndex = 0;
 

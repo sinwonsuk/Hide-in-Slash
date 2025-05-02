@@ -38,7 +38,7 @@ public class GeneratorMiniGame : MonoBehaviour
 
         generatorGage generatorGage = GeneratorGage.GetComponent<generatorGage>();
 
-        generatorGage.generatorInImage.fillAmount += 0.2f;
+        generatorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, +0.2f);
 
     }
     void NotCheckCollsion()
@@ -51,7 +51,11 @@ public class GeneratorMiniGame : MonoBehaviour
 
         generatorGage.generatorInImage.fillAmount -= 0.2f;
 
+        generatorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, -0.2f);
+
+
     }
+
 
 
     public Action stopSquareCheckAction;

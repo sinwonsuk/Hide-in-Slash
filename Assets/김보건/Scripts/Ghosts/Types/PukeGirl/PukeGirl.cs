@@ -2,6 +2,7 @@ using Photon.Pun;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class PukeGirl : Ghost, IPunObservable
 {
@@ -27,6 +28,12 @@ public class PukeGirl : Ghost, IPunObservable
     [Header("토 후 부스트")]
     [SerializeField] private float boostMultiplier = 1.5f;
     [SerializeField] private float boostDuration = 3f;
+
+    [Header("스킬쿨타임")]
+    [SerializeField] private float cooldownTime = 5f;
+    private float cooldownTimer = 0f;
+    private bool isCoolingDown = false;
+    [SerializeField] private Image skillImage;
 
     private float originalSpeed;
     private bool isBoosted = false;
@@ -54,6 +61,8 @@ public class PukeGirl : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Start();
+            GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
+            skillImage = _skillImage.GetComponent<Image>();
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
@@ -72,11 +81,21 @@ public class PukeGirl : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.E) && !isCoolingDown)
             {
                 photonView.RPC("RPC_StartVomit", RpcTarget.All);
             }
+            UpdateSkillCooldown();
 
+            if (isBoosted)
+            {
+                boostTimer -= Time.deltaTime;
+                if (boostTimer <= 0f)
+                {
+                    isBoosted = false;
+                    moveSpeed = originalSpeed;
+                }
+            }
         }
         else
         {
@@ -93,16 +112,27 @@ public class PukeGirl : Ghost, IPunObservable
             }
         }
 
-        if (isBoosted)
-        {
-            boostTimer -= Time.deltaTime;
-            if (boostTimer <= 0f)
-            {
-                isBoosted = false;
-                moveSpeed = originalSpeed;
-            }
-        }
+    }
+    private void UseSkill()
+    {
+        isCoolingDown = true;
+        cooldownTimer = cooldownTime;
+        if (skillImage != null)
+            skillImage.fillAmount = 1f;
+    }
 
+    private void UpdateSkillCooldown()
+    {
+        if (!isCoolingDown) return;
+        cooldownTimer -= Time.deltaTime;
+        if (skillImage != null)
+            skillImage.fillAmount = cooldownTimer / cooldownTime;
+        if (cooldownTimer <= 0f)
+        {
+            isCoolingDown = false;
+            if (skillImage != null)
+                skillImage.fillAmount = 0f;
+        }
     }
 
     [PunRPC]
@@ -112,7 +142,10 @@ public class PukeGirl : Ghost, IPunObservable
 
         ghostStateMachine.ChangeState(vomitState);
 		anim.SetBool("IsVomiting", true);
-	}
+
+        if (photonView.IsMine)
+            UseSkill();
+    }
 
     protected override void FixedUpdate()
     {
@@ -167,8 +200,6 @@ public class PukeGirl : Ghost, IPunObservable
         moveSpeed = originalSpeed * boostMultiplier;
 
         Vector2 input = MoveInput;
-
-        anim.SetBool("IsVomiting", false);
         ghostStateMachine.ChangeState(moveState);
     }
 

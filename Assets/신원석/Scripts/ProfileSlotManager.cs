@@ -98,11 +98,11 @@ public class ProfileSlotManager : MonoBehaviourPunCallbacks
                 {
 
                     //// 슬롯 생성
-                    //GameObject slot = Instantiate(profileSlotPrefab, bossProfileSlotParent);
-                    //slot.GetComponent<RectTransform>().anchoredPosition = bossProfileTransforms[playerCheck];
-                    //slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
-                    //slot.GetComponent<OtherPlayerProfile>().Init();
-                    //playerCheck++;
+                    GameObject slot = Instantiate(profileSlotPrefab, bossProfileSlotParent);
+                    slot.GetComponent<RectTransform>().anchoredPosition = bossProfileTransforms[playerCheck];
+                    slot.GetComponent<OtherPlayerProfile>().targetPlayer = player;
+                    slot.GetComponent<OtherPlayerProfile>().Init();
+                    playerCheck++;
                 }
 
             }

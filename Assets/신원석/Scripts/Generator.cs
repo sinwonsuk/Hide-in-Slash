@@ -16,7 +16,18 @@ public class Generator : MonoBehaviourPunCallbacks
     void Update()
     {
         if (isUpdate == false)
+        {
+            if (generatorMiniGame != null)
+            {
+                Destroy(generatorMiniGame.gameObject);
+                generatorMiniGame = null;
+            }
+
             return;
+        }
+           
+
+
 
         if (generatorMiniGame != null)
         {
@@ -103,24 +114,51 @@ public class Generator : MonoBehaviourPunCallbacks
 
     void Delete()
     {
-        if (!isMiniGameFinished && generatorMiniGame != null)
+        if (isMiniGameFinished)
+            return;
+
+        if (generatorMiniGame != null)
         {
             Destroy(generatorMiniGame.gameObject);
             generatorMiniGame = null;
-            photonView.RPC("Sucess", RpcTarget.All);
-            StopGeneration();
-            isMiniGameFinished = true;
+        }
+
+        photonView.RPC("Sucess", RpcTarget.All);
+        StopGeneration();
+        isMiniGameFinished = true;
+    }
+    [PunRPC]
+    public void RequestGeneratorComplete()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            DeleteAction?.Invoke();
         }
     }
-
     [PunRPC]
     public void Sucess()
-    {
-        isUpdate = false;
+    {       
         animator.SetTrigger("Sucess");
+        isUpdate = false;
         EventManager.TriggerEvent(EventType.GeneratorSuccess);
     }
 
+    [PunRPC]
+    public void AddGage(float _gege)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        gage += _gege;
+
+        photonView.RPC("BroadCastGage", RpcTarget.AllBuffered, gage);
+    }
+
+    [PunRPC]
+    public void BroadCastGage(float _gege)
+    {
+        generatorGage.generatorInImage.fillAmount = _gege;
+    }
     bool isUpdate = true;
 
     bool isMiniGameRunning = false;
@@ -133,6 +171,9 @@ public class Generator : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject miniGamePrefab;
 
+    [SerializeField]
+    generatorGage generatorGage;
+
     GeneratorMiniGame generatorMiniGame;
 
     Coroutine coroutine;
@@ -142,4 +183,9 @@ public class Generator : MonoBehaviourPunCallbacks
     public UnityAction DeleteAction;
 
     bool isMiniGameFinished = false;
+
+
+
+    public float gage { get; set; } = 0;
+
 }

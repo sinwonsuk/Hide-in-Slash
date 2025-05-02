@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2191573428496805871}
   - component: {fileID: 5926006382409986361}
   - component: {fileID: 720339782849012603}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: PeanutGhost
   m_TagString: Ghost
   m_Icon: {fileID: 0}
@@ -168,6 +168,9 @@ MonoBehaviour:
   moveSpeed: 20
   isStunned: 0
   exclamationPrefab: {fileID: 7838346147354192671, guid: 3d5c9ed01e7510f4aaae0d2d381862ff, type: 3}
+  cooldownTime: 20
+  skillImage: {fileID: 0}
+  blackoutDuration: 5
 --- !u!50 &2191573428496805871
 Rigidbody2D:
   serializedVersion: 5

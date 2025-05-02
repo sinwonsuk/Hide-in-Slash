@@ -4,6 +4,7 @@ using UnityEngine;
 public class SettingRoom : MonoBehaviour
 {
     public TMP_InputField roomNameInput; //방이름 입력창
+    public TMP_InputField roomPasswordInput; //방이름 입력창
     public GameObject popupPanel; // 방 생성창
     public GameObject roomPanelPrefab; //생성할 방
 
@@ -18,7 +19,7 @@ public class SettingRoom : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)&& gameObject.activeSelf)
             AddRoom();
 
         if (Input.GetKeyDown(KeyCode.Escape) && warning == 0)
@@ -49,14 +50,14 @@ public class SettingRoom : MonoBehaviour
     {
         Time.timeScale = 1;
         string roomName = roomNameInput.text;
+        string password = roomPasswordInput.text;
 
         if (!string.IsNullOrEmpty(roomName))
         {
             if (roomName.Length < 14)
             {
 
-                    GameReadyManager.Instance.CreateRoomWithPassword(roomName);
-                    //SceneManager.Instance.LoadSceneAsync(SceneName.WaitingRoom);
+                GameReadyManager.Instance.CreateRoomWithPassword(roomName,password);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
             }

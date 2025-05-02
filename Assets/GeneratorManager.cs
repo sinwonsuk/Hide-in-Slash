@@ -1,8 +1,9 @@
 using NUnit.Framework;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneratorManager : MonoBehaviour
+public class GeneratorManager : MonoBehaviourPunCallbacks
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -13,10 +14,19 @@ public class GeneratorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(generatorCount == 5)
+
+        if (generatorCount == 2 && isCheck ==false && PhotonNetwork.IsMasterClient)
         {
-            EventManager.TriggerEvent(EventType.AllGeneratorSuccess);
+            photonView.RPC("BroadcastSuecss", RpcTarget.All);       
         }
+    }
+
+    [PunRPC]
+    public void BroadcastSuecss()
+    {
+        fadeout.SetActive(true);
+        EventManager.TriggerEvent(EventType.AllGeneratorSuccess);
+        isCheck = true;
     }
 
     public void addCount()
@@ -24,9 +34,11 @@ public class GeneratorManager : MonoBehaviour
         generatorCount++;
     }
 
-
+    bool isCheck = false;
 
     int generatorCount = 0;
 
+    [SerializeField]
+    GameObject fadeout;
 
 }
