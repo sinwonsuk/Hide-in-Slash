@@ -146,9 +146,12 @@ public class Generator : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddGage(float _gege)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         gage += _gege;
 
-        photonView.RPC("BroadCastGage", RpcTarget.OthersBuffered, gage);
+        photonView.RPC("BroadCastGage", RpcTarget.AllBuffered, gage);
     }
 
     [PunRPC]

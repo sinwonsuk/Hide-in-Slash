@@ -47,12 +47,7 @@ public class generatorGage : MonoBehaviourPunCallbacks
         
     }
 
-    //[PunRPC]
-    //public void SyncFillAmount(float newFillAmount)
-    //{
-    //    generatorInImage.fillAmount += newFillAmount;
-    //}
-    PhotonView pv;
+    public PhotonView pv { get; private set; }
     bool isCheck = false;
     
     [SerializeField]
