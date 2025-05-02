@@ -21,8 +21,8 @@ public class PlayerSlot : MonoBehaviour
 
     [Header("Sprites")]
     [SerializeField] private Sprite[] profileSprites;   // 5개 프로필 스프라이트
-    [SerializeField] private Sprite offSprite;        // 버튼 X 스프라이트
-    [SerializeField] private Sprite onSprite;         // 버튼 O 스프라이트
+    [SerializeField] private Sprite offSprite;     
+    [SerializeField] private Sprite onSprite;         
 
     [Header("Animation Settings")]
     [SerializeField] private float leverOffAngle = -30f;
