@@ -28,6 +28,8 @@ public enum EventType
     ChattingActiveOff,
     ChattingActiveOn,
     AddItem,
+    EntireLightOn,
+    EntireLightOff,
 }
 
 
