@@ -53,6 +53,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject lobbyPanel;
     [SerializeField] private GameObject hands;    
     [SerializeField] private GameObject waitingPanel;
+    [SerializeField] private GameObject roleSelectionUIPrefab;
+    private GameObject _roleUIInstance;
 
     [Header("Slot UI")]
     [SerializeField] private RectTransform[] slotPoints; // length=5
@@ -123,6 +125,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel = GameObject.Find("robby");
         waitingPanel = GameObject.Find("WaitingUI");
         hands = GameObject.Find("RobbyHands");
+        roleSelectionUIPrefab = GameObject.Find("BossSelectionUI");
         playerSlotPrefab = Resources.Load<GameObject>("PlayerSlot");
 
         slotPoints = new RectTransform[5];
@@ -159,6 +162,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(true);
         hands.SetActive(true);
         waitingPanel.SetActive(false);
+        roleSelectionUIPrefab.SetActive(false);
 
         // leaveButton 클릭 리스너
         //leaveButton.onClick.RemoveAllListeners();
@@ -550,6 +554,18 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             randomValues.Add(randomValue);
         }
         return new List<int>(randomValues);
+    }
+
+    public void ShowRolePanel()
+    {
+        roleSelectionUIPrefab.SetActive(true);
+        if (_roleUIInstance == null)
+            _roleUIInstance = Instantiate(roleSelectionUIPrefab);
+        else
+            _roleUIInstance.SetActive(true);
+
+        var mgr = _roleUIInstance.GetComponent<RoleSelectionManager>();
+        if (mgr != null) mgr.Initialize();
     }
 
     #endregion

@@ -336,17 +336,23 @@ public class AssignManager : MonoBehaviourPunCallbacks
         Debug.Log("역할배정완료");
 
         //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
-
+        //photonView.RPC(nameof(RPC_NotifyRole), RpcTarget.AllBuffered);
 
         if (photonView == null)
         {
             Debug.Log("포톤뷰없음");
         }
-
+        
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("MergeScene");
         }
+    }
+
+    [PunRPC]
+    private void RPC_NotifyRole()
+    {
+        GameReadyManager.Instance.ShowRolePanel();
     }
 
     [PunRPC]
