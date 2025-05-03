@@ -541,6 +541,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = false;
         }
 
+        if (collision.CompareTag("Prison"))
+        {
+            profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
+        }
 
     }
 
@@ -632,6 +636,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             sr.color = visible;
             flashLight.enabled = isLightOn;
             circleLight.enabled = true;
+
+            if (playerNickName != null)
+                playerNickName.SetActive(true);
+
             return;
         }
 
@@ -652,12 +660,16 @@ public class Player : MonoBehaviourPun, IPunObservable
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f); // 완전 투명
             flashLight.enabled = false;
             circleLight.enabled = false;
+            if (playerNickName != null)
+                playerNickName.SetActive(false);
         }
         else
         {
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f); // 반투명
             flashLight.enabled = isLightOn;
             circleLight.enabled = true;
+            if (playerNickName != null)
+                playerNickName.SetActive(true);
         }
     }
 
@@ -766,15 +778,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
         isLightOn = true;
         flashLight.enabled = true;
+        circleLight.enabled = true;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
     }
 
     private void TurnOffEntireLight()
     {
-        if (!photonView.IsMine)
-            return;
         isLightOn = false;
         flashLight.enabled = false;
+        circleLight.enabled = false;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
     }
 
@@ -818,6 +830,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void SetFlashEntireLight(bool turnOn)
     {
+        if (!photonView.IsMine)
+            return;
         isLightOn = turnOn;
         isCircleLightOn = turnOn;
         flashLight.enabled = turnOn;
@@ -1043,11 +1057,31 @@ public class Player : MonoBehaviourPun, IPunObservable
         circleLight.enabled = true;
     }
 
+    [PunRPC]
+    public void EscapePlayerObject()
+    {
+        if (!photonView.IsMine)
+        {
+            // 타 클라에서 탈출플레이어(자신) 렌더링,콜라이더 끄기
+            sr.enabled = false; // SpriteRenderer
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+
+            if (playerNickName != null)
+                playerNickName.SetActive(false);
+
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+                col.enabled = false;
+        }
+    }
+
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
 
     [SerializeField] private GameObject spriteObject;
     [SerializeField] private Transform lightObject;
+    [SerializeField] private GameObject playerNickName;
 
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
