@@ -78,6 +78,7 @@ MonoBehaviour:
   - SetFlashEntireLight
   - RPC_NotifyRole
   - TeleportPlayer
+  - Blackout
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

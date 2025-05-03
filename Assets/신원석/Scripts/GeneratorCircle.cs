@@ -13,11 +13,11 @@ public class GeneratorCircle : MonoBehaviour
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
 
-        if(isCheck ==true && Input.GetKeyDown(KeyCode.Space))
+        if(isCheck ==true && Input.GetKeyDown(KeyCode.G))
         {
             miniGame.stopSquareCheckAction.Invoke();
         }
-        else if(Input.GetKeyDown(KeyCode.Space))
+        else if(Input.GetKeyDown(KeyCode.G))
         {
             miniGame.stopSquareCheckFlaseAction.Invoke();
         }

@@ -14,11 +14,10 @@ public class generatorGage : MonoBehaviourPunCallbacks
 
     // Update is called once per frame
     void Update()
-    {        
+    {
 
-        //photonView.RPC("SyncFillAmount", RpcTarget.OthersBuffered, Time.deltaTime * speed);
 
-        pv.RPC("AddGage", RpcTarget.MasterClient, Time.deltaTime * speed);
+        pv.RPC("AddGage", RpcTarget.MasterClient, Time.deltaTime / durationTime);
 
 
         if (generatorInImage.fillAmount >= 1 && isCheck ==false)
@@ -56,4 +55,6 @@ public class generatorGage : MonoBehaviourPunCallbacks
     public Image generatorInImage;
 
     Generator generator;
+
+    float durationTime = 30.0f;
 }

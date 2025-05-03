@@ -545,8 +545,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         Transform portal = moveMap.transform.Find(portalName);
         if (portal != null)
-            transform.position = portal.position;
-        
+            transform.position = portal.position;        
     }
 
     private IEnumerator UpdateCameraConfinerDelayed()
@@ -644,6 +643,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (isReceiverMonster)
         {
+
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f); // 완전 투명
             flashLight.enabled = false;
             circleLight.enabled = false;
@@ -824,10 +824,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         PhotonView view = PhotonView.Find(viewID);
         if (view != null)
         {
-            view.transform.position = pos;
-
-
-           
+            view.transform.position = pos;       
             // 보간용 위치도 순간이동 위치로 맞춰줌
             networkedPosition = pos;
             rb.linearVelocity = Vector2.zero;
@@ -838,7 +835,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     public IEnumerator ResetTeleportFlag()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         isTeleporting = false;
     }
 

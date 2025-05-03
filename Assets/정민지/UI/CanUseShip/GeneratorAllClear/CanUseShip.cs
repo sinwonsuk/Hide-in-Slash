@@ -18,26 +18,26 @@ public class CanUseShip : MonoBehaviour
         anim = GetComponent<Animator>();
 
         // 캔버스를 독립적으로 생성
-        canvasInstance = Instantiate(canvasPrefab);
+        canvasInstance = Instantiate(canvasPrefab,transform);
         text = canvasInstance.GetComponentInChildren<TMP_Text>();
 
         // 캔버스 위치를 부모의 위치로 설정 (부모의 위치를 추적하려면 Update에서 처리)
-        UpdateCanvasPosition();
+        //UpdateCanvasPosition();
     }
 
     void Update()
     {
         // 부모의 위치를 따라가도록 캔버스 위치 업데이트
-        UpdateCanvasPosition();
+        //UpdateCanvasPosition();
     }
 
     void UpdateCanvasPosition()
     {
-        if (canvasInstance != null)
-        {
-            // 캔버스를 부모의 위치와 동일하게 맞춰줌
-            canvasInstance.transform.position = transform.position;
-        }
+        //if (canvasInstance != null)
+        //{
+        //    // 캔버스를 부모의 위치와 동일하게 맞춰줌
+        //    canvasInstance.transform.position = transform.position;
+        //}
     }
 
     public void WaitAndStart()

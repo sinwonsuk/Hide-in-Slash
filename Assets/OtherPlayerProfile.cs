@@ -14,6 +14,7 @@ public enum ProfileState
     deadSprite,
     prisonSprite,
     Escape,
+    AliveSprite,
 }
 
 
@@ -65,29 +66,22 @@ public class OtherPlayerProfile : MonoBehaviour
         if (keyValuePairs.TryGetValue((ProfileState)intname, out Sprite sprites))
         {
             profileImage.sprite = sprites;
+
+            keyValuePairs.Add(ProfileState.AliveSprite, sprites);
+
         }
 
-        //else
-        //{
-        //    targetPlayer.CustomProperties.TryGetValue("Profile", out object selfRoleObj);
-
-        //    if (selfRoleObj is int selfRole)
-        //    {
-        //        intname = selfRole;
-        //    }
-
-        //    if (keyValuePairs.TryGetValue((ProfileState)intname, out Sprite sprites))
-        //    {
-        //        profileImage.sprite = sprites;
-        //    }
-        //}
     }
     // 상태 변경에 따라 UI 업데이트
     public void UpdateProfileState(ProfileState _state)
-    { 
-        if(keyValuePairs.TryGetValue(_state, out Sprite sprites))
+    {
+        
+
+
+        if (keyValuePairs.TryGetValue(_state, out Sprite sprites))
         {
-            if(_state == ProfileState.Escape)
+
+            if (_state == ProfileState.Escape)
             {
                 bg.sprite = sprites;
                 profileImage.enabled = false;
@@ -95,7 +89,7 @@ public class OtherPlayerProfile : MonoBehaviour
             else
             {
                 profileImage.sprite = sprites;
-            }           
+            }                           
         }
     }
 }

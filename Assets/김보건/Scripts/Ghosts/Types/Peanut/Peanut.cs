@@ -70,6 +70,8 @@ public class Peanut : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Start();
+            GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
+            skillImage = _skillImage.GetComponent<Image>();
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
@@ -91,8 +93,6 @@ public class Peanut : Ghost, IPunObservable
         {
             view.transform.position = pos;
 
-
-
             // 보간용 위치도 순간이동 위치로 맞춰줌
             networkedPosition = pos;
             rb.linearVelocity = Vector2.zero;
@@ -113,10 +113,11 @@ public class Peanut : Ghost, IPunObservable
         if (photonView.IsMine)
         {
             base.Update();
+            CooldownSkill();
 
             if (Input.GetKeyDown(KeyCode.E) && !isCoolingDown)
             {
-                //스킬 사용
+                UseSkill();
             }
 
         }
@@ -177,10 +178,25 @@ public class Peanut : Ghost, IPunObservable
             skillImage.fillAmount = 1f;
         }
 
+        photonView.RPC("Blackout", RpcTarget.AllBuffered);
 
-        // 스킬 로직 실행...
     }
 
+    [PunRPC]
+    public void Blackout()
+    {
+        StartCoroutine(enumerator());
+    }
+
+    IEnumerator enumerator()
+    {
+        EventManager.TriggerEvent(EventType.LightOff);
+        EventManager.TriggerEvent(EventType.EntireLightOff);
+        yield return new WaitForSeconds(blackoutDuration);
+        EventManager.TriggerEvent(EventType.LightOn);
+        EventManager.TriggerEvent(EventType.EntireLightOn);
+    }
+   
     public override void UpdateAnimParam(Vector2 input)
     {
         if (input != Vector2.zero)

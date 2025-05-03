@@ -13,44 +13,6 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
      
     }
 
-    void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    // 카메라의 z 값을 마우스의 z 값에 반영
-        //    Vector3 mousePos = Input.mousePosition;
-        //    mousePos.z = Mathf.Abs(Camera.main.transform.position.z); // 카메라의 z 값
-
-        //    // 월드 좌표로 변환
-        //    Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        //    // 레이캐스트로 충돌 확인
-        //    RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
-
-        //    if (hit.collider != null && hit.collider.CompareTag(tagName))
-        //    {
-        //        CreateChat(text);
-        //        transform.parent.gameObject.SetActive(false);
-        //        Debug.Log("2D Object Hit: " + hit.collider.gameObject.name);
-        //    }
-        //}
-    }
-    // Update is called once per frame
-    //void Update()
-    //{
-
-
-    //    if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭
-    //    {
-    //        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-    //        if (collider2D.OverlapPoint(mouseWorldPos))
-    //        {
-    //            CreateChat(text);
-    //            transform.parent.gameObject.SetActive(false);
-    //        }
-    //    }
-    //}
 
     public void CreateChat(string _text)
     {
@@ -103,8 +65,6 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
 
     [SerializeField]
     Transform chattingObjectParent;
-
-    new PolygonCollider2D collider2D;
 
     [SerializeField]
     GameObject chattingObject;
