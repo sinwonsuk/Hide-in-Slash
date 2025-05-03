@@ -25,7 +25,7 @@ public class PlayerEscapeState : PlayerState
 
         if (!player.photonView.IsMine)
             return;
-
+        PhotonNetwork.AutomaticallySyncScene = false;
         Debug.Log($"탈출 상태: {StateType} (Code: {(int)StateType}), 탈출 유형: {currentEscapeType} (Code: {(int)currentEscapeType})");
         player.profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.Escape);
 
