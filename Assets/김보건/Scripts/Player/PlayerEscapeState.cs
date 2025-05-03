@@ -56,7 +56,12 @@ public class PlayerEscapeState : PlayerState
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
 
                 player.StartCoroutine(EscapeWithDelay(5f));
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RobbyScene");
+
+                if (player.photonView.IsMine)
+                {
+                    PhotonNetwork.LoadLevel("RobbyScene");
+                }
+
                 break;
 
             default:

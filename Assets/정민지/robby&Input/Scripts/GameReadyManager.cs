@@ -363,7 +363,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         AssignManager.instance.gameObject.AddComponent<PhotonView>();
 
 
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
   
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
