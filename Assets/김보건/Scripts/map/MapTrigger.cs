@@ -24,7 +24,7 @@ public class MapTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!(other.CompareTag("Player") || other.CompareTag("Peanut") || other.CompareTag("Protein") || other.CompareTag("PukeGirl"))) return;
+        if (!(other.CompareTag("Player") || other.CompareTag("Peanut") || other.CompareTag("Protein") || other.CompareTag("PukeGirl") || other.CompareTag("DeadPlayer"))) return;
         if (isTeleport) return;
 
         AssignManager mapManager = AssignManager.instance;

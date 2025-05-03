@@ -23,6 +23,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
+
+        // 콜리전 감지 강화
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
         canvas = GameObject.FindGameObjectWithTag("Dark").GetComponent<Canvas>();
         canvas.enabled = false;
         originalSpeed = moveSpeed;
@@ -573,6 +577,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         sr.color = c;
 
         gameObject.tag = "DeadPlayer";
+        gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
 
         photonView.RPC("SetGhostVisual", RpcTarget.Others);
 
@@ -874,14 +879,19 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine) return;
 
-        photonView.RPC("EscapeHatch", RpcTarget.All);
+        // EscapeHatch는 자신에게만 적용
+        escapeState.SetEscapeType(EscapeType.Hatch);
+        PlayerStateMachine.ChangeState(escapeState);
+
+        // 나 말고는 상태 바꾸지 않도록
+        photonView.RPC("SetEscapeTypeForOthers", RpcTarget.OthersBuffered, (int)EscapeType.Hatch);
     }
 
     [PunRPC]
-    private void EscapeHatch()
+    private void SetEscapeTypeForOthers(int escapeCode)
     {
-        escapeState.SetEscapeType(EscapeType.Hatch);
-        PlayerStateMachine.ChangeState(escapeState);
+        escapeType = (EscapeType)escapeCode;
+        // 상태 바꾸지 않음
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
