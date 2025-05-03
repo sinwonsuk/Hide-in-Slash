@@ -56,6 +56,7 @@ public class PlayerEscapeState : PlayerState
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
 
                 player.StartCoroutine(EscapeWithDelay(5f));
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RobbyScene");
                 break;
 
             default:
@@ -67,11 +68,6 @@ public class PlayerEscapeState : PlayerState
     {
         yield return new WaitForSeconds(delay);
 
-        if (player.photonView.IsMine && currentEscapeType == EscapeType.Hatch)
-        {
-            // 내 플레이어일 때만 씬 이동!
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RobbyScene");
-        }
     }
 
 }
