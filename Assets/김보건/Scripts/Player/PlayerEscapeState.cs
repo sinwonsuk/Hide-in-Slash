@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -25,8 +26,9 @@ public class PlayerEscapeState : PlayerState
         if (!player.photonView.IsMine)
             return;
 
-
         Debug.Log($"탈출 상태: {StateType} (Code: {(int)StateType}), 탈출 유형: {currentEscapeType} (Code: {(int)currentEscapeType})");
+        player.profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.Escape);
+
 
         switch (currentEscapeType)
         {
@@ -38,6 +40,8 @@ public class PlayerEscapeState : PlayerState
             case EscapeType.Hatch:
                 if (player.UseItemAndEscapeUI != null)
                 {
+                    player.UseItemAndEscapeUI.transform.SetParent(null);
+                    Object.DontDestroyOnLoad(player.UseItemAndEscapeUI);
                     player.UseItemAndEscapeUI.SetActive(true);
 
                     Transform black = player.UseItemAndEscapeUI.transform.Find("Black");
@@ -49,7 +53,9 @@ public class PlayerEscapeState : PlayerState
                     }
                 }
 
-                player.StartCoroutine(EscapeWithDelay(7f));
+                player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
+
+                player.StartCoroutine(EscapeWithDelay(5f));
                 break;
 
             default:
@@ -59,15 +65,13 @@ public class PlayerEscapeState : PlayerState
 
     private IEnumerator EscapeWithDelay(float delay)
     {
+        yield return new WaitForSeconds(delay);
 
-        yield return new WaitForSeconds(delay);   // UI 보여주는 시간
-
-        //if (player.UseItemAndEscapeUI != null)
-        //{
-        //    player.UseItemAndEscapeUI.SetActive(false);
-        //}
-
-        //// 탈출 처리 (플레이어 오브젝트 비활성화)
-        //player.gameObject.SetActive(false);
+        if (player.photonView.IsMine && currentEscapeType == EscapeType.Hatch)
+        {
+            // 내 플레이어일 때만 씬 이동!
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RobbyScene");
+        }
     }
+
 }

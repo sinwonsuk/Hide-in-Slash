@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 9139093811081375807}
   lightObject: {fileID: 8647247377837554913}
+  playerNickName: {fileID: 1563926410423676207}
   profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
