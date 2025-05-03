@@ -11,15 +11,13 @@ public class PingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftControl) && isCheck ==false)
+        if(Input.GetKey(KeyCode.LeftControl))
         {
             pingObject.SetActive(true);
-            isCheck = true;
         }
-        else if(Input.GetKeyDown(KeyCode.LeftControl) && isCheck == true)
+        else 
         {
             pingObject.SetActive(false);
-            isCheck = false;
         }
         
     }
