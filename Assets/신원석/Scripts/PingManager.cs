@@ -5,7 +5,12 @@ public class PingManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        EventManager.RegisterEvent(EventType.PingOff, PingOff);
+    }
+
+    public void PingOff()
+    {
+        pingObject.SetActive(false);
     }
 
     // Update is called once per frame

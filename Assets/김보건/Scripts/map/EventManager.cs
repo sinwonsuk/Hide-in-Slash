@@ -30,6 +30,9 @@ public enum EventType
     AddItem,
     EntireLightOn,
     EntireLightOff,
+    InevntoryOff,
+    ChattingOff,   
+    PingOff,
 }
 
 
