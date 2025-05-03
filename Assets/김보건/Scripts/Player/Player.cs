@@ -589,7 +589,9 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void SetGhostVisual()
     {
-        gameObject.SetActive(false);
+        Color c = sr.color;
+        c.a = 0f;
+        sr.color = c;
     }
 
     //투명물약
