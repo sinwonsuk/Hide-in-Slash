@@ -579,10 +579,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         c.a = 0.5f;
         sr.color = c;
 
+        flashLight.enabled = false;
+        circleLight.enabled = false;
+
         gameObject.tag = "DeadPlayer";
         gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
 
         photonView.RPC("SetGhostVisual", RpcTarget.Others);
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
 
     }
 
@@ -592,6 +596,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         Color c = sr.color;
         c.a = 0f;
         sr.color = c;
+        playerNickName.SetActive(false);
+        gameObject.tag = "DeadPlayer";
+        gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
     }
 
     //투명물약
