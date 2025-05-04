@@ -20,7 +20,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Action<Photon.Realtime.Player, Hashtable> PropertiesAction;
 
     [Header("닉네임")]
-   // public GameObject loginchang;
+    // public GameObject loginchang;
     public TMP_InputField NickNameInput; // 클래스 멤버 변수로 선언
 
     [Header("로비판넬")]
@@ -51,7 +51,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     [Header("UI Panels")]
     [SerializeField] private GameObject lobbyPanel;
-    [SerializeField] private GameObject hands;    
+    [SerializeField] private GameObject hands;
     [SerializeField] private GameObject waitingPanel;
     [SerializeField] private GameObject BossUI;
     [SerializeField] private GameObject BossPanel;
@@ -94,11 +94,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         test = Test;
         Gc = GetContent;
-        
+
     }
     private void OnDestroy()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        PropertiesAction -= HandleReadyChanged;
+        PropertiesAction -= HandleProfileIndexChanged;
+        PropertiesAction -= HandleRoleChanged;
+        PropertiesAction -= HandleRoleConfirmed;
     }
 
     void Start()
@@ -116,14 +120,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //    waitingPanel.SetActive(false);
         //    lobbyPanel.SetActive(true);
         //});
-    }
-
-    public void CleanUpEvents()
-    {
-        PropertiesAction -= HandleReadyChanged;
-        PropertiesAction -= HandleProfileIndexChanged;
-        PropertiesAction -= HandleRoleChanged;
-        PropertiesAction -= HandleRoleConfirmed;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -187,7 +183,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if(roomList.Count == 0)
+        if (roomList.Count == 0)
         {
             return;
         }
@@ -210,9 +206,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                     int currentPlayerCount = room.PlayerCount;  // 현재 인원수
                     int maxPlayers = room.MaxPlayers;           // 최대 인원수
 
-                   
 
-                    if(currentPlayerCount==0)
+
+                    if (currentPlayerCount == 0)
                     {
                         GameObject roomUI = roomDic[room.Name];
                         roomDic.Remove(room.Name);
@@ -243,13 +239,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
 
 
-                   // roomDic.Add(room.Name, newButton);
+                    // roomDic.Add(room.Name, newButton);
                     //roomInfoDict.Add(room, newButton);
 
                     roomDic[room.Name] = newButton;
                     roomInfoDict[room.Name] = room;
                 }
-                                      
+
             }
             else if (room.RemovedFromList || room.PlayerCount == 0)
             {
@@ -276,10 +272,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby() //로비로 가기
     {
 
-       PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
 
 
-       // PhotonNetwork.LocalPlayer.NickName = "adadadad";
+        // PhotonNetwork.LocalPlayer.NickName = "adadadad";
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
         PhotonNetwork.LoadLevel("RobbyScene");
 
@@ -293,9 +289,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     #region 방
 
     //비번과 함께 방 생성
-    public void CreateRoomWithPassword(string roomName,string password)
+    public void CreateRoomWithPassword(string roomName, string password)
     {
-         if(PhotonNetwork.IsConnected&&PhotonNetwork.InLobby)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InLobby)
         {
 
             RoomOptions roomOptions = new RoomOptions(); //새로운 룸 옵션
@@ -352,7 +348,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             {
                 GameObject currentWarning = Instantiate(IncorrectPassword);
 
-                if(UnityEngine.Input.GetKeyDown(KeyCode.Escape)&& currentWarning != null)
+                if (UnityEngine.Input.GetKeyDown(KeyCode.Escape) && currentWarning != null)
                 {
                     Destroy(currentWarning);
                 }
@@ -375,7 +371,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
 
         PhotonNetwork.AutomaticallySyncScene = true;
-  
+
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
         lobbyPanel.SetActive(false);
@@ -409,7 +405,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //ChatInput.text = "";
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
-  
+
     //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
 
     // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //랜덤 참가
@@ -424,7 +420,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             AssignProfileIndex(newPlayer);
         }
-            RoomRenewal();  //채팅 메시지
+        RoomRenewal();  //채팅 메시지
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
@@ -486,7 +482,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("MergeScene");
         }
-        CleanUpEvents();
     }
 
 
@@ -510,7 +505,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         rt.anchoredPosition = Vector2.zero;
 
         slot.Initialize(p, index);
-        
+
         slotMap[p] = slot;
         occupied[index] = true;
 
