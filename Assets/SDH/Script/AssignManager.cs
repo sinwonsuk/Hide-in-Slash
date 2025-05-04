@@ -20,7 +20,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
-    private List<string> monTypes = new List<string> { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" }; //몬스터 프리팹 이름
+    private List<string> monTypes = new List<string> { "PeanutGhost", "PeanutGhost", "PeanutGhost" }; //몬스터 프리팹 이름
+    //private List<string> monTypes = new List<string> { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" }; //몬스터 프리팹 이름
     private List<string> pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
     private Transform shipTf;
@@ -139,7 +140,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
-            espIndexs = MakeRandomValues(20, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
+            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
             InitializeMiniGames(); // 미니게임 뿌리기
             InitializeGenerators(); // 발전기 뿌리기
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
@@ -254,7 +255,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void InitializeMiniGames()
     {
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 5; i++)
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
