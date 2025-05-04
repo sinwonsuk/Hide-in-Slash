@@ -20,7 +20,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
     private List<int> roleIndexs = new();
-    private List<string> monTypes = new List<string> { "PeanutGhost", "PeanutGhost", "PeanutGhost" }; //몬스터 프리팹 이름
+    //private List<string> monTypes = new List<string> { "PeanutGhost", "PeanutGhost", "PeanutGhost" }; //몬스터 프리팹 이름
     //private List<string> monTypes = new List<string> { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" }; //몬스터 프리팹 이름
     private List<string> pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
@@ -69,7 +69,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
-            //AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
+            AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
             GameReadyManager.Instance.PropertiesAction += SetPlayerName;
 
         }
@@ -92,7 +92,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //게임내부임
 
         if (PhotonNetwork.IsMasterClient)
-        {           
+        {
             InitializeMap(); // 맵 생성 및 브로드캐스트
             Wait1();         // 마스터는 직접 실행
         }
@@ -143,7 +143,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
             espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
             InitializeMiniGames(); // 미니게임 뿌리기
             InitializeGenerators(); // 발전기 뿌리기
-            AssignRole();
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
             Debug.Log("방에서 마스터할일 완");
         }
@@ -278,11 +277,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         foreach (var player in PhotonNetwork.PlayerList)
         {
-            if (!player.CustomProperties.ContainsKey("Role"))
-            {
-                return false;
-            }
-
             if (!player.CustomProperties.ContainsKey("SpawnIndex"))
             {
                 return false;
@@ -293,18 +287,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public IEnumerator tttt()
     {
-
-       while (true)
-       {
-           if (AllPlayersHaveRoles())
-           {
-               if (InitializePlayers() == true)
-               {
-                   yield break;
-               }
-           }
-           yield return null;
-       }
+        while (true)
+        {
+            if (AllPlayersHaveRoles())
+            {
+                if (InitializePlayers() == true)
+                {
+                    yield break;
+                }
+            }
+            yield return null;
+        }
     }
 
 
