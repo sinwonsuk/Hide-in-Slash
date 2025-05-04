@@ -165,12 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47102c21a1a7f0b4f92c200027739699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 8
   isStunned: 0
   exclamationPrefab: {fileID: 7838346147354192671, guid: 3d5c9ed01e7510f4aaae0d2d381862ff, type: 3}
   cooldownTime: 20
   skillImage: {fileID: 0}
-  blackoutDuration: 5
+  blackoutDuration: 2.5
 --- !u!50 &2191573428496805871
 Rigidbody2D:
   serializedVersion: 5

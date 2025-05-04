@@ -249,7 +249,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void InitializeMiniGames()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
