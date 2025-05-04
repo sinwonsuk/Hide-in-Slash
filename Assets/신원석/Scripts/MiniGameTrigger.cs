@@ -20,7 +20,10 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (!view.IsMine)
+
+
+
+        if (view != null && !view.IsMine)
             return;
 
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
@@ -30,14 +33,9 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         }
         else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
         {
-            photonView.RPC("RequestCloseMiniGame", RpcTarget.MasterClient); // 모두에게 누가 닫았는지 전달
             CloseMiniGame();
         }
     }
-
-
-
-
 
     [PunRPC]
     void RequestOpenMiniGame()
