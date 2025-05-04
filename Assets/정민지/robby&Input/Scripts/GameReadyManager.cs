@@ -99,10 +99,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-        PropertiesAction -= HandleReadyChanged;
-        PropertiesAction -= HandleProfileIndexChanged;
-        PropertiesAction -= HandleRoleChanged;
-        PropertiesAction -= HandleRoleConfirmed;
     }
 
     void Start()
@@ -120,6 +116,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //    waitingPanel.SetActive(false);
         //    lobbyPanel.SetActive(true);
         //});
+    }
+
+    public void CleanUpEvents()
+    {
+        PropertiesAction -= HandleReadyChanged;
+        PropertiesAction -= HandleProfileIndexChanged;
+        PropertiesAction -= HandleRoleChanged;
+        PropertiesAction -= HandleRoleConfirmed;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -482,6 +486,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("MergeScene");
         }
+        CleanUpEvents();
     }
 
 
