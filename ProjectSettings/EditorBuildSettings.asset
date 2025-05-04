@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MergeScene.unity
     guid: cf31c957eb6a692479470327c5ddb886
+  - enabled: 0
+    path: Assets/Scenes/TEST.unity
+    guid: 1339d4dc66da8914e9603cb3daa8d523
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

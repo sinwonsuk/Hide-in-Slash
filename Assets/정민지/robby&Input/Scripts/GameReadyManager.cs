@@ -9,15 +9,15 @@ using PHashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using UnityEngine.Windows;
 using System;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System.Linq;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.Events;
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
-    public Action<Photon.Realtime.Player, Hashtable> PropertiesAction;
+    public UnityAction<Photon.Realtime.Player, Hashtable> PropertiesAction;
 
     [Header("닉네임")]
     // public GameObject loginchang;
@@ -486,9 +486,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         if (allConfirmed)
         {
             PhotonNetwork.LoadLevel("MergeScene");
+            CleanHandler();
         }
-
-        CleanHandler();
     }
 
 
