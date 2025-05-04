@@ -86,7 +86,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         {
             EventManager.TriggerEvent(EventType.LightOn);
             RequestDestroy();
-            Destroy(miniGameManager.gameObject);
+           
         }
     }
 
@@ -94,6 +94,8 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (isDestroyed) return;
         isDestroyed = true;
+
+        Destroy(miniGameManager.gameObject);
 
         if (PhotonNetwork.IsMasterClient)
         {
