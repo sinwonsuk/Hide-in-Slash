@@ -2,94 +2,61 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using ExitGames.Client.Photon;
-using System.Linq;
+using System.Collections.Generic;
 
-public class RoleSelectionManager : MonoBehaviourPun
+public class RoleSelectionManager : MonoBehaviourPunCallbacks
 {
-    [Header("추격자(UI)와 도망자(UI) 패널")]
-    [SerializeField] private GameObject BossPanel;
-    [SerializeField] private GameObject RunnerPanel;
-
-    [Header("슬롯 컨테이너")]
-    [SerializeField] private Transform runnerSlotContainer;
-
-    [Header("PlayerSlot")]
-    [SerializeField] private GameObject profileSlotPrefab;
-
-    [Header("Boss 전용")]
-    [SerializeField] private Button[] bossChoiceButtons;
-    [SerializeField] private Image[] bossChoiceImages;         
-    [SerializeField] private Sprite[] bossSprites;               
-
-    [Header("게임 시작 버튼")]
     [SerializeField] private Button startButton;
+    [SerializeField] private Image profileImage;     // 슬롯 프로필 이미지
+    [SerializeField] private Image characterImage;   // 캐릭터 아바타 이미지
+    [SerializeField] private Sprite[] profileSprites;
+    [SerializeField] private Sprite[] characterSprites;
+    [SerializeField] private string[] characterKeys;
 
-    public void Initialize()
+    [Header("Button Visuals")]
+    [SerializeField] private Image startButtonImage;
+    [SerializeField] private Sprite readyOffSprite;
+    [SerializeField] private Sprite readyOnSprite;
+
+    private bool isConfirmed = false;
+
+    private readonly List<string> pTypes = new List<string>
     {
-        bool isBoss = false;
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object roleObj)
-         && roleObj is string roleName)
-        {
-            isBoss = NetworkProperties.instance.GetMonsterStates(roleName);
-        }
+        "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7"
+    };
 
-        BossPanel.SetActive(isBoss);
-        RunnerPanel.SetActive(!isBoss);
+    public void SetProfileInfo(int profileIndex, string characterType)
+    {
+        // 프로필 슬롯 이미지
+        if (profileIndex >= 0 && profileIndex < profileSprites.Length)
+            profileImage.sprite = profileSprites[profileIndex];
 
-        // RunnerPanel 세팅
-        if (!isBoss)
-        {
-            // 기존 슬롯 모두 삭제
-            foreach (Transform ch in runnerSlotContainer) Destroy(ch.gameObject);
+        // 캐릭터 아바타 이미지
+        int charIndex = pTypes.IndexOf(characterType);
+        if (charIndex >= 0 && charIndex < characterSprites.Length)
+            characterImage.sprite = characterSprites[charIndex];
+    }
 
-            // 내 프로필 슬롯 하나 띄우기
-            var go = Instantiate(profileSlotPrefab, runnerSlotContainer);
-            var prof = go.GetComponent<OtherPlayerProfile>();
-            prof.targetPlayer = PhotonNetwork.LocalPlayer;
-            prof.Init();
-        }
+    private void Start()
+    {
+        startButton.onClick.AddListener(OnClickStart);
+    }
 
-        // BossPanel 세팅
-        if (isBoss)
-        {
-            // 버튼 이미지 세팅
-            for (int i = 0; i < bossChoiceButtons.Length; i++)
-            {
-                int idx = i;  // 클로저 방지
-                bossChoiceImages[i].sprite = bossSprites[i];
-                bossChoiceButtons[i].onClick.RemoveAllListeners();
-                bossChoiceButtons[i].onClick.AddListener(() =>
-                {
-                    // 로컬 플레이어 Role 업데이트
-                    string chosen = bossSprites[idx].name;
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(
-                        new Hashtable { { "Role", chosen } }
-                    );
-                    // 선택한 버튼만 강조
-                    HighlightBossChoice(idx);
-                });
-            }
-        }
+    private void OnClickStart()
+    {
+        if (isConfirmed) return;
 
-        // “시작” 버튼 세팅
-        startButton.onClick.RemoveAllListeners();
-        startButton.onClick.AddListener(() =>
-        {
-            PhotonNetwork.LocalPlayer.SetCustomProperties(
-                new Hashtable { { "Ready", true } }
-            );
-            startButton.interactable = false;
+        isConfirmed = true;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {
+            { "RoleConfirmed", true }
         });
-    }
 
-    private void HighlightBossChoice(int chosenIdx)
-    {
-        // 예: 선택된 버튼만 강조(비활성화) 처리
-        for (int i = 0; i < bossChoiceButtons.Length; i++)
-        {
-            bossChoiceButtons[i].interactable = (i != chosenIdx);
-            bossChoiceImages[i].color = (i == chosenIdx ? Color.white : new Color(1, 1, 1, 0.5f));
-        }
-    }
+        startButton.interactable = false;
 
+        if (startButtonImage != null && readyOnSprite != null)
+            startButtonImage.sprite = readyOnSprite;
+
+        gameObject.SetActive(false);
+    }
 }
