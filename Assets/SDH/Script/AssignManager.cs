@@ -138,7 +138,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
-            espIndexs = MakeRandomValues(10, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
+            espIndexs = MakeRandomValues(23, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
             InitializeMiniGames(); // 미니게임 뿌리기
             InitializeGenerators(); // 발전기 뿌리기
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
@@ -253,7 +253,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void InitializeMiniGames()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
@@ -322,9 +322,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
     public void AssignRole()
     {
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-        //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
+        string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
-        string[] monsterTypes = { "ProteinGhost", "ProteinGhost", "PukeGirlGhost" };
+        //string[] monsterTypes = { "ProteinGhost", "ProteinGhost", "PukeGirlGhost" };
         string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
 
         roleIndexs = MakeRandomValues(players.Length, players.Length);
