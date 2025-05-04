@@ -23,7 +23,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
         {
 
-            photonView.RPC("OpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
+            photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
             OpenMiniGame();
         }
         else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
