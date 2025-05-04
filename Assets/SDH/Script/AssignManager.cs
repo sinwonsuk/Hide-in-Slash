@@ -292,17 +292,19 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public IEnumerator tttt()
     {
-        while (true)
-        {
-            if (AllPlayersHaveRoles())
-            {
-                if (InitializePlayers() == true)
-                {
-                    yield break;
-                }
-            }
-            yield return null;
-        }
+        yield break;
+
+        //while (true)
+        //{
+        //    if (AllPlayersHaveRoles())
+        //    {
+        //        if (InitializePlayers() == true)
+        //        {
+        //            yield break;
+        //        }
+        //    }
+        //    yield return null;
+        //}
     }
 
 
