@@ -99,6 +99,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+
+    public void CleanHandler()
+    {
         PropertiesAction -= HandleReadyChanged;
         PropertiesAction -= HandleProfileIndexChanged;
         PropertiesAction -= HandleRoleChanged;
@@ -482,6 +487,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("MergeScene");
         }
+
+        CleanHandler();
     }
 
 
