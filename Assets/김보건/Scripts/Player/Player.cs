@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
 using ExitGames.Client.Photon;
+using UnityEngine.Splines.ExtrusionShapes;
 
 public enum EscapeType
 {
@@ -45,7 +46,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
         profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
 
-        flashLight.enabled = false;
+        
 
     }
 
@@ -87,11 +88,20 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         PlayerStateMachine.Initialize(idleState);
 
+        flashLight.enabled = true;              
+        lightCollider.enabled = true;
+        isLightOn = true;
+
         if (photonView.IsMine)
         {
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
+
+            photonView.RPC("SetFlashlight", RpcTarget.Others, true);
+
+            // 다른 플레이어에게도 전파
+            photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
             GameObject playerCanvas = GameObject.Find("PlayerCanvas");
             if (playerCanvas != null)
@@ -158,11 +168,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             PlayerStateMachine.currentState.Update();
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                ToggleLight();
-            }
 
             if (Input.GetKeyDown(KeyCode.M))
             {
@@ -519,6 +524,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         }
 
+        if (collision.CompareTag("Prison"))
+        {
+            isLightOn = false;
+            flashLight.enabled = false;
+            lightCollider.enabled = false;
+            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+        }
+
 
     }
 
@@ -528,12 +541,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (collision.CompareTag("PrisonDoor"))
         {
             isInPrisonDoor = false;
-            if (hasPrisonKey)
-            {
-                
-            }
             // 이벤트로 isInPrisonDoor = true
-            EventManager.TriggerEvent(EventType.InPrisonDoor, false);
+            EventManager.TriggerEvent(EventType.InPrisonDoor, true);
         }
 
         if (collision.CompareTag("Hatch"))
@@ -543,6 +552,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Prison"))
         {
+            isLightOn = true;
+            flashLight.enabled = true;
+            lightCollider.enabled = true;
+            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
         }
 
@@ -578,9 +591,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         Color c = sr.color;
         c.a = 0.5f;
         sr.color = c;
-
-        flashLight.enabled = false;
-        circleLight.enabled = false;
 
         gameObject.tag = "DeadPlayer";
         gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
@@ -744,18 +754,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         flashLight.enabled = turnOn;
     }
 
-    private void ToggleLight()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        isLightOn = !isLightOn;
-        flashLight.enabled = isLightOn;
-
-        photonView.RPC("SetFlashlight", RpcTarget.Others, isLightOn);
-
-    }
-
     private void TurnOnLight()
     {
         if (!photonView.IsMine)
@@ -763,6 +761,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         isLightOn = true;
         flashLight.enabled = true;
+        lightCollider.enabled = true;
         photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
         Debug.Log("손전등켜짐");
@@ -775,7 +774,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         isLightOn = false;
         flashLight.enabled = false;
-
+        lightCollider.enabled = false;
         photonView.RPC("SetFlashlight", RpcTarget.Others, false);
 
         Debug.Log("손전등꺼짐");
@@ -788,14 +787,18 @@ public class Player : MonoBehaviourPun, IPunObservable
         isLightOn = true;
         flashLight.enabled = true;
         circleLight.enabled = true;
+        lightCollider.enabled = true;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
     }
 
     private void TurnOffEntireLight()
     {
+        if (!photonView.IsMine)
+            return;
         isLightOn = false;
         flashLight.enabled = false;
         circleLight.enabled = false;
+        lightCollider.enabled = false;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
     }
 
@@ -834,17 +837,17 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         isLightOn = turnOn;
         flashLight.enabled = turnOn;
+        lightCollider.enabled = turnOn;
     }
 
     [PunRPC]
     public void SetFlashEntireLight(bool turnOn)
     {
-        if (!photonView.IsMine)
-            return;
         isLightOn = turnOn;
         isCircleLightOn = turnOn;
         flashLight.enabled = turnOn;
         circleLight.enabled = turnOn;
+        lightCollider.enabled = turnOn;
     }
     [PunRPC]
     void TeleportPlayer(int viewID, Vector3 pos)

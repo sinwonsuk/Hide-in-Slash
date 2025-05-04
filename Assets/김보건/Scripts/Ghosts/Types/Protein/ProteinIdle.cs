@@ -11,8 +11,9 @@ public class ProteinIdle : GhostState
     {
         base.Enter();
         ghost.SetZeroVelocity();
+        ghost.rb.constraints |= RigidbodyConstraints2D.FreezePosition;
         ghost.UpdateAnimParam(Vector2.zero);
-        Debug.Log("°¡¸¸È÷");
+        Debug.Log("ê°€ë§Œížˆ");
     }
     public override void Update()
     {
@@ -26,5 +27,6 @@ public class ProteinIdle : GhostState
     public override void Exit()
     {
         base.Exit();
+        ghost.rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
     }
 }

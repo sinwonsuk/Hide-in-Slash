@@ -11,6 +11,7 @@ public class PeanutIdle : GhostState
     {
         base.Enter();
         ghost.SetZeroVelocity();
+        ghost.rb.constraints |= RigidbodyConstraints2D.FreezePosition;
         ghost.UpdateAnimParam(Vector2.zero);
     }
     public override void Update()
@@ -25,6 +26,7 @@ public class PeanutIdle : GhostState
     public override void Exit()
     {
         base.Exit();
+        ghost.rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
     }
 
 }

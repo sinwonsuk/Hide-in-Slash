@@ -57,11 +57,6 @@ public class PlayerEscapeState : PlayerState
 
                 player.StartCoroutine(EscapeWithDelay(5f));
 
-                if (player.photonView.IsMine)
-                {
-                    PhotonNetwork.LoadLevel("RobbyScene");
-                }
-
                 break;
 
             default:
@@ -73,6 +68,15 @@ public class PlayerEscapeState : PlayerState
     {
         yield return new WaitForSeconds(delay);
 
+        if (player.UseItemAndEscapeUI != null)
+        {
+            Object.Destroy(player.UseItemAndEscapeUI);
+        }
+        if (player.photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(player.gameObject);    
+            PhotonNetwork.LoadLevel("RobbyScene");
+        }
     }
 
 }

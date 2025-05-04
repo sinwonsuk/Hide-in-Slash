@@ -190,10 +190,8 @@ public class Peanut : Ghost, IPunObservable
 
     IEnumerator enumerator()
     {
-        EventManager.TriggerEvent(EventType.LightOff);
         EventManager.TriggerEvent(EventType.EntireLightOff);
         yield return new WaitForSeconds(blackoutDuration);
-        EventManager.TriggerEvent(EventType.LightOn);
         EventManager.TriggerEvent(EventType.EntireLightOn);
     }
    
