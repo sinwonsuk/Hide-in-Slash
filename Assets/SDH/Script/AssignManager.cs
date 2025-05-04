@@ -275,6 +275,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         foreach (var player in PhotonNetwork.PlayerList)
         {
+            if (!player.CustomProperties.ContainsKey("Role"))
+            {
+                return false;
+            }
+
             if (!player.CustomProperties.ContainsKey("SpawnIndex"))
             {
                 return false;
@@ -317,9 +322,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
     public void AssignRole()
     {
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-        string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
+        //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
-        //string[] monsterTypes = { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" };
+        string[] monsterTypes = { "ProteinGhost", "ProteinGhost", "PukeGirlGhost" };
         string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
 
         roleIndexs = MakeRandomValues(players.Length, players.Length);
