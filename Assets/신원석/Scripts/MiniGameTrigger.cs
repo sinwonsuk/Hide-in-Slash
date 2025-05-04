@@ -18,9 +18,6 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (!photonView.IsMine) 
-            return;
-
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
         {
             photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
@@ -48,7 +45,6 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         PhotonView pv = collision.GetComponent<PhotonView>();
         if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
@@ -85,8 +81,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (miniGameManager != null && isPlaying == true)
         {
             EventManager.TriggerEvent(EventType.LightOn);
-            RequestDestroy();
-           
+            RequestDestroy();        
         }
     }
 
@@ -111,7 +106,6 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DestroySelf(int viewID)
     {
-
         PhotonView target = PhotonView.Find(viewID);
         if (target != null)
         {
