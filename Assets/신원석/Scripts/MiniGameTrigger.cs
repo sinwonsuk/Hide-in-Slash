@@ -20,10 +20,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
-
-
-        if (view == null && !view.IsMine)
+        if (view == null || !view.IsMine)
             return;
 
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
