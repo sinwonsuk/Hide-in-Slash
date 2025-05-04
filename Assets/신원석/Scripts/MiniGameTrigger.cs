@@ -23,7 +23,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
 
 
-        if (view != null && !view.IsMine)
+        if (view == null && !view.IsMine)
             return;
 
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
