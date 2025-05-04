@@ -22,7 +22,8 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
         {
-            isPlaying = true;
+
+            photonView.RPC("OpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
             OpenMiniGame();
         }
         else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
@@ -30,7 +31,21 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
             CloseMiniGame();
         }
     }
+    [PunRPC]
+    void RequestOpenMiniGame()
+    {
+        if (PhotonNetwork.IsMasterClient && isPlaying == false)
+        {
+            isPlaying = true;
+            photonView.RPC("ControllMiniGame", RpcTarget.All); // 모두에게 누가 열었는지 전달
+        }
+    }
 
+    [PunRPC]
+    void ControllMiniGame()
+    {
+        isPlaying = true;      
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
