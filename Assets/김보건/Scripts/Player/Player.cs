@@ -377,14 +377,33 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
+    }
+
+    private IEnumerator DeathUIDeleteDelay(GameObject ui, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ui.SetActive(false);
+    }
+
+    private IEnumerator GhostDeathSequence(float delay)
+    {
+        yield return new WaitForSeconds(delay); 
+
+        PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (!photonView.IsMine) return;
 
-        if (collision.collider.CompareTag("Peanut"))
+        if (collision.CompareTag("Peanut"))
         {
 
             countLife--;
             Debug.Log("땅콩 충돌");
-         
+
             if (countLife <= 0 && !isDead)
             {
                 Debug.Log("너죽음");
@@ -403,7 +422,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             else if (countLife == 1)
             {
                 photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
-                if(photonView.IsMine)
+                if (photonView.IsMine)
                     StartCoroutine(UpdateCameraConfinerDelayed());
                 EventManager.TriggerEvent(EventType.PlayerHpOne);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
@@ -412,7 +431,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.collider.CompareTag("Protein"))
+        if (collision.CompareTag("Protein"))
         {
 
             countLife--;
@@ -444,7 +463,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.collider.CompareTag("PukeGirl"))
+        if (collision.CompareTag("PukeGirl"))
         {
 
             countLife--;
@@ -476,25 +495,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             }
         }
-    }
-
-    private IEnumerator DeathUIDeleteDelay(GameObject ui, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ui.SetActive(false);
-    }
-
-    private IEnumerator GhostDeathSequence(float delay)
-    {
-        yield return new WaitForSeconds(delay); 
-
-        PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!photonView.IsMine) return;
 
         if (collision.CompareTag("PlayerSight"))
             return;

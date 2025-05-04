@@ -53,8 +53,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject lobbyPanel;
     [SerializeField] private GameObject hands;    
     [SerializeField] private GameObject waitingPanel;
-    [SerializeField] private GameObject roleSelectionUIPrefab;
-    private GameObject _roleUIInstance;
+    [SerializeField] private GameObject BossUI;
+    [SerializeField] private GameObject BossPanel;
+    [SerializeField] private GameObject RunnerPanel;
 
     [Header("Slot UI")]
     [SerializeField] private RectTransform[] slotPoints; // length=5
@@ -82,6 +83,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
             PropertiesAction += HandleReadyChanged;
             PropertiesAction += HandleProfileIndexChanged;
+            PropertiesAction += HandleRoleChanged;
+            PropertiesAction += HandleRoleConfirmed;
 
         }
         else
@@ -98,6 +101,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         PropertiesAction -= HandleReadyChanged;
         PropertiesAction -= HandleProfileIndexChanged;
+        PropertiesAction -= HandleRoleChanged;
+        PropertiesAction -= HandleRoleConfirmed;
     }
 
     void Start()
@@ -125,8 +130,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel = GameObject.Find("robby");
         waitingPanel = GameObject.Find("WaitingUI");
         hands = GameObject.Find("RobbyHands");
-        roleSelectionUIPrefab = GameObject.Find("BossSelectionUI");
-        playerSlotPrefab = Resources.Load<GameObject>("PlayerSlot");
+        BossUI = GameObject.Find("BossSelectionUI");
+        BossPanel = BossUI.transform.Find("BossPanel")?.gameObject;
+        RunnerPanel = BossUI.transform.Find("RunnerPanel")?.gameObject;
 
         slotPoints = new RectTransform[5];
         var waitingUI = GameObject.Find("WaitingUI");
@@ -162,7 +168,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(true);
         hands.SetActive(true);
         waitingPanel.SetActive(false);
-        roleSelectionUIPrefab.SetActive(false);
+        BossPanel.SetActive(false);
+        RunnerPanel.SetActive(false);
 
         // leaveButton 클릭 리스너
         //leaveButton.onClick.RemoveAllListeners();
@@ -448,6 +455,36 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void HandleRoleChanged(RealtimePlayer target, Hashtable changedProps)
+    {
+        if (target == PhotonNetwork.LocalPlayer && changedProps.ContainsKey("Role"))
+        {
+            ShowRolePanel();
+        }
+    }
+    private void HandleRoleConfirmed(RealtimePlayer target, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("RoleConfirmed") && (bool)changedProps["RoleConfirmed"])
+        {
+            TryStartGame(); // 모든 플레이어가 RoleConfirmed면 MergeScene으로
+        }
+    }
+
+    private void TryStartGame()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        bool allConfirmed = PhotonNetwork.PlayerList.All(p =>
+            p.CustomProperties.TryGetValue("RoleConfirmed", out var c) && (bool)c
+        );
+
+        if (allConfirmed)
+        {
+            PhotonNetwork.LoadLevel("MergeScene");
+        }
+    }
+
+
     //public override void OnLeftRoom()
     //{
     //    // 방 나가기 시 로비로 돌아가기
@@ -521,7 +558,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.CurrentRoom.IsVisible == false)
                 Debug.Log("이제 방이 안보임");
 
-            PropertiesAction -= HandleReadyChanged;
             AssignManager.instance.StartGame();
         }
     }
@@ -556,17 +592,101 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         return new List<int>(randomValues);
     }
 
-    //public void ShowRolePanel()
-    //{
-    //    roleSelectionUIPrefab.SetActive(true);
-    //    if (_roleUIInstance == null)
-    //        _roleUIInstance = Instantiate(roleSelectionUIPrefab);
-    //    else
-    //        _roleUIInstance.SetActive(true);
-    //
-    //    var mgr = _roleUIInstance.GetComponent<RoleSelectionManager>();
-    //    if (mgr != null) mgr.Initialize();
-    //}
+    public void ShowRolePanel()
+    {
+        waitingPanel.SetActive(false);
+        if (!PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out var roleObj))
+        {
+            Debug.LogWarning("❗ Role 값이 아직 설정되지 않았습니다.");
+            return;
+        }
+
+        if (NetworkProperties.instance == null)
+        {
+            Debug.LogError("❌ NetworkProperties.instance 가 null입니다.");
+            return;
+        }
+
+        bool isBoss = NetworkProperties.instance.GetMonsterStates((string)roleObj);
+
+        int profileIndex = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("ProfileIndex", out var pIndex)
+                       ? (int)pIndex : 0;
+
+        if (isBoss)
+        {
+            if (BossPanel == null)
+            {
+                Debug.LogError("❌ BossPanel 이 null입니다.");
+                return;
+            }
+
+            BossPanel.SetActive(true);
+            var mgr = BossPanel.GetComponent<BossSelectionManager>();
+            if (mgr == null)
+            {
+                Debug.LogError("❌ BossSelectionManager가 BossPanel에 없습니다.");
+                return;
+            }
+            mgr.SetProfileImage(profileIndex);
+        }
+        else
+        {
+            if (RunnerPanel == null)
+            {
+                Debug.LogError("❌ RunnerPanel 이 null입니다.");
+                return;
+            }
+
+            RunnerPanel.SetActive(true);
+            string characterType = (string)roleObj;
+            int profileIndexs = profileIndex;
+
+            var mgr = RunnerPanel.GetComponent<RoleSelectionManager>();
+            if (mgr == null)
+            {
+                Debug.LogError("❌ RoleSelectionManager가 RunnerPanel에 없습니다.");
+                return;
+            }
+            mgr.SetProfileInfo(profileIndexs, characterType);
+        }
+    }
+
+
+    public void WaitUntilAllInitProperties(Action onReady)
+    {
+        StartCoroutine(WaitUntilAllPropertiesAssignedCoroutine(onReady));
+    }
+
+    private IEnumerator WaitUntilAllPropertiesAssignedCoroutine(Action onReady)
+    {
+        float timeout = 5f;
+        float elapsed = 0f;
+
+        while (elapsed < timeout)
+        {
+            var props = PhotonNetwork.LocalPlayer.CustomProperties;
+
+            bool hasRole = props.TryGetValue("Role", out _);
+            bool hasProfile = props.TryGetValue("ProfileIndex", out _);
+
+            if (hasRole && hasProfile)
+            {
+                Debug.Log("✅ 모든 초기 속성 수신 완료");
+                onReady?.Invoke();  // 모든 조건 만족 시 콜백 실행
+                yield break;
+            }
+
+            if (!hasRole) Debug.Log("⏳ Role 대기 중...");
+            if (!hasProfile) Debug.Log("⏳ ProfileIndex 대기 중...");
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        Debug.LogWarning("⛔ 초기 속성이 제한 시간 내에 도착하지 않음");
+        yield break;
+    }
+
 
     #endregion
 

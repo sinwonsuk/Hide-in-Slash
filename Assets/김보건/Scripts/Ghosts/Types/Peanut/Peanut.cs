@@ -59,7 +59,7 @@ public class Peanut : Ghost, IPunObservable
 		if (exclamationPrefab != null)
 		{
 			exclamationInstance = Instantiate(exclamationPrefab, transform);
-			exclamationInstance.transform.localPosition = Vector3.up * 2f;
+			exclamationInstance.transform.localPosition = Vector3.up * 3f;
 			exclamationInstance.SetActive(false);
 		}
 	}

@@ -73,6 +73,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
             GameReadyManager.Instance.PropertiesAction += SetPlayerName;
 
         }
+
+        if (PhotonNetwork.LocalPlayer.IsMasterClient || true) 
+        {
+            GameReadyManager.Instance.WaitUntilAllInitProperties(GameReadyManager.Instance.ShowRolePanel);
+        }
     }
 
     //IEnumerator CallAssignDelayed()
@@ -318,43 +323,28 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     public void AssignRole()
     {
-
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-        string monsterName = monTypes[UnityEngine.Random.Range(0, monTypes.Count)];
-        ExitGames.Client.Photon.Hashtable monProp = new();
-        monProp.Add("Role", monsterName);
-        players[roleIndexs[0]].SetCustomProperties(monProp);
+        string[] monsterTypes = { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" };
+        string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
 
+        roleIndexs = MakeRandomValues(players.Length, players.Length);
+        ExitGames.Client.Photon.Hashtable monProp = new();
+        monProp.Add("Role", bossType);
+        monProp.Add("BossType", bossType);
+        players[roleIndexs[0]].SetCustomProperties(monProp);
 
         for (int i = 1; i < players.Length; i++)
         {
             string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Count)];
-            ExitGames.Client.Photon.Hashtable playerProp = new ExitGames.Client.Photon.Hashtable();
+            ExitGames.Client.Photon.Hashtable playerProp = new();
             playerProp.Add("Role", playerName);
             pTypes.Remove(playerName);
             players[roleIndexs[i]].SetCustomProperties(playerProp);
         }
+
         Debug.Log("역할배정완료");
-
-        //여기에다가 대기실에서 자기 역할 알 수 있게 하는 로직 추가할 예정
-        //photonView.RPC(nameof(RPC_NotifyRole), RpcTarget.AllBuffered);
-
-        if (photonView == null)
-        {
-            Debug.Log("포톤뷰없음");
-        }
-        
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.LoadLevel("MergeScene");
-        }
     }
 
-    [PunRPC]
-    private void RPC_NotifyRole()
-    {
-        //GameReadyManager.Instance.ShowRolePanel();
-    }
 
     [PunRPC]
     public void RPC_LoadMergeScene()
@@ -383,25 +373,28 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         ExitGames.Client.Photon.Hashtable prop = PhotonNetwork.LocalPlayer.CustomProperties;
 
-
-
+        string role = "";
+        string bossType = "";
 
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
-        {
-            if (selfRoleObj is string selfRoles)
-            {
-                playerName = selfRoles;
-            }
-        }
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("SpawnIndex", out object index))
-        {
-            if (index is int selfRole)
-            {
-                spawnIndex = selfRole;
-            }
-        }
+            role = selfRoleObj.ToString();
 
-        PhotonNetwork.Instantiate(playerName, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("SpawnIndex", out object index))
+            spawnIndex = (int)index;
+
+        //BossType도 함께 가져오기
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("BossType", out object bossTypeObj))
+            bossType = bossTypeObj.ToString();
+
+        //Instantiate할 때 Role 또는 BossType을 기준으로
+        if (role == "Boss" && !string.IsNullOrEmpty(bossType))
+        {
+            PhotonNetwork.Instantiate(bossType, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+        }
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();

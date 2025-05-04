@@ -211,7 +211,7 @@ public class PukeGirl : Ghost, IPunObservable
         float signX = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Mathf.Sign(dir.x) : 0f;
 
         float xOffset = 1.5f;
-        float yOffset = -1.2f;
+        float yOffset = 0f;
 
         Vector3 spawnPos = transform.position + new Vector3(signX * xOffset, yOffset, 0f);
 

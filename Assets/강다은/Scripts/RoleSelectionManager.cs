@@ -2,52 +2,61 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using ExitGames.Client.Photon;
-using System.Linq;
+using System.Collections.Generic;
 
-public class RoleSelectionManager : MonoBehaviourPun
+public class RoleSelectionManager : MonoBehaviourPunCallbacks
 {
-    [Header("추격자(UI)와 도망자(UI) 패널")]
-    [SerializeField] private GameObject BossPanel;
-    [SerializeField] private GameObject RunnerPanel;
-
-    [Header("슬롯 컨테이너")]
-    [SerializeField] private Transform slotContainer;
-
-    [Header("PlayerSlot")]
-    [SerializeField] private GameObject profileSlotPrefab;
-
-    [Header("Boss 전용")]
-    [SerializeField] private Button bossChoiceButtons;         
-    [SerializeField] private Image[] bossChoiceImages;         
-    [SerializeField] private Sprite[] bossSprites;               
-
-    [Header("게임 시작 버튼")]
     [SerializeField] private Button startButton;
+    [SerializeField] private Image profileImage;     // 슬롯 프로필 이미지
+    [SerializeField] private Image characterImage;   // 캐릭터 아바타 이미지
+    [SerializeField] private Sprite[] profileSprites;
+    [SerializeField] private Sprite[] characterSprites;
+    [SerializeField] private string[] characterKeys;
 
-    public void Initialize()
+    [Header("Button Visuals")]
+    [SerializeField] private Image startButtonImage;
+    [SerializeField] private Sprite readyOffSprite;
+    [SerializeField] private Sprite readyOnSprite;
+
+    private bool isConfirmed = false;
+
+    private readonly List<string> pTypes = new List<string>
     {
-        bool isBoss = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out var roleObj)
-                      && NetworkProperties.instance.GetMonsterStates((string)roleObj);
-        BossPanel.SetActive(isBoss);
-        RunnerPanel.SetActive(!isBoss);
+        "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7"
+    };
 
-        foreach (Transform child in slotContainer)
-            Destroy(child.gameObject);
+    public void SetProfileInfo(int profileIndex, string characterType)
+    {
+        // 프로필 슬롯 이미지
+        if (profileIndex >= 0 && profileIndex < profileSprites.Length)
+            profileImage.sprite = profileSprites[profileIndex];
 
-        var me = PhotonNetwork.LocalPlayer;
-        var go = Instantiate(profileSlotPrefab, slotContainer);
-        var prof = go.GetComponent<OtherPlayerProfile>();
-        prof.targetPlayer = me;
-        prof.Init();
-
-        startButton.onClick.RemoveAllListeners();
-        startButton.onClick.AddListener(() =>
-        {
-            PhotonNetwork.LocalPlayer.SetCustomProperties(
-                new ExitGames.Client.Photon.Hashtable { { "Ready", true } }
-            );
-            startButton.interactable = false;
-        });
+        // 캐릭터 아바타 이미지
+        int charIndex = pTypes.IndexOf(characterType);
+        if (charIndex >= 0 && charIndex < characterSprites.Length)
+            characterImage.sprite = characterSprites[charIndex];
     }
 
+    private void Start()
+    {
+        startButton.onClick.AddListener(OnClickStart);
+    }
+
+    private void OnClickStart()
+    {
+        if (isConfirmed) return;
+
+        isConfirmed = true;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {
+            { "RoleConfirmed", true }
+        });
+
+        startButton.interactable = false;
+
+        if (startButtonImage != null && readyOnSprite != null)
+            startButtonImage.sprite = readyOnSprite;
+
+        gameObject.SetActive(false);
+    }
 }
