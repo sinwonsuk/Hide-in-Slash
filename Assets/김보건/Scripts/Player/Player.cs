@@ -88,9 +88,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         PlayerStateMachine.Initialize(idleState);
 
-        flashLight.enabled = true;              
-        lightCollider.enabled = true;
-        isLightOn = true;
+        //flashLight.enabled = true;              
+        //lightCollider.enabled = true;
+        //isLightOn = true;
 
         if (photonView.IsMine)
         {
@@ -98,9 +98,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (cam != null)
                 cam.Follow = transform;
 
-            photonView.RPC("SetFlashlight", RpcTarget.Others, true);
-
-            // 다른 플레이어에게도 전파
             photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
             GameObject playerCanvas = GameObject.Find("PlayerCanvas");
@@ -464,15 +461,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = false;
         }
 
-        if (collision.CompareTag("Prison"))
-        {
-            isLightOn = true;
-            flashLight.enabled = true;
-            lightCollider.enabled = true;
-            isInsidePrison = false;
-            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
-            profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
-        }
+        //if (collision.CompareTag("Prison"))
+        //{
+        //    isLightOn = true;
+        //    flashLight.enabled = true;
+        //    lightCollider.enabled = true;
+        //    isInsidePrison = false;
+        //    photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+        //    profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
+        //}
 
     }
 
@@ -711,25 +708,25 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.points = scaled;
     }
 
-    public void OnEvent(EventData data)
-    {
-        if (data.Code != EVENT_BLACKOUT) return;
+    //public void OnEvent(EventData data)
+    //{
+    //    if (data.Code != EVENT_BLACKOUT) return;
 
-        float duration = (float)data.CustomData;
-        if (photonView.IsMine)
-        {
-            flashLight.enabled = false;
-            circleLight.enabled = false;
-            StartCoroutine(DelayedTurnOn(duration));
-        }
-    }
+    //    float duration = (float)data.CustomData;
+    //    if (photonView.IsMine)
+    //    {
+    //        flashLight.enabled = false;
+    //        circleLight.enabled = false;
+    //        StartCoroutine(DelayedTurnOn(duration));
+    //    }
+    //}
 
-    private IEnumerator DelayedTurnOn(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        flashLight.enabled = true;
-        circleLight.enabled = true;
-    }
+    //private IEnumerator DelayedTurnOn(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //    flashLight.enabled = true;
+    //    circleLight.enabled = true;
+    //}
 
     #endregion
 
