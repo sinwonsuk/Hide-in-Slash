@@ -166,11 +166,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             PlayerStateMachine.currentState.Update();
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (isInMiniGameTrigger && Input.GetKeyDown(KeyCode.E))
             {
-                InputE();
-                photonView.RPC("HandleInputE", RpcTarget.AllBuffered);
+                currentTrigger.TryOpenMiniGame(photonView);
             }
+
 
             if (Input.GetKeyDown(KeyCode.M))
             {
@@ -314,6 +314,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine) return;
 
+        if (collision.CompareTag("MiniGameTrigger"))
+        {
+            currentTrigger = collision.GetComponent<MiniGameTrigger>();
+            isInMiniGameTrigger = true;
+        }
+
         if (collision.CompareTag("Peanut"))
         {
             countLife--;
@@ -455,6 +461,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine) return;
 
+        if (collision.CompareTag("MiniGameTrigger"))
+        {
+            isInMiniGameTrigger = false;
+            currentTrigger = null;
+        }
+
         if (collision.CompareTag("PrisonDoor"))
         {
             isInPrisonDoor = false;
@@ -483,13 +495,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         return Input.GetKeyDown(KeyCode.E);
     }
-
-    [PunRPC]
-    void HandleInputE()
-    {
-    }
-
-
 
     [PunRPC]
     public void CaughtByGhost()
@@ -1227,4 +1232,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     bool isTeleporting =false;
 
     bool isInitialized = false;
+
+    bool isInMiniGameTrigger =false;
+    MiniGameTrigger currentTrigger;
 }
