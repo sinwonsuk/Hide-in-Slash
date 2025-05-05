@@ -439,6 +439,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Prison"))
         {
+            isInsidePrison = true;
             isLightOn = false;
             flashLight.enabled = false;
             lightCollider.enabled = false;
@@ -468,6 +469,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             isLightOn = true;
             flashLight.enabled = true;
             lightCollider.enabled = true;
+            isInsidePrison = false;
             photonView.RPC("SetFlashlight", RpcTarget.Others, false);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
         }
@@ -660,6 +662,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
+
+        if (IsInsidePrison())
+            return;
+
         isLightOn = true;
         flashLight.enabled = true;
         circleLight.enabled = true;
@@ -1178,6 +1184,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [Header("감옥키")]
     [SerializeField] private bool hasPrisonKey = false;
     private bool isInPrisonDoor = false;
+    private bool isInsidePrison = false;
 
     [Header("잡혀서 감옥감")]
     [SerializeField] private GameObject moveMap;
