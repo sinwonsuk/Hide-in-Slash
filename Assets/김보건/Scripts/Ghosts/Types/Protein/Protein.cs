@@ -8,45 +8,6 @@ using UnityEngine.UI;
 
 public class Protein : Ghost, IPunObservable
 {
-    public override GhostState moveState { get; protected set; }
-    private GhostState normalIdleState;
-    private GhostState normalMoveState;
-    private GhostState skillIdleState;
-    private GhostState skillMoveState;
-
-
-
-    [Header("단백질섭취(벌크업)")]
-    [SerializeField] private float ProteinDuration = 10f; //벌크업 지속시간
-    [SerializeField] private float ProteincooldownDuration = 5f;    //쿨타임
-    [SerializeField] private float buffedSpeed = 2f;
-    private bool isDashing = false; //대쉬 여부
-    private bool isProtein = false; //단백질 섭취 여부
-    private bool isProteinCooldown = false; //단백질 쿨타임 여부
-    [SerializeField] private float proteinTimer; //지속시간 타이머
-    [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
-
-    [Header("스킬쿨타임")]
-    [SerializeField] private float cooldownTime = 20f;
-    private float cooldownTimer = 0f;
-    private bool isCoolingDown = false;
-    [SerializeField] private Image skillImage;
-
-
-    private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
-
-    private float originalSpeed;
-    private Vector3 originalScale;
-
-    private PhotonView photonView;
-
-    private Vector3 networkedPosition;
-    private Vector3 networkedVelocity;
-    private float lerpSpeed = 10f;
-    private bool networkedIsMoving;
-    private float networkedDirX;
-    private float networkedDirY;
-    bool isTeleporting = false;
 
     protected override void Awake()
     {
@@ -117,91 +78,68 @@ public class Protein : Ghost, IPunObservable
         isTeleporting = false;
     }
 
-    // 업데이트에 돌리기
-    public void CooldownSkill()
-    {
-        if (isCoolingDown)
+
+	protected override void Update()
+	{
+		base.Update();
+
+        if (photonView.IsMine && Input.GetKeyDown(KeyCode.K))
         {
-            cooldownTimer += Time.deltaTime;
-            skillImage.fillAmount = 1f - (cooldownTimer / cooldownTime);
-
-            if (cooldownTimer >= cooldownTime)
-            {
-                isCoolingDown = false;
-                skillImage.fillAmount = 0f;
-            }
+            impulseSource.GenerateImpulse(); // 또는 GenerateImpulse(Vector3.down)
+            Debug.Log("Impulse Triggered");
         }
-    }
-
-    // 스킬 사용
-    private void UseSkill()
-    {
-        isCoolingDown = true;
-        cooldownTimer = 0f;
-        if (photonView.IsMine && skillImage != null)
-        {
-            skillImage.fillAmount = 1f;
-        }
-        //StartCoroutine(StartDash());
-    }
-
-    //IEnumerator StartDash()
-    //{
-    //    isDashing = true;
-
-    //    rb.AddForce(new Vector2(facingDir, facingUpDir) * moveSpeed * 10f, ForceMode2D.Impulse);
-    //    yield return new WaitForSeconds(0.5f);
-    //    rb.linearVelocity = Vector2.zero;
-    //    isDashing = false;
-    //}
-    protected override void Update()
-    {
-        base.Update();
-        if (isDashing)
-            return;
 
         if (photonView.IsMine)
-        {
-            if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
-            {
-                photonView.RPC("DrinkProtein", RpcTarget.All);
-            }
-            CooldownSkill();
-        }
-        else
-        {
-            //이동보간
-            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
+		{
+			if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
+			{
+				photonView.RPC("DrinkProtein", RpcTarget.All);
+			}
 
-            anim.SetBool("IsMoving", networkedIsMoving);
-            anim.SetFloat("DirX", networkedDirX);
-            anim.SetFloat("DirY", networkedDirY);
+			diceTimer += Time.deltaTime;
 
-            if (Mathf.Abs(networkedDirX) >= Mathf.Abs(networkedDirY))
-            {
-                sr.flipX = networkedDirX < 0;
-            }
-        }
+			if (diceTimer >= diceCoolTime)
+			{
+				diceTimer = 0f;
+				int roll = Random.Range(1, 7);
+				Debug.Log("프로틴 주사위 굴리기: " + roll);
+				photonView.RPC("RollDice", RpcTarget.All, roll);
+			}
+		}
+		else
+		{
+			//이동보간
+			transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
 
-        if (isProtein)
-        {
-            proteinTimer -= Time.deltaTime;
-            if (proteinTimer <= 0)
-            {
-                photonView.RPC("EndProtein", RpcTarget.All);
-            }
-        }
+			anim.SetBool("IsMoving", networkedIsMoving);
+			anim.SetFloat("DirX", networkedDirX);
+			anim.SetFloat("DirY", networkedDirY);
 
-        if (isProteinCooldown)
-        {
-            proteinCooldownTimer -= Time.deltaTime;
-            if (proteinCooldownTimer <= 0)
-            {
-                isProteinCooldown = false;
-                proteinCooldownTimer = ProteincooldownDuration;
-            }
-        }
-    }
+			if (Mathf.Abs(networkedDirX) >= Mathf.Abs(networkedDirY))
+			{
+				sr.flipX = networkedDirX < 0;
+			}
+		}
+
+		if (isProtein)
+		{
+			proteinTimer -= Time.deltaTime;
+			if (proteinTimer <= 0)
+			{
+				photonView.RPC("EndProtein", RpcTarget.All);
+			}
+		}
+
+		if (isProteinCooldown)
+		{
+			proteinCooldownTimer -= Time.deltaTime;
+			if (proteinCooldownTimer <= 0)
+			{
+				isProteinCooldown = false;
+				proteinCooldownTimer = ProteincooldownDuration;
+			}
+		}
+	}
 
     protected override void FixedUpdate()
     {
@@ -216,6 +154,60 @@ public class Protein : Ghost, IPunObservable
     }
 
     [PunRPC]
+    private void RollDice(int dice)
+    {
+        if(diceCoroutine != null)
+            StopCoroutine(diceCoroutine);
+
+        diceCoroutine = StartCoroutine(DiceCoroutine(dice));
+    }
+
+    private IEnumerator DiceCoroutine(int dice)
+    {
+        float duration = 10f; // 지속시간
+
+        moveSpeed = originalSpeed;
+        transform.localScale = originalScale;
+
+        switch(dice)
+        {
+            case 1:
+                moveSpeed = 4f;
+                transform.localScale = originalScale * 2f;
+                if (photonView.IsMine && impulseSource != null)
+                    impulseSource.GenerateImpulse();
+                break;
+            case 2:
+                moveSpeed = 5f;
+                transform.localScale = originalScale * 1.6f;
+                break;
+            case 3:
+                moveSpeed = 6f;
+                transform.localScale = originalScale * 1.3f;
+                break;
+            case 4:
+                moveSpeed = 7f;
+                transform.localScale = originalScale * 1.1f;
+                break;
+            case 5:
+                moveSpeed = 8f;
+                transform.localScale = originalScale * 1.0f;
+                break;
+            case 6:
+                moveSpeed = 9f;
+                transform.localScale = originalScale * 0.9f;
+                break;
+            default:
+                Debug.LogError("Invalid dice value: " + dice);
+                break;
+        }
+
+        yield return new WaitForSeconds(duration);
+        moveSpeed = originalSpeed;
+        transform.localScale = originalScale;
+    }
+
+    [PunRPC]
     private void DrinkProtein()
     {
         isProtein = true;
@@ -224,9 +216,6 @@ public class Protein : Ghost, IPunObservable
         transform.localScale = originalScale * 1.5f;
 
         Debug.Log("단백질 섭취");
-
-        if (photonView.IsMine)
-            UseSkill();
 
         ghostStateMachine.ChangeState(useSkillState);
     }
@@ -345,4 +334,51 @@ public class Protein : Ghost, IPunObservable
             }
         }
     }
+
+    public override GhostState moveState { get; protected set; }
+    private GhostState normalIdleState;
+    private GhostState normalMoveState;
+    private GhostState skillIdleState;
+    private GhostState skillMoveState;
+
+
+
+    [Header("단백질섭취(벌크업)")]
+    [SerializeField] private float ProteinDuration = 10f; //벌크업 지속시간
+    [SerializeField] private float ProteincooldownDuration = 5f;    //쿨타임
+    [SerializeField] private float buffedSpeed = 2f;
+    private bool isDashing = false; //대쉬 여부
+    private bool isProtein = false; //단백질 섭취 여부
+    private bool isProteinCooldown = false; //단백질 쿨타임 여부
+    [SerializeField] private float proteinTimer; //지속시간 타이머
+    [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
+
+    [Header("스킬쿨타임")]
+    [SerializeField] private float cooldownTime = 20f;
+    private float cooldownTimer = 0f;
+    private bool isCoolingDown = false;
+    [SerializeField] private Image skillImage;
+
+    [Header("주사위 패시브 구현")]
+    [SerializeField] private float diceCoolTime = 10f;
+    private float diceTimer = 0f;
+    private Coroutine diceCoroutine;
+
+    [Header("주사위 1 디버프")]
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+
+    private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
+
+    private float originalSpeed;
+    private Vector3 originalScale;
+
+    private PhotonView photonView;
+
+    private Vector3 networkedPosition;
+    private Vector3 networkedVelocity;
+    private float lerpSpeed = 10f;
+    private bool networkedIsMoving;
+    private float networkedDirX;
+    private float networkedDirY;
+    bool isTeleporting = false;
 }
