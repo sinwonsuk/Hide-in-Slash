@@ -17,8 +17,6 @@ public class Generator : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (view == null || !view.IsMine)
-            return;
 
         if (isUpdate == false)
         {

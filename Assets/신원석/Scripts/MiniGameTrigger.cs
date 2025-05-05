@@ -13,37 +13,28 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
     List<PhotonView> lists = new List<PhotonView>();
 
-
+    GameObject miniGameManagerInstance; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         closeMiniGameAction = CloseMiniGame;
+    }
 
+
+    public void TryOpenMiniGame(PhotonView playerView)
+    {
+        if (isPlaying ==true) 
+            return;
+
+        view = playerView;
+        photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient);
+        OpenMiniGame();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        for (int i = 0; i < lists.Count; i++)
-        {
-            if (lists[i].gameObject.GetComponent<Player>().InputE() ==true)
-            {
-                view = lists[i];
-
-                if (isPlayerInRange && isPlaying == false)
-                {
-                    photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
-                    OpenMiniGame();
-                }
-            }
-
-        }
-       
-        //else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
-        //{
-        //    CloseMiniGame();
-        //}
+        
     }
 
     [PunRPC]
@@ -63,27 +54,24 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PhotonView pv = collision.GetComponent<PhotonView>();
-
-        lists.Add(pv);
-
-        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
-        {
-            if (view == null) 
-            {
-                view = pv;
-            }
-
-            isPlayerInRange = true;
-        }
+       
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.GetComponent<PhotonView>() == view && collision.CompareTag("Player"))
+        PhotonView exitView = collision.GetComponent<PhotonView>();
+
+        if (exitView == null || !collision.CompareTag("Player"))
+            return;
+
+        // 내가 관리하던 플레이어인지 확인
+        if (view != null && exitView.ViewID == view.ViewID)
         {
-            isPlayerInRange = false;
-            CloseMiniGame();
+            if (view.IsMine) // 로컬 플레이어가 나가는 경우에만 미니게임 종료 시도
+            {
+                isPlayerInRange = false;
+                CloseMiniGame();
+            }
         }
     }
 
@@ -91,10 +79,10 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (miniGameManager != null)
         {
-            miniGameManager = Instantiate(miniGameManager);
+            miniGameManagerInstance = Instantiate(miniGameManager);
 
             EventManager.TriggerEvent(EventType.LightOff);
-            GameObject choice = miniGameManager.GetComponent<MiniGameManager>().choiceMiniGame;
+            GameObject choice = miniGameManagerInstance.GetComponent<MiniGameManager>().choiceMiniGame;
             MiniGame MiniGame = choice.GetComponentInChildren<MiniGame>();
             MiniGame.trigerAction = closeMiniGameAction;
         }
@@ -102,7 +90,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
     private void CloseMiniGame()
     {
-        if (miniGameManager != null && isPlaying == true)
+        if (miniGameManagerInstance != null && isPlaying == true)
         {
             EventManager.TriggerEvent(EventType.LightOn);
             RequestDestroy();        
@@ -114,8 +102,8 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (isDestroyed) return;
         isDestroyed = true;
 
-        if(miniGameManager != null)
-        Destroy(miniGameManager.gameObject);
+        if(miniGameManagerInstance != null)
+        Destroy(miniGameManagerInstance.gameObject);
 
         if (PhotonNetwork.IsMasterClient)
         {
