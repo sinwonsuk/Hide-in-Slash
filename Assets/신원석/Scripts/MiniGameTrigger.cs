@@ -51,9 +51,12 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (view != null) 
+            return; 
+
         view = collision.GetComponent<PhotonView>();
 
-        if (view != null && view.IsMine && collision.CompareTag("Player"))
+        if (view.IsMine && collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
         }

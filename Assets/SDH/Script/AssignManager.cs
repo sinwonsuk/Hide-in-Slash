@@ -265,7 +265,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < 5; i++)
         {
-            int index = espIndexs[9 - i];
+            int index = espIndexs[20 - i];
             Transform spawnPoint = eventSpawnPoints[index];
             PhotonNetwork.Instantiate("Generator", spawnPoint.position, Quaternion.identity);
         }
