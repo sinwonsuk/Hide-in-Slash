@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,6 +10,9 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     PhotonView view;
 
     bool isDestroyed = false;
+
+    List<PhotonView> lists = new List<PhotonView>();
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,18 +24,26 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (view == null || !view.IsMine)
-            return;
 
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isPlaying ==false)
+        for (int i = 0; i < lists.Count; i++)
         {
-            photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
-            OpenMiniGame();
+            if (lists[i].gameObject.GetComponent<Player>().InputE() ==true)
+            {
+                view = lists[i];
+
+                if (isPlayerInRange && isPlaying == false)
+                {
+                    photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient); // 모두에게 누가 열었는지 전달
+                    OpenMiniGame();
+                }
+            }
+
         }
-        else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
-        {
-            CloseMiniGame();
-        }
+       
+        //else if (isPlayerInRange == false && Input.GetKeyDown(KeyCode.E))
+        //{
+        //    CloseMiniGame();
+        //}
     }
 
     [PunRPC]
@@ -51,22 +63,24 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (view != null) 
-            return; 
+        PhotonView pv = collision.GetComponent<PhotonView>();
 
-        view = collision.GetComponent<PhotonView>();
+        lists.Add(pv);
 
-        if (view.IsMine && collision.CompareTag("Player"))
+        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
         {
+            if (view == null) 
+            {
+                view = pv;
+            }
+
             isPlayerInRange = true;
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        view = collision.GetComponent<PhotonView>();
-        if (view != null && view.IsMine && collision.CompareTag("Player"))
+        if(collision.GetComponent<PhotonView>() == view && collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
             CloseMiniGame();
