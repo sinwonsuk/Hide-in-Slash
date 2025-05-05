@@ -156,13 +156,12 @@ public class Protein : Ghost, IPunObservable
     //}
     protected override void Update()
     {
+        base.Update();
         if (isDashing)
             return;
-        base.Update();
 
         if (photonView.IsMine)
         {
-            base.Update();
             if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
             {
                 photonView.RPC("DrinkProtein", RpcTarget.All);
@@ -194,6 +193,11 @@ public class Protein : Ghost, IPunObservable
         }
 
         if (isProteinCooldown)
+        {
+            proteinCooldownTimer -= Time.deltaTime;
+            if (proteinCooldownTimer <= 0)
+            {
+                isProteinCooldown = false;     if (isProteinCooldown)
         {
             proteinCooldownTimer -= Time.deltaTime;
             if (proteinCooldownTimer <= 0)
