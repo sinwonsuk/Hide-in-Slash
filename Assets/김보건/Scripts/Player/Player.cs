@@ -166,6 +166,12 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             PlayerStateMachine.currentState.Update();
 
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                InputE();
+                photonView.RPC("HandleInputE", RpcTarget.AllBuffered);
+            }
+
             if (Input.GetKeyDown(KeyCode.M))
             {
                 if (!hasMap)
@@ -472,6 +478,18 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
 
     }
+
+    public bool InputE()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
+
+    [PunRPC]
+    void HandleInputE()
+    {
+    }
+
+
 
     [PunRPC]
     public void CaughtByGhost()
