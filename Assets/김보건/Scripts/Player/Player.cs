@@ -288,39 +288,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         //transform.position = new Vector3(pos.x, pos.y, pos.y);
     }
 
-    public void ApplySlow(float factor)
-    {
-        moveSpeed = originalSpeed * factor;
-    }
-
-    public void ResetSpeed()
-    {
-        moveSpeed = originalSpeed;
-    }
-
-    public void SetEscapeType(EscapeType type)
-    {
-        escapeType = type;
-    }
-
-    public void SetVelocity(Vector2 velocity)
-    {
-        rb.linearVelocity = velocity;
-    }
-
-    public void SetZeroVelocity()
-    {
-        rb.linearVelocity = Vector2.zero;
-    }
-
-    public void ResumeMovement()
-    {
-        if (PlayerStateMachine != null)
-        {
-            PlayerStateMachine.ChangeState(idleState);
-        }
-    }
-
     public void UpdateAnimParam(Vector2 input)
     {
         if (input != Vector2.zero)
@@ -334,63 +301,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     }
 
-    public void RotateLight(Vector2 moveInput)
-    {
-        if (moveInput == Vector2.zero)
-            return;
-
-        float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
-
-        lightObject.localPosition = Vector3.zero;
-
-        lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
-
-        if (photonView.IsMine)
-        {
-            lightAngle = angle;
-        }
-    }
-
-
-    public void Flip()
-    {
-        facingDir *= -1;
-        facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
-    }
-
-    private void FlipVertical()
-    {
-        facingUpDir *= -1;
-        facingUp = !facingUp;
-        transform.Rotate(180, 0, 0);
-    }
-
-    public void FlipController(float x, float y)
-    {
-        if (x > 0 && !facingRight) Flip();
-        else if (x < 0 && facingRight) Flip();
-
-        if (y > 0 && !facingUp) FlipVertical();
-        else if (y < 0 && facingUp) FlipVertical();
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-    }
-
-    private IEnumerator DeathUIDeleteDelay(GameObject ui, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ui.SetActive(false);
-    }
-
-    private IEnumerator GhostDeathSequence(float delay)
-    {
-        yield return new WaitForSeconds(delay); 
-
-        PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
     }
 
 
@@ -581,8 +494,240 @@ public class Player : MonoBehaviourPun, IPunObservable
         canvas.enabled = false;
 
     }
+    #region 이동관련
+
+    public void Flip()
+    {
+        facingDir *= -1;
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
+    }
+
+    private void FlipVertical()
+    {
+        facingUpDir *= -1;
+        facingUp = !facingUp;
+        transform.Rotate(180, 0, 0);
+    }
+
+    public void FlipController(float x, float y)
+    {
+        if (x > 0 && !facingRight) Flip();
+        else if (x < 0 && facingRight) Flip();
+
+        if (y > 0 && !facingUp) FlipVertical();
+        else if (y < 0 && facingUp) FlipVertical();
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        rb.linearVelocity = velocity;
+    }
+
+    public void SetZeroVelocity()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    public void ResumeMovement()
+    {
+        if (PlayerStateMachine != null)
+        {
+            PlayerStateMachine.ChangeState(idleState);
+        }
+    }
+    public void ApplySlow(float factor)
+    {
+        moveSpeed = originalSpeed * factor;
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = originalSpeed;
+    }
+    [PunRPC]
+    void TeleportPlayer(int viewID, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.position = pos;
+            // 보간용 위치도 순간이동 위치로 맞춰줌
+            networkedPosition = pos;
+            rb.linearVelocity = Vector2.zero;
+            isTeleporting = true;
+            StartCoroutine(ResetTeleportFlag());
+
+        }
+    }
+    public IEnumerator ResetTeleportFlag()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isTeleporting = false;
+    }
+
+    #endregion
+
+    #region 손전등 관련
+    public void RotateLight(Vector2 moveInput)
+    {
+        if (moveInput == Vector2.zero)
+            return;
+
+        float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
+
+        lightObject.localPosition = Vector3.zero;
+
+        lightObject.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+        if (photonView.IsMine)
+        {
+            lightAngle = angle;
+        }
+    }
+    //손전등업글
+    private void UseUpgradedLightHandler()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        photonView.RPC("UpGradeLight", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void UpGradeLight()
+    {
+        flashLight.pointLightOuterRadius = upgradedRadius;
+        flashLight.enabled = true;
+
+        //hasUpgradedFlashlight = false;
+        isUpgradedLight = true;
+        upgradedLightTimer = upgradeLightDuration;
+
+        float scaleRatio = upgradedRadius / defaultRadius;
+        ScalePolygonCollider(scaleRatio);
+
+        Debug.Log("손전등 업글");
+    }
 
 
+    [PunRPC]
+    private void ResetFlashlight()
+    {
+        flashLight.pointLightOuterRadius = defaultRadius;
+
+        isUpgradedLight = false;
+        isBlinking = false;
+        blinkTimer = 0f;
+
+        ScalePolygonCollider(1.0f); // 손전등원래대로
+        Debug.Log("손전등업그레이드 종료");
+    }
+
+    [PunRPC]
+    public void SetFlashlightBlink(bool turnOn)
+    {
+        flashLight.enabled = turnOn;
+    }
+
+    private void TurnOnLight()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        isLightOn = true;
+        flashLight.enabled = true;
+        lightCollider.enabled = true;
+        photonView.RPC("SetFlashlight", RpcTarget.Others, true);
+
+        Debug.Log("손전등켜짐");
+    }
+
+    private void TurnOffLight()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        isLightOn = false;
+        flashLight.enabled = false;
+        lightCollider.enabled = false;
+        photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+
+        Debug.Log("손전등꺼짐");
+    }
+
+    private void TurnOnEntireLight()
+    {
+        if (!photonView.IsMine)
+            return;
+        isLightOn = true;
+        flashLight.enabled = true;
+        circleLight.enabled = true;
+        lightCollider.enabled = true;
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
+    }
+
+    private void TurnOffEntireLight()
+    {
+        if (!photonView.IsMine)
+            return;
+        isLightOn = false;
+        flashLight.enabled = false;
+        circleLight.enabled = false;
+        lightCollider.enabled = false;
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
+    }
+
+    [PunRPC]
+    public void SetFlashlight(bool turnOn)
+    {
+        isLightOn = turnOn;
+        flashLight.enabled = turnOn;
+        lightCollider.enabled = turnOn;
+    }
+
+    [PunRPC]
+    public void SetFlashEntireLight(bool turnOn)
+    {
+        isLightOn = turnOn;
+        isCircleLightOn = turnOn;
+        flashLight.enabled = turnOn;
+        circleLight.enabled = turnOn;
+        lightCollider.enabled = turnOn;
+    }
+    private void ScalePolygonCollider(float scale)
+    {
+        Vector2[] scaled = new Vector2[defaultColliderPoints.Length];
+        for (int i = 0; i < scaled.Length; i++)
+        {
+            scaled[i] = defaultColliderPoints[i] * scale;
+        }
+        lightCollider.points = scaled;
+    }
+
+    public void OnEvent(EventData data)
+    {
+        if (data.Code != EVENT_BLACKOUT) return;
+
+        float duration = (float)data.CustomData;
+        if (photonView.IsMine)
+        {
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+            StartCoroutine(DelayedTurnOn(duration));
+        }
+    }
+
+    private IEnumerator DelayedTurnOn(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        flashLight.enabled = true;
+        circleLight.enabled = true;
+    }
+
+    #endregion
+
+    #region 플레이어 죽음
     public void BecomeGhost()
     {
         if (!photonView.IsMine)
@@ -610,7 +755,55 @@ public class Player : MonoBehaviourPun, IPunObservable
         gameObject.tag = "DeadPlayer";
         gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
     }
+    private IEnumerator DeathUIDeleteDelay(GameObject ui, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ui.SetActive(false);
+    }
 
+    private IEnumerator GhostDeathSequence(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
+    }
+
+    #endregion
+
+    #region 플레이어 탈출
+    public void SetEscapeType(EscapeType type)
+    {
+        escapeType = type;
+    }
+
+    [PunRPC]
+    private void SetEscapeTypeForOthers(int escapeCode)
+    {
+        escapeType = (EscapeType)escapeCode;
+        // 상태 바꾸지 않음
+    }
+
+    [PunRPC]
+    public void EscapePlayerObject()
+    {
+        if (!photonView.IsMine)
+        {
+            // 타 클라에서 탈출플레이어(자신) 렌더링,콜라이더 끄기
+            sr.enabled = false; // SpriteRenderer
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+
+            if (playerNickName != null)
+                playerNickName.SetActive(false);
+
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+                col.enabled = false;
+        }
+    }
+    #endregion
+
+    #region 아이템
     //투명물약
     public void BecomeInvisible()
     {
@@ -708,100 +901,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("이속버프끝");
     }
 
-
-    //손전등업글
-    private void UseUpgradedLightHandler()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        photonView.RPC("UpGradeLight", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void UpGradeLight()
-    {
-        flashLight.pointLightOuterRadius = upgradedRadius;
-        flashLight.enabled = true;
-
-        //hasUpgradedFlashlight = false;
-        isUpgradedLight = true;
-        upgradedLightTimer = upgradeLightDuration;
-
-        float scaleRatio = upgradedRadius / defaultRadius;
-        ScalePolygonCollider(scaleRatio);
-
-        Debug.Log("손전등 업글");
-    }
-
-
-    [PunRPC]
-    private void ResetFlashlight()
-    {
-        flashLight.pointLightOuterRadius = defaultRadius;
-
-        isUpgradedLight = false;
-        isBlinking = false;
-        blinkTimer = 0f;
-
-        ScalePolygonCollider(1.0f); // 손전등원래대로
-        Debug.Log("손전등업그레이드 종료");
-    }
-
-    [PunRPC]
-    public void SetFlashlightBlink(bool turnOn)
-    {
-        flashLight.enabled = turnOn;
-    }
-
-    private void TurnOnLight()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        isLightOn = true;
-        flashLight.enabled = true;
-        lightCollider.enabled = true;
-        photonView.RPC("SetFlashlight", RpcTarget.Others, true);
-
-        Debug.Log("손전등켜짐");
-    }
-
-    private void TurnOffLight()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        isLightOn = false;
-        flashLight.enabled = false;
-        lightCollider.enabled = false;
-        photonView.RPC("SetFlashlight", RpcTarget.Others, false);
-
-        Debug.Log("손전등꺼짐");
-    }
-
-    private void TurnOnEntireLight()
-    {
-        if (!photonView.IsMine)
-            return;
-        isLightOn = true;
-        flashLight.enabled = true;
-        circleLight.enabled = true;
-        lightCollider.enabled = true;
-        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
-    }
-
-    private void TurnOffEntireLight()
-    {
-        if (!photonView.IsMine)
-            return;
-        isLightOn = false;
-        flashLight.enabled = false;
-        circleLight.enabled = false;
-        lightCollider.enabled = false;
-        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
-    }
-
     private void HasTriggerMap()
     {
         hasMap = true;
@@ -830,54 +929,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             minimap.SetActive(false);
         }
         Debug.Log("맵 닫음");
-    }
-
-    [PunRPC]
-    public void SetFlashlight(bool turnOn)
-    {
-        isLightOn = turnOn;
-        flashLight.enabled = turnOn;
-        lightCollider.enabled = turnOn;
-    }
-
-    [PunRPC]
-    public void SetFlashEntireLight(bool turnOn)
-    {
-        isLightOn = turnOn;
-        isCircleLightOn = turnOn;
-        flashLight.enabled = turnOn;
-        circleLight.enabled = turnOn;
-        lightCollider.enabled = turnOn;
-    }
-    [PunRPC]
-    void TeleportPlayer(int viewID, Vector3 pos)
-    {
-        PhotonView view = PhotonView.Find(viewID);
-        if (view != null)
-        {
-            view.transform.position = pos;       
-            // 보간용 위치도 순간이동 위치로 맞춰줌
-            networkedPosition = pos;
-            rb.linearVelocity = Vector2.zero;
-            isTeleporting = true;
-            StartCoroutine(ResetTeleportFlag());
-            
-        }
-    }
-    public IEnumerator ResetTeleportFlag()
-    {
-        yield return new WaitForSeconds(0.1f);
-        isTeleporting = false;
-    }
-
-    private void ScalePolygonCollider(float scale)
-    {
-        Vector2[] scaled = new Vector2[defaultColliderPoints.Length];
-        for (int i = 0; i < scaled.Length; i++)
-        {
-            scaled[i] = defaultColliderPoints[i] * scale;
-        }
-        lightCollider.points = scaled;
     }
 
     private void HasPrisonKey()
@@ -910,13 +961,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         photonView.RPC("SetEscapeTypeForOthers", RpcTarget.OthersBuffered, (int)EscapeType.Hatch);
     }
 
-    [PunRPC]
-    private void SetEscapeTypeForOthers(int escapeCode)
-    {
-        escapeType = (EscapeType)escapeCode;
-        // 상태 바꾸지 않음
-    }
+    #endregion
 
+    #region 시리얼라이즈뷰 동기화
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (isInitialized == false)
@@ -1049,44 +1096,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void OnEvent(EventData data)
-    {
-        if (data.Code != EVENT_BLACKOUT) return;
+    #endregion
 
-        float duration = (float)data.CustomData;
-        if (photonView.IsMine)
-        {
-            flashLight.enabled = false;
-            circleLight.enabled = false;
-            StartCoroutine(DelayedTurnOn(duration));
-        }
-    }
-
-    private IEnumerator DelayedTurnOn(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        flashLight.enabled = true;
-        circleLight.enabled = true;
-    }
-
-    [PunRPC]
-    public void EscapePlayerObject()
-    {
-        if (!photonView.IsMine)
-        {
-            // 타 클라에서 탈출플레이어(자신) 렌더링,콜라이더 끄기
-            sr.enabled = false; // SpriteRenderer
-            flashLight.enabled = false;
-            circleLight.enabled = false;
-
-            if (playerNickName != null)
-                playerNickName.SetActive(false);
-
-            Collider2D col = GetComponent<Collider2D>();
-            if (col != null)
-                col.enabled = false;
-        }
-    }
 
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
