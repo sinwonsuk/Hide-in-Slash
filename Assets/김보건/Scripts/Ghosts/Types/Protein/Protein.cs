@@ -197,11 +197,6 @@ public class Protein : Ghost, IPunObservable
             proteinCooldownTimer -= Time.deltaTime;
             if (proteinCooldownTimer <= 0)
             {
-                isProteinCooldown = false;     if (isProteinCooldown)
-        {
-            proteinCooldownTimer -= Time.deltaTime;
-            if (proteinCooldownTimer <= 0)
-            {
                 isProteinCooldown = false;
                 proteinCooldownTimer = ProteincooldownDuration;
             }
