@@ -310,7 +310,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Peanut"))
         {
-
             countLife--;
             Debug.Log("땅콩 충돌");
 
@@ -448,6 +447,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!photonView.IsMine) return;
 
         if (collision.CompareTag("PrisonDoor"))
         {
