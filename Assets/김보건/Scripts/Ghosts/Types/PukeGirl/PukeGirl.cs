@@ -24,12 +24,7 @@ public class PukeGirl : Ghost, IPunObservable
 
 	[Header("뿌릴 Puddle Prefab")]
 	[SerializeField] private GameObject puddlePrefab;
-	[SerializeField] private float puddleDuration = 40f;
     private Vector2 pukeDir;
-
-    [Header("토 후 부스트")]
-    [SerializeField] private float boostMultiplier = 1.5f;
-    [SerializeField] private float boostDuration = 3f;
 
     [Header("스킬쿨타임")]
     [SerializeField] private float cooldownTime = 5f;
@@ -37,14 +32,9 @@ public class PukeGirl : Ghost, IPunObservable
     private bool isCoolingDown = false;
     [SerializeField] private Image skillImage;
 
-    private float originalSpeed;
-    private bool isBoosted = false;
-    private float boostTimer = 0f;
-
     protected override void Awake()
     {
         base.Awake();
-        originalSpeed = moveSpeed;
 
         photonView = GetComponent<PhotonView>(); 
 
@@ -89,15 +79,6 @@ public class PukeGirl : Ghost, IPunObservable
             }
             UpdateSkillCooldown();
 
-            if (isBoosted)
-            {
-                boostTimer -= Time.deltaTime;
-                if (boostTimer <= 0f)
-                {
-                    isBoosted = false;
-                    moveSpeed = originalSpeed;
-                }
-            }
         }
         else
         {
@@ -216,13 +197,8 @@ public class PukeGirl : Ghost, IPunObservable
         Vector3 spawnPos = transform.position + new Vector3(signX * xOffset, yOffset, 0f);
 
         var puddle = Instantiate(puddlePrefab, spawnPos, Quaternion.identity);
-        Destroy(puddle, puddleDuration);
 
         anim.SetBool("IsVomiting", false);
-
-        isBoosted = true;
-        boostTimer = boostDuration;
-        moveSpeed = originalSpeed * boostMultiplier;
 
         Vector2 input = MoveInput;
         ghostStateMachine.ChangeState(moveState);
