@@ -85,7 +85,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             PropertiesAction += HandleProfileIndexChanged;
             PropertiesAction += HandleRoleChanged;
             PropertiesAction += HandleRoleConfirmed;
-
         }
         else
         {
@@ -742,7 +741,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             Debug.LogError("Room name is null or empty");
             return null;  // 또는 적절한 처리
         }
-
         if (roomDic.TryGetValue(roomName, out GameObject roomObject))
         {
             return roomInfoDict[roomName];
