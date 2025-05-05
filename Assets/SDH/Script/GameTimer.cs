@@ -7,8 +7,9 @@ using System.Collections; // Photon 관련 Room Properties용
 
 public class GameTimer : MonoBehaviourPunCallbacks
 {
-    private float countdownTime = 600f;
+    private float countdownTime = 10f;
     private double startTime;
+    private bool isEnded = false;
 
     public Text timerText;
 
@@ -34,9 +35,11 @@ public class GameTimer : MonoBehaviourPunCallbacks
         int seconds = Mathf.FloorToInt(timeRemaining % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        if (timeRemaining <= 0)
+        if (timeRemaining <= 0 && !isEnded)
         {
-            Debug.Log("타이머 종료!");
+            isEnded = true;
+            photonView.RPC("OnTimeoutEnd", RpcTarget.All);
+
         }
     }
 
@@ -44,5 +47,20 @@ public class GameTimer : MonoBehaviourPunCallbacks
     public void RPC_SetStartTime(double time)
     {
         startTime = time;
+    }
+
+    [PunRPC]
+    void OnTimeoutEnd()
+    {
+        // 모든 Player 오브젝트 중 내 것만 실행
+        var players = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
+        foreach (var p in players)
+        {
+            if (p.photonView.IsMine)
+            {
+                p.TriggerDeathByTimeout();
+                break;
+            }
+        }
     }
 }

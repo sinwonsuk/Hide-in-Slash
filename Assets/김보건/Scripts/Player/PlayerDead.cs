@@ -1,3 +1,5 @@
+using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerDead : PlayerState
@@ -12,6 +14,15 @@ public class PlayerDead : PlayerState
         base.Enter();
         player.SetZeroVelocity();
         player.BecomeGhost();
+
+        if (!player.photonView.IsMine) return;
+
+        // 연출 시작
+        if (DeadManager.Instance != null)
+        {
+            DeadManager.Instance.CheckAllPlayerDead(); // AllDeath or PlayerDeath UI 보여줌
+        }
+
     }
 
     public override void Update()
@@ -20,5 +31,11 @@ public class PlayerDead : PlayerState
 
         if (moveInput != Vector2.zero)
             stateMachine.ChangeState(player.moveState);
+    }
+    public IEnumerator DeathWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        PhotonNetwork.LoadLevel("RobbyScene");
     }
 }
