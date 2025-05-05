@@ -433,14 +433,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         }
 
-        //if (collision.CompareTag("Prison"))
-        //{
-        //    isInsidePrison = true;
-        //    isLightOn = false;
-        //    flashLight.enabled = false;
-        //    lightCollider.enabled = false;
-        //    photonView.RPC("SetFlashlight", RpcTarget.Others, false);
-        //}
+        if (collision.CompareTag("Prison"))
+        {
+            isInsidePrison = true;
+            isLightOn = false;
+            flashLight.enabled = false;
+            lightCollider.enabled = false;
+            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+        }
 
 
     }
@@ -461,15 +461,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInHatch = false;
         }
 
-        //if (collision.CompareTag("Prison"))
-        //{
-        //    isLightOn = true;
-        //    flashLight.enabled = true;
-        //    lightCollider.enabled = true;
-        //    isInsidePrison = false;
-        //    photonView.RPC("SetFlashlight", RpcTarget.Others, false);
-        //    profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
-        //}
+        if (collision.CompareTag("Prison"))
+        {
+            isLightOn = true;
+            flashLight.enabled = true;
+            lightCollider.enabled = true;
+            isInsidePrison = false;
+            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+            profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
+        }
 
     }
 
