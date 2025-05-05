@@ -84,8 +84,12 @@ MonoBehaviour:
   - Stop
   - ControllMiniGame
   - RequestOpenMiniGame
-  - HandleInputE
   - RollDice
+  - ShowAllDeathUI
+  - ShowPlayerDeathUI
+  - OnTimeoutEnd
+  - TriggerDeathByTimeout
+  - SetInitialPlayerCount
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
