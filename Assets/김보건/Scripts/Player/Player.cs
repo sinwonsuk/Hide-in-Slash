@@ -663,7 +663,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        if (IsInsidePrison())
+        if (isInsidePrison)
             return;
 
         isLightOn = true;
