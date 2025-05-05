@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Generator : MonoBehaviourPunCallbacks
 {
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,6 +17,9 @@ public class Generator : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (view == null || !view.IsMine)
+            return;
+
         if (isUpdate == false)
         {
             if (generatorMiniGame != null)
@@ -58,9 +63,9 @@ public class Generator : MonoBehaviourPunCallbacks
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        PhotonView pv = collision.GetComponent<PhotonView>();
+        view = collision.GetComponent<PhotonView>();
 
-        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
+        if (view != null && view.IsMine && collision.CompareTag("Player"))
         {            
             isPlayerColilision = true;
         }
@@ -69,9 +74,9 @@ public class Generator : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        PhotonView pv = collision.GetComponent<PhotonView>();
+        view = collision.GetComponent<PhotonView>();
 
-        if (pv != null && pv.IsMine && collision.CompareTag("Player"))
+        if (view != null && view.IsMine && collision.CompareTag("Player"))
         {
             isPlayerColilision = false;
             canvas.gameObject.SetActive(false);
@@ -185,6 +190,7 @@ public class Generator : MonoBehaviourPunCallbacks
     bool isMiniGameFinished = false;
 
 
+    PhotonView view;    
 
     public float gage { get; set; } = 0;
 

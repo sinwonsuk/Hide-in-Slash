@@ -36,6 +36,11 @@ public class GeneratorMiniGame : MonoBehaviour
 
         GameObject GeneratorGage = GameObject.Find("GeneratorGage");
 
+        if(GeneratorGage == null)
+        {           
+            return;
+        }
+
         generatorGage generatorGage = GeneratorGage.GetComponent<generatorGage>();
 
         generatorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, +0.05f);
