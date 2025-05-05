@@ -97,6 +97,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (isDestroyed) return;
         isDestroyed = true;
 
+        if(miniGameManager != null)
         Destroy(miniGameManager.gameObject);
 
         if (PhotonNetwork.IsMasterClient)

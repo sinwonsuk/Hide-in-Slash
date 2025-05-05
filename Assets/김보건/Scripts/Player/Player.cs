@@ -437,14 +437,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         }
 
-        if (collision.CompareTag("Prison"))
-        {
-            isInsidePrison = true;
-            isLightOn = false;
-            flashLight.enabled = false;
-            lightCollider.enabled = false;
-            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
-        }
+        //if (collision.CompareTag("Prison"))
+        //{
+        //    isInsidePrison = true;
+        //    isLightOn = false;
+        //    flashLight.enabled = false;
+        //    lightCollider.enabled = false;
+        //    photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+        //}
 
 
     }
