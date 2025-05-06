@@ -140,32 +140,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         slotPoints = new RectTransform[5];
         var waitingUI = GameObject.Find("WaitingUI");
-        if (waitingUI == null)
-            Debug.LogError("❌ WaitingUI 오브젝트를 찾을 수 없습니다!");
-        else
+        var roomUI = waitingUI.transform.Find("RoomUI");
+        var slotContainer = roomUI.Find("SlotContainer");
+
+        for (int i = 0; i < slotPoints.Length; i++)
         {
-            var roomUI = waitingUI.transform.Find("RoomUI");
-            if (roomUI == null)
-                Debug.LogError("❌ WaitingUI/RoomUI 경로를 찾을 수 없습니다!");
-            else
-            {
-                var slotContainer = roomUI.Find("SlotContainer");
-                if (slotContainer == null)
-                    Debug.LogError("❌ WaitingUI/RoomUI/SlotContainer 를 찾을 수 없습니다!");
-                else
-                {
-                    // 3) SlotPoint0~4 채우기
-                    slotPoints = new RectTransform[5];
-                    for (int i = 0; i < slotPoints.Length; i++)
-                    {
-                        var p = slotContainer.Find($"SlotPoint{i}");
-                        if (p == null)
-                            Debug.LogError($"❌ SlotPoint{i} 를 찾을 수 없습니다!");
-                        else
-                            slotPoints[i] = p.GetComponent<RectTransform>();
-                    }
-                }
-            }
+            var p = slotContainer.Find($"SlotPoint{i}");
+            slotPoints[i] = p.GetComponent<RectTransform>();
         }
 
         // 초기 UI 상태
