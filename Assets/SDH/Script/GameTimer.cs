@@ -15,7 +15,9 @@ public class GameTimer : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if(PhotonNetwork.IsMasterClient)
+        SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
+
+        if (PhotonNetwork.IsMasterClient)
         {
             startTime = PhotonNetwork.Time;
             photonView.RPC("RPC_SetStartTime", RpcTarget.Others, startTime);

@@ -185,28 +185,32 @@ public class Inventory : MonoBehaviour
         {
             case InventoryType.Invisibility:
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.DrinkItem, false);
                     EventManager.TriggerEvent(EventType.UseInvisiblePotion);
                     break;
                 }
             case InventoryType.Tunnel:
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.OpenDoor, false);
                     ExitItemUI.SetActive(true);
                     EventManager.TriggerEvent(EventType.UseHatch);
                     break;
                 }
             case InventoryType.Flashlight:
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.UseLight, false);
                     EventManager.TriggerEvent(EventType.UseUpgradedLight);
                     break;
                 }
             case InventoryType.EngeryDrink:
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.DrinkItem, false);
                     EventManager.TriggerEvent(EventType.UseEnergyDrink);
                     break;
                 }
             case InventoryType.PrisonKey:
                 {
-
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.useKey, false);
                     EventManager.TriggerEvent(EventType.UsePrisonKey);
                     break;
                 }

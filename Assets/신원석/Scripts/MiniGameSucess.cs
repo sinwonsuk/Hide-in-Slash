@@ -6,6 +6,8 @@ public class MiniGameSucess : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.MiniGmaeSucess, false);
+
         Money.instance.addMoney(150);
 
         spriteRenderer = GetComponent<Image>();
