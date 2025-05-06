@@ -464,7 +464,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         if (allConfirmed)
         {
+            SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
             PhotonNetwork.LoadLevel("MergeScene");
+
             CleanHandler();
         }
     }

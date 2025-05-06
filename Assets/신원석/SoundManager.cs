@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     {
         PleaseFind,
         scar,
+        Help,
     }
     private void Awake()
     {
