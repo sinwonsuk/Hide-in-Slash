@@ -290,8 +290,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             roomOptions.CustomRoomProperties = customProps;
             roomOptions.CustomRoomPropertiesForLobby = new string[] { "pw" };
 
-            PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
-            SoundManager.GetInstance().PlayBgm(SoundManager.bgm.scar);
+            PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성           
             Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName}이라는 방을 생성하셨습니다!");
         }
         else
@@ -351,6 +350,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         AssignManager.instance.gameObject.AddComponent<PhotonView>();
 
+        SoundManager.GetInstance().PlayBgm(SoundManager.bgm.scar);
 
         PhotonNetwork.AutomaticallySyncScene = true;
 
