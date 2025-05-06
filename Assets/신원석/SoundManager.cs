@@ -6,6 +6,16 @@ public class SoundManager : MonoBehaviour
     public enum sfx
     {
         OpenDoor,
+        MiniGmaeSucess,
+        MiniGameFail,
+        Generator,
+        Click,
+        OpenStore,
+        BuyItem,
+        DrinkItem,
+        useKey,
+        UseLight,
+        Enter,
     }
     public enum bgm
     {

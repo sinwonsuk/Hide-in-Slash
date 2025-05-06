@@ -24,6 +24,8 @@ public class ShopButtonHandle : MonoBehaviour
             return;
         }
 
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.BuyItem, false);
+
         Money.instance.MusMoney(price);
 
         inventory.AddItem(type, price);
