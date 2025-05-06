@@ -354,6 +354,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        int a = 0;
+
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
         lobbyPanel.SetActive(false);
