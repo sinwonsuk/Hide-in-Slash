@@ -27,8 +27,12 @@ public class SceneManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
+    private void Start()
+    {
+        SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Stage1);
+    }
 
-	public void LoadSceneAsync(SceneName scene)
+    public void LoadSceneAsync(SceneName scene)
 	{
 		StartCoroutine(LoadSceneCoroutine(scene));
 	}
@@ -38,7 +42,7 @@ public class SceneManager : MonoBehaviour
 		string sceneStr = System.Enum.GetName(typeof(SceneName), scene);
 		AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneStr);
 
-		// ¿©±â¼­ ·Îµù Áß ÁøÇàµµ Ç¥½Ã °¡´É
+		// ì—¬ê¸°ì„œ ë¡œë”© ì¤‘ ì§„í–‰ë„ í‘œì‹œ ê°€ëŠ¥
 		while (!asyncLoad.isDone)
 		{
 			Debug.Log($"Loading progress: {asyncLoad.progress}");
