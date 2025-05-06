@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 706fdd5f81ea3734da7e82bbc807863f
+guid: 29b73083dbaa8de43a26eb40cc98d5c6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4119031589193256025
-    second: Peanut_Skill_Spri_0
+      213: 5680648843590850406
+    second: KakaoTalk_20250506_211658621_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 12
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Peanut_Skill_Spri_0
+      name: KakaoTalk_20250506_211658621_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 4
-        width: 26
-        height: 25
+        x: 0
+        y: 0
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 95c0a74286db92930800000000000000
-      internalID: 4119031589193256025
+      spriteID: 66757ff9608b5de40800000000000000
+      internalID: 5680648843590850406
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Peanut_Skill_Spri_0: 4119031589193256025
+      KakaoTalk_20250506_211658621_0: 5680648843590850406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
