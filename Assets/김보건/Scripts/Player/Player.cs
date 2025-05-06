@@ -800,13 +800,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         // 이미 죽은 상태라면 (두 번 잡힌 경우 포함)
         if (PlayerStateMachine.currentState == deadState)
         {
-            StartCoroutine(GetComponent<PlayerDead>().DeathWithDelay(5f));
+            StartCoroutine(deadState.DeathWithDelay(5f));
         }
         else
         {
             // 아직 유령이 아닌 경우라면 죽이고
             PlayerStateMachine.ChangeState(deadState);
-            StartCoroutine(GetComponent<PlayerDead>().DeathWithDelay(5f));
+            StartCoroutine(deadState.DeathWithDelay(5f));
         }
     }
 
