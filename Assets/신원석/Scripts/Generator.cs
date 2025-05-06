@@ -2,6 +2,8 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class Generator : MonoBehaviourPunCallbacks
 {
@@ -43,6 +45,17 @@ public class Generator : MonoBehaviourPunCallbacks
 
         if (isPlayerColilision ==true)
         {
+            // E키를 눌렀을 때 사운드 재생
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Generator, true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.Generator);
+            }
+
             if (Input.GetKey(KeyCode.E))
             {
                 canvas.gameObject.SetActive(true);
@@ -76,6 +89,7 @@ public class Generator : MonoBehaviourPunCallbacks
 
         if (view != null && view.IsMine && collision.CompareTag("Player"))
         {
+            SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.Generator);
             isPlayerColilision = false;
             canvas.gameObject.SetActive(false);
         }
@@ -119,6 +133,8 @@ public class Generator : MonoBehaviourPunCallbacks
     {
         if (isMiniGameFinished)
             return;
+
+        SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.Generator);
 
         if (generatorMiniGame != null)
         {

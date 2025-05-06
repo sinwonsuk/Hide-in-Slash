@@ -15,6 +15,7 @@ public class StoreWindowMove : MonoBehaviour
 
     void Start()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.OpenStore, false); // 사운드 재생
         uiElement = GetComponent<RectTransform>();
         firstPosition = uiElement.anchoredPosition;
         targetPosition = new Vector2(0, 60);

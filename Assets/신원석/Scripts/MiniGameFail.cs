@@ -8,6 +8,9 @@ public class MiniGameFail : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.MiniGameFail, false);
+
         spriteRenderer = GetComponent<Image>();
 
         color = Color.white;

@@ -262,7 +262,7 @@ MonoBehaviour:
       - m_Target: {fileID: 4933579722516162600}
         m_TargetAssemblyTypeName: roomClick, Assembly-CSharp
         m_MethodName: OnRoomButtonClicked
-        m_Mode: 5
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passwordPanelPrefab: {fileID: 3652881892550266672, guid: 819e4b07217d14842bf28510e5ec679e, type: 3}
+  roomName: {fileID: 330415686851087782}
 --- !u!1 &8764694741649238373
 GameObject:
   m_ObjectHideFlags: 0

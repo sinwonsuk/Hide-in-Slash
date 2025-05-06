@@ -32,7 +32,7 @@ public class EnterRoom : MonoBehaviour
 
     void Update()
     {
-        if(passwordInputField!=null&& Input.GetKeyDown(KeyCode.Return))
+        if (passwordInputField != null && Input.GetKeyDown(KeyCode.Return))
         {
             OnJoinButtonClicked();
         }

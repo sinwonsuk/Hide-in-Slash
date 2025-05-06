@@ -650,13 +650,17 @@ MonoBehaviour:
   reduceSoundSpeed: 0
   sfxClips:
   - {fileID: 8300000, guid: 257bbf7930d97be49a2e4a4086b86f8b, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sfxVolume: 0
+  - {fileID: 8300000, guid: 2c1cdb667800d754a9502f764312adef, type: 3}
+  - {fileID: 8300000, guid: 30fc9eca01220fd40927e8145a660c4c, type: 3}
+  - {fileID: 8300000, guid: a031dcf45386b7e439ee5627a9bd8892, type: 3}
+  - {fileID: 8300000, guid: 104cef282c335fb478db934a85d057f4, type: 3}
+  - {fileID: 8300000, guid: 9f122a9ab7a7bbf40a4e73be23076b4e, type: 3}
+  - {fileID: 8300000, guid: 6a83c46249023734388c048a0f1d9163, type: 3}
+  - {fileID: 8300000, guid: 86b045b3476f8a84c8b650727d9d6204, type: 3}
+  - {fileID: 8300000, guid: 39f3389666d29494ba03cb9b02ad7a07, type: 3}
+  - {fileID: 8300000, guid: b372e530a16998f46bfe168b30f8c5ce, type: 3}
+  - {fileID: 8300000, guid: e2e54bd5cf46a8b49a5fa4d07c33528c, type: 3}
+  sfxVolume: 0.5
   channels: 20
 --- !u!4 &881139572
 Transform:

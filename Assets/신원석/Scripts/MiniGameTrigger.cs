@@ -26,6 +26,8 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (isPlaying ==true) 
             return;
 
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Click, false); // 사운드 재생
+
         view = playerView;
         photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient);
         OpenMiniGame();
@@ -107,7 +109,6 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            // 마스터는 직접 제거 가능
             PhotonNetwork.Destroy(gameObject);
         }
 

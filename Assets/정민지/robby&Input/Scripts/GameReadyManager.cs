@@ -217,10 +217,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                     newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
                     newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
 
-                    string capturedRoomName = room.Name;
-                    newButton.GetComponent<Button>().onClick.AddListener(() => {
-                        roomClickScript.OnRoomButtonClicked(capturedRoomName); // capturedRoomName 사용
-                    });
+                    //string capturedRoomName = room.Name;
+                    //newButton.GetComponent<Button>().onClick.AddListener(() => {
+                    //    roomClickScript.OnRoomButtonClicked(capturedRoomName); // capturedRoomName 사용
+                    //});
 
 
 
@@ -284,14 +284,17 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             roomOptions.MaxPlayers = 5; //옵션에서 최대인원
             roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
 
+
             // 비밀번호 설정
             Hashtable customProps = new Hashtable();
             customProps.Add("pw", password);
             roomOptions.CustomRoomProperties = customProps;
             roomOptions.CustomRoomPropertiesForLobby = new string[] { "pw" };
 
-            PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성           
+            PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
             Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName}이라는 방을 생성하셨습니다!");
+
+
         }
         else
         {
@@ -300,20 +303,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     }
 
-    //public void OnSubmitPassword(string inputPassword)
-    //{
-    //   // RoomInfo[] roomList = myList;
-    //    RoomInfo roomInfo = myList.FirstOrDefault(r => r.Name == ClickRoom.selectedRoomName);
+    public void CreateRoomWithOutPassword(string roomName)
+    {
+        RoomOptions roomOptions = new RoomOptions(); //새로운 룸 옵션
 
-    //    if (roomInfo != null)
-    //    {
-    //        TryJoinRoom(roomInfo, inputPassword);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("방 정보를 찾을 수 없습니다.");
-    //    }
-    //}
+        roomOptions.MaxPlayers = 5; //옵션에서 최대인원
+        roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
+        PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
+    }
 
     public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
     {
