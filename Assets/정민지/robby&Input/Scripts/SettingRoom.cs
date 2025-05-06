@@ -70,6 +70,15 @@ public class SettingRoom : MonoBehaviour
                 warning = 2;
             }
 
+
+            if (!string.IsNullOrEmpty(password))
+            {
+
+                GameReadyManager.Instance.CreateRoomWithOutPassword(roomName);
+                popupPanel.SetActive(false); // 팝업 닫기
+                roomNameInput.text = "";
+            }
+
         }
         else
         {
