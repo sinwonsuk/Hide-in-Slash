@@ -37,6 +37,20 @@ public class PlayerEscapeState : PlayerState
         switch (currentEscapeType)
         {
             case EscapeType.ExitDoor:
+                
+                if (player.ExitDoorEscapeUI != null )
+                {
+                    player.ExitDoorEscapeUI.transform.SetParent(null); 
+                    Object.DontDestroyOnLoad(player.ExitDoorEscapeUI);   
+                    player.ExitDoorEscapeUI.SetActive(true);
+
+                    var black = player.ExitDoorEscapeUI.transform.Find("Black");
+                    if (black != null)
+                    {
+                        var fade = black.GetComponent<playerDeath>();    
+                        if (fade != null) fade.TriggerFade();                
+                    }
+                }
 
                 player.StartCoroutine(EscapeWithDelay(2f));
                 break;
@@ -73,6 +87,10 @@ public class PlayerEscapeState : PlayerState
         if (player.UseItemAndEscapeUI != null)
         {
             Object.Destroy(player.UseItemAndEscapeUI);
+        }
+        if(player.ExitDoorEscapeUI != null)
+        {
+            Object.Destroy(player.ExitDoorEscapeUI);
         }
         if (player.photonView.IsMine)
         {

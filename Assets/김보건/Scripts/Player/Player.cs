@@ -121,6 +121,17 @@ public class Player : MonoBehaviourPun, IPunObservable
                     Debug.LogWarning("UseItemAndEscape 오브젝트없음");
                 }
 
+                Transform allEscapeObj = playerCanvas.transform.Find("AllEscape");
+                if (allEscapeObj != null)
+                {
+                    exitDoorEscapeUI = allEscapeObj.gameObject;
+                    exitDoorEscapeUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("AllEscape 오브젝트 없음");
+                }
+
                 Transform deathProtein = playerCanvas.transform.Find("ProteinDeathAnim");
                 if (deathProtein != null)
                 {
@@ -425,6 +436,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             Debug.Log("탈출구가능");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
+
+            // 나 말고는 상태 바꾸지 않도록
+            photonView.RPC("SetEscapeTypeForOthers", RpcTarget.OthersBuffered, (int)EscapeType.Hatch);
         }
 
 
@@ -1222,7 +1236,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     [Header("탈출")]
     [SerializeField] private GameObject useItemAndEscapeUI;
+    [SerializeField] private GameObject exitDoorEscapeUI;
     public GameObject UseItemAndEscapeUI => useItemAndEscapeUI;
+    public GameObject ExitDoorEscapeUI => exitDoorEscapeUI;
 
     [Header("잡힘")]
     [SerializeField] private GameObject deathProteinUI;

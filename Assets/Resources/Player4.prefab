@@ -341,6 +341,7 @@ MonoBehaviour:
   hasHatch: 0
   hasMap: 0
   useItemAndEscapeUI: {fileID: 4787706857007138734, guid: ff53048c3cd262948a3b9629e418903e, type: 3}
+  exitDoorEscapeUI: {fileID: 2861908893766765647, guid: 686638027a0e04843b30007aa89662d8, type: 3}
   deathProteinUI: {fileID: 0}
   deathPeanutUI: {fileID: 0}
   deathPuKeGirlUI: {fileID: 0}
