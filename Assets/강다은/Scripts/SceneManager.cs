@@ -29,7 +29,7 @@ public class SceneManager : MonoBehaviour
 	}
     private void Start()
     {
-        SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Stage1);
+        //SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Stage1);
     }
 
     public void LoadSceneAsync(SceneName scene)

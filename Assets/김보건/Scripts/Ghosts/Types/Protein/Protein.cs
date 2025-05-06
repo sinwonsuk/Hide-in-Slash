@@ -208,14 +208,50 @@ public class Protein : Ghost, IPunObservable
     }
 
     [PunRPC]
+    private void RotateSurvivorScreen(float angle, float duration)
+    {
+        if (!photonView.IsMine) return;
+
+        Camera mainCam = Camera.main;
+        if (mainCam == null)
+        {
+            Debug.LogWarning("Main Camera not found!");
+            return;
+        }
+
+        StartCoroutine(RotateCameraCoroutine(mainCam.transform, angle, duration));
+    }
+
+    private IEnumerator RotateCameraCoroutine(Transform camTransform, float angle, float duration)
+    {
+        Quaternion originalRot = camTransform.rotation;
+        camTransform.rotation = Quaternion.Euler(0, 0, angle);
+        yield return new WaitForSeconds(duration);
+        camTransform.rotation = originalRot;
+    }
+
+    [PunRPC]
     private void DrinkProtein()
     {
-        isProtein = true;
-        proteinTimer = ProteinDuration;
-        moveSpeed = buffedSpeed;
-        transform.localScale = originalScale * 1.5f;
+        if (!photonView.IsMine) return;
 
-        Debug.Log("단백질 섭취");
+        isCoolingDown = true;
+        cooldownTimer = 0f;
+        if (skillImage != null) skillImage.fillAmount = 1f;
+
+        float angle = Random.value > 0.5f ? 90f : 180f;
+        float duration = 5f;
+
+        Debug.Log($"[프로틴] 화면 회전 스킬 발동! {angle}도");
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PhotonView pv = obj.GetComponent<PhotonView>();
+            if (pv != null)
+            {
+                pv.RPC("RotateSurvivorScreen", RpcTarget.All, angle, duration);
+            }
+        }
 
         ghostStateMachine.ChangeState(useSkillState);
     }

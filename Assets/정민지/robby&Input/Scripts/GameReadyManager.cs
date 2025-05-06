@@ -300,9 +300,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     }
 
-
-
-
     //public void OnSubmitPassword(string inputPassword)
     //{
     //   // RoomInfo[] roomList = myList;
@@ -347,7 +344,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         }
     }
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
-
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
     public override void OnJoinedRoom()
