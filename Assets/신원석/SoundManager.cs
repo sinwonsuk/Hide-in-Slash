@@ -5,14 +5,12 @@ public class SoundManager : MonoBehaviour
 {
     public enum sfx
     {
-       none,
+        OpenDoor,
     }
     public enum bgm
     {
-        Stage1,
-        Stage2,
-        Stage3,
-        Lobby,
+        PleaseFind,
+        scar,
     }
     private void Awake()
     {
