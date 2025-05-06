@@ -794,34 +794,34 @@ public class Player : MonoBehaviourPun, IPunObservable
         PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
     }
 
-    [PunRPC]
-    public void TriggerDeathByTimeout()
-    {
-        // 이미 죽은 상태라면 (두 번 잡힌 경우 포함)
-        if (PlayerStateMachine.currentState == deadState)
-        {
-            StartCoroutine(deadState.DeathWithDelay(5f));
-        }
-        else
-        {
-            // 아직 유령이 아닌 경우라면 죽이고
-            PlayerStateMachine.ChangeState(deadState);
-            StartCoroutine(deadState.DeathWithDelay(5f));
-        }
-    }
+    //[PunRPC]
+    //public void TriggerDeathByTimeout()
+    //{
+    //    // 이미 죽은 상태라면 (두 번 잡힌 경우 포함)
+    //    if (PlayerStateMachine.currentState == deadState)
+    //    {
+    //        StartCoroutine(deadState.DeathWithDelay(5f));
+    //    }
+    //    else
+    //    {
+    //        // 아직 유령이 아닌 경우라면 죽이고
+    //        PlayerStateMachine.ChangeState(deadState);
+    //        StartCoroutine(deadState.DeathWithDelay(5f));
+    //    }
+    //}
 
-    private IEnumerator PlayTimeoutDeathUI()
-    {
-        yield return new WaitForSeconds(0.5f);
+    //private IEnumerator PlayTimeoutDeathUI()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
 
-        if (DeadManager.Instance != null)
-        {
-            DeadManager.Instance.CheckAllPlayerDead(); // AllDeath / PlayerDeath UI
-        }
+    //    if (DeadManager.Instance != null)
+    //    {
+    //        DeadManager.Instance.CheckAllPlayerDead(); // AllDeath / PlayerDeath UI
+    //    }
 
-        yield return new WaitForSeconds(5f);
-        PhotonNetwork.LoadLevel("RobbyScene");
-    }
+    //    yield return new WaitForSeconds(5f);
+    //    PhotonNetwork.LoadLevel("RobbyScene");
+    //}
 
     #endregion
 

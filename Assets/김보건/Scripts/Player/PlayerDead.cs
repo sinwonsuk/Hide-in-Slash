@@ -15,13 +15,13 @@ public class PlayerDead : PlayerState
         player.SetZeroVelocity();
         player.BecomeGhost();
 
-        if (!player.photonView.IsMine) return;
+        //if (!player.photonView.IsMine) return;
 
-        // 연출 시작
-        if (DeadManager.Instance != null)
-        {
-            DeadManager.Instance.CheckAllPlayerDead(); // AllDeath or PlayerDeath UI 보여줌
-        }
+        //// 연출 시작
+        //if (DeadManager.Instance != null)
+        //{
+        //    DeadManager.Instance.CheckAllPlayerDead(); // AllDeath or PlayerDeath UI 보여줌
+        //}
 
     }
 
@@ -32,10 +32,10 @@ public class PlayerDead : PlayerState
         if (moveInput != Vector2.zero)
             stateMachine.ChangeState(player.moveState);
     }
-    public IEnumerator DeathWithDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
+    //public IEnumerator DeathWithDelay(float delay)
+    //{
+    //    yield return new WaitForSeconds(delay);
 
-        PhotonNetwork.LoadLevel("RobbyScene");
-    }
+    //    PhotonNetwork.LoadLevel("RobbyScene");
+    //}
 }

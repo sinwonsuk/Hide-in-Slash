@@ -38,7 +38,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
         if (timeRemaining <= 0 && !isEnded)
         {
             isEnded = true;
-            photonView.RPC("OnTimeoutEnd", RpcTarget.All);
+            //photonView.RPC("OnTimeoutEnd", RpcTarget.All);
 
         }
     }
@@ -49,18 +49,18 @@ public class GameTimer : MonoBehaviourPunCallbacks
         startTime = time;
     }
 
-    [PunRPC]
-    void OnTimeoutEnd()
-    {
-        // 모든 Player 오브젝트 중 내 것만 실행
-        var players = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
-        foreach (var p in players)
-        {
-            if (p.photonView.IsMine)
-            {
-                p.TriggerDeathByTimeout();
-                break;
-            }
-        }
-    }
+    //[PunRPC]
+    //void OnTimeoutEnd()
+    //{
+    //    // 모든 Player 오브젝트 중 내 것만 실행
+    //    var players = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
+    //    foreach (var p in players)
+    //    {
+    //        if (p.photonView.IsMine)
+    //        {
+    //            p.TriggerDeathByTimeout();
+    //            break;
+    //        }
+    //    }
+    //}
 }
