@@ -83,18 +83,13 @@ public class Protein : Ghost, IPunObservable
 	{
 		base.Update();
 
-        if (photonView.IsMine && Input.GetKeyDown(KeyCode.K))
-        {
-            impulseSource.GenerateImpulse(); // 또는 GenerateImpulse(Vector3.down)
-            Debug.Log("Impulse Triggered");
-        }
-
         if (photonView.IsMine)
 		{
 			if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
 			{
 				photonView.RPC("DrinkProtein", RpcTarget.All);
-			}
+                
+            }
 
 			diceTimer += Time.deltaTime;
 
@@ -105,7 +100,9 @@ public class Protein : Ghost, IPunObservable
 				Debug.Log("프로틴 주사위 굴리기: " + roll);
 				photonView.RPC("RollDice", RpcTarget.All, roll);
 			}
-		}
+
+            UpdateSkillCooldown();
+        }
 		else
 		{
 			//이동보간
@@ -121,7 +118,7 @@ public class Protein : Ghost, IPunObservable
 			}
 		}
 
-		if (isProtein)
+        if (isProtein)
 		{
 			proteinTimer -= Time.deltaTime;
 			if (proteinTimer <= 0)
@@ -151,6 +148,28 @@ public class Protein : Ghost, IPunObservable
         {
             rb.linearVelocity = networkedVelocity;
         }
+    }
+
+    private void UpdateSkillCooldown()
+    {
+        if (!isCoolingDown) return;
+        cooldownTimer -= Time.deltaTime;
+        if (skillImage != null)
+            skillImage.fillAmount = cooldownTimer / cooldownTime;
+        if (cooldownTimer <= 0f)
+        {
+            isCoolingDown = false;
+            if (skillImage != null)
+                skillImage.fillAmount = 0f;
+        }
+    }
+
+    private void UseSkill()
+    {
+        isCoolingDown = true;
+        cooldownTimer = cooldownTime;
+        if (skillImage != null)
+            skillImage.fillAmount = 1f;
     }
 
     [PunRPC]
@@ -235,9 +254,7 @@ public class Protein : Ghost, IPunObservable
     {
         if (!photonView.IsMine) return;
 
-        isCoolingDown = true;
-        cooldownTimer = 0f;
-        if (skillImage != null) skillImage.fillAmount = 1f;
+        UseSkill();
 
         float angle = Random.value > 0.5f ? 90f : 180f;
         float duration = 5f;
@@ -390,7 +407,7 @@ public class Protein : Ghost, IPunObservable
     [SerializeField] private float proteinCooldownTimer; //쿨타임 타이머
 
     [Header("스킬쿨타임")]
-    [SerializeField] private float cooldownTime = 20f;
+    [SerializeField] private float cooldownTime = 50f;
     private float cooldownTimer = 0f;
     private bool isCoolingDown = false;
     [SerializeField] private Image skillImage;

@@ -645,6 +645,7 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: f9b5e3d054c208449b0a5e70b6e61b60, type: 3}
   - {fileID: 8300000, guid: 47fb57d3c938f7242a25d0018f66b6a4, type: 3}
+  - {fileID: 8300000, guid: f5ebfa082e854b64c865d4af0a92e85d, type: 3}
   bgmVolume: 0.5
   reduceSoundSpeed: 0
   sfxClips:
