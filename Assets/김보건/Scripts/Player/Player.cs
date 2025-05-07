@@ -485,7 +485,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             isInPrisonDoor = false;
             // 이벤트로 isInPrisonDoor = true
-            EventManager.TriggerEvent(EventType.InPrisonDoor, true);
+            EventManager.TriggerEvent(EventType.InPrisonDoor, false);
         }
 
         if (collision.CompareTag("Hatch"))

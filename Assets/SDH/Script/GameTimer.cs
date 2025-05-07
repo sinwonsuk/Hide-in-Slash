@@ -21,8 +21,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
 
 
         if (PhotonNetwork.IsMasterClient)
-        {
-           
+        {           
             startTime = PhotonNetwork.Time;
             photonView.RPC("RPC_SetStartTime", RpcTarget.Others, startTime);
         }
@@ -30,6 +29,16 @@ public class GameTimer : MonoBehaviourPunCallbacks
 
     IEnumerator enumerator()
     {
+        while (true)
+        {
+            if(AssignManager.instance.Bossplayer != null)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
         yield return new WaitForSeconds(3.0f);
 
         if (PhotonNetwork.IsMasterClient)
