@@ -290,7 +290,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine && PlayerStateMachine.currentState != deadState && Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log("플레이어죽음");
+            EventManager.TriggerEvent(EventType.PlayerHpZero);
             PlayerStateMachine.ChangeState(deadState);
+            profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
         }
     }
 
@@ -341,6 +343,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPeanutUI != null)
@@ -348,8 +351,8 @@ public class Player : MonoBehaviourPun, IPunObservable
                     deathPeanutUI.SetActive(true);
                     StartCoroutine(DeathUIDeleteDelay(deathPeanutUI, 3f));
                 }
-
-                StartCoroutine(GhostDeathSequence(2f));
+                PlayerStateMachine.ChangeState(deadState);
+                //StartCoroutine(GhostDeathSequence(2f));
             }
             else if (countLife == 1)
             {
@@ -381,7 +384,8 @@ public class Player : MonoBehaviourPun, IPunObservable
                     deathProteinUI.SetActive(true);
                     StartCoroutine(DeathUIDeleteDelay(deathProteinUI, 3f));
                 }
-                StartCoroutine(GhostDeathSequence(2f));
+                //StartCoroutine(GhostDeathSequence(2f));
+                PlayerStateMachine.ChangeState(deadState);
             }
             else if (countLife == 1)
             {
@@ -413,8 +417,8 @@ public class Player : MonoBehaviourPun, IPunObservable
                     deathPuKeGirlUI.SetActive(true);
                     StartCoroutine(DeathUIDeleteDelay(deathPuKeGirlUI, 3f));
                 }
-
-                StartCoroutine(GhostDeathSequence(2f));
+                PlayerStateMachine.ChangeState(deadState);
+               
             }
             else if (countLife == 1)
             {
