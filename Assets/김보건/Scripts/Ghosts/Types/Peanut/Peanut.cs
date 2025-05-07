@@ -1,3 +1,4 @@
+
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -217,7 +218,7 @@ public class Peanut : Ghost, IPunObservable
     {
         if (collision.gameObject.CompareTag("PlayerSight") && !isStunned)
         {
-            StartCoroutine(StunnedTime(5f));
+            StartCoroutine(StunnedTime(2f));
         }
 
 		var rt = collision.GetComponent<RegionTrigger>();
