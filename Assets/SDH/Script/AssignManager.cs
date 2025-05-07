@@ -414,6 +414,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     private void SpawnExit()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
         EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
     }

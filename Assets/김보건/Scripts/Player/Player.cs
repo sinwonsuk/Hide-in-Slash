@@ -121,6 +121,17 @@ public class Player : MonoBehaviourPun, IPunObservable
                     Debug.LogWarning("UseItemAndEscape 오브젝트없음");
                 }
 
+                Transform allEscapeObj = playerCanvas.transform.Find("AllEscape");
+                if (allEscapeObj != null)
+                {
+                    exitDoorEscapeUI = allEscapeObj.gameObject;
+                    exitDoorEscapeUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("AllEscape 오브젝트 없음");
+                }
+
                 Transform deathProtein = playerCanvas.transform.Find("ProteinDeathAnim");
                 if (deathProtein != null)
                 {
@@ -425,6 +436,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             Debug.Log("탈출구가능");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
+
+            // 나 말고는 상태 바꾸지 않도록
+            photonView.RPC("SetEscapeTypeForOthers", RpcTarget.OthersBuffered, (int)EscapeType.Hatch);
         }
 
 
@@ -794,34 +808,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         PlayerStateMachine.ChangeState(deadState); // 죽음 상태로 전환
     }
 
-    //[PunRPC]
-    //public void TriggerDeathByTimeout()
-    //{
-    //    // 이미 죽은 상태라면 (두 번 잡힌 경우 포함)
-    //    if (PlayerStateMachine.currentState == deadState)
-    //    {
-    //        StartCoroutine(deadState.DeathWithDelay(5f));
-    //    }
-    //    else
-    //    {
-    //        // 아직 유령이 아닌 경우라면 죽이고
-    //        PlayerStateMachine.ChangeState(deadState);
-    //        StartCoroutine(deadState.DeathWithDelay(5f));
-    //    }
-    //}
-
-    //private IEnumerator PlayTimeoutDeathUI()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    if (DeadManager.Instance != null)
-    //    {
-    //        DeadManager.Instance.CheckAllPlayerDead(); // AllDeath / PlayerDeath UI
-    //    }
-
-    //    yield return new WaitForSeconds(5f);
-    //    PhotonNetwork.LoadLevel("RobbyScene");
-    //}
 
     #endregion
 
@@ -1250,7 +1236,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     [Header("탈출")]
     [SerializeField] private GameObject useItemAndEscapeUI;
+    [SerializeField] private GameObject exitDoorEscapeUI;
     public GameObject UseItemAndEscapeUI => useItemAndEscapeUI;
+    public GameObject ExitDoorEscapeUI => exitDoorEscapeUI;
 
     [Header("잡힘")]
     [SerializeField] private GameObject deathProteinUI;
