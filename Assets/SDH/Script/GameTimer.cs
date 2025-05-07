@@ -17,7 +17,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
     {
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
 
-       // StartCoroutine(enumerator());
+        StartCoroutine(enumerator());
 
 
         if (PhotonNetwork.IsMasterClient)
@@ -44,7 +44,6 @@ public class GameTimer : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.SetMasterClient(AssignManager.instance.Bossplayer);
-            photonView.RPC("ForceInitDeadManager", AssignManager.instance.Bossplayer);
         }
     }
     private void Update()
