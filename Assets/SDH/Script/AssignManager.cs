@@ -30,6 +30,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public static AssignManager instance;
 
+    public Photon.Realtime.Player Bossplayer;
+
     private new void OnEnable()
     {
         EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
@@ -176,7 +178,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < maps.Length; i++)
         {
-            GameObject go = PhotonNetwork.Instantiate(maps[i], Vector3.right * 200 * i, Quaternion.identity);
+            GameObject go = PhotonNetwork.InstantiateRoomObject(maps[i], Vector3.right * 200 * i, Quaternion.identity);
         }
 
         // 맵 생성 완료 후 신호
@@ -257,7 +259,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
-            PhotonNetwork.Instantiate("MiniGame", spawnPoint.position, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject("MiniGame", spawnPoint.position, Quaternion.identity);
         }
     }
 
@@ -267,7 +269,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             int index = espIndexs[20 - i];
             Transform spawnPoint = eventSpawnPoints[index];
-            PhotonNetwork.Instantiate("Generator", spawnPoint.position, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject("Generator", spawnPoint.position, Quaternion.identity);
         }
     }
 
@@ -296,6 +298,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
             {
                 if (InitializePlayers() == true)
                 {
+
                     yield break;
                 }
             }
@@ -333,6 +336,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         monProp.Add("BossType", bossType);
         players[roleIndexs[0]].SetCustomProperties(monProp);
 
+        Bossplayer = players[roleIndexs[0]];
+    
         for (int i = 1; i < players.Length; i++)
         {
             string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Count)];
@@ -395,6 +400,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
+       
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
@@ -412,7 +418,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     private void SpawnExit()
     {
-        PhotonNetwork.Instantiate("Ship", shipTf.position, Quaternion.identity);
+        if (!PhotonNetwork.IsMasterClient) return;
+        PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
         EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
     }
 }

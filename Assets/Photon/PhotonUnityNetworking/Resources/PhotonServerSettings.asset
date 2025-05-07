@@ -92,6 +92,16 @@ MonoBehaviour:
   - SetInitialPlayerCount
   - RotateSurvivorScreen
   - RPC_TriggerFogIncrease
+  - RunnerDied
+  - ShowAllDead
+  - RunnerEscaped
+  - ShowSomeDead
+  - RPC_PlayerEnteredExit
+  - RPC_PlayerFailed
+  - RPC_ShowAllEscape
+  - RPC_ShowAloneEscape
+  - RPC_StartExitPhase
+  - test
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

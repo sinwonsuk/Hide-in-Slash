@@ -17,15 +17,33 @@ public class GameTimer : MonoBehaviourPunCallbacks
     {
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
 
+        StartCoroutine(enumerator());
+
+
         if (PhotonNetwork.IsMasterClient)
         {
+           
             startTime = PhotonNetwork.Time;
             photonView.RPC("RPC_SetStartTime", RpcTarget.Others, startTime);
         }
     }
 
+    IEnumerator enumerator()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.SetMasterClient(AssignManager.instance.Bossplayer);
+        }
+    }
     private void Update()
     {
+
+            Photon.Realtime.Player master = PhotonNetwork.MasterClient;
+            Debug.Log("마스터 클라이언트: " + master.NickName);
+        
+
         double elapsed = PhotonNetwork.Time - startTime;
         float timeRemaining = countdownTime - (float)elapsed;
 
@@ -40,8 +58,9 @@ public class GameTimer : MonoBehaviourPunCallbacks
         if (timeRemaining <= 0 && !isEnded)
         {
             isEnded = true;
-            //photonView.RPC("OnTimeoutEnd", RpcTarget.All);
 
+            if (PhotonNetwork.IsMasterClient)
+                DeadManager.Instance.OnTimeOut();
         }
     }
 
@@ -51,18 +70,4 @@ public class GameTimer : MonoBehaviourPunCallbacks
         startTime = time;
     }
 
-    //[PunRPC]
-    //void OnTimeoutEnd()
-    //{
-    //    // 모든 Player 오브젝트 중 내 것만 실행
-    //    var players = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
-    //    foreach (var p in players)
-    //    {
-    //        if (p.photonView.IsMine)
-    //        {
-    //            p.TriggerDeathByTimeout();
-    //            break;
-    //        }
-    //    }
-    //}
 }

@@ -9,19 +9,20 @@ public class PlayerDead : PlayerState
         stateType = PlayerStateType.Dead;
     }
 
+    bool hasReportedDeath;
+
     public override void Enter()
     {
         base.Enter();
         player.SetZeroVelocity();
         player.BecomeGhost();
 
-        //if (!player.photonView.IsMine) return;
+        if (player.photonView.IsMine && !hasReportedDeath)          // 중복 호출 방지
+        {
+            hasReportedDeath = true;
+            DeadManager.Instance.photonView.RPC("RunnerDied", RpcTarget.MasterClient);
+        }
 
-        //// 연출 시작
-        //if (DeadManager.Instance != null)
-        //{
-        //    DeadManager.Instance.CheckAllPlayerDead(); // AllDeath or PlayerDeath UI 보여줌
-        //}
 
     }
 
@@ -32,10 +33,4 @@ public class PlayerDead : PlayerState
         if (moveInput != Vector2.zero)
             stateMachine.ChangeState(player.moveState);
     }
-    //public IEnumerator DeathWithDelay(float delay)
-    //{
-    //    yield return new WaitForSeconds(delay);
-
-    //    PhotonNetwork.LoadLevel("RobbyScene");
-    //}
 }
