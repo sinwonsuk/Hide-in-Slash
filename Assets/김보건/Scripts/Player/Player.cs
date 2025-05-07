@@ -470,6 +470,11 @@ public class Player : MonoBehaviourPun, IPunObservable
             flashLight.enabled = false;
             lightCollider.enabled = false;
             photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+
+            // 서버에 내 상태 알리기
+            ExitGames.Client.Photon.Hashtable props = new();
+            props["IsInPrison"] = true;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
 
@@ -505,6 +510,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInsidePrison = false;
             photonView.RPC("SetFlashlight", RpcTarget.Others, false);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
+
+            ExitGames.Client.Photon.Hashtable props = new();
+            props["IsInPrison"] = false;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
     }
