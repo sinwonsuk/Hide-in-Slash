@@ -71,7 +71,7 @@ public class DeadManager : MonoBehaviourPun
         CheckEndCondition();
     }
 
-    /* ---------- 엔드게임 판정 ---------- */
+    //엔드 게임판정
     private void CheckEndCondition()
     {
         if (runnersAlive == 0)         // 생존자 0명
@@ -79,7 +79,7 @@ public class DeadManager : MonoBehaviourPun
     }
 
 
-    /* ---------- 게임 종료 처리 ---------- */
+    //게임 종료
     private void TryFinishGame(string reason)
     {
         if (alreadyEnded) return;
@@ -87,9 +87,9 @@ public class DeadManager : MonoBehaviourPun
 
         Debug.Log($"[DM] 게임 종료 : {reason}  (Escaped:{runnersEscaped})");
 
-        if (runnersEscaped > 0)            // ▶ 탈출 인원이 1명 이상
+        if (runnersEscaped > 0)            // 탈출 인원이 1명 이상
             photonView.RPC(nameof(ShowSomeDead), RpcTarget.All);
-        else                               // ▶ 전원 사망
+        else                               // 전원 사망
             photonView.RPC(nameof(ShowAllDead), RpcTarget.All);
     }
 
@@ -127,7 +127,7 @@ public class DeadManager : MonoBehaviourPun
             PhotonNetwork.JoinLobby();
     }
 
-    /* ---------- 유틸 ---------- */
+
     private int CountRunners()
     {
         int cnt = 0;

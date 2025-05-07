@@ -697,12 +697,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
 
+        circleLight.enabled = true;
+
         if (isInsidePrison)
             return;
 
         isLightOn = true;
         flashLight.enabled = true;
-        circleLight.enabled = true;
         lightCollider.enabled = true;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
     }
