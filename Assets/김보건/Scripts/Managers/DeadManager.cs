@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Realtime;
 using Player = Photon.Realtime.Player;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 
 public class DeadManager : MonoBehaviourPunCallbacks
 {
@@ -15,6 +16,7 @@ public class DeadManager : MonoBehaviourPunCallbacks
     public GameObject someDeadUI;       // 일부 사망
     public GameObject allEscapeUI; // 탈출 연출용
     public GameObject someEscapeUI; // 탈출 연출용
+    public GameObject prisonEndingUI; // 감옥 연출용
 
     public float uiDuration = 5f;     // 연출 후 로비 전환까지 지연 시간
 
@@ -79,6 +81,8 @@ public class DeadManager : MonoBehaviourPunCallbacks
 
         if (runnersAlive == 0)
             TryFinishGame("모든 Runner 사망");
+
+        CheckEndCondition();
     }
 
     // 생존자 탈출
@@ -95,8 +99,26 @@ public class DeadManager : MonoBehaviourPunCallbacks
     //엔드 게임판정
     private void CheckEndCondition()
     {
-        if (runnersAlive == 0)         // 생존자 0명
+        int realAlive = 0;
+
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            bool isRunner = !NetworkProperties.instance.GetMonsterStates(p.CustomProperties["Role"].ToString());
+            bool isEscaped = escapedActors.Contains(p.ActorNumber);
+            bool isInPrison = p.CustomProperties.TryGetValue("IsInPrison", out object prison) && (bool)prison;
+
+            if (isRunner && !isEscaped && !isInPrison)
+            {
+                realAlive++;  // 현재 움직일 수 있는 도망자
+            }
+        }
+
+        if (realAlive == 0)
+        {
+            Debug.Log("[DM] 모든 유효 도망자 상태 종료 → 생존자 수 0 처리");
+            runnersAlive = 0;  // 추가!
             TryFinishGame("생존자 전멸");
+        }
     }
 
 
@@ -107,14 +129,27 @@ public class DeadManager : MonoBehaviourPunCallbacks
         alreadyEnded = true;
 
         int[] escapedArray = escapedActors.ToArray();
+        List<int> prisonedPlayers = new();
+
+
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            if (p.CustomProperties.TryGetValue("IsInPrison", out object value) && (bool)value)
+            {
+                prisonedPlayers.Add(p.ActorNumber);
+            }
+        }
+
         photonView.RPC(nameof(ShowResultPerClient),
-                       RpcTarget.All,
-                       escapedArray,
-                       runnersTotal);   // 시작 시 저장해둔 전체 도망자 수
+               RpcTarget.All,
+               escapedArray,
+               runnersTotal,
+               prisonedPlayers.ToArray());  // 시작 시 저장해둔 전체 도망자 수 
+
     }
 
     [PunRPC]
-    private void ShowResultPerClient(int[] escapedList, int runnersTotal)
+    private void ShowResultPerClient(int[] escapedList, int runnersTotal, int[] prisonedList)
     {
         // 술레 플레이어면 UI 생략
         if (NetworkProperties.instance.GetMonsterStates(
@@ -123,6 +158,7 @@ public class DeadManager : MonoBehaviourPunCallbacks
 
         int escapedCnt = escapedList.Length;
         bool iEscaped = escapedList.Contains(PhotonNetwork.LocalPlayer.ActorNumber);
+        bool iInPrison = prisonedList.Contains(PhotonNetwork.LocalPlayer.ActorNumber);
 
         //전원탈출, 전원사망
         if (escapedCnt == runnersTotal) PlayUI(allEscapeUI);  
@@ -130,8 +166,12 @@ public class DeadManager : MonoBehaviourPunCallbacks
         //일부탈출
         else
         {
-            if (iEscaped) PlayUI(someEscapeUI);   //  탈출
-            else PlayUI(someDeadUI);     // 실패
+            if (iInPrison)
+                PlayUI(prisonEndingUI);  // 새로 만든 감옥 엔딩 연출 UI
+            else if (iEscaped)
+                PlayUI(someEscapeUI);   // 탈출
+            else
+                PlayUI(someDeadUI);     // 죽음
         }
 
         // 5초 뒤 로비 이동
@@ -212,6 +252,19 @@ public class DeadManager : MonoBehaviourPunCallbacks
             Debug.LogWarning("[DM] DeadManager 인스턴스가 null입니다");
         }
     }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player target,
+                                              ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        // 마스터가 아니거나 이미 게임이 끝났으면 무시
+        if (!PhotonNetwork.IsMasterClient || alreadyEnded) return;
+
+        // 감옥 상태가 바뀐 경우에만 재검사
+        if (changedProps.ContainsKey("IsInPrison"))
+        {
+            CheckEndCondition();   // 여기서 realAlive 재계산 → 0이면 바로 TryFinishGame
+        }
     }
 
 }   
