@@ -42,9 +42,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private Transform content; //스크롤 콘텐트
     public Text totalPlayersText;  // 인원수를 표시할 텍스트 UI (전체 인원수)
 
-    List<RoomInfo> myList = new List<RoomInfo>();
-    int currentPage = 1, maxPage, multiple;
-
     [Header("ETC")]
     public Text StatusText;
     public PhotonView PV;
@@ -350,8 +347,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.scar);
 
         PhotonNetwork.AutomaticallySyncScene = true;
-
-        int a = 0;
 
         occupied = new bool[slotPoints.Length];
         Debug.Log("방 입장 완료: " + PhotonNetwork.CurrentRoom.Name);
@@ -730,8 +725,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             return null;
         }
     }
-
-    int keyCheck = 0;
 
     public Action<string> test;
     public Action<Transform> Gc;

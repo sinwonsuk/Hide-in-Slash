@@ -91,6 +91,7 @@ MonoBehaviour:
   - TriggerDeathByTimeout
   - SetInitialPlayerCount
   - RotateSurvivorScreen
+  - RPC_TriggerFogIncrease
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

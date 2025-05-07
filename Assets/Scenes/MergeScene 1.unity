@@ -1232,6 +1232,7 @@ GameObject:
   - component: {fileID: 543290332}
   - component: {fileID: 543290334}
   - component: {fileID: 543290333}
+  - component: {fileID: 543290335}
   m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
@@ -1335,6 +1336,19 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
+--- !u!114 &543290335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543290331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2beef7f0cfce13d4ebd0ebad06b78038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogEffect: {fileID: 543290334}
 --- !u!1 &549967400
 GameObject:
   m_ObjectHideFlags: 0

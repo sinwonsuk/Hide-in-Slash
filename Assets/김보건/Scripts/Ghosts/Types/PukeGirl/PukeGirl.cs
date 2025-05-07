@@ -145,13 +145,33 @@ public class PukeGirl : Ghost, IPunObservable
     public void RPC_StartVomit()
     {
         pukeDir = lastDir;
-
         ghostStateMachine.ChangeState(vomitState);
-		anim.SetBool("IsVomiting", true);
+        anim.SetBool("IsVomiting", true);
 
         if (photonView.IsMine)
+        {
             UseSkill();
+
+            photonView.RPC("RPC_TriggerFogIncrease", RpcTarget.All);
+        }
     }
+
+    [PunRPC]
+    public void RPC_TriggerFogIncrease()
+    {
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isBoss", out object isBossObj) && !(bool)isBossObj) 
+        {
+            var fog = Camera.main?.GetComponentInChildren<FogController>();
+            if (fog != null)
+            {
+                fog.IncreaseFog();
+                Debug.Log("생존자 화면에서 안개 진해짐!");
+            }
+        }
+    }
+
+
 
     protected override void FixedUpdate()
     {
