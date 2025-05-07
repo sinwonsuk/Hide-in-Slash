@@ -3547,8 +3547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839f4a5f015fc2c428a1a1496c3d7659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDeadUI: {fileID: 988723134}
-  someDeadUI: {fileID: 1514167981}
+  allDeadUI: {fileID: 0}
+  someDeadUI: {fileID: 0}
   uiDuration: 5
 --- !u!4 &2111568168
 Transform:
