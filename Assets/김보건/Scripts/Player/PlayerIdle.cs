@@ -13,8 +13,9 @@ public class PlayerIdle : PlayerState
         base.Enter();
 
         player.SetZeroVelocity();
+        player.rb.constraints |= RigidbodyConstraints2D.FreezePosition;
 
-        // ¸¶Áö¸· ¹Ù¶óº¸´ø ¹æÇâ ±×´ë·Î À¯Áö
+        // ë§ˆì§€ë§‰ ë°”ë¼ë³´ë˜ ë°©í–¥ ê·¸ëŒ€ë¡œ ìœ ì§€
         player.UpdateAnimParam(Vector2.zero);
     }
     public override void Update()
@@ -28,6 +29,7 @@ public class PlayerIdle : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
     }
 
 }
