@@ -21,6 +21,7 @@ public class DrawMiniGame : MiniGame
 
     private void CreateSucessObject()
     {
+        Money.instance.addMoney(money);
         Delete();
        Instantiate(sucessObject);
     }
@@ -47,4 +48,7 @@ public class DrawMiniGame : MiniGame
 
     [SerializeField]
     GameObject failObject;
+
+    [SerializeField]
+    int money = 0;
 }

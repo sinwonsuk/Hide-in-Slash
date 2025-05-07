@@ -14,12 +14,9 @@ public class FogController : MonoBehaviour
     {
         while(true)
         {
-
-
             if(AllPlayersHaveRoles())
             {
                 
-
                 if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
                 {
                     if (selfRoleObj is string selfRole)
@@ -57,7 +54,6 @@ public class FogController : MonoBehaviour
                         }
                     }                    
                 }
-
 
                 gameObject.SetActive(false);
                 fogEffect?.SetFloat("FogAmount", 0.0f);

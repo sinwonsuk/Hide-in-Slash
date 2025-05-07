@@ -935,10 +935,10 @@ MonoBehaviour:
   CameraDistance: 1000
   DeadZoneDepth: 0
   Composition:
-    ScreenPosition: {x: 0.018229157, y: 0.0018519834}
+    ScreenPosition: {x: 0.018229056, y: 0.0018518493}
     DeadZone:
       Enabled: 1
-      Size: {x: 0.042708397, y: 0.035185114}
+      Size: {x: 0.11041669, y: 0.12962954}
     HardLimits:
       Enabled: 0
       Size: {x: 0.8, y: 0.8}
@@ -3140,7 +3140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1570568349613218444, guid: b7608eed1ca18f54cad49140f4d91185, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 384
+      value: 65920
       objectReference: {fileID: 0}
     - target: {fileID: 2405261045622038209, guid: b7608eed1ca18f54cad49140f4d91185, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3992,6 +3992,18 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5957312833049250442, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957312833049250442, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957312833049250442, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7882285311315119095, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4154,7 +4166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3075886434825444186, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
       propertyPath: m_text
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 3433908155586461456, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
       propertyPath: m_AnchorMax.x

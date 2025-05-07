@@ -42,9 +42,10 @@ public class CatchMiniGame : MiniGame
 
         if(check == CircleCount)
         {
+            Money.instance.addMoney(money);
             Delete();
             Instantiate(sucessObject);
-            Debug.Log("¹Ì´Ï°ÔÀÓ ½Â¸®");
+            Debug.Log("ë¯¸ë‹ˆê²Œìž„ ìŠ¹ë¦¬");
         }
 
     }
@@ -66,5 +67,6 @@ public class CatchMiniGame : MiniGame
 
     [SerializeField]
     GameObject sucessObject;
-
+    [SerializeField]
+    int money = 0;
 }

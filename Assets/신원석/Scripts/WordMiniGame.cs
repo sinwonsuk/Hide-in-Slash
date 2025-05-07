@@ -34,6 +34,7 @@ public class WordMiniGame : MiniGame
     {
         if(correctCheck == 5)
         {
+            Money.instance.addMoney(money);
             Instantiate(minigameSucess);
             DeleteAll();
         }
@@ -138,10 +139,9 @@ public class WordMiniGame : MiniGame
 
     public Action<string> wordhandler;
 
-    [SerializeField]
-    int correctCount = 10;
-
     int correctCheck = 0;
 
+    [SerializeField]
+    int money = 0;
 
 }

@@ -53,14 +53,16 @@ public class MemoryMiniGame : MiniGame
                 {
                     Delete();
                     Instantiate(failObject);
-                    Debug.Log("¹Ì´Ï°ÔÀÓ ½ÇÆÐ");
+                    Debug.Log("ë¯¸ë‹ˆê²Œìž„ ì‹¤íŒ¨");
                     return;
                 }
             }
 
+            Debug.Log("ë¯¸ë‹ˆê²Œìž„ ì„±ê³µ");
             Delete();
+            Money.instance.addMoney(money);
             Instantiate(sucessObject);
-            Debug.Log("¹Ì´Ï°ÔÀÓ ¼º°ø");
+           
 
         }
     }
@@ -93,4 +95,6 @@ public class MemoryMiniGame : MiniGame
 
     [SerializeField]
     GameObject failObject;
+    [SerializeField]
+    int money = 0;
 }

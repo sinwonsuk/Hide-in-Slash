@@ -8,8 +8,6 @@ public class MiniGameSucess : MonoBehaviour
     {
         SoundManager.GetInstance().SfxPlay(SoundManager.sfx.MiniGmaeSucess, false);
 
-        Money.instance.addMoney(150);
-
         spriteRenderer = GetComponent<Image>();
      
         color = Color.white;

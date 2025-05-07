@@ -611,7 +611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameWordDrop: {fileID: 3355315109733306669, guid: 71f520ac63755ca4a992bada7cdd0f3f, type: 3}
   minigameSucess: {fileID: 3959170323658439888, guid: c45f580ef669d8e449db9cea29b8b2bf, type: 3}
-  correctCount: 5
+  money: 200
 --- !u!61 &1458185617502218786
 BoxCollider2D:
   m_ObjectHideFlags: 0

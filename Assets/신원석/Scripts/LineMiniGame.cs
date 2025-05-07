@@ -56,6 +56,7 @@ public class LineMiniGame : MiniGame
     
         if(lineChecks.Count == 4)
         {
+            Money.instance.addMoney(money);
             trigerAction.Invoke();
             minigameSucess =Instantiate(minigameSucess);
             Destroy(gameObject);
@@ -101,6 +102,9 @@ public class LineMiniGame : MiniGame
 
     [SerializeField]
     GameObject minigameSucess;
+
+    [SerializeField]
+    int money =0;
 
 }
  

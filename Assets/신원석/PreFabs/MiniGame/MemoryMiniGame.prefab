@@ -332,6 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sucessObject: {fileID: 3959170323658439888, guid: c45f580ef669d8e449db9cea29b8b2bf, type: 3}
   failObject: {fileID: 3729170894573701110, guid: e7fd5e04143850c4fa436053d81a3476, type: 3}
+  money: 200
 --- !u!1 &2764209728803496968
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +439,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0.33333334, g: 0, b: 0.20392157, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
-  duration: 1
+  duration: 0.5
   light2D: {fileID: 4046706669334403715}
 --- !u!1 &2865290261631642134
 GameObject:
