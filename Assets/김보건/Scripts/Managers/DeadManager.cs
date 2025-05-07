@@ -2,8 +2,9 @@ using Photon.Pun;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using Photon.Realtime;
 
-public class DeadManager : MonoBehaviourPun
+public class DeadManager : MonoBehaviourPunCallbacks
 {
     public static DeadManager Instance;
 
@@ -150,4 +151,13 @@ public class DeadManager : MonoBehaviourPun
         }
         return cnt;
     }
+
+    [PunRPC]
+    public void ForceInitDeadManager()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        Debug.Log("[DM] 강제 초기화 호출됨");
+        StartCoroutine(InitRunnerCount());
+    }
+
 }

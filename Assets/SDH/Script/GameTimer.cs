@@ -44,6 +44,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.SetMasterClient(AssignManager.instance.Bossplayer);
+            photonView.RPC("ForceInitDeadManager", AssignManager.instance.Bossplayer);
         }
     }
     private void Update()
