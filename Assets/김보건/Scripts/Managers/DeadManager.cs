@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class DeadManager : MonoBehaviourPun
@@ -33,11 +34,21 @@ public class DeadManager : MonoBehaviourPun
     private void Start()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        StartCoroutine(InitRunnerCount());
+    }
 
-        // 방 입장 직후 AssignManager 가 역할을 다 배분한 상태라고 가정
+    private IEnumerator InitRunnerCount()
+    {
+        // 모든 플레이어가 Role / SpawnIndex 를 받을 때까지 대기
+        while (PhotonNetwork.PlayerList.Any(p =>
+               !p.CustomProperties.ContainsKey("Role")))
+        {
+            yield return null;      // 한 프레임씩 쉬어 줌
+        }
+
         runnersAlive = CountRunners();
         runnersEscaped = 0;
-        Debug.Log($"[DM] 초기 Runner 수 : {runnersAlive}");
+        Debug.Log($"[DM] Runner 초기화 완료 : {runnersAlive}");
     }
 
     //타이머 종료
@@ -51,8 +62,9 @@ public class DeadManager : MonoBehaviourPun
     [PunRPC]
     public void RunnerDied()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!PhotonNetwork.IsMasterClient || alreadyEnded) return;
 
+        // 혹시 음수로 내려가지 않도록 Clamp
         runnersAlive = Mathf.Max(0, runnersAlive - 1);
         Debug.Log($"[DM] Runner 남음 : {runnersAlive}");
 
