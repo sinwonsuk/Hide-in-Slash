@@ -343,7 +343,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
-                PlayerStateMachine.ChangeState(deadState);
+                
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPeanutUI != null)
@@ -351,7 +351,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                     deathPeanutUI.SetActive(true);
                     StartCoroutine(DeathUIDeleteDelay(deathPeanutUI, 3f));
                 }
-
+                PlayerStateMachine.ChangeState(deadState);
                 //StartCoroutine(GhostDeathSequence(2f));
             }
             else if (countLife == 1)
