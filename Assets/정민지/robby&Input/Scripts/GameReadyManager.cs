@@ -53,6 +53,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject BossUI;
     [SerializeField] private GameObject BossPanel;
     [SerializeField] private GameObject RunnerPanel;
+    private GameObject BossBlack;
+    private GameObject RunnerBlack;
 
     [Header("Slot UI")]
     [SerializeField] private RectTransform[] slotPoints; // length=5
@@ -134,6 +136,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         BossUI = GameObject.Find("BossSelectionUI");
         BossPanel = BossUI.transform.Find("BossPanel")?.gameObject;
         RunnerPanel = BossUI.transform.Find("RunnerPanel")?.gameObject;
+        BossBlack = BossPanel.transform.Find("Black")?.gameObject;
+        RunnerBlack = RunnerPanel.transform.Find("Black")?.gameObject;
 
         slotPoints = new RectTransform[5];
         var waitingUI = GameObject.Find("WaitingUI");
@@ -152,6 +156,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         waitingPanel.SetActive(false);
         BossPanel.SetActive(false);
         RunnerPanel.SetActive(false);
+        BossBlack.SetActive(false);
+        RunnerBlack.SetActive(false);
 
         // leaveButton 클릭 리스너
         //leaveButton.onClick.RemoveAllListeners();
@@ -601,7 +607,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             BossPanel.SetActive(true);
-            var bossR = BossPanel.GetComponentInChildren<playerDeath>(true); // (true) = 비활성화 오브젝트 포함
+            BossBlack.SetActive(true);
+            var bossR = BossPanel.GetComponentInChildren<playerDeath>();
             bossR.appearRole();
             var mgr = BossPanel.GetComponent<BossSelectionManager>();
             if (mgr == null)
@@ -620,6 +627,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             RunnerPanel.SetActive(true);
+            RunnerBlack.SetActive(true);
             var playerR = RunnerPanel.GetComponentInChildren<playerDeath>(true); // (true) = 비활성화 오브젝트 포함
             playerR.appearRole();
             string characterType = (string)roleObj;
