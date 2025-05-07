@@ -17,17 +17,10 @@ public class FogController : MonoBehaviour
             if(AllPlayersHaveRoles())
             {
 
-                bool isBoss = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isBoss", out object isBossObj) && (bool)isBossObj;
-                string bossType = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Role", out object bossTypeObj)
+                string bossType = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object bossTypeObj)
                     ? bossTypeObj as string
                     : "";
 
-                if (isBoss)
-                {
-                    gameObject.SetActive(false);
-                    Debug.Log("Fog OFF - 나는 보스");
-                    yield break;
-                }
 
                 if (bossType == "PukeGirlGhost")
                 {
@@ -41,8 +34,9 @@ public class FogController : MonoBehaviour
                     Debug.Log("Fog OFF - 보스가 PukeGirl 아님");
                 }
 
-                break;
+                yield break;
             }
+            yield return null;
         }
     }
 
