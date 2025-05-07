@@ -327,7 +327,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
-        string[] monsterTypes = { "ProteinGhost", "ProteinGhost", "ProteinGhost" };
+        string[] monsterTypes = { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" };
         string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
 
         roleIndexs = MakeRandomValues(players.Length, players.Length);
