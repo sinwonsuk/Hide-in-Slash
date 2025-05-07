@@ -73,6 +73,8 @@ public class PlayerEscapeState : PlayerState
 
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
 
+                player.StartCoroutine(EscapeWithDelay(2f));
+
                 break;
 
             default:
