@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Photon.Realtime;
 using Player = Photon.Realtime.Player;
+using System.Collections.Generic;
 
 public class DeadManager : MonoBehaviourPunCallbacks
 {
@@ -12,8 +13,13 @@ public class DeadManager : MonoBehaviourPunCallbacks
     [Header("UI")]
     public GameObject allDeadUI;      // 전원 사망 연출용
     public GameObject someDeadUI;       // 일부 사망
+    public GameObject allEscapeUI; // 탈출 연출용
+    public GameObject someEscapeUI; // 탈출 연출용
+
     public float uiDuration = 5f;     // 연출 후 로비 전환까지 지연 시간
 
+    private readonly List<int> escapedActors = new();   // 탈출한 플레이어 ActorNumber 모음
+    private int runnersTotal;
     private int runnersAlive;         // 살아있는 도망자 수 (마스터만 신뢰)
     private int runnersEscaped;         // 탈출 성공인원
     private bool alreadyEnded;        // 중복 호출 방지
@@ -48,7 +54,8 @@ public class DeadManager : MonoBehaviourPunCallbacks
             yield return null;      // 한 프레임씩 쉬어 줌
         }
 
-        runnersAlive = CountRunners();
+        runnersTotal = CountRunners();  // ← 이거 있어야 함
+        runnersAlive = runnersTotal;
         runnersEscaped = 0;
         Debug.Log($"[DM] Runner 초기화 완료 : {runnersAlive}");
     }
@@ -76,12 +83,12 @@ public class DeadManager : MonoBehaviourPunCallbacks
 
     // 생존자 탈출
     [PunRPC]
-    public void RunnerEscaped()
+    public void RunnerEscaped(int actorNumber)
     {
         if (!PhotonNetwork.IsMasterClient || alreadyEnded) return;
 
         runnersAlive = Mathf.Max(0, runnersAlive - 1);
-        runnersEscaped++;
+        escapedActors.Add(actorNumber);       // 목록에 ActorNumber 삽입
         CheckEndCondition();
     }
 
@@ -99,16 +106,42 @@ public class DeadManager : MonoBehaviourPunCallbacks
         if (alreadyEnded) return;
         alreadyEnded = true;
 
-        Debug.Log($"[DM] 게임 종료 : {reason}  (Escaped:{runnersEscaped})");
+        int[] escapedArray = escapedActors.ToArray();
+        photonView.RPC(nameof(ShowResultPerClient),
+                       RpcTarget.All,
+                       escapedArray,
+                       runnersTotal);   // 시작 시 저장해둔 전체 도망자 수
+    }
 
-        if (runnersEscaped > 0)            // 탈출 인원이 1명 이상
-            photonView.RPC(nameof(ShowSomeDead), RpcTarget.All);
-        else                               // 전원 사망
-            photonView.RPC(nameof(ShowAllDead), RpcTarget.All);
+    [PunRPC]
+    private void ShowResultPerClient(int[] escapedList, int runnersTotal)
+    {
+        // 술레 플레이어면 UI 생략
+        if (NetworkProperties.instance.GetMonsterStates(
+                PhotonNetwork.LocalPlayer.CustomProperties["Role"].ToString()))
+            return;
+
+        int escapedCnt = escapedList.Length;
+        bool iEscaped = escapedList.Contains(PhotonNetwork.LocalPlayer.ActorNumber);
+
+        //전원탈출, 전원사망
+        if (escapedCnt == runnersTotal) PlayUI(allEscapeUI);  
+        else if (escapedCnt == 0) PlayUI(allDeadUI);    
+        //일부탈출
+        else
+        {
+            if (iEscaped) PlayUI(someEscapeUI);   //  탈출
+            else PlayUI(someDeadUI);     // 실패
+        }
+
+        // 5초 뒤 로비 이동
+        StartCoroutine(ReturnToLobbyAfter(5f, null));
     }
 
     [PunRPC] private void ShowAllDead() => PlayUI(allDeadUI);
     [PunRPC] private void ShowSomeDead() => PlayUI(someDeadUI);
+    [PunRPC] private void ShowAllEscape() => PlayUI(allEscapeUI);
+    [PunRPC] private void ShowSomeEscape() => PlayUI(someEscapeUI);
 
     private void PlayUI(GameObject ui)
     {
