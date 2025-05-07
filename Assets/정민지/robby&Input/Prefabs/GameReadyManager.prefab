@@ -64,6 +64,9 @@ MonoBehaviour:
   lobbyPanel: {fileID: 0}
   hands: {fileID: 0}
   waitingPanel: {fileID: 0}
+  BossUI: {fileID: 0}
+  BossPanel: {fileID: 0}
+  RunnerPanel: {fileID: 0}
   slotPoints:
   - {fileID: 0}
   - {fileID: 0}

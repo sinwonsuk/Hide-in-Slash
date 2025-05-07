@@ -601,7 +601,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             BossPanel.SetActive(true);
-            BossPanel.GetComponentInChildren<playerDeath>().appearRole();
+            var bossR = BossPanel.GetComponentInChildren<playerDeath>(true); // (true) = 비활성화 오브젝트 포함
+            bossR.appearRole();
             var mgr = BossPanel.GetComponent<BossSelectionManager>();
             if (mgr == null)
             {
@@ -619,7 +620,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             RunnerPanel.SetActive(true);
-            RunnerPanel.GetComponentInChildren<playerDeath>().appearRole();
+            var playerR = RunnerPanel.GetComponentInChildren<playerDeath>(true); // (true) = 비활성화 오브젝트 포함
+            playerR.appearRole();
             string characterType = (string)roleObj;
             int profileIndexs = profileIndex;
 
