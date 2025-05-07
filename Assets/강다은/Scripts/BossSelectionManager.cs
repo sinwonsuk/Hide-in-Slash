@@ -58,16 +58,16 @@ public class BossSelectionManager : MonoBehaviourPunCallbacks
         Debug.Log($"보스 선택됨: {selectedMonster} (index: {currentIndex})");
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {
-            { "BossType", monsterTypes[currentIndex] },
+            { "Role", monsterTypes[currentIndex] },
             { "RoleConfirmed", true }
         });
 
         if (PhotonNetwork.IsMasterClient)
         {
             Hashtable roomProps = new Hashtable();
-            roomProps["BossType"] = selectedMonster;
+            roomProps["Role"] = selectedMonster;
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
-            Debug.Log($"BossType 방에 설정됨: {selectedMonster}");
+            Debug.Log($"Role 방에 설정됨: {selectedMonster}");
         }
 
         leftButton.interactable = false;

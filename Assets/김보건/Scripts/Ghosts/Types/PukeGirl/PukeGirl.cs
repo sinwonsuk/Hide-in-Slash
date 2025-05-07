@@ -78,7 +78,6 @@ public class PukeGirl : Ghost, IPunObservable
                 photonView.RPC("RPC_StartVomit", RpcTarget.All);
             }
             UpdateSkillCooldown();
-
         }
         else
         {
@@ -152,22 +151,18 @@ public class PukeGirl : Ghost, IPunObservable
         {
             UseSkill();
 
-            photonView.RPC("RPC_TriggerFogIncrease", RpcTarget.All);
+            photonView.RPC("RPC_TriggerFogIncrease", RpcTarget.Others);
         }
     }
 
     [PunRPC]
     public void RPC_TriggerFogIncrease()
     {
-
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isBoss", out object isBossObj) && !(bool)isBossObj) 
+        var fog = Camera.main?.GetComponentInChildren<FogController>();
+        if (fog != null)
         {
-            var fog = Camera.main?.GetComponentInChildren<FogController>();
-            if (fog != null)
-            {
-                fog.IncreaseFog();
-                Debug.Log("생존자 화면에서 안개 진해짐!");
-            }
+            fog.IncreaseFog();
+            Debug.Log("생존자 화면에서 안개 진해짐!");
         }
     }
 

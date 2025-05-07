@@ -12,36 +12,37 @@ public class FogController : MonoBehaviour
 
     private IEnumerator Start()
     {
-        float timeout = 3f;
-        while ((!PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("isBoss") ||
-                !PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("BossType")) && timeout > 0f)
+        while(true)
         {
-            timeout -= Time.deltaTime;
-            yield return null;
-        }
+            if(AllPlayersHaveRoles())
+            {
 
-        bool isBoss = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isBoss", out object isBossObj) && (bool)isBossObj;
-        string bossType = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("BossType", out object bossTypeObj)
-            ? bossTypeObj as string
-            : "";
+                bool isBoss = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isBoss", out object isBossObj) && (bool)isBossObj;
+                string bossType = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Role", out object bossTypeObj)
+                    ? bossTypeObj as string
+                    : "";
 
-        if (isBoss)
-        {
-            gameObject.SetActive(false);
-            Debug.Log("Fog OFF - 나는 보스");
-            yield break;
-        }
+                if (isBoss)
+                {
+                    gameObject.SetActive(false);
+                    Debug.Log("Fog OFF - 나는 보스");
+                    yield break;
+                }
 
-        if (bossType == "PukeGirlGhost")
-        {
-            gameObject.SetActive(true);
-            fogEffect?.SetFloat("FogAmount", 20f);
-            Debug.Log("Fog ON - 생존자 + PukeGirl 보스");
-        }
-        else
-        {
-            gameObject.SetActive(false);
-            Debug.Log("Fog OFF - 보스가 PukeGirl 아님");
+                if (bossType == "PukeGirlGhost")
+                {
+                    gameObject.SetActive(true);
+                    fogEffect?.SetFloat("FogAmount", 20f);
+                    Debug.Log("Fog ON - 생존자 + PukeGirl 보스");
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                    Debug.Log("Fog OFF - 보스가 PukeGirl 아님");
+                }
+
+                break;
+            }
         }
     }
 
@@ -52,5 +53,17 @@ public class FogController : MonoBehaviour
         fogAmount = Mathf.Clamp(fogAmount + fogIncreaseStep, 0f, maxFogAmount);
         fogEffect?.SetFloat("FogAmount", fogAmount);
         Debug.Log($"Fog 증가 → {fogAmount}");
+    }
+
+    private bool AllPlayersHaveRoles()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (!player.CustomProperties.ContainsKey("Role"))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
