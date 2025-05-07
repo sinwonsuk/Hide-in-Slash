@@ -17,15 +17,33 @@ public class GameTimer : MonoBehaviourPunCallbacks
     {
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
 
+        StartCoroutine(enumerator());
+
+
         if (PhotonNetwork.IsMasterClient)
         {
+           
             startTime = PhotonNetwork.Time;
             photonView.RPC("RPC_SetStartTime", RpcTarget.Others, startTime);
         }
     }
 
+    IEnumerator enumerator()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.SetMasterClient(AssignManager.instance.Bossplayer);
+        }
+    }
     private void Update()
     {
+
+            Photon.Realtime.Player master = PhotonNetwork.MasterClient;
+            Debug.Log("마스터 클라이언트: " + master.NickName);
+        
+
         double elapsed = PhotonNetwork.Time - startTime;
         float timeRemaining = countdownTime - (float)elapsed;
 
