@@ -1,4 +1,3 @@
-
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -30,8 +29,6 @@ public class Peanut : Ghost, IPunObservable
 
 	private GameObject exclamationInstance;
 	private RegionTrigger currentRegion;
-
-    private const byte EVENT_BLACKOUT = 1;
 
     [Header("스킬 쿨타임")]
     [SerializeField] private float cooldownTime = 20f;
@@ -241,7 +238,7 @@ public class Peanut : Ghost, IPunObservable
     {
         isStunned = true;
         ghostStateMachine.ChangeState(stunnedState);
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(5f);
         isStunned = false;
         ghostStateMachine.ChangeState(idleState);
     }
