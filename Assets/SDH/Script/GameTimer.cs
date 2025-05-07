@@ -17,7 +17,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
     {
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
 
-        StartCoroutine(enumerator());
+       // StartCoroutine(enumerator());
 
 
         if (PhotonNetwork.IsMasterClient)
