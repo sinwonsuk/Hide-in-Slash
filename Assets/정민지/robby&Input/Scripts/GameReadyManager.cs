@@ -574,6 +574,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public void ShowRolePanel()
     {
         waitingPanel.SetActive(false);
+
         if (!PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out var roleObj))
         {
             Debug.LogWarning("❗ Role 값이 아직 설정되지 않았습니다.");
@@ -600,6 +601,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             BossPanel.SetActive(true);
+            BossPanel.GetComponentInChildren<playerDeath>().appearRole();
             var mgr = BossPanel.GetComponent<BossSelectionManager>();
             if (mgr == null)
             {
@@ -617,6 +619,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             }
 
             RunnerPanel.SetActive(true);
+            RunnerPanel.GetComponentInChildren<playerDeath>().appearRole();
             string characterType = (string)roleObj;
             int profileIndexs = profileIndex;
 
