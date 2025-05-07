@@ -14,6 +14,12 @@ public class playerDeath : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
+    public void appearRole()
+    {
+        ResetAlpha();
+        StartCoroutine(FadeOut());
+    }
+
     private void ResetAlpha()
     {
         if (imageToFade != null)
