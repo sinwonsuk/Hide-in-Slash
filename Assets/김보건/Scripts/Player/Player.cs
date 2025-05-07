@@ -343,7 +343,6 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
-                
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPeanutUI != null)
@@ -353,6 +352,40 @@ public class Player : MonoBehaviourPun, IPunObservable
                 }
                 PlayerStateMachine.ChangeState(deadState);
                 //StartCoroutine(GhostDeathSequence(2f));
+            }
+            else if (countLife == 1)
+            {
+                photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
+                if (photonView.IsMine)
+                    StartCoroutine(UpdateCameraConfinerDelayed());
+                EventManager.TriggerEvent(EventType.PlayerHpOne);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
+                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
+
+            }
+        }
+
+
+        if (collision.CompareTag("PukeGirl"))
+        {
+
+            countLife--;
+            Debug.Log("토하는애 충돌");
+
+            if (countLife <= 0 && !isDead)
+            {
+                Debug.Log("너죽음");
+                isDead = true;
+                EventManager.TriggerEvent(EventType.PlayerHpZero);
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
+
+                if (deathPuKeGirlUI != null)
+                {
+                    deathPuKeGirlUI.SetActive(true);
+                    StartCoroutine(DeathUIDeleteDelay(deathPuKeGirlUI, 3f));
+                }
+                PlayerStateMachine.ChangeState(deadState);
+
             }
             else if (countLife == 1)
             {
@@ -386,39 +419,6 @@ public class Player : MonoBehaviourPun, IPunObservable
                 }
                 //StartCoroutine(GhostDeathSequence(2f));
                 PlayerStateMachine.ChangeState(deadState);
-            }
-            else if (countLife == 1)
-            {
-                photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
-                if (photonView.IsMine)
-                    StartCoroutine(UpdateCameraConfinerDelayed());
-                EventManager.TriggerEvent(EventType.PlayerHpOne);
-                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
-                Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
-
-            }
-        }
-
-        if (collision.CompareTag("PukeGirl"))
-        {
-
-            countLife--;
-            Debug.Log("토하는애 충돌");
-
-            if (countLife <= 0 && !isDead)
-            {
-                Debug.Log("너죽음");
-                isDead = true;
-                EventManager.TriggerEvent(EventType.PlayerHpZero);
-                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
-
-                if (deathPuKeGirlUI != null)
-                {
-                    deathPuKeGirlUI.SetActive(true);
-                    StartCoroutine(DeathUIDeleteDelay(deathPuKeGirlUI, 3f));
-                }
-                PlayerStateMachine.ChangeState(deadState);
-               
             }
             else if (countLife == 1)
             {
