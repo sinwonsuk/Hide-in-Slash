@@ -333,8 +333,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         monProp.Add("BossType", bossType);
         players[roleIndexs[0]].SetCustomProperties(monProp);
 
-        PhotonNetwork.SetMasterClient(players[roleIndexs[0]]);
-
+       
         for (int i = 1; i < players.Length; i++)
         {
             string playerName = pTypes[UnityEngine.Random.Range(0, pTypes.Count)];
@@ -391,6 +390,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //Instantiate할 때 Role 또는 BossType을 기준으로
         if (role == "Boss" && !string.IsNullOrEmpty(bossType))
         {
+            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
             PhotonNetwork.Instantiate(bossType, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
         else
