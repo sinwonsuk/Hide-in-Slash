@@ -328,12 +328,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
         string[] monsterTypes = { "PeanutGhost", "ProteinGhost", "PukeGirlGhost" };
-        string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
+        //string bossType = monsterTypes[UnityEngine.Random.Range(0, monsterTypes.Length)];
 
         roleIndexs = MakeRandomValues(players.Length, players.Length);
         ExitGames.Client.Photon.Hashtable monProp = new();
-        monProp.Add("Role", bossType);
-        monProp.Add("BossType", bossType);
+        monProp.Add("Role", "Boss");
+        //monProp.Add("BossType", bossType);
         players[roleIndexs[0]].SetCustomProperties(monProp);
 
         Bossplayer = players[roleIndexs[0]];

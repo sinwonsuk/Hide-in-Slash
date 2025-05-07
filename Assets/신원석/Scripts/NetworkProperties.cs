@@ -25,6 +25,7 @@ public class NetworkProperties : MonoBehaviour
 
     public bool GetMonsterStates(string _name)
     {
+        if (_name == "Boss") return true;
         foreach (var name in monsterNames)
         {
             if (name == _name)
