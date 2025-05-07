@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using Photon.Realtime;
+using Player = Photon.Realtime.Player;
 
 public class DeadManager : MonoBehaviourPunCallbacks
 {
@@ -160,4 +161,24 @@ public class DeadManager : MonoBehaviourPunCallbacks
         StartCoroutine(InitRunnerCount());
     }
 
-}
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+    Debug.Log($"[DM] 마스터 변경됨 → 새로운 마스터: {newMasterClient.NickName}");
+
+        if (PhotonNetwork.IsMasterClient &&
+        PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
+        {
+        Debug.Log("[DM] 새로운 Master가 DeadManager 초기화 재실행");
+
+        if (DeadManager.Instance != null)
+        {
+            DeadManager.Instance.StartCoroutine(DeadManager.Instance.InitRunnerCount());
+        }
+        else
+        {
+            Debug.LogWarning("[DM] DeadManager 인스턴스가 null입니다");
+        }
+    }
+    }
+
+}   
