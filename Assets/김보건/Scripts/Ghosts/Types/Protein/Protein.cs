@@ -197,6 +197,13 @@ public class Protein : Ghost, IPunObservable
         if(diceCoroutine != null)
             StopCoroutine(diceCoroutine);
 
+        if (diceRollEffectPrefab != null && headPosition != null)
+        {
+            GameObject effect = Instantiate(diceRollEffectPrefab, headPosition.position, Quaternion.identity);
+            effect.transform.SetParent(headPosition);
+            effect.transform.localPosition = Vector3.zero; 
+        }
+
         diceCoroutine = StartCoroutine(DiceCoroutine(dice));
     }
 
@@ -433,6 +440,8 @@ public class Protein : Ghost, IPunObservable
 
     [Header("주사위 패시브 구현")]
     [SerializeField] private float diceCoolTime = 10f;
+    [SerializeField] private GameObject diceRollEffectPrefab;
+    [SerializeField] private Transform headPosition; // 머리 위 기준 Transform
     private float diceTimer = 0f;
     private Coroutine diceCoroutine;
 

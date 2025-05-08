@@ -25,8 +25,10 @@ public class Peanut : Ghost, IPunObservable
     private float networkedDirX;
     private float networkedDirY;
     bool isTeleporting = false;
-    [Tooltip("머리 위에 띄울 ! 아이콘 Prefab")]
-	public GameObject exclamationPrefab;
+
+    [Header("머리 위에 띄울 ! 아이콘 Prefab")]
+    [SerializeField] private Transform headPosition;
+    public GameObject exclamationPrefab;
 
 	private GameObject exclamationInstance;
 	private RegionTrigger currentRegion;
@@ -59,9 +61,10 @@ public class Peanut : Ghost, IPunObservable
 
 		if (exclamationPrefab != null)
 		{
-			exclamationInstance = Instantiate(exclamationPrefab, transform);
-			exclamationInstance.transform.localPosition = Vector3.up * 3f;
-			exclamationInstance.SetActive(false);
+            exclamationInstance = Instantiate(exclamationPrefab, headPosition.position, Quaternion.identity);
+            exclamationInstance.transform.SetParent(headPosition);
+            exclamationInstance.transform.localPosition = Vector3.zero;
+            exclamationInstance.SetActive(false);
 		}
 	}
 
