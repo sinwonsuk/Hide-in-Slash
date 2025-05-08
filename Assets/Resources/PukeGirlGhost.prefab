@@ -418,7 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   puddlePrefab: {fileID: 1992948655862707270, guid: 8c9f9605fa9ada640947b27593fbca98, type: 3}
-  cooldownTime: 5
+  cooldownTime: 10
   skillImage: {fileID: 0}
 --- !u!50 &8012748389203710762
 Rigidbody2D:

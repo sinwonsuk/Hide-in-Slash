@@ -185,7 +185,7 @@ MonoBehaviour:
   moveSpeed: 7
   isStunned: 0
   exclamationPrefab: {fileID: 7838346147354192671, guid: 3d5c9ed01e7510f4aaae0d2d381862ff, type: 3}
-  cooldownTime: 40
+  cooldownTime: 25
   skillImage: {fileID: 0}
   blackoutDuration: 2.5
 --- !u!50 &2191573428496805871
