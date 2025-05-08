@@ -774,6 +774,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             lightCollider.enabled = false;
             return;
         }
+        if (isDead)
+        {
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+            lightCollider.enabled = false;
+            return;
+        }
         isLightOn = turnOn;
         isCircleLightOn = turnOn;
         flashLight.enabled = turnOn;
@@ -817,6 +824,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
+        
+        isDead = true;
 
         Color c = sr.color;
         c.a = 0.5f;
