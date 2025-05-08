@@ -12,6 +12,7 @@ public class PlayerMove : PlayerState
     public override void Enter()
     {
         base.Enter();
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Walk, true);
     }
 
     public override void Update()
@@ -37,5 +38,6 @@ public class PlayerMove : PlayerState
 	public override void Exit()
     {
         base.Exit();
+        SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.Walk);
     }
 }
