@@ -12,6 +12,7 @@ public class Peanut : Ghost, IPunObservable
     public override GhostState moveState { get; protected set; }
     private GhostState stunnedState;
     [SerializeField] private bool isStunned = false;
+    private bool canBeStunned = true;
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
@@ -238,9 +239,12 @@ public class Peanut : Ghost, IPunObservable
     {
         isStunned = true;
         ghostStateMachine.ChangeState(stunnedState);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         isStunned = false;
         ghostStateMachine.ChangeState(idleState);
+
+        yield return new WaitForSeconds(7f);
+        canBeStunned = true;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
