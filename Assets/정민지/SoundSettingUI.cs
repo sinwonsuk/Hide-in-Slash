@@ -37,6 +37,8 @@ public class SoundSettingsUI : MonoBehaviour
     {
         SoundManager manager = SoundManager.GetInstance();
         manager.sfxVolume = value;
+        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.Save();
 
         // 현재 재생 중인 모든 SFX 볼륨 적용
         foreach (AudioSource src in manager.GetComponentsInChildren<AudioSource>())
@@ -44,5 +46,6 @@ public class SoundSettingsUI : MonoBehaviour
             if (src != null && src != manager.GetComponent<AudioSource>())
                 src.volume = value;
         }
+
     }
 }

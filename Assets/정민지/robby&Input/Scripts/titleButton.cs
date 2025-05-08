@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class titleButton : MonoBehaviour
 {
-    [Header("∑Œ±◊¿Œ √¢")]
+    [Header("Î°úÍ∑∏Ïù∏ Ï∞Ω")]
     [SerializeField] private GameObject login;
+    [SerializeField] private GameObject settingSound;
 
     [SerializeField] private GameObject Manager;
 
@@ -19,7 +20,7 @@ public class titleButton : MonoBehaviour
 
     public void OnClickOption()
     {
-
+        Instantiate(settingSound);
     }
 
     public void OnClickExit()

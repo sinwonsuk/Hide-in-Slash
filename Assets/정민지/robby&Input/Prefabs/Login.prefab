@@ -1146,7 +1146,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3375371103910819272
 MonoBehaviour:
@@ -1203,7 +1203,6 @@ MonoBehaviour:
   nicknameIsNull: {fileID: 3641281223192473759, guid: 67948e38dbc24184685d0c83de3717cc, type: 3}
   lengthExceeded: {fileID: 2218333914126809915, guid: 525945277e30fbf4a96d59795407873e, type: 3}
   nameInputField: {fileID: 6984102969096610084}
-  title: {fileID: 5704680997101461352, guid: d934efac69d9fab46a117d334048094d, type: 3}
 --- !u!114 &3928834069958884944
 MonoBehaviour:
   m_ObjectHideFlags: 0
