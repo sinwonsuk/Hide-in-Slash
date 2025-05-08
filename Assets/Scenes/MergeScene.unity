@@ -4430,6 +4430,14 @@ PrefabInstance:
       propertyPath: ExitItemUI
       value: 
       objectReference: {fileID: 1567141943}
+    - target: {fileID: 4747602769121921723, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: inventoryList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747602769121921723, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: 'inventoryList.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8088257538587014412, guid: f19891850044a5b4ba7d5d401e9c9fe6, type: 3}
     - target: {fileID: 5611061582945759303, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
       propertyPath: m_Color.a
       value: 0.019607844
