@@ -345,6 +345,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPeanutUI != null)
@@ -381,6 +382,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPuKeGirlUI != null)
@@ -416,6 +418,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathProteinUI != null)
