@@ -40,6 +40,8 @@ public class Peanut : Ghost, IPunObservable
     [Header("블랙아웃 지속시간")]
     [SerializeField] private float blackoutDuration = 5f;
 
+    private bool wasMoving = false;
+
     protected override void Awake()
     {
 
@@ -208,6 +210,19 @@ public class Peanut : Ghost, IPunObservable
         if (Mathf.Abs(lastDir.x) >= Mathf.Abs(lastDir.y))  
         {
             sr.flipX = lastDir.x < 0;
+        }
+
+        if(photonView.IsMine)
+        {
+            if(isMoving && !wasMoving)
+            {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.PeanutWalking, true, 0.5f);
+            }
+            else if(!isMoving && wasMoving)
+            {
+                SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.PeanutWalking);
+            }
+            wasMoving = isMoving;
         }
 
     }

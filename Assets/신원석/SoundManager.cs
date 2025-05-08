@@ -16,7 +16,12 @@ public class SoundManager : MonoBehaviour
         useKey,
         UseLight,
         Enter,
-        Walk
+        Walk,
+        Vomit,
+        Grow,
+        PeanutWalking,
+        PukeWalking,
+        RollADice,
     }
     public enum bgm
     {
