@@ -31,10 +31,11 @@ public class PlayerEscapeState : PlayerState
 
         if (player.photonView.IsMine)      
         {
-            DeadManager.Instance.photonView.RPC(
-          "RunnerEscaped",
-          RpcTarget.MasterClient,
-          PhotonNetwork.LocalPlayer.ActorNumber);   // 내 ActorNumber 전달
+            //  DeadManager.Instance.photonView.RPC(
+            //"RunnerEscaped",
+            //RpcTarget.MasterClient,
+            //PhotonNetwork.LocalPlayer.ActorNumber);   // 내 ActorNumber 전달
+            player.BroadcastStatus(RunnerStatus.Escaped);
         }
 
         switch (currentEscapeType)

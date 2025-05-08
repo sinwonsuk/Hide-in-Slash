@@ -347,6 +347,13 @@ MonoBehaviour:
   deathProteinUI: {fileID: 0}
   deathPeanutUI: {fileID: 0}
   deathPuKeGirlUI: {fileID: 0}
+  isDead: 0
+  allDeadUI: {fileID: 0}
+  someDeadUI: {fileID: 0}
+  allEscapeUI: {fileID: 0}
+  someEscapeUI: {fileID: 0}
+  prisonEndingUI: {fileID: 0}
+  uiDuration: 5
 --- !u!50 &362624439115721499
 Rigidbody2D:
   serializedVersion: 5

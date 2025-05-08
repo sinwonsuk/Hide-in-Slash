@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDead : PlayerState
@@ -17,10 +18,19 @@ public class PlayerDead : PlayerState
         player.SetZeroVelocity();
         player.BecomeGhost();
 
+        player.isDead = true;
+
+        if (player.photonView.IsMine)
+        {
+            ExitGames.Client.Photon.Hashtable props = new();
+            props["IsDead"] = true;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+
         if (player.photonView.IsMine && !hasReportedDeath)          // 중복 호출 방지
         {
             hasReportedDeath = true;
-            DeadManager.Instance.photonView.RPC("RunnerDied", RpcTarget.MasterClient);
+            player.BroadcastStatus(RunnerStatus.Dead);
         }
 
 

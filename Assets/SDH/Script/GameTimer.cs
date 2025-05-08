@@ -61,9 +61,6 @@ public class GameTimer : MonoBehaviourPunCallbacks
         if (timeRemaining <= 0 && !isEnded)
         {
             isEnded = true;
-
-            if (PhotonNetwork.IsMasterClient)
-                DeadManager.Instance.OnTimeOut();
         }
     }
 
