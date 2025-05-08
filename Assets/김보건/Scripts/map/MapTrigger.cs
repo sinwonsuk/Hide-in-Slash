@@ -24,7 +24,7 @@ public class MapTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!(other.CompareTag("Player") || other.CompareTag("Peanut") || other.CompareTag("Protein") || other.CompareTag("PukeGirl") || other.CompareTag("DeadPlayer"))) return;
+        if (!other.CompareTag("Foot")) return;
         if (isTeleport) return;
 
         AssignManager mapManager = AssignManager.instance;
@@ -34,7 +34,7 @@ public class MapTrigger : MonoBehaviour
         Transform returnTrigger = newMap.transform.Find(Portal);
         //other.transform.position = returnTrigger.position;
 
-        PhotonView otherView = other.GetComponent<PhotonView>();
+        PhotonView otherView = other.transform.parent.GetComponent<PhotonView>();
 
         if (otherView == null)
         {
@@ -45,12 +45,12 @@ public class MapTrigger : MonoBehaviour
         if(otherView.IsMine)
         {
             int viewID = otherView.ViewID;
-            other.GetComponent<PhotonView>().RPC("TeleportPlayer", RpcTarget.All, viewID, returnTrigger.position);
+            otherView.RPC("TeleportPlayer", RpcTarget.All, viewID, returnTrigger.position);
         }
      
         //photonView.RPC("TeleportPlayer", RpcTarget.All, other.GetComponent<PhotonView>(), returnTrigger.position);
 
-        PhotonView pv = other.GetComponent<PhotonView>();
+        PhotonView pv = otherView.GetComponent<PhotonView>();
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
         CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
         if (pv != null && pv.IsMine)
