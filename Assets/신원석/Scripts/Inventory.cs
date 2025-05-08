@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
     {
         orderedKeys = new List<InventoryType>();
 
-        AddItem(0, 100);
+        AddItem(3, 0);
     }
 
     // Update is called once per frame  
