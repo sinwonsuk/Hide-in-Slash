@@ -26,6 +26,12 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
 
         string nickname = PhotonNetwork.NickName;
 
+        if(nickname == null)
+        {
+            Debug.Log(nickname);
+        }
+
+
         photonView.RPC("Craete", RpcTarget.All, _text, nickname);
     }
     [PunRPC]
@@ -37,11 +43,11 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
         {
             if (selfRoleObj is string selfRole)
             {
-                name = selfRole;
+                Playername = selfRole;
             }
         }
 
-        if (NetworkProperties.instance.GetMonsterStates(name) == false)
+        if (NetworkProperties.instance.GetMonsterStates(Playername) == false)
         {
             GameObject instantiate = Instantiate(chattingObject, chattingObjectParent);
 
@@ -71,4 +77,6 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
 
     [SerializeField]
     string text;
+
+    string Playername;
 }
