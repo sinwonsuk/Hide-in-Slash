@@ -97,7 +97,7 @@ public class Protein : Ghost, IPunObservable
 			if (diceTimer >= diceCoolTime)
 			{
 				diceTimer = 0f;
-				int roll = Random.Range(1, 7);
+                int roll = GetWeightedDiceRoll();
 				Debug.Log("프로틴 주사위 굴리기: " + roll);
                 SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
                 photonView.RPC("RollDice", RpcTarget.All, roll);
@@ -152,6 +152,23 @@ public class Protein : Ghost, IPunObservable
         }
     }
 
+    private int GetWeightedDiceRoll()
+    {
+        int[] weightedPool = new int[]
+        {
+            1, 1,
+            2, 2, 2, 2,     
+            3, 3, 3, 3, 3, 3,
+            4, 4, 4,       
+            5, 5,       
+            6         
+        };
+
+        int index = Random.Range(0, weightedPool.Length);
+        return weightedPool[index];
+    }
+
+
     private void UpdateSkillCooldown()
     {
         if (!isCoolingDown) return;
@@ -193,13 +210,13 @@ public class Protein : Ghost, IPunObservable
         switch(dice)
         {
             case 1:
-                moveSpeed = 4f;
+                moveSpeed = 4.5f;
                 transform.localScale = originalScale * 2f;
                 if (photonView.IsMine && impulseSource != null)
                     impulseSource.GenerateImpulse();
                 break;
             case 2:
-                moveSpeed = 5f;
+                moveSpeed = 4.8f;
                 transform.localScale = originalScale * 1.6f;
                 break;
             case 3:
@@ -207,15 +224,15 @@ public class Protein : Ghost, IPunObservable
                 transform.localScale = originalScale * 1.3f;
                 break;
             case 4:
-                moveSpeed = 7f;
+                moveSpeed = 6.3f;
                 transform.localScale = originalScale * 1.1f;
                 break;
             case 5:
-                moveSpeed = 8f;
+                moveSpeed = 6.6f;
                 transform.localScale = originalScale * 1.0f;
                 break;
             case 6:
-                moveSpeed = 9f;
+                moveSpeed = 7.5f;
                 transform.localScale = originalScale * 0.9f;
                 break;
             default:
