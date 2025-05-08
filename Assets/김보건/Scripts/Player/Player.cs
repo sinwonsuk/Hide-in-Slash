@@ -714,10 +714,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (isInsidePrison)
             return;
-
         isLightOn = true;
         flashLight.enabled = true;
         lightCollider.enabled = true;
+        if (isInvisible)
+        {
+            photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
+            return;
+        }
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
     }
 
@@ -743,6 +747,14 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void SetFlashEntireLight(bool turnOn)
     {
+        // 투명 상태인 경우, 라이트 켜지지 않도록 예외 처리
+        if (isInvisible)
+        {
+            flashLight.enabled = false;
+            circleLight.enabled = false;
+            lightCollider.enabled = false;
+            return;
+        }
         isLightOn = turnOn;
         isCircleLightOn = turnOn;
         flashLight.enabled = turnOn;
@@ -887,8 +899,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         c.a = 1f;
         sr.color = c;
 
+        flashLight.enabled = true;
         isInvisible = false;
         photonView.RPC("SetTransparencyVisual", RpcTarget.Others, false);
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
         Debug.Log("투명버프끝");
     }
 

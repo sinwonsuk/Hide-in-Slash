@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 9180715065919143765}
   - component: {fileID: 7696556125561654549}
   - component: {fileID: 703367829968994112}
+  - component: {fileID: 3300531718546437752}
   m_Layer: 0
   m_Name: Cage_ (3)
   m_TagString: Untagged
@@ -178,6 +179,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6254272, y: 1.506134}
   m_EdgeRadius: 0
+--- !u!114 &3300531718546437752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235376953664228251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.875, y: 0, z: 0}
+  - {x: -0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 703367829968994112}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284528
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.062286377, y: 0.76690674, z: 0}
+      m_Extent: {x: 0.7327118, y: 0.6730652, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.08
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.08
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.08
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 703367829968994112}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284528
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &676439895671669786
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +246,7 @@ GameObject:
   - component: {fileID: 825902531744738161}
   - component: {fileID: 2415802420559912134}
   - component: {fileID: 4558650516133336775}
+  - component: {fileID: 8584746397705525942}
   m_Layer: 8
   m_Name: ColliderTile
   m_TagString: Untagged
@@ -2828,6 +2883,59 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &8584746397705525942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676439895671669786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: -10
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 229, z: 0}
+  - {x: 165, y: 229, z: 0}
+  - {x: 165, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 2415802420559912134}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284530
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: 152.49998, y: 220, z: 0}
+      m_Extent: {x: 12.499985, y: 8.999992, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 2415802420559912134}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284530
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &865091776233987120
 GameObject:
   m_ObjectHideFlags: 0
@@ -20448,6 +20556,7 @@ GameObject:
   - component: {fileID: 5272745487742909861}
   - component: {fileID: 6668516749927763941}
   - component: {fileID: 3263378876811066798}
+  - component: {fileID: 5738389454144578415}
   m_Layer: 0
   m_Name: Cage_
   m_TagString: Untagged
@@ -20583,6 +20692,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6254425, y: 1.517273}
   m_EdgeRadius: 0
+--- !u!114 &5738389454144578415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819272060532820331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.875, y: 0, z: 0}
+  - {x: -0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 3263378876811066798}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284525
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.062278748, y: 0.78056335, z: 0}
+      m_Extent: {x: 0.7327194, y: 0.67863464, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.08
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.08
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.08
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 3263378876811066798}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284525
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &4846481935049973200
 GameObject:
   m_ObjectHideFlags: 0
@@ -20924,6 +21086,7 @@ GameObject:
   - component: {fileID: 278164057289820641}
   - component: {fileID: 5587054577296447146}
   - component: {fileID: 6401417913013398625}
+  - component: {fileID: 1928908785469141181}
   m_Layer: 0
   m_Name: Table_HuntHouse
   m_TagString: Untagged
@@ -21059,6 +21222,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.0710144, y: 2.129074}
   m_EdgeRadius: 0
+--- !u!114 &1928908785469141181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561956191057185415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -3.125, y: 0, z: 0}
+  - {x: -3.125, y: 2.8125, z: 0}
+  - {x: 3.125, y: 2.8125, z: 0}
+  - {x: 3.125, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 6401417913013398625}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284529
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.0894928, y: 1.1133499, z: 0}
+      m_Extent: {x: 2.935501, y: 0.96453094, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.1
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.1
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.1
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 6401417913013398625}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284529
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &6749264684132836829
 GameObject:
   m_ObjectHideFlags: 0
@@ -24138,6 +24354,7 @@ GameObject:
   - component: {fileID: 2167939859047688059}
   - component: {fileID: 842678228826510651}
   - component: {fileID: 3891131474152420454}
+  - component: {fileID: 4495541606775263461}
   m_Layer: 0
   m_Name: Cage_ (1)
   m_TagString: Untagged
@@ -24273,6 +24490,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6115875, y: 1.517273}
   m_EdgeRadius: 0
+--- !u!114 &4495541606775263461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078067008191140789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.875, y: 0, z: 0}
+  - {x: -0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 3891131474152420454}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284526
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.06920624, y: 0.78056335, z: 0}
+      m_Extent: {x: 0.72579193, y: 0.67863464, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.08
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.08
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.08
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 3891131474152420454}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284526
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &7434672640613917026
 GameObject:
   m_ObjectHideFlags: 0
@@ -25135,6 +25405,7 @@ GameObject:
   - component: {fileID: 1407242908458433970}
   - component: {fileID: 441455338147827698}
   - component: {fileID: 7607250444625898111}
+  - component: {fileID: 4177601694838826768}
   m_Layer: 0
   m_Name: Cage_ (2)
   m_TagString: Untagged
@@ -25270,6 +25541,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6116028, y: 1.4922943}
   m_EdgeRadius: 0
+--- !u!114 &4177601694838826768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8046752043962829180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.875, y: 0, z: 0}
+  - {x: -0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 3.25, z: 0}
+  - {x: 0.875, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 7607250444625898111}
+  m_ShadowShape2DProvider:
+    rid: 2054099011517284527
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.06919861, y: 0.76000214, z: 0}
+      m_Extent: {x: 0.72579956, y: 0.6661453, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.08
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.08
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.08
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 7607250444625898111}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2054099011517284527
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &8713208793980444478
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class PlayerDead : PlayerState
     {
         base.Update();
 
-        //if (moveInput != Vector2.zero)
-        //    stateMachine.ChangeState(player.moveState);
+        if (moveInput != Vector2.zero)
+            stateMachine.ChangeState(player.moveState);
     }
 }
