@@ -345,6 +345,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPeanutUI != null)
@@ -381,6 +382,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathPuKeGirlUI != null)
@@ -416,6 +418,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
+                EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
 
                 if (deathProteinUI != null)
@@ -733,6 +736,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (isInsidePrison)
             return;
+
+        if (isDead)
+            return;
         isLightOn = true;
         flashLight.enabled = true;
         lightCollider.enabled = true;
@@ -747,6 +753,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     private void TurnOffEntireLight()
     {
         if (!photonView.IsMine)
+            return;
+        if (isDead)
             return;
         isLightOn = false;
         flashLight.enabled = false;
@@ -768,13 +776,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         // 투명 상태인 경우, 라이트 켜지지 않도록 예외 처리
         if (isInvisible)
-        {
-            flashLight.enabled = false;
-            circleLight.enabled = false;
-            lightCollider.enabled = false;
-            return;
-        }
-        if (isDead)
         {
             flashLight.enabled = false;
             circleLight.enabled = false;
@@ -824,8 +825,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
-        
-        isDead = true;
 
         Color c = sr.color;
         c.a = 0.5f;
