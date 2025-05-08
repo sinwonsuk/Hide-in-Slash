@@ -39,6 +39,15 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
     {
         Debug.Log($"Craete RPC 호출됨 by {senderNickname} with text: {_text}");
 
+        Debug.Log($"NetworkProperties.instance == null: {NetworkProperties.instance == null}");
+        Debug.Log($"chattingObject == null: {chattingObject == null}");
+        Debug.Log($"chattingObjectParent == null: {chattingObjectParent == null}");
+        Debug.Log($"scrollRect == null: {scrollRect == null}");
+        Debug.Log($"Playername == null: {Playername == null}");
+
+
+
+
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
         {
             if (selfRoleObj is string selfRole)
@@ -63,7 +72,6 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         CreateChat(text);
-        transform.parent.gameObject.SetActive(false);     
     }
 
     [SerializeField]
