@@ -333,10 +333,11 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInMiniGameTrigger = true;
         }
 
-        if (collision.CompareTag("Peanut"))
+        if (collision.CompareTag("Peanut") && !isHit)
         {
             countLife--;
             Debug.Log("땅콩 충돌");
+            StartCoroutine(HitCooldown());
 
             if (countLife <= 0 && !isDead)
             {
@@ -367,11 +368,12 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
 
 
-        if (collision.CompareTag("PukeGirl"))
+        if (collision.CompareTag("PukeGirl") && !isHit)
         {
 
             countLife--;
             Debug.Log("토하는애 충돌");
+            StartCoroutine(HitCooldown());
 
             if (countLife <= 0 && !isDead)
             {
@@ -401,11 +403,12 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.CompareTag("Protein"))
+        if (collision.CompareTag("Protein") && !isHit)
         {
 
             countLife--;
             Debug.Log("프로틴 충돌");
+            StartCoroutine(HitCooldown());
 
             if (countLife <= 0 && !isDead)
             {
@@ -519,6 +522,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
+    }
+
+    private IEnumerator HitCooldown()
+    {
+        isHit = true;
+        yield return new WaitForSeconds(hitCooldown);
+        isHit = false;
     }
 
     [PunRPC]
@@ -1281,6 +1291,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject deathProteinUI;
     [SerializeField] private GameObject deathPeanutUI;
     [SerializeField] private GameObject deathPuKeGirlUI;
+    private bool isHit = false;
+    private float hitCooldown = 0.5f;
     private bool isDead = false;
 
     bool isTeleporting =false;
