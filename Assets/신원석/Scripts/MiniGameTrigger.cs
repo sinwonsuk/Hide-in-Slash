@@ -26,11 +26,14 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (isPlaying ==true) 
             return;
 
-        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Click, false); // 사운드 재생
+        if(playerView.gameObject.tag == "Player")
+        {
+            SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Click, false); // 사운드 재생
 
-        view = playerView;
-        photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient);
-        OpenMiniGame();
+            view = playerView;
+            photonView.RPC("RequestOpenMiniGame", RpcTarget.MasterClient);
+            OpenMiniGame();
+        }       
     }
 
     // Update is called once per frame
@@ -83,7 +86,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         {
             miniGameManagerInstance = Instantiate(miniGameManager);
 
-            EventManager.TriggerEvent(EventType.LightOff);
+//            EventManager.TriggerEvent(EventType.LightOff);
             GameObject choice = miniGameManagerInstance.GetComponent<MiniGameManager>().choiceMiniGame;
             MiniGame MiniGame = choice.GetComponentInChildren<MiniGame>();
             MiniGame.trigerAction = closeMiniGameAction;
@@ -94,7 +97,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (miniGameManagerInstance != null && isPlaying == true)
         {
-            EventManager.TriggerEvent(EventType.LightOn);
+   //         EventManager.TriggerEvent(EventType.LightOn);
             RequestDestroy();        
         }
     }
