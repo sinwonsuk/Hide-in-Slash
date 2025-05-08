@@ -18,6 +18,8 @@ public class SceneManager : MonoBehaviour
 
 	private void Awake()
 	{
+        PhotonNetwork.SendRate = 30; // 기본값은 10
+        PhotonNetwork.SerializationRate = 30; // 기본값은 10
 
         if (Instance == null)
 		{
