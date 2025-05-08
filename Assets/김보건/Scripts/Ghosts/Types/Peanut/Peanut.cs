@@ -229,8 +229,9 @@ public class Peanut : Ghost, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerSight") && !isStunned)
+        if (collision.gameObject.CompareTag("PlayerSight") && !isStunned && canBeStunned)
         {
+            canBeStunned = false;
             StartCoroutine(StunnedTime(2f));
         }
 
@@ -254,11 +255,11 @@ public class Peanut : Ghost, IPunObservable
     {
         isStunned = true;
         ghostStateMachine.ChangeState(stunnedState);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(time);
         isStunned = false;
         ghostStateMachine.ChangeState(idleState);
 
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(3f);
         canBeStunned = true;
     }
 
