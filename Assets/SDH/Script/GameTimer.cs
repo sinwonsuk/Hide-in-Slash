@@ -7,7 +7,7 @@ using System.Collections; // Photon 관련 Room Properties용
 
 public class GameTimer : MonoBehaviourPunCallbacks
 {
-    private float countdownTime = 900f;
+    private float countdownTime = 720f;
     private double startTime;
     private bool isEnded = false;
 
