@@ -68,6 +68,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private List<int> profileOrder;
     private int nextProfilePointer;
 
+    private bool isStartingGame = false;
+
     public static GameReadyManager Instance { get; private set; }
 
     private void Awake()
@@ -398,11 +400,34 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         int idx = GetNextFreeIndex(0);
         SpawnSlot(newPlayer, idx, animate: true);
 
+
         if (PhotonNetwork.IsMasterClient)
         {
             AssignProfileIndex(newPlayer);
+
+            if (newPlayer.CustomProperties.TryGetValue("ProfileIndex", out var profileIdx))
+            {
+                if (slotMap.TryGetValue(newPlayer, out var slot))
+                    slot.SetProfileImage((int)profileIdx);
+            }
         }
         RoomRenewal();  //채팅 메시지
+
+        foreach (var kvp in slotMap)
+        {
+            var player = kvp.Key;
+            var slot = kvp.Value;
+
+            if (player.CustomProperties.TryGetValue("Ready", out var readyObj))
+            {
+                slot.SetReadyState((bool)readyObj);
+            }
+
+            if (player.CustomProperties.TryGetValue("ProfileIndex", out var profileIdx))
+            {
+                slot.SetProfileImage((int)profileIdx);
+            }
+        }
     }
 
     public override void OnPlayerLeftRoom(RealtimePlayer otherPlayer)
@@ -455,6 +480,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void TryStartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        if (isStartingGame) return;
 
         bool allConfirmed = PhotonNetwork.PlayerList.All(p =>
             p.CustomProperties.TryGetValue("RoleConfirmed", out var c) && (bool)c
@@ -462,10 +488,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         if (allConfirmed)
         {
+            isStartingGame = true;
             //SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
             PhotonNetwork.LoadLevel("MergeScene");
 
             CleanHandler();
+            StopAllCoroutines();
         }
     }
 

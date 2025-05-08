@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 1837901590864550549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.979, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -272,7 +272,7 @@ Transform:
   - {fileID: 5878041481653769451}
   m_Father: {fileID: 3665548687673608436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5047369931022630657
+--- !u!1 &3288214840026293980
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,59 +280,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3665548687673608436}
-  - component: {fileID: 6007203494317379037}
-  - component: {fileID: 7202515897409173102}
-  - component: {fileID: 8012748389203710762}
-  - component: {fileID: -5556804345626720387}
-  - component: {fileID: 2462011498936849797}
+  - component: {fileID: 1701705483735485833}
+  - component: {fileID: 6835278325327029265}
   m_Layer: 17
-  m_Name: PukeGirlGhost
-  m_TagString: PukeGirl
+  m_Name: Foot
+  m_TagString: Foot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3665548687673608436
+--- !u!4 &1701705483735485833
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047369931022630657}
+  m_GameObject: {fileID: 3288214840026293980}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 77.5, y: -58.51, z: -0.44698483}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7715858402176072029}
-  - {fileID: 2638344193335441765}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 3665548687673608436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6007203494317379037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047369931022630657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e72eed3dac736be49b0f9118e46d5d15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 6
-  puddlePrefab: {fileID: 1992948655862707270, guid: 8c9f9605fa9ada640947b27593fbca98, type: 3}
-  cooldownTime: 5
-  skillImage: {fileID: 0}
---- !u!61 &7202515897409173102
+--- !u!61 &6835278325327029265
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047369931022630657}
+  m_GameObject: {fileID: 3288214840026293980}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -360,7 +338,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.017185211, y: 0.10503769}
+  m_Offset: {x: -0.04594803, y: 0.27568436}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -370,8 +348,63 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.28551483, y: 0.2583084}
+  m_Size: {x: 0.8162155, y: 0.4792633}
   m_EdgeRadius: 0
+--- !u!1 &5047369931022630657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3665548687673608436}
+  - component: {fileID: 6007203494317379037}
+  - component: {fileID: 8012748389203710762}
+  - component: {fileID: -5556804345626720387}
+  - component: {fileID: 2462011498936849797}
+  - component: {fileID: 1997745909608548732}
+  m_Layer: 17
+  m_Name: PukeGirlGhost
+  m_TagString: PukeGirl
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3665548687673608436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047369931022630657}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 77.5, y: -58.51, z: -0.44698483}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7715858402176072029}
+  - {fileID: 2638344193335441765}
+  - {fileID: 1701705483735485833}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6007203494317379037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047369931022630657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72eed3dac736be49b0f9118e46d5d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 6
+  puddlePrefab: {fileID: 1992948655862707270, guid: 8c9f9605fa9ada640947b27593fbca98, type: 3}
+  cooldownTime: 5
+  skillImage: {fileID: 0}
 --- !u!50 &8012748389203710762
 Rigidbody2D:
   serializedVersion: 5
@@ -456,7 +489,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.028049469, y: 0.87223434}
+  m_Offset: {x: 0.07399368, y: 0.9411564}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -466,5 +499,17 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9178085, y: 1.8304214}
+  m_Size: {x: 2.009697, y: 1.9682655}
   m_EdgeRadius: 0
+--- !u!114 &1997745909608548732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047369931022630657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84db18309b28b0e488ab78d4528bf833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
