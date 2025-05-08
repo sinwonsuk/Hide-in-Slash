@@ -49,6 +49,7 @@ public class SoundManager : MonoBehaviour
 
             sfxSound[i].clip = sfxClips[(int)sfx];
             sfxSound[i].Play();
+            sfxSound[i].volume = volume > 0 ? volume : sfxVolume;
             sfxSound[i].volume = volume;
 
             if (_loopcheck == true)
