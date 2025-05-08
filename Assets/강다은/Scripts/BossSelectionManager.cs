@@ -33,6 +33,23 @@ public class BossSelectionManager : MonoBehaviourPunCallbacks
         UpdateSprite();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangeSprite(-1);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeSprite(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            OnConfirm();
+        }
+    }
+
     private void ChangeSprite(int direction)
     {
         if (isConfirmed) return;

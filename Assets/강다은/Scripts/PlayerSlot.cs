@@ -76,12 +76,23 @@ public class PlayerSlot : MonoBehaviour
         rt.anchoredPosition = target;
     }
 
-    public void SetReadyState(bool ready)
+    public void SetReadyState(bool isReady)
     {
-        buttonImage.sprite = ready ? onSprite : offSprite;
-        StartCoroutine(RotateLever(ready, tweenDuration));
+        if (!gameObject.activeInHierarchy)
+        {
+            StartCoroutine(WaitUntilActiveAndSet(isReady));
+            return;
+        }
+
+        buttonImage.sprite = isReady ? onSprite : offSprite;
+        StartCoroutine(RotateLever(isReady, tweenDuration));
     }
 
+    private IEnumerator WaitUntilActiveAndSet(bool isReady)
+    {
+        yield return new WaitUntil(() => gameObject.activeInHierarchy);
+        SetReadyState(isReady);
+    }
     private IEnumerator RotateLever(bool on, float duration)
     {
         var rt = leverImage.rectTransform;

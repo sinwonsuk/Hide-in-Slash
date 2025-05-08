@@ -161,6 +161,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         BossBlack.SetActive(false);
         RunnerBlack.SetActive(false);
 
+        StartCoroutine(InitializeSlotStatesAfterSceneLoad());
+
         // leaveButton 클릭 리스너
         //leaveButton.onClick.RemoveAllListeners();
         //leaveButton.onClick.AddListener(OnLeaveClicked);
@@ -394,6 +396,22 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //랜덤 참가
 
+    private IEnumerator InitializeSlotStatesAfterSceneLoad()
+    {
+        yield return null;
+
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (!slotMap.TryGetValue(player, out var slot)) continue;
+
+            if (player.CustomProperties.TryGetValue("Ready", out var ready))
+                slot.SetReadyState((bool)ready);
+
+            if (player.CustomProperties.TryGetValue("ProfileIndex", out var profile))
+                slot.SetProfileImage((int)profile);
+        }
+    }
+
     public override void OnPlayerEnteredRoom(RealtimePlayer newPlayer) //방 참가 (포톤에서 자동으로 처리)
     {
 
@@ -518,6 +536,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         rt.anchoredPosition = Vector2.zero;
 
         slot.Initialize(p, index);
+
+        if (p.CustomProperties.TryGetValue("Ready", out var readyObj))
+            slot.SetReadyState((bool)readyObj);
 
         slotMap[p] = slot;
         occupied[index] = true;
