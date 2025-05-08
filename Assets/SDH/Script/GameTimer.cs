@@ -45,10 +45,8 @@ public class GameTimer : MonoBehaviourPunCallbacks
     private void Update()
     {
 
-            Photon.Realtime.Player master = PhotonNetwork.MasterClient;
-            Debug.Log("마스터 클라이언트: " + master.NickName);
-        
 
+      
         double elapsed = PhotonNetwork.Time - startTime;
         float timeRemaining = countdownTime - (float)elapsed;
 

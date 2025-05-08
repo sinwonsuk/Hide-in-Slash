@@ -85,9 +85,11 @@ public class Generator : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return; 
+
         view = collision.GetComponent<PhotonView>();
 
-        if (view != null && view.IsMine && collision.CompareTag("Player"))
+        if (view != null && view.IsMine )
         {
             SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.Generator);
             isPlayerColilision = false;
@@ -107,9 +109,12 @@ public class Generator : MonoBehaviourPunCallbacks
 
                 if (!isMiniGameRunning)
                 {
-                    GameObject miniGame = Instantiate(miniGamePrefab, transform);
+                    GameObject miniGame = Instantiate(miniGamePrefab);
+                    miniGame.transform.position = transform.position;
 
                     generatorMiniGame = miniGame.GetComponent<GeneratorMiniGame>();
+
+                    generatorMiniGame.GeneratorGage = generatorGage;
 
                     isMiniGameRunning = true;
 

@@ -34,27 +34,26 @@ public class GeneratorMiniGame : MonoBehaviour
     {
         IsCheck = true;
 
-        GameObject GeneratorGage = GameObject.Find("GeneratorGage");
+       
 
         if(GeneratorGage == null)
         {           
             return;
         }
-
-        generatorGage generatorGage = GeneratorGage.GetComponent<generatorGage>();
-
-        generatorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, +0.05f);
+      
+        GeneratorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, +0.05f);
 
     }
     void NotCheckCollsion()
     {
         IsCheck = true;
 
-        GameObject GeneratorGage = GameObject.Find("GeneratorGage");
+        if (GeneratorGage == null)
+        {
+            return;
+        }
 
-        generatorGage generatorGage = GeneratorGage.GetComponent<generatorGage>();
-
-        generatorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, -0.05f);
+        GeneratorGage.pv.RPC("AddGage", Photon.Pun.RpcTarget.MasterClient, -0.05f);
 
 
     }
@@ -68,5 +67,7 @@ public class GeneratorMiniGame : MonoBehaviour
 
     [SerializeField]
     GameObject generatorStopObject;
+
+    public generatorGage GeneratorGage { get; set; }
 
 }
