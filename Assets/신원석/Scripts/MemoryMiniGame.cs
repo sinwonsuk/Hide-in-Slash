@@ -84,7 +84,7 @@ public class MemoryMiniGame : MiniGame
     public Func<bool> activeButtonAction;
 
     int colorindex = 0;
-    public int memoryCount { get; set; } = 5;
+    public int memoryCount { get; set; } = 3;
 
     List<bool> colorcheck = new List<bool>();
 

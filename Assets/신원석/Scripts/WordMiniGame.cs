@@ -32,7 +32,7 @@ public class WordMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if(correctCheck == 5)
+        if(correctCheck == 3)
         {
             Money.instance.addMoney(money);
             Instantiate(minigameSucess);
