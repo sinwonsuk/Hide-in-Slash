@@ -17,8 +17,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> mapDic = new();
     private List<Transform> eventSpawnPoints = new();
     private List<Transform> playerSpawnPoints = new();
+    private List<Transform> generatorSpawnPoints = new();
+    private List<Transform> maingeneratorSpawnPoints = new();
     private List<int> espIndexs = new();
     private List<int> pspIndexs = new();
+    private List<int> gspIndexs = new();
+    private List<int> maingspIndexs = new();
     private List<int> roleIndexs = new();
     private List<string> pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
     private string currentMap;
@@ -141,6 +145,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
             espIndexs = MakeRandomValues(23, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
+            gspIndexs = MakeRandomValues(3, generatorSpawnPoints.Count); // 발전기 스폰포인트 섞기
+            maingspIndexs = MakeRandomValues(2, maingeneratorSpawnPoints.Count); // 발전기 스폰포인트 섞기
             InitializeMiniGames(); // 미니게임 뿌리기
             InitializeGenerators(); // 발전기 뿌리기
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
@@ -234,6 +240,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
                 {
                     playerSpawnPoints.Add(child);
                 }
+                else if (child.CompareTag("gsp"))
+                {
+                    generatorSpawnPoints.Add(child);
+                }
+                else if (child.CompareTag("maingsp"))
+                {
+                    maingeneratorSpawnPoints.Add(child);
+                }
                 else if (child.name == "ShipSpawn")
                 {
                     shipTf = child;
@@ -255,7 +269,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void InitializeMiniGames()
     {
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 20; i++)
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
@@ -265,10 +279,16 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private void InitializeGenerators()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
-            int index = espIndexs[20 - i];
-            Transform spawnPoint = eventSpawnPoints[index];
+            int index = gspIndexs[i];
+            Transform spawnPoint = generatorSpawnPoints[index];
+            PhotonNetwork.InstantiateRoomObject("Generator", spawnPoint.position, Quaternion.identity);
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            int index = maingspIndexs[i];
+            Transform spawnPoint = maingeneratorSpawnPoints[index];
             PhotonNetwork.InstantiateRoomObject("Generator", spawnPoint.position, Quaternion.identity);
         }
     }

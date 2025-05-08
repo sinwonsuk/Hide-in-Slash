@@ -41,6 +41,8 @@ TagManager:
   - PrisonEscape
   - MiniGameTrigger
   - Foot
+  - gsp
+  - maingsp
   layers:
   - Default
   - TransparentFX

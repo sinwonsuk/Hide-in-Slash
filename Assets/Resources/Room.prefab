@@ -239,7 +239,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -577,7 +577,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -4058,7 +4058,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -4095,7 +4095,7 @@ Transform:
   m_GameObject: {fileID: 4941112269182517051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 170.85, y: -21.32, z: 2.0796459}
+  m_LocalPosition: {x: 172.6, y: -18.24, z: 2.0796459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4303,7 +4303,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -4517,7 +4517,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -4529,6 +4529,37 @@ MonoBehaviour:
     - rid: 2054099011517284507
       type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!1 &5095908129778419913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6074825584228259156}
+  m_Layer: 0
+  m_Name: gsp
+  m_TagString: gsp
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6074825584228259156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5095908129778419913}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 176.66, y: -20.34, z: 2.0796459}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9033854297450491647}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5237402392511597408
 GameObject:
   m_ObjectHideFlags: 0
@@ -4731,7 +4762,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -5043,6 +5074,7 @@ Transform:
   - {fileID: 7053832325821086319}
   - {fileID: 321512603801523233}
   - {fileID: 6152835562662901056}
+  - {fileID: 6074825584228259156}
   - {fileID: 1832761352299486765}
   - {fileID: 6075732462966049362}
   - {fileID: 2534963520309867660}
@@ -20220,7 +20252,7 @@ Transform:
   m_GameObject: {fileID: 8238055850354284080}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 146.56, y: -16.93, z: 2.0796459}
+  m_LocalPosition: {x: 149.8, y: -16.51, z: 2.0796459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
