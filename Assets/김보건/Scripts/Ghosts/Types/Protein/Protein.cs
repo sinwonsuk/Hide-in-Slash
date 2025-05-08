@@ -87,7 +87,8 @@ public class Protein : Ghost, IPunObservable
 		{
 			if (Input.GetKeyDown(KeyCode.E) && !isProtein && !isCoolingDown)
 			{
-				photonView.RPC("DrinkProtein", RpcTarget.All);
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Grow, false, 0.5f);
+                photonView.RPC("DrinkProtein", RpcTarget.All);
                 
             }
 
@@ -98,7 +99,8 @@ public class Protein : Ghost, IPunObservable
 				diceTimer = 0f;
 				int roll = Random.Range(1, 7);
 				Debug.Log("프로틴 주사위 굴리기: " + roll);
-				photonView.RPC("RollDice", RpcTarget.All, roll);
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
+                photonView.RPC("RollDice", RpcTarget.All, roll);
 			}
 
             UpdateSkillCooldown();

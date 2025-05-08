@@ -32,6 +32,8 @@ public class PukeGirl : Ghost, IPunObservable
     private bool isCoolingDown = false;
     [SerializeField] private Image skillImage;
 
+    private bool wasMoving = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -75,6 +77,7 @@ public class PukeGirl : Ghost, IPunObservable
             base.Update();
             if (Input.GetKeyDown(KeyCode.E) && !isCoolingDown)
             {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Vomit, false, 0.5f);
                 photonView.RPC("RPC_StartVomit", RpcTarget.All);
             }
             UpdateSkillCooldown();
@@ -194,6 +197,19 @@ public class PukeGirl : Ghost, IPunObservable
         if (Mathf.Abs(lastDir.x) >= Mathf.Abs(lastDir.y))
         {
             sr.flipX = lastDir.x < 0;
+        }
+
+        if (photonView.IsMine)
+        {
+            if (isMoving && !wasMoving)
+            {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.PukeWalking, true, 0.5f);
+            }
+            else if (!isMoving && wasMoving)
+            {
+                SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.PukeWalking);
+            }
+            wasMoving = isMoving;
         }
 
     }
