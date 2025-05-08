@@ -26535,7 +26535,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_AlphaCutoff: 1
+  m_AlphaCutoff: 0.893
   m_ApplyToSortingLayers: 00000000
   m_ShapePath:
   - {x: 0, y: -28, z: 0}

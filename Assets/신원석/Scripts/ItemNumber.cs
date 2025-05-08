@@ -7,6 +7,7 @@ public class ItemNumber : MonoBehaviour
     private void Awake()
     {
         imageNumber = GetComponent<Image>();
+        ChangeImage(1);
     }
   
     // Update is called once per frame
