@@ -2690,7 +2690,7 @@ MonoBehaviour:
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
@@ -2791,7 +2791,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.13337994, y: -0.90589905}
+  m_Offset: {x: -0.13337994, y: -1.5263311}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2801,7 +2801,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 17.119932, y: 8.788502}
+  m_Size: {x: 17.119932, y: 10.029362}
   m_EdgeRadius: 0
 --- !u!1 &2382384336193118068
 GameObject:
@@ -2992,7 +2992,7 @@ MonoBehaviour:
     m_TrimEdge: 0.08
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.08
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.08
   m_PreviousEdgeProcessing: 1
@@ -39393,18 +39393,18 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 1.03125, z: 0}
-      m_Extent: {x: 8.415619, y: 0.9312439, z: 0}
+      m_Center: {x: -5.037918, y: 0.23209381, z: 0}
+      m_Extent: {x: 3.3777008, y: 0.10669708, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.1
+    m_InitialTrim: 0
   m_CastingOption: 1
   m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
   m_PreviousShadowCastingSource: 2
-  m_PreviousShadowShape2DSource: {fileID: 4499928786608720601}
+  m_PreviousShadowShape2DSource: {fileID: 6866713437347231375}
   references:
     version: 2
     RefIds:
