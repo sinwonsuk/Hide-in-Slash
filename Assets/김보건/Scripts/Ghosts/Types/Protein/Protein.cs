@@ -156,12 +156,12 @@ public class Protein : Ghost, IPunObservable
     {
         int[] weightedPool = new int[]
         {
-            1, 1,
-            2, 2, 2, 2,     
-            3, 3, 3, 3, 3, 3,
-            4, 4, 4,       
-            5, 5,       
-            6         
+            1,
+            2, 2, 2,     
+            3, 3, 3, 3, 3,
+            4, 4, 4, 4, 4, 4, 4, 
+            5, 5, 5,     
+            6,      
         };
 
         int index = Random.Range(0, weightedPool.Length);
@@ -210,29 +210,29 @@ public class Protein : Ghost, IPunObservable
         switch(dice)
         {
             case 1:
-                moveSpeed = 4.5f;
+                moveSpeed = 4f;
                 transform.localScale = originalScale * 2f;
                 if (photonView.IsMine && impulseSource != null)
                     impulseSource.GenerateImpulse();
                 break;
             case 2:
-                moveSpeed = 4.8f;
+                moveSpeed = 4.4f;
                 transform.localScale = originalScale * 1.6f;
                 break;
             case 3:
-                moveSpeed = 6f;
+                moveSpeed = 4.8f;
                 transform.localScale = originalScale * 1.3f;
                 break;
             case 4:
-                moveSpeed = 6.3f;
+                moveSpeed = 5f;
                 transform.localScale = originalScale * 1.1f;
                 break;
             case 5:
-                moveSpeed = 6.6f;
+                moveSpeed = 6f;
                 transform.localScale = originalScale * 1.0f;
                 break;
             case 6:
-                moveSpeed = 7.5f;
+                moveSpeed = 6.5f;
                 transform.localScale = originalScale * 0.9f;
                 break;
             default:
