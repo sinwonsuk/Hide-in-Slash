@@ -46,7 +46,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
         profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
 
-        
+
 
     }
 
@@ -107,13 +107,13 @@ public class Player : MonoBehaviourPun, IPunObservable
                 if (minimapObj != null)
                 {
                     minimap = minimapObj.gameObject;
-                    minimap.SetActive(false); 
+                    minimap.SetActive(false);
                 }
 
                 Transform escapeUIObj = playerCanvas.transform.Find("UseItemAndEscape");
                 if (escapeUIObj != null)
                 {
-                    useItemAndEscapeUI = escapeUIObj.gameObject;   
+                    useItemAndEscapeUI = escapeUIObj.gameObject;
                     useItemAndEscapeUI.SetActive(false);
                 }
                 else
@@ -319,7 +319,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
     }
 
 
@@ -550,7 +550,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         Transform portal = moveMap.transform.Find(portalName);
         if (portal != null)
-            transform.position = portal.position;        
+            transform.position = portal.position;
     }
 
     private IEnumerator UpdateCameraConfinerDelayed()
@@ -1303,10 +1303,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     private float hitCooldown = 0.5f;
     private bool isDead = false;
 
-    bool isTeleporting =false;
+    bool isTeleporting = false;
 
     bool isInitialized = false;
 
-    bool isInMiniGameTrigger =false;
+    bool isInMiniGameTrigger = false;
     MiniGameTrigger currentTrigger;
 }
