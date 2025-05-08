@@ -8,6 +8,8 @@ using Photon.Realtime;
 using Unity.Cinemachine;
 using ExitGames.Client.Photon;
 using UnityEngine.Splines.ExtrusionShapes;
+using System.Collections.Generic;
+using System.Linq;
 
 public enum EscapeType
 {
@@ -16,11 +18,21 @@ public enum EscapeType
     Hatch = 2         // 개구멍
 }
 
+public enum RunnerStatus
+{
+    Alive,
+    Prison,
+    Dead,
+    Escaped
+}
+
 public class Player : MonoBehaviourPun, IPunObservable
 {
 
     private void Awake()
     {
+        if (photonView.IsMine)
+            PhotonNetwork.LocalPlayer.TagObject = this;
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
@@ -45,7 +57,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         // 인스펙터창에 무조건 있어야함 긴급 땜빵
         GameObject gameObject = GameObject.Find("SpawnPlayerProfile");
         profileSlotManager = gameObject.GetComponent<ProfileSlotManager>();
-
 
 
     }
@@ -121,16 +132,16 @@ public class Player : MonoBehaviourPun, IPunObservable
                     Debug.LogWarning("UseItemAndEscape 오브젝트없음");
                 }
 
-                Transform allEscapeObj = playerCanvas.transform.Find("AllEscape");
-                if (allEscapeObj != null)
-                {
-                    exitDoorEscapeUI = allEscapeObj.gameObject;
-                    exitDoorEscapeUI.SetActive(false);
-                }
-                else
-                {
-                    Debug.LogWarning("AllEscape 오브젝트 없음");
-                }
+                //Transform allEscapeObj = playerCanvas.transform.Find("AllEscape");
+                //if (allEscapeObj != null)
+                //{
+                //    exitDoorEscapeUI = allEscapeObj.gameObject;
+                //    exitDoorEscapeUI.SetActive(false);
+                //}
+                //else
+                //{
+                //    Debug.LogWarning("AllEscape 오브젝트 없음");
+                //}
 
                 Transform deathProtein = playerCanvas.transform.Find("ProteinDeathAnim");
                 if (deathProtein != null)
@@ -164,6 +175,47 @@ public class Player : MonoBehaviourPun, IPunObservable
                 {
                     Debug.LogWarning("deathPuKeGirlUI 못 찾음");
                 }
+
+                Transform allDead = playerCanvas.transform.Find("AllDeath");
+                if (allDead != null)
+                { 
+                allDeadUI = allDead.gameObject;
+                allDeadUI.SetActive(false);
+                }
+                else 
+                    Debug.LogWarning("AllDeath UI 못 찾음");
+
+                Transform someDead = playerCanvas.transform.Find("PlayerDeath");
+                if (someDead != null)
+                {
+                    someDeadUI = someDead.gameObject;
+                    someDeadUI.SetActive(false);
+                }
+                else Debug.LogWarning("PlayerDeath UI 못 찾음");
+
+                Transform allEscape = playerCanvas.transform.Find("AllEscape");
+                if (allEscape != null)
+                {
+                    allEscapeUI = allEscape.gameObject;
+                    allEscapeUI.SetActive(false);
+                }
+                else Debug.LogWarning("AllEscape UI 못 찾음");
+
+                Transform someEscape = playerCanvas.transform.Find("EscapeAlone");
+                if (someEscape != null)
+                {
+                    someEscapeUI = someEscape.gameObject;
+                    someEscapeUI.SetActive(false);
+                }
+                else Debug.LogWarning("EscapeAlone UI 못 찾음");
+
+                Transform prisonEnding = playerCanvas.transform.Find("PrisonEnding");
+                if (prisonEnding != null)
+                {
+                    prisonEndingUI = prisonEnding.gameObject;
+                    prisonEndingUI.SetActive(false);
+                }
+                else Debug.LogWarning("PrisonEnding UI 못 찾음");
             }
         }
 
@@ -292,6 +344,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             Debug.Log("플레이어죽음");
             EventManager.TriggerEvent(EventType.PlayerHpZero);
             PlayerStateMachine.ChangeState(deadState);
+            isDead = true;
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
         }
     }
@@ -333,7 +386,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             isInMiniGameTrigger = true;
         }
 
-        if (collision.CompareTag("Peanut") && !isHit)
+        if (collision.CompareTag("Peanut") && !isHit && PlayerStateMachine.currentState != escapeState)
         {
             countLife--;
             Debug.Log("땅콩 충돌");
@@ -343,7 +396,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
-                isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
                 EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
@@ -369,7 +421,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
 
 
-        if (collision.CompareTag("PukeGirl") && !isHit)
+        if (collision.CompareTag("PukeGirl") && !isHit && PlayerStateMachine.currentState != escapeState)
         {
 
             countLife--;
@@ -380,7 +432,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
-                isDead = true;
+
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
                 EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
@@ -405,7 +457,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.CompareTag("Protein") && !isHit)
+        if (collision.CompareTag("Protein") && !isHit && PlayerStateMachine.currentState != escapeState)
         {
 
             countLife--;
@@ -416,7 +468,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
-                isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
                 EventManager.TriggerEvent(EventType.InevntoryOff);
                 profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
@@ -446,6 +497,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("ExitDoor"))
         {
+            if (CompareTag("DeadPlayer"))
+                return;
             Debug.Log("탈출구가능");
             escapeState.SetEscapeType(EscapeType.ExitDoor);
             PlayerStateMachine.ChangeState(escapeState);
@@ -481,9 +534,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             photonView.RPC("SetFlashlight", RpcTarget.Others, false);
 
             // 서버에 내 상태 알리기
-            ExitGames.Client.Photon.Hashtable props = new();
-            props["IsInPrison"] = true;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            BroadcastStatus(RunnerStatus.Prison);
+            //ExitGames.Client.Photon.Hashtable props = new();
+            //props["IsInPrison"] = true;
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
 
@@ -517,12 +571,12 @@ public class Player : MonoBehaviourPun, IPunObservable
             flashLight.enabled = true;
             lightCollider.enabled = true;
             isInsidePrison = false;
-            photonView.RPC("SetFlashlight", RpcTarget.Others, false);
+            photonView.RPC("SetFlashlight", RpcTarget.Others, true);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
-
-            ExitGames.Client.Photon.Hashtable props = new();
-            props["IsInPrison"] = false;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            BroadcastStatus(RunnerStatus.Alive);
+            //ExitGames.Client.Photon.Hashtable props = new();
+            //props["IsInPrison"] = false;
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
     }
@@ -551,6 +605,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         Transform portal = moveMap.transform.Find(portalName);
         if (portal != null)
             transform.position = portal.position;
+
+        if (photonView.IsMine)
+        {
+            ExitGames.Client.Photon.Hashtable props = new();
+            props["IsInPrison"] = true;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
     }
 
     private IEnumerator UpdateCameraConfinerDelayed()
@@ -1194,6 +1255,165 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     #endregion
 
+    [PunRPC]
+    public void RPC_NotifyStatus(int actorNumber, int statusCode)
+    {
+        runnerStatuses[actorNumber] = (RunnerStatus)statusCode;
+
+        // 항상 내 로컬 Player 컴포넌트로 검사 돌리기
+        if (PhotonNetwork.LocalPlayer.TagObject is Player local)
+            local.TryCheckEndingLocally();
+    }
+    private bool IsRunner(Photon.Realtime.Player player)
+    {
+        if (!player.CustomProperties.TryGetValue("Role", out object roleObj) || roleObj == null)
+        {
+            Debug.LogWarning($"[IsRunner] {player.NickName} 의 Role 없음");
+            return false;
+        }
+
+        string roleName = roleObj.ToString();
+        bool isMonster = NetworkProperties.instance.GetMonsterStates(roleName);
+        return !isMonster;
+    }
+
+    public void BroadcastStatus(RunnerStatus status)
+    {
+        int myActor = PhotonNetwork.LocalPlayer.ActorNumber;
+        runnerStatuses[myActor] = status;
+
+        TryCheckEndingLocally();   //내 로컬에서도 즉시 검사
+
+        photonView.RPC("RPC_NotifyStatus", RpcTarget.All, myActor, (int)status);
+    }
+
+    private void TryCheckEndingLocally()
+    {
+        Debug.Log($"[TryCheck] {PhotonNetwork.LocalPlayer.NickName} - 상태 검사 시작");
+
+        // 도망자 플레이어 목록 (술래는 제외)
+        List<int> runnerList = new List<int>();
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (IsRunner(player))
+                runnerList.Add(player.ActorNumber);
+        }
+
+        // 모든 도망자의 상태 정보가 모이지 않았다면 기다림
+        foreach (int actor in runnerList)
+        {
+            if (!runnerStatuses.ContainsKey(actor))
+                return; // 아직 모른 도망자 있으면 연출x
+        }
+
+        //도망자 상태 리스트
+        List<RunnerStatus> runnerStatusList = new List<RunnerStatus>();
+        foreach (int actor in runnerList)
+        {
+            runnerStatusList.Add(runnerStatuses[actor]);
+        }
+
+        // 아직 살아있는 도망자가 있다면 연출x
+        foreach (RunnerStatus status in runnerStatusList)
+        {
+            if (status == RunnerStatus.Alive)
+                return;
+        }
+
+        //연출은 딱 한 번
+        if (hasTriggeredEnding)
+            return;
+
+        hasTriggeredEnding = true;
+
+        // 내 상태 확인
+        int myActor = PhotonNetwork.LocalPlayer.ActorNumber;
+        RunnerStatus myStatus = runnerStatuses[myActor];
+
+        // 상태별 인원 세기
+        int totalDead = 0;
+        int totalEscaped = 0;
+        foreach (RunnerStatus status in runnerStatusList)
+        {
+            if (status == RunnerStatus.Dead)
+                totalDead++;
+            else if (status == RunnerStatus.Escaped)
+                totalEscaped++;
+        }
+
+        // 전체 연출 조건 판단
+        if (totalEscaped == runnerList.Count)
+        {
+            ShowLocalUI(allEscapeUI);
+        }
+        else if (totalDead == runnerList.Count)
+        {
+            ShowLocalUI(allDeadUI);
+        }
+        else
+        {
+            // 내 상태 기준 연출
+            switch (myStatus)
+            {
+                case RunnerStatus.Escaped:
+                    ShowLocalUI(someEscapeUI);
+                    break;
+                case RunnerStatus.Dead:
+                    ShowLocalUI(someDeadUI);
+                    break;
+                case RunnerStatus.Prison:
+                    ShowLocalUI(prisonEndingUI);
+                    break;
+            }
+        }
+    }
+
+    private GameObject GetPartialUI(RunnerStatus status)
+    {
+        return status switch
+        {
+            RunnerStatus.Escaped => someEscapeUI,
+            RunnerStatus.Dead => someDeadUI,
+            RunnerStatus.Prison => prisonEndingUI,
+            _ => null
+        };
+    }
+
+    private void ShowLocalUI(GameObject ui)
+    {
+        Debug.Log($"[연출] ");
+
+        if (ui == null) return;
+
+        ui.transform.SetParent(null);                // 부모 해제 (캔버스 등)
+        DontDestroyOnLoad(ui);                       // 씬 전환 후에도 유지
+        ui.SetActive(true);                          // 보이기
+
+        Transform black = ui.transform.Find("Black");
+        if (black)
+        {
+            var fade = black.GetComponent<playerDeath>();
+            if (fade) fade.TriggerFade();
+        }
+
+        // 로비건너가는 핸들러
+        GameObject handlerGO = new GameObject("EndingHandler");
+        EndingHandler handler = handlerGO.AddComponent<EndingHandler>();
+        handler.StartEndSequence(ui, uiDuration);
+    }
+
+    private IEnumerator ReturnToLobbyAfter(float sec, GameObject ui)
+    {
+        yield return new WaitForSeconds(sec);
+        if (ui != null)
+            Destroy(ui);
+
+        PhotonNetwork.LoadLevel("RobbyScene");
+
+        yield return new WaitForSeconds(0.1f);
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
+    }
 
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
@@ -1301,7 +1521,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject deathPuKeGirlUI;
     private bool isHit = false;
     private float hitCooldown = 0.5f;
-    private bool isDead = false;
+    public bool isDead = false;
 
     bool isTeleporting = false;
 
@@ -1309,4 +1529,14 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     bool isInMiniGameTrigger = false;
     MiniGameTrigger currentTrigger;
+
+    [Header("UI")]
+    public GameObject allDeadUI;      // 전원 사망 연출용
+    public GameObject someDeadUI;       // 일부 사망
+    public GameObject allEscapeUI; // 탈출 연출용
+    public GameObject someEscapeUI; // 탈출 연출용
+    public GameObject prisonEndingUI; // 감옥 연출용
+    private static Dictionary<int, RunnerStatus> runnerStatuses = new();
+    public float uiDuration = 5f;
+    private bool hasTriggeredEnding = false;
 }
