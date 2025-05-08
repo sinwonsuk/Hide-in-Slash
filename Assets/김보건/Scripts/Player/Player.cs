@@ -340,6 +340,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             if (countLife <= 0 && !isDead)
             {
+                photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
@@ -374,6 +375,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             if (countLife <= 0 && !isDead)
             {
+                photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
@@ -407,6 +409,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             if (countLife <= 0 && !isDead)
             {
+                photonView.RPC("PlayScream", RpcTarget.All);
                 Debug.Log("너죽음");
                 isDead = true;
                 EventManager.TriggerEvent(EventType.PlayerHpZero);
@@ -516,6 +519,12 @@ public class Player : MonoBehaviourPun, IPunObservable
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
+    }
+
+    [PunRPC]
+    public void PlayScream()
+    {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Scream, false);
     }
 
     public bool InputE()

@@ -18,7 +18,6 @@ public class SceneManager : MonoBehaviour
 
 	private void Awake()
 	{
-        PhotonNetwork.ConnectToBestCloudServer();
 
         if (Instance == null)
 		{

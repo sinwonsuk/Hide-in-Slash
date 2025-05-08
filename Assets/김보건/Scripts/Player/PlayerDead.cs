@@ -14,6 +14,7 @@ public class PlayerDead : PlayerState
     public override void Enter()
     {
         base.Enter();
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Scream, false);
         player.SetZeroVelocity();
         player.BecomeGhost();
 
