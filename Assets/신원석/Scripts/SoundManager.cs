@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
         PeanutWalking,
         PukeWalking,
         RollADice,
+        Scream
     }
     public enum bgm
     {

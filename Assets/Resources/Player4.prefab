@@ -325,9 +325,9 @@ MonoBehaviour:
   profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
-  boostedSpeed: 10
+  boostedSpeed: 8
   boostDuration: 10
-  invisibleDuration: 5
+  invisibleDuration: 7
   hasInvisiblePotion: 0
   invisibleTimer: 0
   flashLight: {fileID: 3473344795628825297}

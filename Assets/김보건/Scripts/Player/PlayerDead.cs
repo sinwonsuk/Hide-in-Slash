@@ -14,6 +14,7 @@ public class PlayerDead : PlayerState
     public override void Enter()
     {
         base.Enter();
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Scream, false);
         player.SetZeroVelocity();
         player.BecomeGhost();
 
@@ -30,7 +31,7 @@ public class PlayerDead : PlayerState
     {
         base.Update();
 
-        //if (moveInput != Vector2.zero)
-        //    stateMachine.ChangeState(player.moveState);
+        if (moveInput != Vector2.zero)
+            stateMachine.ChangeState(player.moveState);
     }
 }
