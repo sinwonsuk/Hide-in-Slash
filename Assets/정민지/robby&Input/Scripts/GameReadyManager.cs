@@ -599,19 +599,18 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         props["Ready"] = null;
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-
-        Debug.Log("🧹 profileOrder 초기화");
-        Debug.Log("✅ 방 나감 → 로비 진입 시도");
-
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
-
         if (AssignManager.instance != null)
         {
             var existingView = AssignManager.instance.GetComponent<PhotonView>();
             if (existingView != null)
                 Destroy(existingView);  // 중복된 PhotonView 제거
         }
+
+        Debug.Log("🧹 profileOrder 초기화");
+        Debug.Log("✅ 방 나감 → 로비 진입 시도");
+
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
     }
 
     private void SpawnSlot(RealtimePlayer p, int index, bool animate)
