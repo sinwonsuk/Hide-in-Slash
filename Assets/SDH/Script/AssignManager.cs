@@ -420,15 +420,15 @@ public class AssignManager : MonoBehaviourPunCallbacks
             spawnIndex = (int)index;
 
         //BossType도 함께 가져오기
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("BossType", out object bossTypeObj))
-            bossType = bossTypeObj.ToString();
+        //if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("BossType", out object bossTypeObj))
+        //    bossType = bossTypeObj.ToString();
 
-        //Instantiate할 때 Role 또는 BossType을 기준으로
-        if (role == "Boss" && !string.IsNullOrEmpty(bossType))
-        {
-            PhotonNetwork.Instantiate(bossType, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
-        }
-        else
+        ////Instantiate할 때 Role 또는 BossType을 기준으로
+        //if (role == "Boss" && !string.IsNullOrEmpty(bossType))
+        //{
+        //    PhotonNetwork.Instantiate(bossType, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+        //}
+        //else
         {
             PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
