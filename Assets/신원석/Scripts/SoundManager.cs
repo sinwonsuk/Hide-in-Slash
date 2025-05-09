@@ -113,6 +113,10 @@ public class SoundManager : MonoBehaviour
     }
     private void Init()
     {
+        // 🔽 저장된 볼륨값 불러오기
+        bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 0.5f);
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+
         GameObject bgmObject = new GameObject("BGM");
         bgmObject.transform.parent = transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
