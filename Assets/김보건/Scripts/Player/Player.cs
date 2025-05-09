@@ -379,6 +379,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void CheckPeanut()
     {
+        if (!photonView.IsMine)
+            return;
+
+
         if (!isHit && PlayerStateMachine.currentState != escapeState)
         {
             countLife--;
