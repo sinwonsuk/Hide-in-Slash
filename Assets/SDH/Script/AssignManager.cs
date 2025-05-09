@@ -100,8 +100,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private new void OnEnable()
     {
-        EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
-        Debug.Log("구독완");
+        
     }
 
     private void Awake()
@@ -117,9 +116,15 @@ public class AssignManager : MonoBehaviourPunCallbacks
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void Start()
+    {
+        EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+        Debug.Log("구독완");
+    }
+
     private void OnDestroy()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -517,8 +522,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient) return;
         GameObject ins = PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
-        EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
-
+      
         ship = ins;
     }
 }
