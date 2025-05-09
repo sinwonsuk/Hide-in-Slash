@@ -1,28 +1,31 @@
 fileFormatVersion: 2
-guid: 85cd4002f186fae48a85777facdcede4
+guid: 8b142785bd2297345bd6e84615be7899
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -76155411435029042
-    second: Sucess_0
+      213: -4706266570645107223
+    second: "\uBB34\uC81C-1_0"
   - first:
-      213: 5612755983623836467
-    second: Sucess_1
+      213: -7078161372759334163
+    second: "\uBB34\uC81C-1_1"
   - first:
-      213: -2011041833879882032
-    second: Sucess_2
+      213: 3521101205626139249
+    second: "\uBB34\uC81C-1_2"
   - first:
-      213: 7340707828608733533
-    second: Sucess_3
+      213: -8538549774224743966
+    second: "\uBB34\uC81C-1_3"
   - first:
-      213: 160734413969161193
-    second: Sucess_4
+      213: 7936702759924352765
+    second: "\uBB34\uC81C-1_4"
   - first:
-      213: -22658470444302672
-    second: Sucess_5
+      213: 6725315614259239002
+    second: "\uBB34\uC81C-1_5"
   - first:
-      213: -2869062812212199273
-    second: Sucess_6
+      213: 8455104494540683743
+    second: "\uBB34\uC81C-1_6"
+  - first:
+      213: 5035116853827545330
+    second: "\uBB34\uC81C-1_7"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -157,12 +160,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sucess_0
+      name: "\uBB34\uC81C-1_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 5023
+        width: 5726
         height: 1429
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -170,10 +173,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d4ba752ea5ba0e940b1ef17ff242d6d1
-      internalID: 1722049492
+      spriteID: 9ed07662d7bffaeb0800000000000000
+      internalID: -4706266570645107223
       vertices: []
       indices: 
       edges: []
@@ -182,7 +185,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b5ce31b4576876f4db9fa9c6242443e1
+    spriteID: d39b445d0ca637642a3ea19193a61751
     internalID: 0
     vertices: []
     indices: 
@@ -192,7 +195,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sucess_0: 1722049492
+      "\uBB34\uC81C-1_0": -4706266570645107223
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
