@@ -605,6 +605,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
+        AssignManager.instance.ListClear();
+
         if (AssignManager.instance != null)
         {
             var existingView = AssignManager.instance.GetComponent<PhotonView>();

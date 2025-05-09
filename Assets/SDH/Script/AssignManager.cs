@@ -36,6 +36,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public Photon.Realtime.Player Bossplayer;
 
+    public void ListClear()
+    {
+        mapObjects.Clear();
+        mapDic.Clear();
+        eventSpawnPoints.Clear();
+        playerSpawnPoints.Clear();
+        generatorSpawnPoints.Clear();
+        maingeneratorSpawnPoints.Clear();
+    }
+
+
     private new void OnEnable()
     {
         EventManager.RegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
@@ -306,6 +317,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
             {
                 return false;
             }
+
+
         }
         return true;
     }
