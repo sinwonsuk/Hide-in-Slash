@@ -178,6 +178,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             slotPoints[i] = p.GetComponent<RectTransform>();
         }
 
+
+
         // 초기 UI 상태
         lobbyPanel.SetActive(true);
         hands.SetActive(true);
@@ -614,10 +616,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         props["BossType"] = null;
         props["RoleConfirmed"] = null;
 
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         AssignManager.instance.ListClear();
-       
+
+        PhotonNetwork.DestroyAll();
 
         if (AssignManager.instance != null)
         {
