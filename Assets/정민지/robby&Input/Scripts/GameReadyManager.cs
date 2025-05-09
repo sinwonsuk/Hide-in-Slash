@@ -14,6 +14,7 @@ using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class GameReadyManager : MonoBehaviourPunCallbacks
 {
@@ -597,6 +598,11 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         Hashtable props = new Hashtable();
         props["Ready"] = null;
+        props["Role"] = null;
+        props["SpawnIndex"] = null;
+        props["Boss"] = null;
+        props["BossType"] = null;
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
 
