@@ -1264,6 +1264,16 @@ public class Player : MonoBehaviourPun, IPunObservable
         // 항상 내 로컬 Player 컴포넌트로 검사 돌리기
         if (PhotonNetwork.LocalPlayer.TagObject is Player local)
             local.TryCheckEndingLocally();
+
+        // 술래도 여기서 직접 연출 검사
+        foreach (var ghost in FindObjectsByType<Ghost>(FindObjectsSortMode.None))
+        {
+            if (ghost.photonView.IsMine)
+            {
+                Debug.Log("[GhostCheck] TryCheckGhostEnding 호출!");
+                ghost.TryCheckGhostEnding(); // 💥 이 한 줄이 술래의 연출을 담당
+            }
+        }
     }
     private bool IsRunner(Photon.Realtime.Player player)
     {
@@ -1541,7 +1551,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public GameObject allEscapeUI; // 탈출 연출용
     public GameObject someEscapeUI; // 탈출 연출용
     public GameObject prisonEndingUI; // 감옥 연출용
-    private static Dictionary<int, RunnerStatus> runnerStatuses = new();
+    public static Dictionary<int, RunnerStatus> runnerStatuses = new();
     public float uiDuration = 5f;
     private bool hasTriggeredEnding = false;
 }

@@ -214,6 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47102c21a1a7f0b4f92c200027739699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allKillUI: {fileID: 0}
+  someKillUI: {fileID: 0}
+  uiDuration: 5
   moveSpeed: 7
   isStunned: 0
   headPosition: {fileID: 7588568600932724921}
