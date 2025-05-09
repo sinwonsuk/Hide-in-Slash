@@ -65,8 +65,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
         initialized = false;
         pTypes.Clear();
         pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
-        
-        
+
+        PhotonNetwork.Destroy(gameObject);
+
         //if(PhotonNetwork.IsMasterClient)
         //{
         //    for (int i = 0; i < minigames.Count; i++)
@@ -93,7 +94,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
         //PhotonNetwork.Destroy(ship);
 
-        //PhotonNetwork.Destroy(gameObject);
+
     }
 
 
