@@ -251,7 +251,7 @@ public class Peanut : Ghost, IPunObservable
         if (playerView != null && collision.CompareTag("Player"))
         {
             // 모든 클라이언트에게 잡힌 플레이어의 ViewID 전달
-            playerView.RPC("HandleCaughtPlayer", RpcTarget.All, playerView.ViewID);
+            photonView.RPC("HandleCaughtPlayer", RpcTarget.All, playerView.ViewID);
         }
 
 
