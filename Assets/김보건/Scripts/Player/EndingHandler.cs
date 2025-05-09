@@ -16,14 +16,17 @@ public class EndingHandler : MonoBehaviour
 
         if (ui != null)
             Destroy(ui);
+
         if (PhotonNetwork.InRoom)
+        {
             PhotonNetwork.LeaveRoom();
 
-        yield return new WaitForSeconds(0.1f);
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
+            // LeaveRoom()은 비동기 → OnLeftRoom()을 기다려야 안정적
+            while (PhotonNetwork.InRoom)
+                yield return null;
+        }
 
-        Destroy(gameObject); // 다 끝났으면 이 오브젝트도 제거
+        Destroy(gameObject); // 이 오브젝트 제거
     }
 }
 
