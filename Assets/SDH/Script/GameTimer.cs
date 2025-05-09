@@ -31,7 +31,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
     {
         while (true)
         {
-            if(AssignManager.instance.Bossplayer != null)
+            if(AssignManager.instance  != null&& AssignManager.instance.Bossplayer != null)
             {
                 break;
             }
@@ -40,6 +40,11 @@ public class GameTimer : MonoBehaviourPunCallbacks
         }
 
         yield return new WaitForSeconds(3.0f);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.SetMasterClient(AssignManager.instance.Bossplayer);
+        }
 
     }
     private void Update()
