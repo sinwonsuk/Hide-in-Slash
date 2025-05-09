@@ -603,6 +603,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         props["SpawnIndex"] = null;
         props["Boss"] = null;
         props["BossType"] = null;
+        props["RoleConfirmed"] = null;
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
