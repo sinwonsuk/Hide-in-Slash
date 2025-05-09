@@ -29,6 +29,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<GameObject> generators = new();
     private List<GameObject> minigames = new();
     private List<GameObject> Maps = new();
+
+    GameObject ship;
+
     private string currentMap;
     private Transform shipTf;
     string playerName;
@@ -87,6 +90,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
             Maps.Clear();
         }
+
+        PhotonNetwork.Destroy(ship);
 
         PhotonNetwork.Destroy(gameObject);
     }
@@ -510,8 +515,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private void SpawnExit()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
+        GameObject ins = PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
         EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+
+        ship = ins;
     }
 }
 
