@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SoundSettingsUI : MonoBehaviour
 {
@@ -43,4 +44,11 @@ public class SoundSettingsUI : MonoBehaviour
         PlayerPrefs.SetFloat("SFXVolume", value);
         PlayerPrefs.Save();
     }
+
+    public void OnSfxSliderReleased(BaseEventData eventData)
+    {
+        SoundManager manager = SoundManager.GetInstance();
+        manager.SfxPlay(SoundManager.sfx.SfxSetting, false, sfxSlider.value);
+    }
+
 }

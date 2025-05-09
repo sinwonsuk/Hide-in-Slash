@@ -591,6 +591,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         // 방 나가기 시 로비로 돌아가기
         ClearSlots();
+        slotMap.Clear();
         profileOrder = null;
         nextProfilePointer = 0;
         isStartingGame = false;
@@ -756,6 +757,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                 return;
             }
 
+            RunnerPanel.SetActive(false);
+            RunnerBlack.SetActive(false);
             BossPanel.SetActive(true);
             BossBlack.SetActive(true);
             var bossR = BossPanel.GetComponentInChildren<playerDeath>();
@@ -776,6 +779,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                 return;
             }
 
+            BossPanel.SetActive(false);
+            BossBlack.SetActive(false);
             RunnerPanel.SetActive(true);
             RunnerBlack.SetActive(true);
             var playerR = RunnerPanel.GetComponentInChildren<playerDeath>(true); // (true) = 비활성화 오브젝트 포함
