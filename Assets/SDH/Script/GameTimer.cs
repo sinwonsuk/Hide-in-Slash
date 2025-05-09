@@ -45,7 +45,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
     private void Update()
     {
 
-
+        Debug.Log("방의 있는 수 "+PhotonNetwork.PlayerList.Length);
       
         double elapsed = PhotonNetwork.Time - startTime;
         float timeRemaining = countdownTime - (float)elapsed;
