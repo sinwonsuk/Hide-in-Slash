@@ -800,7 +800,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (isInsidePrison)
         {
-            photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
+            photonView.RPC("SetFlashLightInPrison", RpcTarget.Others);
             return;
         }
 
@@ -829,6 +829,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.enabled = false;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
     }
+    [PunRPC]
+    public void SetFlashLightInPrison()
+    {
+        circleLight.enabled = true;
+    }
 
     [PunRPC]
     public void SetFlashlight(bool turnOn)
@@ -849,10 +854,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             lightCollider.enabled = false;
             return;
         }
-        if (isInsidePrison)
+        else if (isInsidePrison)
         {
-            isCircleLightOn = turnOn;
-            circleLight.enabled = turnOn;
             return;
         }
         isLightOn = turnOn;
