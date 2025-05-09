@@ -50,6 +50,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         maingspIndexs.Clear();
         roleIndexs.Clear();
 
+        initialized = false;
         pTypes.Clear();
         pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
 
