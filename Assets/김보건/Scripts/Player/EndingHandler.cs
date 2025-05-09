@@ -16,8 +16,8 @@ public class EndingHandler : MonoBehaviour
 
         if (ui != null)
             Destroy(ui);
-
-        PhotonNetwork.LoadLevel("RobbyScene");
+        if (!PhotonNetwork.InRoom)
+            PhotonNetwork.LeaveRoom();
 
         yield return new WaitForSeconds(0.1f);
         if (!PhotonNetwork.InLobby)
