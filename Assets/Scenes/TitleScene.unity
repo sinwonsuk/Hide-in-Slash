@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   login: {fileID: 6409034000419116843, guid: e2068a59b83b30b47a8d7bf1689265a4, type: 3}
+  settingSound: {fileID: 635890760174155419, guid: bef75939e84da4c4cace03b98ec16238, type: 3}
   Manager: {fileID: 4424384947438334842, guid: 19500b69e6e9432408add454071a1aba, type: 3}
 --- !u!1 &194968115
 GameObject:

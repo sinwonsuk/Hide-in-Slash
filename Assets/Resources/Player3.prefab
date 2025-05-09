@@ -731,6 +731,7 @@ MonoBehaviour:
   deathProteinUI: {fileID: 0}
   deathPeanutUI: {fileID: 0}
   deathPuKeGirlUI: {fileID: 0}
+  isDead: 0
 --- !u!50 &7010930786892485481
 Rigidbody2D:
   serializedVersion: 5

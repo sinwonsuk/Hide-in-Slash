@@ -20,13 +20,9 @@ public class roomClick : MonoBehaviour
 
         if (getRoom.CustomProperties.ContainsKey("pw") && !string.IsNullOrEmpty(getRoom.CustomProperties["pw"] as string)) //패스워드가 방정보에 포함되어있거나 비어있지 않을 경우
         {
-            GameObject panelInstance = Instantiate(passwordPanelPrefab);
+            GameReadyManager.Instance.instantiatePwprefab(selectedRoomName);
 
-            var enterRoom = panelInstance.GetComponent<EnterRoom>();
-            if (enterRoom != null)
-            {
-                enterRoom.SetRoomName(selectedRoomName);
-            }
+           
         }
         else //패스워드가 비어있다면
         {
