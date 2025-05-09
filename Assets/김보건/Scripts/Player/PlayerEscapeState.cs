@@ -106,8 +106,6 @@ public class PlayerEscapeState : PlayerState
             if (PhotonNetwork.InRoom)
                 PhotonNetwork.LeaveRoom();
 
-            PhotonNetwork.LoadLevel("RobbyScene");
-
             yield return new WaitForSeconds(0.1f);
             if (!PhotonNetwork.InLobby)
                 PhotonNetwork.JoinLobby();

@@ -207,11 +207,14 @@ public class DeadManager : MonoBehaviourPunCallbacks
         if (ui != null)
             Destroy(ui);
 
-        PhotonNetwork.LoadLevel("RobbyScene");
+        // 방을 먼저 나감
+        if (PhotonNetwork.InRoom)
+            PhotonNetwork.LeaveRoom();
 
         yield return new WaitForSeconds(0.1f);
         if (!PhotonNetwork.InLobby)
             PhotonNetwork.JoinLobby();
+
     }
 
 

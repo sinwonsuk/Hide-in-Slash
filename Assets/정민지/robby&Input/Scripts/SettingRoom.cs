@@ -57,7 +57,7 @@ public class SettingRoom : MonoBehaviour
             if (roomName.Length < 14)
             {
 
-                GameReadyManager.Instance.CreateRoomWithPassword(roomName,password);
+                GameReadyManager.Instance.RequestCreateRoomWithPassword(roomName,password);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
             }
@@ -74,7 +74,7 @@ public class SettingRoom : MonoBehaviour
             if (!string.IsNullOrEmpty(password))
             {
 
-                GameReadyManager.Instance.CreateRoomWithOutPassword(roomName);
+                GameReadyManager.Instance.RequestCreateRoomWithOutPassword(roomName);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
             }

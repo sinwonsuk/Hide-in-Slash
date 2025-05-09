@@ -70,6 +70,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     private bool isStartingGame = false;
 
+    private string pendingRoomName = null;
+    private string pendingPassword = null;
+    private bool isRoomWithPassword = false;
+
     public static GameReadyManager Instance { get; private set; }
 
     private void Awake()
@@ -130,6 +134,14 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "RobbyScene") return;
+
+        ClearSlots();
+
+        if (!PhotonNetwork.InLobby)
+        {
+            Debug.Log("InLobby 아님 → 재시도");
+            PhotonNetwork.JoinLobby();
+        }
 
         // RobbyScene 에 있는 UI를 찾아서 바인딩
         lobbyPanel = GameObject.Find("robby");
@@ -261,16 +273,28 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby(); //대기실에 조인
 
-    public override void OnJoinedLobby() //로비로 가기
+    public override void OnJoinedLobby()
     {
+        Debug.Log("✅ 로비에 접속했습니다");
 
         PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName;
 
+        LoadSceneSafely("RobbyScene");
 
-        // PhotonNetwork.LocalPlayer.NickName = "adadadad";
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
-        PhotonNetwork.LoadLevel("RobbyScene");
+        if (!string.IsNullOrEmpty(pendingRoomName))
+        {
+            if (isRoomWithPassword)
+                CreateRoomWithPassword_Internal(pendingRoomName, pendingPassword);
+            else
+                CreateRoomWithOutPassword_Internal(pendingRoomName);
 
+            pendingRoomName = null;
+            pendingPassword = null;
+            isRoomWithPassword = false;
+        }
+
+    
     }
 
     public void Disconnect() => PhotonNetwork.Disconnect(); //서버 접속 끊음
@@ -280,43 +304,65 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     #region 방
 
-    //비번과 함께 방 생성
-    public void CreateRoomWithPassword(string roomName, string password)
+    public void RequestCreateRoomWithPassword(string roomName, string password)
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.InLobby)
         {
-
-            RoomOptions roomOptions = new RoomOptions(); //새로운 룸 옵션
-
-            roomOptions.MaxPlayers = 5; //옵션에서 최대인원
-            roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
-
-
-            // 비밀번호 설정
-            Hashtable customProps = new Hashtable();
-            customProps.Add("pw", password);
-            roomOptions.CustomRoomProperties = customProps;
-            roomOptions.CustomRoomPropertiesForLobby = new string[] { "pw" };
-
-            PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
-            Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName}이라는 방을 생성하셨습니다!");
-
-
+            CreateRoomWithPassword_Internal(roomName, password);
         }
         else
         {
-            Debug.Log("아직 접속되지 않음");
+            pendingRoomName = roomName;
+            pendingPassword = password;
+            isRoomWithPassword = true;
+            PhotonNetwork.JoinLobby();
         }
-
     }
 
-    public void CreateRoomWithOutPassword(string roomName)
+    public void RequestCreateRoomWithOutPassword(string roomName)
     {
-        RoomOptions roomOptions = new RoomOptions(); //새로운 룸 옵션
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InLobby)
+        {
+            CreateRoomWithOutPassword_Internal(roomName);
+        }
+        else
+        {
+            pendingRoomName = roomName;
+            pendingPassword = null;
+            isRoomWithPassword = false;
+            PhotonNetwork.JoinLobby();
+        }
+    }
 
-        roomOptions.MaxPlayers = 5; //옵션에서 최대인원
-        roomOptions.EmptyRoomTtl = 0; // 유저가 모두 나가면 즉시 삭제
-        PhotonNetwork.CreateRoom(roomName, roomOptions); //서버에서 룸 생성
+    //비번과 함께 방 생성
+    private void CreateRoomWithPassword_Internal(string roomName, string password)
+    {
+        Debug.Log($"pw 있는 방 생성 시도 | 접속 상태: {PhotonNetwork.IsConnected}, 로비 상태: {PhotonNetwork.InLobby}");
+
+        RoomOptions roomOptions = new RoomOptions
+        {
+            MaxPlayers = 5,
+            EmptyRoomTtl = 0,
+            CustomRoomProperties = new Hashtable { { "pw", password } },
+            CustomRoomPropertiesForLobby = new string[] { "pw" }
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+        Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName} (비밀번호) 방을 생성하셨습니다!");
+    }
+
+    private void CreateRoomWithOutPassword_Internal(string roomName)
+    {
+        Debug.Log($"pw 없는 방 생성 시도 | 접속 상태: {PhotonNetwork.IsConnected}, 로비 상태: {PhotonNetwork.InLobby}");
+
+        RoomOptions roomOptions = new RoomOptions
+        {
+            MaxPlayers = 5,
+            EmptyRoomTtl = 0
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+        Debug.Log($"{PhotonNetwork.LocalPlayer.NickName}님이 {roomName} (비밀번호 없음) 방을 생성하셨습니다!");
     }
 
     public void TryJoinRoom(RoomInfo roomInfo, string inputPassword)
@@ -508,7 +554,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             isStartingGame = true;
             //SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
-            PhotonNetwork.LoadLevel("MergeScene");
+            LoadSceneSafely("MergeScene");
 
             CleanHandler();
             StopAllCoroutines();
@@ -516,13 +562,15 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     }
 
 
-    //public override void OnLeftRoom()
-    //{
-    //    // 방 나가기 시 로비로 돌아가기
-    //    ClearSlots();
-    //    waitingPanel.SetActive(false);
-    //    lobbyPanel.SetActive(true);
-    //}
+    public override void OnLeftRoom()
+    {
+        // 방 나가기 시 로비로 돌아가기
+        ClearSlots();
+        Debug.Log("✅ 방 나감 → 로비 진입 시도");
+
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
+    }
 
     private void SpawnSlot(RealtimePlayer p, int index, bool animate)
     {
@@ -560,9 +608,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     private void ClearSlots()
     {
-        foreach (var slot in slotMap.Values)
-            Destroy(slot.gameObject);
+        foreach (var kvp in slotMap)
+        {
+            if (kvp.Value != null)
+                Destroy(kvp.Value.gameObject);
+        }
         slotMap.Clear();
+
         for (int i = 0; i < occupied.Length; i++) occupied[i] = false;
     }
 
@@ -786,6 +838,26 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             Debug.LogWarning($"Room {roomName} not found");
             return null;
         }
+    }
+
+    public void LoadSceneSafely(string sceneName)
+    {
+        PhotonNetwork.IsMessageQueueRunning = false;
+        StartCoroutine(LoadSceneWithMessageQueueControl(sceneName));
+    }
+
+    private IEnumerator LoadSceneWithMessageQueueControl(string sceneName)
+    {
+        PhotonNetwork.IsMessageQueueRunning = false; 
+        PhotonNetwork.LoadLevel(sceneName);
+
+        yield return new WaitUntil(() => UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == sceneName);
+
+        yield return null;
+        yield return null;
+
+        PhotonNetwork.IsMessageQueueRunning = true;
+        Debug.Log($" 씬 '{sceneName}' 로드 완료 및 메시지 큐 재개됨");
     }
 
     public Action<string> test;
