@@ -60,40 +60,40 @@ public class AssignManager : MonoBehaviourPunCallbacks
         roleIndexs.Clear();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-        PhotonNetwork.Destroy(player);
+        //PhotonNetwork.Destroy(player);
         instance = null;
         initialized = false;
         pTypes.Clear();
         pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
         
         
-        if(PhotonNetwork.IsMasterClient)
-        {
-            for (int i = 0; i < minigames.Count; i++)
-            {
-                PhotonNetwork.Destroy(minigames[i]);
-            }
+        //if(PhotonNetwork.IsMasterClient)
+        //{
+        //    for (int i = 0; i < minigames.Count; i++)
+        //    {
+        //        PhotonNetwork.Destroy(minigames[i]);
+        //    }
 
-            minigames.Clear();
+        //    minigames.Clear();
 
-            for (int i = 0; i < generators.Count; i++)
-            {
-                PhotonNetwork.Destroy(generators[i]);
-            }
+        //    for (int i = 0; i < generators.Count; i++)
+        //    {
+        //        PhotonNetwork.Destroy(generators[i]);
+        //    }
 
-            generators.Clear();
+        //    generators.Clear();
 
-            for (int i = 0; i < Maps.Count; i++)
-            {
-                PhotonNetwork.Destroy(Maps[i]);
-            }
+        //    for (int i = 0; i < Maps.Count; i++)
+        //    {
+        //        PhotonNetwork.Destroy(Maps[i]);
+        //    }
 
-            Maps.Clear();
-        }
+        //    Maps.Clear();
+        //}
 
-        PhotonNetwork.Destroy(ship);
+        //PhotonNetwork.Destroy(ship);
 
-        PhotonNetwork.Destroy(gameObject);
+        //PhotonNetwork.Destroy(gameObject);
     }
 
 
