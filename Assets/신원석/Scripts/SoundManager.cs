@@ -40,6 +40,12 @@ public class SoundManager : MonoBehaviour
 
     public void SfxPlay(sfx sfx, bool _loopcheck, float volume = 0.5f)
     {
+        if (sfxClips[(int)sfx] == null)
+        {
+            Debug.LogWarning($"SFX 클립이 없습니다: {sfx}");
+            return;
+        }
+
         for (int i = 0; i < sfxSound.Length; i++)
         {
             if (sfxSound[i].isPlaying)
@@ -50,7 +56,7 @@ public class SoundManager : MonoBehaviour
             sfxSound[i].clip = sfxClips[(int)sfx];
             sfxSound[i].Play();
             sfxSound[i].volume = volume > 0 ? volume : sfxVolume;
-            sfxSound[i].volume = volume;
+            //sfxSound[i].volume = volume;
 
             if (_loopcheck == true)
             {
@@ -64,6 +70,17 @@ public class SoundManager : MonoBehaviour
         }
 
     }
+
+    public void UpdateSfxVolumes()
+    {
+        foreach (var src in sfxSound)
+        {
+            if (src != null && src.isPlaying)
+                src.volume = sfxVolume;
+        }
+    }
+
+
     public void Sfx_Stop(sfx _sfx)
     {
         for (int i = 0; i < sfxSound.Length; i++)
@@ -96,6 +113,10 @@ public class SoundManager : MonoBehaviour
     }
     private void Init()
     {
+        // 🔽 저장된 볼륨값 불러오기
+        bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 0.5f);
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+
         GameObject bgmObject = new GameObject("BGM");
         bgmObject.transform.parent = transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
