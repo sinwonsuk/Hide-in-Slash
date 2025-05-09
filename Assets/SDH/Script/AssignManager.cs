@@ -25,6 +25,13 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private List<int> maingspIndexs = new();
     private List<int> roleIndexs = new();
     private List<string> pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
+
+    private List<GameObject> generators = new();
+    private List<GameObject> minigames = new();
+    private List<GameObject> Maps = new();
+
+    GameObject ship;
+
     private string currentMap;
     private Transform shipTf;
     string playerName;
@@ -33,6 +40,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     const byte EVENT_MAP_READY = 1;
 
     public static AssignManager instance;
+
+    GameObject player;
 
     public Photon.Realtime.Player Bossplayer;
 
@@ -49,11 +58,42 @@ public class AssignManager : MonoBehaviourPunCallbacks
         gspIndexs.Clear();
         maingspIndexs.Clear();
         roleIndexs.Clear();
-
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+        PhotonNetwork.Destroy(player);
+        instance = null;
+        initialized = false;
         pTypes.Clear();
         pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
-
         
+        
+        if(PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < minigames.Count; i++)
+            {
+                PhotonNetwork.Destroy(minigames[i]);
+            }
+
+            minigames.Clear();
+
+            for (int i = 0; i < generators.Count; i++)
+            {
+                PhotonNetwork.Destroy(generators[i]);
+            }
+
+            generators.Clear();
+
+            for (int i = 0; i < Maps.Count; i++)
+            {
+                PhotonNetwork.Destroy(Maps[i]);
+            }
+
+            Maps.Clear();
+        }
+
+        PhotonNetwork.Destroy(ship);
+
+        PhotonNetwork.Destroy(gameObject);
     }
 
 
@@ -205,6 +245,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < maps.Length; i++)
         {
             GameObject go = PhotonNetwork.InstantiateRoomObject(maps[i], Vector3.right * 200 * i, Quaternion.identity);
+
+
+
+            Maps.Add(go);
+
         }
 
         // 맵 생성 완료 후 신호
@@ -293,7 +338,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             int index = espIndexs[i];
             Transform spawnPoint = eventSpawnPoints[index];
-            PhotonNetwork.InstantiateRoomObject("MiniGame", spawnPoint.position, Quaternion.identity);
+            GameObject ins = PhotonNetwork.InstantiateRoomObject("MiniGame", spawnPoint.position, Quaternion.identity);
+
+            minigames.Add(ins);
         }
     }
 
@@ -303,7 +350,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             int index = gspIndexs[i];
             Transform spawnPoint = generatorSpawnPoints[index];
-            PhotonNetwork.InstantiateRoomObject("Generator", spawnPoint.position, Quaternion.identity);
+            GameObject ins = PhotonNetwork.InstantiateRoomObject("Generator", spawnPoint.position, Quaternion.identity);
+
+
+            generators.Add(ins);
         }
         for (int i = 0; i < 2; i++)
         {
@@ -444,14 +494,14 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //}
         //else
         {
-            PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+            player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
-       
-        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
-        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
-        Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
-        confiner.BoundingShape2D = col;
-        StartCoroutine(ResetCache());
+
+        //CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        //CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        //Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
+        //confiner.BoundingShape2D = col;
+        //StartCoroutine(ResetCache());
         return true;
     }
 
@@ -465,8 +515,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private void SpawnExit()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
+        GameObject ins = PhotonNetwork.InstantiateRoomObject("Ship", shipTf.position, Quaternion.identity);
         EventManager.UnRegisterEvent(EventType.AllGeneratorSuccess, SpawnExit);
+
+        ship = ins;
     }
 }
 
