@@ -86,12 +86,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-            PropertiesAction += HandleReadyChanged;
-            PropertiesAction += HandleProfileIndexChanged;
-            PropertiesAction += HandleRoleChanged;
-            PropertiesAction += HandleRoleConfirmed;
+            init();
         }
         else
         {
@@ -104,8 +100,16 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     }
     private void OnDestroy()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    public void init()
+    {
+        PropertiesAction += HandleReadyChanged;
+        PropertiesAction += HandleProfileIndexChanged;
+        PropertiesAction += HandleRoleChanged;
+        PropertiesAction += HandleRoleConfirmed;
     }
 
     public void CleanHandler()
@@ -126,7 +130,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         // 대기실 나가기
         //leaveButton.onClick.AddListener(() =>
         //{
-        //    PhotonNetwork.LeaveRoom();
+        //    PhotonNetwork.LeaveRo
+        //
+        //
+        //
+        //
+        //    om();
         //    ClearSlots();
         //    waitingPanel.SetActive(false);
         //    lobbyPanel.SetActive(true);
@@ -135,9 +144,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
         if (scene.name != "RobbyScene") return;
-
-        ClearSlots();
+        init();
 
         if (!PhotonNetwork.InLobby)
         {
@@ -413,6 +422,13 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        if (PhotonNetwork.IsMasterClient && profileOrder == null)
+        {
+            // 0,1,2,3,4를 중복 없이 랜덤 섞어서 profileOrder에 저장
+            profileOrder = MakeRandomValues(5, 5);
+            nextProfilePointer = 0;
+        }
+
         AssignManager.instance.gameObject.AddComponent<PhotonView>();
 
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.scar);
@@ -424,13 +440,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         hands.SetActive(false);
         waitingPanel.SetActive(true);
-
-        if (PhotonNetwork.IsMasterClient && profileOrder == null)
-        {
-            // 0,1,2,3,4를 중복 없이 랜덤 섞어서 profileOrder에 저장
-            profileOrder = MakeRandomValues(5, 5);
-            nextProfilePointer = 0;
-        }
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -480,7 +489,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         SpawnSlot(newPlayer, idx, animate: true);
 
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && profileOrder == null)
         {
             AssignProfileIndex(newPlayer);
 
@@ -581,10 +590,28 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         // 방 나가기 시 로비로 돌아가기
         ClearSlots();
+        profileOrder = null;
+        nextProfilePointer = 0;
+        isStartingGame = false;
+        PropertiesAction = null;
+
+        Hashtable props = new Hashtable();
+        props["Ready"] = null;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+
+        Debug.Log("🧹 profileOrder 초기화");
         Debug.Log("✅ 방 나감 → 로비 진입 시도");
 
         if (!PhotonNetwork.InLobby)
             PhotonNetwork.JoinLobby();
+
+        if (AssignManager.instance != null)
+        {
+            var existingView = AssignManager.instance.GetComponent<PhotonView>();
+            if (existingView != null)
+                Destroy(existingView);  // 중복된 PhotonView 제거
+        }
     }
 
     private void SpawnSlot(RealtimePlayer p, int index, bool animate)
