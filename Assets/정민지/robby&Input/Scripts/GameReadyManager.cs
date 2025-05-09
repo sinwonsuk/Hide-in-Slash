@@ -32,6 +32,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     public Button NextBtn;
     [SerializeField] private roomClick roomClickScript;
     public GameObject IncorrectPassword;
+    [SerializeField] private GameObject pwPanel;
+    private GameObject panelInstance;
 
     [Header("대기실")]
     public Text ListText;
@@ -329,6 +331,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             if (roomPassword == inputPassword)
             {
                 PhotonNetwork.JoinRoom(roomInfo.Name);
+                Destroy(panelInstance);
             }
             else
             {
@@ -347,6 +350,18 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinRoom(roomInfo.Name);
         }
     }
+
+    public void instantiatePwprefab(string rn)
+    {
+        panelInstance = Instantiate(pwPanel);
+
+        var enterRoom = panelInstance.GetComponent<EnterRoom>();
+        if (enterRoom != null)
+        {
+            enterRoom.SetRoomName(rn);
+        }
+    }
+
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
