@@ -29,7 +29,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
     private Transform shipTf;
     string playerName;
     int spawnIndex;
-
+    private bool initialized = false;
     const byte EVENT_MAP_READY = 1;
 
     public static AssignManager instance;
@@ -44,6 +44,16 @@ public class AssignManager : MonoBehaviourPunCallbacks
         playerSpawnPoints.Clear();
         generatorSpawnPoints.Clear();
         maingeneratorSpawnPoints.Clear();
+        espIndexs.Clear();
+        pspIndexs.Clear();
+        gspIndexs.Clear();
+        maingspIndexs.Clear();
+        roleIndexs.Clear();
+
+        pTypes.Clear();
+        pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
+
+        
     }
 
 
@@ -330,7 +340,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
             {
                 if (InitializePlayers() == true)
                 {
-
                     yield break;
                 }
             }
@@ -408,6 +417,11 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     private bool InitializePlayers()
     {
+        if (initialized) return false; // 이미 초기화됨
+
+
+          initialized = true;
+
         ExitGames.Client.Photon.Hashtable prop = PhotonNetwork.LocalPlayer.CustomProperties;
 
         string role = "";
