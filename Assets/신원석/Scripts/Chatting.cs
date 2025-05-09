@@ -29,7 +29,11 @@ public class ChattingManager : MonoBehaviourPunCallbacks
             chattingInputWindow.SetActive(false);
         }
     }
-
+    void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.ChattingActiveOff, ActiveOff);
+        EventManager.UnRegisterEvent(EventType.ChattingActiveOn, ActiveOn);
+    }
     public void Send()
     {
 

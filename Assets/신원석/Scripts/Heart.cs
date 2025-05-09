@@ -14,6 +14,12 @@ public class Heart : MonoBehaviour
         EventManager.RegisterEvent(EventType.PlayerHpZero, hpZeroAction);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.PlayerHpOne, hpOnedAction);
+        EventManager.UnRegisterEvent(EventType.PlayerHpZero, hpZeroAction);
+    }
+
     void ChangeHpOne()
     {
         images[1].sprite = Resources.Load<Sprite>("-hpIcon");

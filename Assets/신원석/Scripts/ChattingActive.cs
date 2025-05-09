@@ -8,6 +8,11 @@ public class ChattingActive : MonoBehaviour
         EventManager.RegisterEvent(EventType.ChattingOff, ChattingOff);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.ChattingOff);
+    }
+
     public void ChattingOff()
     {
         gameObject.SetActive(false);
