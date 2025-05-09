@@ -86,7 +86,6 @@ public class AssignManager : MonoBehaviourPunCallbacks
             roleIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, PhotonNetwork.PlayerList.Length); // 인원수 맞춰 랜덤으로 순서섞기
             AssignRole(); // 섞인 순서에서 첫사람이 몬스터, 나머지가 플레이어
             GameReadyManager.Instance.PropertiesAction += SetPlayerName;
-
         }
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient || true) 

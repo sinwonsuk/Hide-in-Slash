@@ -9,6 +9,11 @@ public class InventoryActive : MonoBehaviour
         EventManager.RegisterEvent(EventType.InevntoryOff, InventoryActiveOff);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.InevntoryOff, InventoryActiveOff);
+    }
+
     public void InventoryActiveOff()
     {
         gameObject.SetActive(false);

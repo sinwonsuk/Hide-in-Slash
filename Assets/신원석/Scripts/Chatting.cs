@@ -29,7 +29,11 @@ public class ChattingManager : MonoBehaviourPunCallbacks
             chattingInputWindow.SetActive(false);
         }
     }
-
+    void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.ChattingActiveOff, ActiveOff);
+        EventManager.UnRegisterEvent(EventType.ChattingActiveOn, ActiveOn);
+    }
     public void Send()
     {
 
@@ -38,6 +42,11 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     }
     public void ActiveOff()
     {
+        if(gameObject == null)
+        {
+            Debug.Log("이거왜 널임?");
+        }
+
         gameObject.SetActive(false);
     }
     public void ActiveOn()

@@ -8,6 +8,12 @@ public class PingManager : MonoBehaviour
         EventManager.RegisterEvent(EventType.PingOff, PingOff);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.PingOff);
+    }
+
+
     public void PingOff()
     {
         pingObject.SetActive(false);
