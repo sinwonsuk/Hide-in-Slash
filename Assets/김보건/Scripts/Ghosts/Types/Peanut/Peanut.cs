@@ -16,8 +16,6 @@ public class Peanut : Ghost, IPunObservable
 
     private Vector2 lastDir = Vector2.right;   // 기본값은 오른쪽
 
-    private PhotonView photonView;
-
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
     private float lerpSpeed = 10f;
@@ -48,7 +46,6 @@ public class Peanut : Ghost, IPunObservable
     {
 
         base.Awake();
-        photonView = GetComponent<PhotonView>();
 
         if (ghostStateMachine == null)
             ghostStateMachine = new GhostStateMachine();
