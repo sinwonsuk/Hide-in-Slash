@@ -457,7 +457,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
 
-        if (collision.CompareTag("Protein") && !isHit && PlayerStateMachine.currentState != escapeState)
+        if (collision.CompareTag("Protein") && !isHit && PlayerStateMachine.currentState != escapeState
+            )
         {
 
             countLife--;
@@ -1344,6 +1345,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         // 전체 연출 조건 판단
         if (totalEscaped == runnerList.Count)
         {
+            if (escapeType == EscapeType.Hatch)
+                return;
             ShowLocalUI(allEscapeUI);
         }
         else if (totalDead == runnerList.Count)
@@ -1356,6 +1359,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             switch (myStatus)
             {
                 case RunnerStatus.Escaped:
+                    if (escapeType == EscapeType.Hatch)
+                        return;
                     ShowLocalUI(someEscapeUI);
                     break;
                 case RunnerStatus.Dead:
