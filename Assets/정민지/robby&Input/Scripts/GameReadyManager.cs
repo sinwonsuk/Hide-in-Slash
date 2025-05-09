@@ -423,7 +423,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.IsMasterClient && profileOrder == null)
+        if (PhotonNetwork.IsMasterClient)
         {
             // 0,1,2,3,4를 중복 없이 랜덤 섞어서 profileOrder에 저장
             profileOrder = MakeRandomValues(5, 5);
@@ -490,7 +490,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         SpawnSlot(newPlayer, idx, animate: true);
 
 
-        if (PhotonNetwork.IsMasterClient && profileOrder == null)
+        if (PhotonNetwork.IsMasterClient)
         {
             AssignProfileIndex(newPlayer);
 
