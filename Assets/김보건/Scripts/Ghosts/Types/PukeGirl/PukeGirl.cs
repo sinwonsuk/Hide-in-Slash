@@ -227,7 +227,10 @@ public class PukeGirl : Ghost, IPunObservable
 
         Vector3 spawnPos = transform.position + new Vector3(signX * xOffset, yOffset, 0f);
 
-        var puddle = Instantiate(puddlePrefab, spawnPos, Quaternion.identity);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Instantiate("PuddlePrefab", spawnPos, Quaternion.identity);
+        }
 
         anim.SetBool("IsVomiting", false);
 
