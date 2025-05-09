@@ -21,6 +21,12 @@ public class GeneratorManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void OnDestroy()
+    {
+        EventManager.UnRegisterEvent(EventType.GeneratorSuccess, addCount);
+    }
+
+
     [PunRPC]
     public void BroadcastSuecss()
     {
