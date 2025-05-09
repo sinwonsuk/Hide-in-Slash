@@ -34,6 +34,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     public static AssignManager instance;
 
+    GameObject player;
+
     public Photon.Realtime.Player Bossplayer;
 
     public void ListClear()
@@ -49,6 +51,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         gspIndexs.Clear();
         maingspIndexs.Clear();
         roleIndexs.Clear();
+
+        PhotonNetwork.Destroy(player);
 
         initialized = false;
         pTypes.Clear();
@@ -445,7 +449,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //}
         //else
         {
-            PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
+            player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
        
         CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
