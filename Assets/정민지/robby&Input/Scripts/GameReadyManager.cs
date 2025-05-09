@@ -621,7 +621,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
         AssignManager.instance.ListClear();
 
-        PhotonNetwork.DestroyAll();
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyAll();
+        }
 
         if (AssignManager.instance != null)
         {
