@@ -360,6 +360,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             MaxPlayers = 5,
             EmptyRoomTtl = 0,
             CustomRoomProperties = new Hashtable { { "pw", password } },
+            CleanupCacheOnLeave = true,
+            PlayerTtl = 0,
             CustomRoomPropertiesForLobby = new string[] { "pw" }
         };
 
