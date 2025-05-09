@@ -102,6 +102,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         //flashLight.enabled = true;              
         //lightCollider.enabled = true;
         //isLightOn = true;
+        countLife = 2;
 
         if (photonView.IsMine)
         {
