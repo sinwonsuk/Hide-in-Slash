@@ -227,34 +227,8 @@ public class Peanut : Ghost, IPunObservable
 
     }
 
-
-    [PunRPC]
-    void HandleCaughtPlayer(int viewID)
-    {
-        PhotonView pv = PhotonView.Find(viewID);
-        if (pv == null) return;
-
-        
-        if (pv.gameObject.TryGetComponent<Player>(out var player))
-        {
-            player.CheckPeanut();
-        }
-    }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        PhotonView playerView = collision.GetComponent<PhotonView>();
-
-        if (playerView != null && collision.CompareTag("Player"))
-        {
-            // 모든 클라이언트에게 잡힌 플레이어의 ViewID 전달
-            photonView.RPC("HandleCaughtPlayer", RpcTarget.All, playerView.ViewID);
-        }
-
-
         if (collision.gameObject.CompareTag("PlayerSight") && !isStunned && canBeStunned)
         {
             canBeStunned = false;

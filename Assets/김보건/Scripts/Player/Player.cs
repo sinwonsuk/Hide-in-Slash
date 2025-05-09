@@ -103,7 +103,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         //lightCollider.enabled = true;
         //isLightOn = true;
         countLife = 2;
-        Player.runnerStatuses.Clear();
 
         if (photonView.IsMine)
         {
@@ -377,13 +376,18 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     }
 
-    public void CheckPeanut()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!photonView.IsMine)
-            return;
+        if (!photonView.IsMine) return;
 
+        if (collision.CompareTag("MiniGameTrigger"))
+        {
+            currentTrigger = collision.GetComponent<MiniGameTrigger>();
+            isInMiniGameTrigger = true;
+        }
 
-        if (!isHit && PlayerStateMachine.currentState != escapeState)
+        if (collision.CompareTag("Peanut") && !isHit && PlayerStateMachine.currentState != escapeState)
         {
             countLife--;
             Debug.Log("땅콩 충돌");
@@ -416,52 +420,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             }
         }
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!photonView.IsMine) return;
-
-        if (collision.CompareTag("MiniGameTrigger"))
-        {
-            currentTrigger = collision.GetComponent<MiniGameTrigger>();
-            isInMiniGameTrigger = true;
-        }
-
-        //if (collision.CompareTag("Peanut") && !isHit && PlayerStateMachine.currentState != escapeState)
-        //{
-        //    countLife--;
-        //    Debug.Log("땅콩 충돌");
-        //    StartCoroutine(HitCooldown());
-
-        //    if (countLife <= 0 && !isDead)
-        //    {
-        //        photonView.RPC("PlayScream", RpcTarget.All);
-        //        Debug.Log("너죽음");
-        //        EventManager.TriggerEvent(EventType.PlayerHpZero);
-        //        EventManager.TriggerEvent(EventType.InevntoryOff);
-        //        profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
-
-        //        if (deathPeanutUI != null)
-        //        {
-        //            deathPeanutUI.SetActive(true);
-        //            StartCoroutine(DeathUIDeleteDelay(deathPeanutUI, 3f));
-        //        }
-        //        PlayerStateMachine.ChangeState(deadState);
-        //        //StartCoroutine(GhostDeathSequence(2f));
-        //    }
-        //    else if (countLife == 1)
-        //    {
-        //        photonView.RPC("CaughtByGhost", RpcTarget.AllBuffered);
-        //        if (photonView.IsMine)
-        //            StartCoroutine(UpdateCameraConfinerDelayed());
-        //        EventManager.TriggerEvent(EventType.PlayerHpOne);
-        //        profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.prisonSprite);
-        //        Debug.Log("너한번잡힘 한 번 더 잡히면 너 죽음");
-
-        //    }
-        //}
 
 
         if (collision.CompareTag("PukeGirl") && !isHit && PlayerStateMachine.currentState != escapeState)
@@ -840,10 +798,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         circleLight.enabled = true;
 
         if (isInsidePrison)
-        {
-            photonView.RPC("SetFlashLightInPrison", RpcTarget.Others);
             return;
-        }
 
         if (isDead)
             return;
@@ -870,11 +825,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.enabled = false;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
     }
-    [PunRPC]
-    public void SetFlashLightInPrison()
-    {
-        circleLight.enabled = true;
-    }
 
     [PunRPC]
     public void SetFlashlight(bool turnOn)
@@ -893,10 +843,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             flashLight.enabled = false;
             circleLight.enabled = false;
             lightCollider.enabled = false;
-            return;
-        }
-        else if (isInsidePrison)
-        {
             return;
         }
         isLightOn = turnOn;
