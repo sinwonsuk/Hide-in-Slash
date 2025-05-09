@@ -574,7 +574,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             flashLight.enabled = true;
             lightCollider.enabled = true;
             isInsidePrison = false;
-            photonView.RPC("SetFlashLight", RpcTarget.Others, true);
+            photonView.RPC("SetFlashlight", RpcTarget.Others, true);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
             BroadcastStatus(RunnerStatus.Alive);
             //ExitGames.Client.Photon.Hashtable props = new();
