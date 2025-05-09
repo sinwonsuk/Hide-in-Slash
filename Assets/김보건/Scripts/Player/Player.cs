@@ -103,6 +103,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         //lightCollider.enabled = true;
         //isLightOn = true;
         countLife = 2;
+        Player.runnerStatuses.Clear();
 
         if (photonView.IsMine)
         {
