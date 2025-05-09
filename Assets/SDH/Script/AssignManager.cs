@@ -451,12 +451,12 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
         }
-       
-        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
-        CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
-        Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
-        confiner.BoundingShape2D = col;
-        StartCoroutine(ResetCache());
+
+        //CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
+        //CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
+        //Collider2D col = playerSpawnPoints[spawnIndex].GetComponentInParent<Collider2D>();
+        //confiner.BoundingShape2D = col;
+        //StartCoroutine(ResetCache());
         return true;
     }
 
