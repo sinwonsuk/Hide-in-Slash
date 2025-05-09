@@ -223,44 +223,44 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             {
                 if (roomDic.ContainsKey(room.Name))
                 {
-                    int currentPlayerCount = room.PlayerCount;  // 현재 인원수
-                    int maxPlayers = room.MaxPlayers;           // 최대 인원수
+                    GameObject roomUI = roomDic[room.Name];
 
-
-
-                    if (currentPlayerCount == 0)
+                    if (room.PlayerCount == 0)
                     {
-                        GameObject roomUI = roomDic[room.Name];
-                        roomDic.Remove(room.Name);
-                        Destroy(roomUI);  // UI 오브젝트 파괴
-                        return;
+                        if (roomUI != null)
+                        {
+                            Destroy(roomUI);           // 파괴 요청
+                        }
+
+                        roomDic.Remove(room.Name);     // 딕셔너리에서 제거
+                        roomInfoDict.Remove(room.Name); // 다른 딕셔너리도 정리
+
+                        continue; // 다음 방 처리
                     }
 
-                    roomDic[room.Name].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
-                    roomDic[room.Name].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
+                    if (roomUI != null)
+                    {
+                        var texts = roomUI.GetComponentsInChildren<TextMeshProUGUI>();
+                        if (texts.Length >= 2)
+                        {
+                            texts[0].text = $"{room.PlayerCount}/{room.MaxPlayers}";
+                            texts[1].text = room.Name;
+                        }
+                    }
 
                 }
                 else
                 {
 
                     GameObject newButton = Instantiate(roomButtonPrefab, content);
-                    newButton.transform.SetParent(content, false); // false를 꼭 넣자!
+                    newButton.transform.SetParent(content, false);
 
-                    int currentPlayerCount = room.PlayerCount;  // 현재 인원수
-                    int maxPlayers = room.MaxPlayers;           // 최대 인원수
-
-                    newButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{currentPlayerCount}/{maxPlayers}";  // 인원수 텍스트 설정
-                    newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.Name;
-
-                    //string capturedRoomName = room.Name;
-                    //newButton.GetComponent<Button>().onClick.AddListener(() => {
-                    //    roomClickScript.OnRoomButtonClicked(capturedRoomName); // capturedRoomName 사용
-                    //});
-
-
-
-                    // roomDic.Add(room.Name, newButton);
-                    //roomInfoDict.Add(room, newButton);
+                    var texts = newButton.GetComponentsInChildren<TextMeshProUGUI>();
+                    if (texts.Length >= 2)
+                    {
+                        texts[0].text = $"{room.PlayerCount}/{room.MaxPlayers}";
+                        texts[1].text = room.Name;
+                    }
 
                     roomDic[room.Name] = newButton;
                     roomInfoDict[room.Name] = room;
@@ -616,6 +616,9 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         props["BossType"] = null;
         props["RoleConfirmed"] = null;
 
+
+        roomDic.Clear();
+        roomInfoDict.Clear();
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
