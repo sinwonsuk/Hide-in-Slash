@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
         RollADice,
         Scream,
         Rotte,
+        SfxSetting,
     }
     public enum bgm
     {
