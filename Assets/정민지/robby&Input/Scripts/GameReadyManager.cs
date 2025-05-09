@@ -79,6 +79,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public static GameReadyManager Instance { get; private set; }
 
+    public GameObject assinManager;
+
     private void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -289,6 +291,8 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("✅ 로비에 접속했습니다");
 
+
+
         PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName;
 
@@ -430,7 +434,10 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
             nextProfilePointer = 0;
         }
 
-        AssignManager.instance.gameObject.AddComponent<PhotonView>();
+
+        GameObject gameobject = Instantiate(assinManager);
+
+        gameobject.AddComponent<PhotonView>();
 
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.scar);
 
@@ -608,6 +615,7 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         AssignManager.instance.ListClear();
+       
 
         if (AssignManager.instance != null)
         {

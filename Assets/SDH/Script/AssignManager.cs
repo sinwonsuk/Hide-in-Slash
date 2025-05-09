@@ -51,9 +51,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
         gspIndexs.Clear();
         maingspIndexs.Clear();
         roleIndexs.Clear();
-
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
         PhotonNetwork.Destroy(player);
-
+        instance = null;
         initialized = false;
         pTypes.Clear();
         pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" }; // 플레이어 프리팹 이름
