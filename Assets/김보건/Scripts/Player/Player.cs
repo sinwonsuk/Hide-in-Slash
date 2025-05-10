@@ -1010,10 +1010,15 @@ public class Player : MonoBehaviourPun, IPunObservable
         c.a = 1f;
         sr.color = c;
 
-        flashLight.enabled = true;
         isInvisible = false;
         photonView.RPC("SetTransparencyVisual", RpcTarget.Others, false);
+
+        if (isInsidePrison)
+            return;
+
+        flashLight.enabled = true;
         photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
+
         Debug.Log("투명버프끝");
     }
 
