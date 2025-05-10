@@ -36,6 +36,7 @@ public class WordMiniGame : MiniGame
         {
             Money.instance.addMoney(money);
             Instantiate(minigameSucess);
+            EventManager.TriggerEvent(EventType.ChattingActiveOn);
             DeleteAll();
         }
 

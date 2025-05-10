@@ -19,6 +19,9 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (isUpdate == true)
+            return;
+
         if(Input.GetKeyDown(KeyCode.Return) && isActiveInputWindow==false)
         {
             isActiveInputWindow = true;
@@ -43,16 +46,11 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     }
     public void ActiveOff()
     {
-        if(gameObject == null)
-        {
-            Debug.Log("이거왜 널임?");
-        }
-
-        gameObject.SetActive(false);
+        isUpdate = true;
     }
     public void ActiveOn()
     {
-        gameObject.SetActive(true);
+        isUpdate = false;
     }
 
     public void CreateChat(string _text)
@@ -102,5 +100,7 @@ public class ChattingManager : MonoBehaviourPunCallbacks
     new string name;
 
     UnityAction<string> UnityAction;
+
+    bool isUpdate = false;
 
 }

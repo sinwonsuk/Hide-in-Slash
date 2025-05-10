@@ -97,7 +97,9 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
     {
         if (miniGameManagerInstance != null && isPlaying == true)
         {
-   //         EventManager.TriggerEvent(EventType.LightOn);
+            EventManager.TriggerEvent(EventType.ChattingActiveOn);
+
+            //         EventManager.TriggerEvent(EventType.LightOn);
             RequestDestroy();        
         }
     }

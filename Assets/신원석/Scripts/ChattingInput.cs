@@ -17,6 +17,7 @@ public class ChattingInput : MonoBehaviour
     
     void Start()
     {
+
     }
 
     void Update()

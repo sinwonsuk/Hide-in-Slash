@@ -224,6 +224,7 @@ MonoBehaviour:
   cooldownTime: 40
   skillImage: {fileID: 0}
   blackoutDuration: 2.5
+  isBlackOut: 0
 --- !u!50 &2191573428496805871
 Rigidbody2D:
   serializedVersion: 5
