@@ -1658,7 +1658,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 8336a9854cc3d1e4ba9315e4fbfb1d3c, type: 3}
     m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
@@ -4590,6 +4590,18 @@ PrefabInstance:
       propertyPath: m_text
       value: 10000
       objectReference: {fileID: 0}
+    - target: {fileID: 3075886434825444186, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
+    - target: {fileID: 3075886434825444186, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 817788767588260179, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
+    - target: {fileID: 3075886434825444186, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3433908155586461456, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4600,6 +4612,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3433908155586461456, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396656827752028672, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
+    - target: {fileID: 4396656827752028672, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 817788767588260179, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
+    - target: {fileID: 4396656827752028672, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4640871488309683108, guid: 93ad8191f9f32ab47a8c53c61c11ed47, type: 3}
