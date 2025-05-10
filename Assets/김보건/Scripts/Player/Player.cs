@@ -1299,7 +1299,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         photonView.RPC("RPC_NotifyStatus", RpcTarget.All, myActor, (int)status);
     }
 
-    private void TryCheckEndingLocally()
+    public void TryCheckEndingLocally()
     {
         Debug.Log($"[TryCheck] {PhotonNetwork.LocalPlayer.NickName} - 상태 검사 시작");
 
@@ -1384,16 +1384,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private GameObject GetPartialUI(RunnerStatus status)
-    {
-        return status switch
-        {
-            RunnerStatus.Escaped => someEscapeUI,
-            RunnerStatus.Dead => someDeadUI,
-            RunnerStatus.Prison => prisonEndingUI,
-            _ => null
-        };
-    }
 
     private void ShowLocalUI(GameObject ui)
     {
@@ -1418,18 +1408,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         handler.StartEndSequence(ui, uiDuration);
     }
 
-    private IEnumerator ReturnToLobbyAfter(float sec, GameObject ui)
-    {
-        yield return new WaitForSeconds(sec);
-        if (ui != null)
-            Destroy(ui);
-
-        PhotonNetwork.LoadLevel("RobbyScene");
-
-        yield return new WaitForSeconds(0.1f);
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
-    }
 
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
