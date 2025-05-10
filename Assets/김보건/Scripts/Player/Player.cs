@@ -584,6 +584,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Prison"))
         {
+            isInsidePrison = false;
             if (isBlackoutPlayer)
             {
                 return;
@@ -591,7 +592,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             isLightOn = true;
             flashLight.enabled = true;
             lightCollider.enabled = true;
-            isInsidePrison = false;
             photonView.RPC("SetFlashlight", RpcTarget.Others, true);
             profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.AliveSprite);
             BroadcastStatus(RunnerStatus.Alive);
