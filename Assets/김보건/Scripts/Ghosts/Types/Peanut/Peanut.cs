@@ -192,11 +192,11 @@ public class Peanut : Ghost, IPunObservable
 
     IEnumerator enumerator()
     {
-        EventManager.TriggerEvent(EventType.EntireLightOff);
         EventManager.TriggerEvent(EventType.IsBlackout, true);
+        EventManager.TriggerEvent(EventType.EntireLightOff);
         yield return new WaitForSeconds(blackoutDuration);
-        EventManager.TriggerEvent(EventType.EntireLightOn);
         EventManager.TriggerEvent(EventType.IsBlackout, false);
+        EventManager.TriggerEvent(EventType.EntireLightOn);
     }
    
     public override void UpdateAnimParam(Vector2 input)
