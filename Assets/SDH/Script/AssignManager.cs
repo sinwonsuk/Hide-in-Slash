@@ -421,6 +421,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     public void AssignRole()
     {
+        pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" };
+
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
