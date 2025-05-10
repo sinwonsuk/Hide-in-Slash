@@ -522,7 +522,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
     IEnumerator SendRPCWithDelay(GameObject player, Vector3 pos)
     {
-        yield return new WaitForSeconds(0.1f); // 한 프레임 이상 대기
+        yield return new WaitForSeconds(1.0f); // 한 프레임 이상 대기
         if (player != null)
         {
             player.GetComponent<PhotonView>().RPC("SetStartPosition", RpcTarget.AllBuffered, pos);
