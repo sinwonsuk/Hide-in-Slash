@@ -810,7 +810,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (isInsidePrison)
         {
-            photonView.RPC("SetFlashEntireLight", RpcTarget.Others, true);
             photonView.RPC("SetFlashLightInPrison", RpcTarget.Others);
             return;
         }
