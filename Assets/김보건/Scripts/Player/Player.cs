@@ -106,6 +106,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
+            photonView.RPC("SetStartPosition", RpcTarget.All, StartPos);
+
+
             transform.position = StartPos;
 
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
@@ -1438,7 +1441,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (!PhotonNetwork.InLobby)
             PhotonNetwork.JoinLobby();
     }
-
+    [PunRPC]
+    public void SetStartPosition(Vector2 pos)
+    {
+        transform.position = pos;
+    }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
 
