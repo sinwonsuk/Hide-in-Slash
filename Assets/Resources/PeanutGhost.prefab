@@ -217,7 +217,7 @@ MonoBehaviour:
   allKillUI: {fileID: 0}
   someKillUI: {fileID: 0}
   uiDuration: 5
-  moveSpeed: 7
+  moveSpeed: 6
   isStunned: 0
   headPosition: {fileID: 7588568600932724921}
   exclamationPrefab: {fileID: 7838346147354192671, guid: 3d5c9ed01e7510f4aaae0d2d381862ff, type: 3}

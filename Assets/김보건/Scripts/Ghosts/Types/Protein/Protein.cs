@@ -288,7 +288,7 @@ public class Protein : Ghost, IPunObservable
         UseSkill();
 
         float angle = Random.value > 0.5f ? 90f : 180f;
-        float duration = 5f;
+        float duration = 3f;
 
         Debug.Log($"[프로틴] 화면 회전 스킬 발동! {angle}도");
 
