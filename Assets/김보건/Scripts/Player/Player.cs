@@ -106,10 +106,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
-            photonView.RPC("SetStartPosition", RpcTarget.All, StartPos);
 
 
-            transform.position = StartPos;
+            //transform.position = StartPos;
 
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
