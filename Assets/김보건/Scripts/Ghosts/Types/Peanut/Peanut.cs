@@ -39,6 +39,7 @@ public class Peanut : Ghost, IPunObservable
 
     [Header("블랙아웃 지속시간")]
     [SerializeField] private float blackoutDuration = 5f;
+    public bool isBlackOut = false;
 
     private bool wasMoving = false;
 
@@ -192,8 +193,10 @@ public class Peanut : Ghost, IPunObservable
     IEnumerator enumerator()
     {
         EventManager.TriggerEvent(EventType.EntireLightOff);
+        EventManager.TriggerEvent(EventType.IsBlackout, true);
         yield return new WaitForSeconds(blackoutDuration);
         EventManager.TriggerEvent(EventType.EntireLightOn);
+        EventManager.TriggerEvent(EventType.IsBlackout, false);
     }
    
     public override void UpdateAnimParam(Vector2 input)

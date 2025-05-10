@@ -33,7 +33,7 @@ public enum EventType
     InevntoryOff,
     ChattingOff,   
     PingOff,
-    PingOn,
+    IsBlackout
 }
 
 
