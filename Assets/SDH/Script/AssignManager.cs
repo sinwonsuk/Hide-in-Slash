@@ -503,7 +503,9 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //else
         {
             player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
-            player.transform.position = playerSpawnPoints[spawnIndex].position;
+
+            player.GetComponent<Player>().StartPos = playerSpawnPoints[spawnIndex].position;
+
         }
 
         //CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();

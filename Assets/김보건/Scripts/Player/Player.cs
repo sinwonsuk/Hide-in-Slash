@@ -106,6 +106,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
+            transform.position = StartPos;
+
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
@@ -1562,4 +1564,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     public static Dictionary<int, RunnerStatus> runnerStatuses = new();
     public float uiDuration = 5f;
     private bool hasTriggeredEnding = false;
+
+    public Vector2 StartPos;
 }
