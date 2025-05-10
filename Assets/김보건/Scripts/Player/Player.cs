@@ -76,6 +76,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.RegisterEvent(EventType.HasPrisonKey, HasPrisonKey);
         EventManager.RegisterEvent(EventType.EntireLightOn, TurnOnEntireLight);
         EventManager.RegisterEvent(EventType.EntireLightOff, TurnOffEntireLight);
+
+        EventManager.RegisterEvent(EventType.IsBlackout, CheckInBlackOut);
     }
 
     private void OnDisable()
@@ -92,6 +94,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         EventManager.UnRegisterEvent(EventType.OutEventPlayer, ResumeMovement);
         EventManager.UnRegisterEvent(EventType.EntireLightOn, TurnOnEntireLight);
         EventManager.UnRegisterEvent(EventType.EntireLightOff, TurnOffEntireLight);
+
+        EventManager.UnRegisterEvent(EventType.IsBlackout, CheckInBlackOut);
     }
 
     private void Start()
@@ -580,6 +584,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("Prison"))
         {
+            if (isBlackoutPlayer)
+            {
+                return;
+            }
             isLightOn = true;
             flashLight.enabled = true;
             lightCollider.enabled = true;
@@ -900,6 +908,11 @@ public class Player : MonoBehaviourPun, IPunObservable
     //    flashLight.enabled = true;
     //    circleLight.enabled = true;
     //}
+
+    private void CheckInBlackOut(object data)
+    {
+        isBlackoutPlayer = (bool)data;
+    }
 
     #endregion
 
@@ -1552,6 +1565,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     bool isInMiniGameTrigger = false;
     MiniGameTrigger currentTrigger;
+
+    private bool isBlackoutPlayer = false;
 
     [Header("UI")]
     public GameObject allDeadUI;      // 전원 사망 연출용
