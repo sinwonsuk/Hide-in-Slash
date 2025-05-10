@@ -652,7 +652,7 @@ MonoBehaviour:
   baseSpeed: 5
   boostedSpeed: 8
   boostDuration: 10
-  invisibleDuration: 7
+  invisibleDuration: 20
   hasInvisiblePotion: 0
   invisibleTimer: 0
   flashLight: {fileID: 5033199840657472670}
@@ -679,6 +679,7 @@ MonoBehaviour:
   someEscapeUI: {fileID: 0}
   prisonEndingUI: {fileID: 0}
   uiDuration: 5
+  StartPos: {x: 0, y: 0}
 --- !u!50 &8233132582108959699
 Rigidbody2D:
   serializedVersion: 5

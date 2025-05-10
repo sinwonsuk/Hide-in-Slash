@@ -712,7 +712,7 @@ MonoBehaviour:
   baseSpeed: 5
   boostedSpeed: 8
   boostDuration: 10
-  invisibleDuration: 7
+  invisibleDuration: 20
   hasInvisiblePotion: 0
   invisibleTimer: 0
   flashLight: {fileID: 8665228054635758513}
