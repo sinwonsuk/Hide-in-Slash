@@ -37,16 +37,19 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
     [PunRPC]
     public void Craete(string _text, string senderNickname)
     {
-        Debug.Log($"Craete RPC 호출됨 by {senderNickname} with text: {_text}");
+        StartCoroutine(WaitUntilReadyAndCreate(_text, senderNickname));
+    }
 
-        Debug.Log($"NetworkProperties.instance == null: {NetworkProperties.instance == null}");
-        Debug.Log($"chattingObject == null: {chattingObject == null}");
-        Debug.Log($"chattingObjectParent == null: {chattingObjectParent == null}");
-        Debug.Log($"scrollRect == null: {scrollRect == null}");
-        Debug.Log($"Playername == null: {Playername == null}");
+    private IEnumerator WaitUntilReadyAndCreate(string _text, string senderNickname)
+    {
+        // 모든 필드가 null이 아닌지 대기
+        yield return new WaitUntil(() =>
+            NetworkProperties.instance != null &&
+            chattingObject != null &&
+            chattingObjectParent != null &&
+            scrollRect != null);
 
-
-
+        Debug.Log($"[SAFE] Craete 실행 by {senderNickname} : {_text}");
 
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Role", out object selfRoleObj))
         {
@@ -59,9 +62,7 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
         if (NetworkProperties.instance.GetMonsterStates(Playername) == false)
         {
             GameObject instantiate = Instantiate(chattingObject, chattingObjectParent);
-
             ChattingOutput chattingOutput = instantiate.GetComponent<ChattingOutput>();
-
             chattingOutput.textMeshProUGUI.text = senderNickname + " : " + _text;
 
             Canvas.ForceUpdateCanvases();
