@@ -212,7 +212,17 @@ public class Peanut : Ghost, IPunObservable
             sr.flipX = lastDir.x < 0;
         }
 
-        if(photonView.IsMine)
+        if (isStunned)
+        {
+            if (wasMoving)
+            {
+                SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.PeanutWalking);
+                wasMoving = false;
+            }
+            return;
+        }
+
+        if (photonView.IsMine)
         {
             if(isMoving && !wasMoving)
             {
