@@ -1441,7 +1441,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             PhotonNetwork.JoinLobby();
     }
     [PunRPC]
-    public void SetStartPosition(Vector2 pos)
+    public void SetStartPosition(Vector3 pos)
     {
         transform.position = pos;
     }

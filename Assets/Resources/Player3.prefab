@@ -739,6 +739,7 @@ MonoBehaviour:
   someEscapeUI: {fileID: 0}
   prisonEndingUI: {fileID: 0}
   uiDuration: 5
+  StartPos: {x: 0, y: 0}
 --- !u!50 &7010930786892485481
 Rigidbody2D:
   serializedVersion: 5

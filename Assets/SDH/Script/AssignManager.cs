@@ -9,6 +9,7 @@ using UnityEngine;
 using Photon.Pun.Demo.PunBasics;
 using Unity.VisualScripting;
 using ExitGames.Client.Photon;
+using UnityEngine.UIElements;
 
 public class AssignManager : MonoBehaviourPunCallbacks
 {
@@ -504,7 +505,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
         {
             player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
 
-            player.GetComponent<Player>().StartPos = playerSpawnPoints[spawnIndex].position;
+
+            StartCoroutine(SendRPCWithDelay(player, playerSpawnPoints[spawnIndex].position));
 
         }
 
@@ -514,6 +516,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //confiner.BoundingShape2D = col;
         //StartCoroutine(ResetCache());
         return true;
+    }
+
+    
+
+    IEnumerator SendRPCWithDelay(GameObject player, Vector3 pos)
+    {
+        yield return new WaitForSeconds(0.1f); // 한 프레임 이상 대기
+        if (player != null)
+        {
+            player.GetComponent<PhotonView>().RPC("SetStartPosition", RpcTarget.AllBuffered, pos);
+        }
     }
 
     IEnumerator ResetCache()
