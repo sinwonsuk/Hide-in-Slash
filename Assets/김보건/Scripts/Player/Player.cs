@@ -342,15 +342,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             lightObject.localRotation = Quaternion.Euler(0f, 0f, lightAngle);
         }
 
-        // 테스트용
-        if (photonView.IsMine && PlayerStateMachine.currentState != deadState && Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log("플레이어죽음");
-            EventManager.TriggerEvent(EventType.PlayerHpZero);
-            PlayerStateMachine.ChangeState(deadState);
-            isDead = true;
-            profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
-        }
+        //// 테스트용
+        //if (photonView.IsMine && PlayerStateMachine.currentState != deadState && Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Debug.Log("플레이어죽음");
+        //    EventManager.TriggerEvent(EventType.PlayerHpZero);
+        //    PlayerStateMachine.ChangeState(deadState);
+        //    isDead = true;
+        //    profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
+        //}
     }
 
 
