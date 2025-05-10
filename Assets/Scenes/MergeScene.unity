@@ -260,6 +260,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4840795530049151070}
     - target: {fileID: 89624141252478646, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
+      propertyPath: chattingManager
+      value: 
+      objectReference: {fileID: 7401871577602021426}
+    - target: {fileID: 89624141252478646, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
       propertyPath: chattingObjectParent
       value: 
       objectReference: {fileID: 1124969392013547871}
@@ -304,6 +308,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4840795530049151070}
     - target: {fileID: 2753611684780489990, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
+      propertyPath: chattingManager
+      value: 
+      objectReference: {fileID: 7401871577602021426}
+    - target: {fileID: 2753611684780489990, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
       propertyPath: chattingObjectParent
       value: 
       objectReference: {fileID: 1124969392013547871}
@@ -315,6 +323,10 @@ PrefabInstance:
       propertyPath: scrollRect
       value: 
       objectReference: {fileID: 4840795530049151070}
+    - target: {fileID: 3066553789264860984, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
+      propertyPath: chattingManager
+      value: 
+      objectReference: {fileID: 7401871577602021426}
     - target: {fileID: 3066553789264860984, guid: d63065a623eac5b4e855aa1b8564fc16, type: 3}
       propertyPath: chattingObjectParent
       value: 
@@ -619,6 +631,7 @@ MonoBehaviour:
   chattingObjectParent: {fileID: 1124969392013547871}
   chattingObject: {fileID: 4233107585197555146, guid: 7b18835c9f11f274ab30b1a30ba178c4, type: 3}
   text: "\uBC1C\uC804\uAE30 \uB3CC\uB9AC\uB294\uC911 "
+  chattingManager: {fileID: 7401871577602021426}
 --- !u!1 &50963585
 GameObject:
   m_ObjectHideFlags: 0
@@ -4523,6 +4536,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
+--- !u!114 &7401871577602021426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8508964728633391768, guid: 771d27cd3ec87c24e9ea171591f6a4b8, type: 3}
+  m_PrefabInstance: {fileID: 7401871577602021425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10399d54bb18544ebfd19d07dcf50e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7453859975788668582
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,22 +15,8 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
 
 
     public void CreateChat(string _text)
-    {
-        Debug.Log("CreateChat 호출됨");
-
-
-        if (photonView != null)
-            Debug.Log("photonView 있음");
-        else
-            Debug.LogWarning("photonView 없음!");
-
+    {      
         string nickname = PhotonNetwork.NickName;
-
-        if(nickname == null)
-        {
-            Debug.Log(nickname);
-        }
-
 
         photonView.RPC("Craete", RpcTarget.All, _text, nickname);
     }
@@ -72,7 +58,7 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        CreateChat(text);
+        chattingManager.wordhandler.Invoke(text);
     }
 
     [SerializeField]
@@ -88,4 +74,7 @@ public class PingClick : MonoBehaviourPunCallbacks, IPointerClickHandler
     string text;
 
     string Playername;
+
+    [SerializeField]
+    ChattingManager chattingManager;
 }

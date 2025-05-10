@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ChattingManager : MonoBehaviourPunCallbacks
@@ -99,4 +100,7 @@ public class ChattingManager : MonoBehaviourPunCallbacks
 
     bool isActiveInputWindow;
     new string name;
+
+    UnityAction<string> UnityAction;
+
 }
