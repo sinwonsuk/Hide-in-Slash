@@ -11,8 +11,6 @@ public class Store : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("isPlayerInRange: " + isPlayerInRange);
-
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && isCheck ==true)
         {
             isCheck = false;
