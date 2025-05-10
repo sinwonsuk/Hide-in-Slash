@@ -272,8 +272,12 @@ public class Peanut : Ghost, IPunObservable
 	private IEnumerator StunnedTime(float time)
     {
         isStunned = true;
+        SoundManager.GetInstance().Sfx_Stop(SoundManager.sfx.PeanutWalking);
+        wasMoving = false;
+
         ghostStateMachine.ChangeState(stunnedState);
         yield return new WaitForSeconds(time);
+
         isStunned = false;
         ghostStateMachine.ChangeState(idleState);
 
