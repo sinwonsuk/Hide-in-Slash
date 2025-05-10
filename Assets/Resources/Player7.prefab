@@ -58,6 +58,7 @@ MonoBehaviour:
   spriteObject: {fileID: 9139093811081375807}
   lightObject: {fileID: 8647247377837554913}
   playerNickName: {fileID: 1563926410423676207}
+  lerpSpeed: 20
   profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
@@ -102,7 +103,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0

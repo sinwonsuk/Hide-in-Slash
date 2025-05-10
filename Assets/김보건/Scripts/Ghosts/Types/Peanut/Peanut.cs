@@ -125,8 +125,8 @@ public class Peanut : Ghost, IPunObservable
         else
         {
             //이동보간
-            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
-
+            //transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
+            
             anim.SetBool("IsMoving", networkedIsMoving);
             anim.SetFloat("DirX", networkedDirX);
             anim.SetFloat("DirY", networkedDirY);
@@ -151,7 +151,7 @@ public class Peanut : Ghost, IPunObservable
         }
         else
         {
-            rb.linearVelocity = networkedVelocity; 
+           transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.fixedDeltaTime * lerpSpeed);
         }
     }
     public void CooldownSkill()
