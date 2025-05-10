@@ -706,6 +706,7 @@ MonoBehaviour:
   spriteObject: {fileID: 7700676960411733606}
   lightObject: {fileID: 5745120180975334999}
   playerNickName: {fileID: 2376387361911119043}
+  lerpSpeed: 20
   profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
@@ -732,6 +733,13 @@ MonoBehaviour:
   deathPeanutUI: {fileID: 0}
   deathPuKeGirlUI: {fileID: 0}
   isDead: 0
+  allDeadUI: {fileID: 0}
+  someDeadUI: {fileID: 0}
+  allEscapeUI: {fileID: 0}
+  someEscapeUI: {fileID: 0}
+  prisonEndingUI: {fileID: 0}
+  uiDuration: 5
+  StartPos: {x: 0, y: 0}
 --- !u!50 &7010930786892485481
 Rigidbody2D:
   serializedVersion: 5
@@ -744,7 +752,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0

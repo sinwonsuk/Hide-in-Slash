@@ -287,7 +287,12 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings(); //접속
 
-    public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby(); //대기실에 조인
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 20;
+        PhotonNetwork.JoinLobby();
+    }
 
     public override void OnJoinedLobby()
     {

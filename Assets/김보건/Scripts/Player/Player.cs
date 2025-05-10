@@ -106,6 +106,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
+
+
+            //transform.position = StartPos;
+
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
@@ -324,8 +328,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         else
         {
             //이동보간
-            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
-            rb.linearVelocity = networkedVelocity;
+           
 
             anim.SetBool("IsMoving", networkedIsMoving);
             anim.SetFloat("DirX", networkedDirX);
@@ -353,9 +356,16 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void FixedUpdate()
     {
-        PlayerStateMachine.currentState.FixedUpdate();
-        Vector3 pos = transform.position;
-        //transform.position = new Vector3(pos.x, pos.y, pos.y);
+        if(photonView.IsMine)
+        {
+            PlayerStateMachine.currentState.FixedUpdate();
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.fixedDeltaTime * lerpSpeed);
+        }
+
+            Vector3 pos = transform.position;
     }
 
     public void UpdateAnimParam(Vector2 input)
@@ -1407,8 +1417,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         EndingHandler handler = handlerGO.AddComponent<EndingHandler>();
         handler.StartEndSequence(ui, uiDuration);
     }
-
-
+    [PunRPC]
+    public void SetStartPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 
     public void AnimationTrigger() => PlayerStateMachine.currentState.AnimationFinishTrigger();
 
@@ -1418,6 +1431,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private Vector3 networkedPosition;
     private Vector3 networkedVelocity;
+    [SerializeField]
     private float lerpSpeed = 10f;
     private bool networkedIsMoving;
     private float networkedDirX;
@@ -1533,4 +1547,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     public static Dictionary<int, RunnerStatus> runnerStatuses = new();
     public float uiDuration = 5f;
     private bool hasTriggeredEnding = false;
+
+    public Vector2 StartPos;
 }

@@ -322,6 +322,7 @@ MonoBehaviour:
   spriteObject: {fileID: 5712273926535718959}
   lightObject: {fileID: 9209552672692172944}
   playerNickName: {fileID: 7472204896828971350}
+  lerpSpeed: 20
   profileSlotManager: {fileID: 0}
   moveSpeed: 5
   baseSpeed: 5
@@ -354,6 +355,7 @@ MonoBehaviour:
   someEscapeUI: {fileID: 0}
   prisonEndingUI: {fileID: 0}
   uiDuration: 5
+  StartPos: {x: 0, y: 0}
 --- !u!50 &362624439115721499
 Rigidbody2D:
   serializedVersion: 5
@@ -366,7 +368,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0

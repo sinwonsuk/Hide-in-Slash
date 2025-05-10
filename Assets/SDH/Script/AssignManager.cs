@@ -9,6 +9,7 @@ using UnityEngine;
 using Photon.Pun.Demo.PunBasics;
 using Unity.VisualScripting;
 using ExitGames.Client.Photon;
+using UnityEngine.UIElements;
 
 public class AssignManager : MonoBehaviourPunCallbacks
 {
@@ -421,6 +422,8 @@ public class AssignManager : MonoBehaviourPunCallbacks
     }
     public void AssignRole()
     {
+        pTypes = new List<string> { "Player", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" };
+
         Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
         //string[] monsterTypes = { "PeanutGhost", "PeanutGhost", "PeanutGhost" };
 
@@ -501,7 +504,10 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //else
         {
             player = PhotonNetwork.Instantiate(role, playerSpawnPoints[spawnIndex].position, Quaternion.identity);
-            player.transform.position = playerSpawnPoints[spawnIndex].position;
+
+
+            StartCoroutine(SendRPCWithDelay(player, playerSpawnPoints[spawnIndex].position));
+
         }
 
         //CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
@@ -510,6 +516,17 @@ public class AssignManager : MonoBehaviourPunCallbacks
         //confiner.BoundingShape2D = col;
         //StartCoroutine(ResetCache());
         return true;
+    }
+
+    
+
+    IEnumerator SendRPCWithDelay(GameObject player, Vector3 pos)
+    {
+        yield return new WaitForSeconds(1.0f); // 한 프레임 이상 대기
+        if (player != null)
+        {
+            player.GetComponent<PhotonView>().RPC("SetStartPosition", RpcTarget.AllBuffered, pos);
+        }
     }
 
     IEnumerator ResetCache()

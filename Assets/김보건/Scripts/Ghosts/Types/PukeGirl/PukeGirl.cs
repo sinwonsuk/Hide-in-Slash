@@ -85,7 +85,7 @@ public class PukeGirl : Ghost, IPunObservable
         else
         {
             //이동보간
-            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.deltaTime * lerpSpeed);
+         
 
             anim.SetBool("IsMoving", networkedIsMoving);
             anim.SetFloat("DirX", networkedDirX);
@@ -169,6 +169,11 @@ public class PukeGirl : Ghost, IPunObservable
         }
     }
 
+    [PunRPC]
+    public void SetStartPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 
 
     protected override void FixedUpdate()
@@ -179,7 +184,7 @@ public class PukeGirl : Ghost, IPunObservable
         }
         else
         {
-            rb.linearVelocity = networkedVelocity;
+            transform.position = Vector3.Lerp(transform.position, networkedPosition, Time.fixedDeltaTime * lerpSpeed);
         }
     }
 
