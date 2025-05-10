@@ -236,6 +236,11 @@ public class Peanut : Ghost, IPunObservable
         }
 
     }
+    [PunRPC]
+    public void SetStartPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -169,6 +169,11 @@ public class PukeGirl : Ghost, IPunObservable
         }
     }
 
+    [PunRPC]
+    public void SetStartPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 
 
     protected override void FixedUpdate()
