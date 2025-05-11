@@ -46,12 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameEntries:
   - state: 0
-    prefab: {fileID: 5814797910505414904, guid: c1d20d0a2980be742bbc5ad6316564d1, type: 3}
+    prefab: {fileID: 4398111624052521353, guid: 67c9e7223c7fbf847aca877b2ef37398, type: 3}
   - state: 1
-    prefab: {fileID: 7514383747277919206, guid: a7509ca4fef090f41ad0c143d786a4ed, type: 3}
+    prefab: {fileID: 4398111624052521353, guid: 67c9e7223c7fbf847aca877b2ef37398, type: 3}
   - state: 2
-    prefab: {fileID: 4813374171957253981, guid: 83e4eb9be43ec2949bdc529077a508b4, type: 3}
+    prefab: {fileID: 4398111624052521353, guid: 67c9e7223c7fbf847aca877b2ef37398, type: 3}
   - state: 3
-    prefab: {fileID: 2391884887687177081, guid: cad1b989c59bc0f4590d0bbac113d9e8, type: 3}
+    prefab: {fileID: 4398111624052521353, guid: 67c9e7223c7fbf847aca877b2ef37398, type: 3}
   - state: 4
     prefab: {fileID: 4398111624052521353, guid: 67c9e7223c7fbf847aca877b2ef37398, type: 3}
