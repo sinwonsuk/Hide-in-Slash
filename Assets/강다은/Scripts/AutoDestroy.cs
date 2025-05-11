@@ -6,7 +6,8 @@ public class AutoDestroy : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, destroyTime);
+        if(CompareTag("Dice"))
+            Destroy(gameObject, destroyTime);
     }
 
 }
