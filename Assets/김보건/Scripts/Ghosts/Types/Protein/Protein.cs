@@ -414,6 +414,10 @@ public class Protein : Ghost, IPunObservable
                     case GhostStateType.Move:
                         ghostStateMachine.ChangeState(moveState);
                         break;
+                    case GhostStateType.ProteinSkill:
+                        ghostStateMachine.ChangeState(useSkillState);
+                        break;
+
                 }
             }
         }

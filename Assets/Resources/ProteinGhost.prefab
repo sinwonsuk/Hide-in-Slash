@@ -441,6 +441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9193af9d2214247b89bd3eff0215fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allKillUI: {fileID: 0}
+  someKillUI: {fileID: 0}
+  uiDuration: 5
   moveSpeed: 6
   ProteinDuration: 10
   ProteincooldownDuration: 5
