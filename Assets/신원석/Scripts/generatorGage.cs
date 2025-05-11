@@ -56,5 +56,5 @@ public class generatorGage : MonoBehaviourPunCallbacks
 
     Generator generator;
 
-    float durationTime = 30.0f;
+    float durationTime = 45.0f;
 }
