@@ -80,7 +80,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         }
     }
 
-    private void OpenMiniGame()
+    public void OpenMiniGame()
     {
         if (miniGameManager != null)
         {
@@ -98,8 +98,6 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         if (miniGameManagerInstance != null && isPlaying == true)
         {
             EventManager.TriggerEvent(EventType.ChattingActiveOn);
-
-            //         EventManager.TriggerEvent(EventType.LightOn);
             RequestDestroy();        
         }
     }
@@ -134,7 +132,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
 
 
     bool isPlaying = false;
-    bool isPlayerInRange = false;
+    public bool isPlayerInRange { get; set; } = false;
 
     [SerializeField]
     GameObject miniGameManager;
