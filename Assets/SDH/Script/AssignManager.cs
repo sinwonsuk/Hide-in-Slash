@@ -213,7 +213,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
             pspIndexs = MakeRandomValues(PhotonNetwork.PlayerList.Length, playerSpawnPoints.Count); // 플레이어 스폰포인트 섞기
             espIndexs = MakeRandomValues(23, eventSpawnPoints.Count); // 여러 이벤트 스폰포인트 섞기
             gspIndexs = MakeRandomValues(3, generatorSpawnPoints.Count); // 발전기 스폰포인트 섞기
-            maingspIndexs = MakeRandomValues(2, maingeneratorSpawnPoints.Count); // 발전기 스폰포인트 섞기
+            maingspIndexs = MakeRandomValues(3, maingeneratorSpawnPoints.Count); // 발전기 스폰포인트 섞기
             InitializeMiniGames(); // 미니게임 뿌리기
             InitializeGenerators(); // 발전기 뿌리기
             AssignSpawnPoint(); // 각 플레이어 스폰포인트 할당
