@@ -583,7 +583,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (collision.CompareTag("MiniGameTrigger"))
         {
-            //collision.gameObject.GetComponent<MiniGameTrigger>().Clo
+            collision.gameObject.GetComponent<MiniGameTrigger>().CloseMiniGame();
             isInMiniGameTrigger = false;
             currentTrigger = null;
             isMiniGameCheck = false;
