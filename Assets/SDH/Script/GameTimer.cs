@@ -7,7 +7,9 @@ using System.Collections; // Photon 관련 Room Properties용
 
 public class GameTimer : MonoBehaviourPunCallbacks
 {
-    private float countdownTime = 600f;
+    public static float TimeRemaining { get; private set; }
+
+    private float countdownTime = 40f;
     private double startTime;
     private bool isEnded = false;
 
@@ -15,6 +17,8 @@ public class GameTimer : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        TimeRemaining = countdownTime;
+
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.Help);
 
         StartCoroutine(enumerator());
@@ -57,6 +61,8 @@ public class GameTimer : MonoBehaviourPunCallbacks
 
         if (timeRemaining < 0)
             timeRemaining = 0;
+
+        TimeRemaining = timeRemaining; // player에서  사용할 수 있도록
 
 
         int minutes = Mathf.FloorToInt(timeRemaining / 60);

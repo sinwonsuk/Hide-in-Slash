@@ -31,6 +31,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
+
         if (photonView.IsMine)
             PhotonNetwork.LocalPlayer.TagObject = this;
         anim = GetComponentInChildren<Animator>();
@@ -103,22 +104,15 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         PlayerStateMachine.Initialize(idleState);
 
-        //flashLight.enabled = true;              
-        //lightCollider.enabled = true;
-        //isLightOn = true;
-        countLife = 2;
-        Player.runnerStatuses.Clear();
+        countLife = 2;  
 
         if (photonView.IsMine)
         {
 
-
-            //transform.position = StartPos;
-
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
-
+            BroadcastStatus(RunnerStatus.Alive);
             photonView.RPC("SetFlashlight", RpcTarget.Others, true);
 
             GameObject playerCanvas = GameObject.Find("PlayerCanvas");
@@ -345,6 +339,28 @@ public class Player : MonoBehaviourPun, IPunObservable
             transform.localScale = scale;
 
             lightObject.localRotation = Quaternion.Euler(0f, 0f, lightAngle);
+        }
+
+        // 타이머 0 체크+ Alive일 경우만 죽음
+        if (!isDead && GameTimer.TimeRemaining <= 0f)
+        {
+            // 내 상태 확인
+            int myActor = PhotonNetwork.LocalPlayer.ActorNumber;
+            // 내 상태가 아직 등록되지 않았는지 확인
+            if (!runnerStatuses.TryGetValue(myActor, out RunnerStatus myStatus))
+            {
+                Debug.LogWarning("[타이머 종료] 내 상태가 아직 등록되지 않았음. 대기");
+                return;
+            }
+
+            if (myStatus == RunnerStatus.Alive)
+            {
+                Debug.Log("[타이머 종료] Player에서 직접 사망 처리");
+                EventManager.TriggerEvent(EventType.PlayerHpZero);
+                PlayerStateMachine.ChangeState(deadState);
+                isDead = true;
+                profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.deadSprite);
+            }
         }
 
         //// 테스트용
@@ -1439,6 +1455,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             var fade = black.GetComponent<playerDeath>();
             if (fade) fade.TriggerFade();
         }
+
+        Player.runnerStatuses.Clear();
 
         // 로비건너가는 핸들러
         GameObject handlerGO = new GameObject("EndingHandler");

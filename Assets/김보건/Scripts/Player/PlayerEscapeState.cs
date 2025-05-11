@@ -72,7 +72,7 @@ public class PlayerEscapeState : PlayerState
                     {
                         playerDeath fadeEffect = black.GetComponent<playerDeath>();
                         if (fadeEffect != null)
-                            fadeEffect.TriggerFade(); 
+                            fadeEffect.TriggerFade();
                     }
                 }
 
@@ -99,6 +99,9 @@ public class PlayerEscapeState : PlayerState
         {
             Object.Destroy(player.ExitDoorEscapeUI);
         }
+
+        Player.runnerStatuses.Clear();
+
         if (player.photonView.IsMine)
         {
             PhotonNetwork.Destroy(player.gameObject);
