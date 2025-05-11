@@ -7,6 +7,7 @@ public class CreativeRoom : MonoBehaviour
 
     public void OnClickCreateRoomButton()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         createRoomPopup.SetActive(true);
     }
 
