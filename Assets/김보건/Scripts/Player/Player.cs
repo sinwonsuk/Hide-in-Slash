@@ -233,9 +233,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             PlayerStateMachine.currentState.Update();
 
-            if (isInMiniGameTrigger && Input.GetKeyDown(KeyCode.E))
+            if (isInMiniGameTrigger && Input.GetKeyDown(KeyCode.E) && isMiniGameCheck ==false)
             {
                 currentTrigger.TryOpenMiniGame(photonView);
+                isMiniGameCheck = true;
             }
 
 
@@ -584,6 +585,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             isInMiniGameTrigger = false;
             currentTrigger = null;
+            isMiniGameCheck = false;
         }
 
         if (collision.CompareTag("PrisonDoor"))
@@ -1595,6 +1597,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     public static Dictionary<int, RunnerStatus> runnerStatuses = new();
     public float uiDuration = 5f;
     private bool hasTriggeredEnding = false;
-
     public Vector2 StartPos;
+
+    bool isMiniGameCheck = false;
+
 }
