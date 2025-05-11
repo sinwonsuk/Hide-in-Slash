@@ -362,7 +362,7 @@ public class AssignManager : MonoBehaviourPunCallbacks
 
             generators.Add(ins);
         }
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             int index = maingspIndexs[i];
             Transform spawnPoint = maingeneratorSpawnPoints[index];
