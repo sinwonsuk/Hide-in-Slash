@@ -93,7 +93,7 @@ public class MiniGameTrigger : MonoBehaviourPunCallbacks
         }
     }
 
-    private void CloseMiniGame()
+    public void CloseMiniGame()
     {
         if (miniGameManagerInstance != null && isPlaying == true)
         {
