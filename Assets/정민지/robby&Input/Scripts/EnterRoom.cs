@@ -16,6 +16,7 @@ public class EnterRoom : MonoBehaviour
 
     public void OnJoinButtonClicked()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         if (string.IsNullOrEmpty(selectedRoomName))
         {
             Debug.LogError("Room name is null or empty.");

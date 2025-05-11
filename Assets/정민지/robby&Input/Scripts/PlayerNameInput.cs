@@ -45,6 +45,7 @@ public class PlayerNameInput : MonoBehaviour
 
     public void SavePlayerName()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         string playerName = nameInputField.text;
 
         GameReadyManager.Instance.Test(playerName);

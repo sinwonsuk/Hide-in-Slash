@@ -48,7 +48,9 @@ public class SettingRoom : MonoBehaviour
 
     public void AddRoom()
     {
+
         Time.timeScale = 1;
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         string roomName = roomNameInput.text;
         string password = roomPasswordInput.text;
 
