@@ -33,13 +33,14 @@ public class Protein : Ghost, IPunObservable
 
     protected override void Start()
     {
+        originalScale = transform.localScale;
         if (photonView.IsMine)
         {
             base.Start();
             GameObject _skillImage = GameObject.Find("Ghost_SkillCoolTime_Sprite");
             skillImage = _skillImage.GetComponent<Image>();
             originalSpeed = moveSpeed;
-            originalScale = transform.localScale;
+           
             CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
             if (cam != null)
                 cam.Follow = transform;
@@ -92,16 +93,16 @@ public class Protein : Ghost, IPunObservable
                 
             }
 
-			//diceTimer += Time.deltaTime;
+            diceTimer += Time.deltaTime;
 
-			//if (diceTimer >= diceCoolTime)
-			//{
-			//	diceTimer = 0f;
-   //             int roll = GetWeightedDiceRoll();
-			//	Debug.Log("프로틴 주사위 굴리기: " + roll);
-   //             SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
-   //             photonView.RPC("RollDice", RpcTarget.All, roll);
-			//}
+            if (diceTimer >= diceCoolTime)
+            {
+                diceTimer = 0f;
+                int roll = GetWeightedDiceRoll();
+                Debug.Log("프로틴 주사위 굴리기: " + roll);
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
+                photonView.RPC("RollDice", RpcTarget.All, roll);
+            }
 
             UpdateSkillCooldown();
         }
