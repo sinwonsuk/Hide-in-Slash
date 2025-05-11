@@ -9,7 +9,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
 {
     public static float TimeRemaining { get; private set; }
 
-    private float countdownTime = 40f;
+    private float countdownTime = 720f;
     private double startTime;
     private bool isEnded = false;
 
