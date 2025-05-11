@@ -18,7 +18,6 @@ public class WordMiniGame : MiniGame
 { 
     void Start()
     {
-
         wordhandler = GetInputText;
 
         rectTransform = GetComponent<RectTransform>();
@@ -26,7 +25,6 @@ public class WordMiniGame : MiniGame
         StartCoroutine(StartWordMiniGame());
 
         EventManager.TriggerEvent(EventType.ChattingActiveOff);
-
     }
 
     // Update is called once per frame
@@ -49,15 +47,20 @@ public class WordMiniGame : MiniGame
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
-        wordList.Remove(collision.gameObject);                          
+        if(collision.CompareTag("Ward"))
+        {
+            Destroy(collision.gameObject);
+            wordList.Remove(collision.gameObject);
+        }
+
+                    
     }
 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(collision.gameObject);
-        wordList.Remove(collision.gameObject);
+        //Destroy(collision.gameObject);
+        //wordList.Remove(collision.gameObject);
     }
 
     public void GetInputText(string _text)

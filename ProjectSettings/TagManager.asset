@@ -45,6 +45,7 @@ TagManager:
   - maingsp
   - Undefined
   - Dice
+  - Ward
   layers:
   - Default
   - TransparentFX
@@ -66,7 +67,7 @@ TagManager:
   - Ghost
   - DeadPlayer
   - PrisonColl
-  - 
+  - FlashLight
   - 
   - 
   - 

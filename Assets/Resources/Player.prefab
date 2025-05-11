@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 5033199840657472670}
   - component: {fileID: 2420036142113666116}
   - component: {fileID: 3152072992325133386}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: FlashLight
   m_TagString: PlayerSight
   m_Icon: {fileID: 0}
