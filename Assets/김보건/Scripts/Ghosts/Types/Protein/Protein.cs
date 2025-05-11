@@ -92,16 +92,16 @@ public class Protein : Ghost, IPunObservable
                 
             }
 
-			diceTimer += Time.deltaTime;
+			//diceTimer += Time.deltaTime;
 
-			if (diceTimer >= diceCoolTime)
-			{
-				diceTimer = 0f;
-                int roll = GetWeightedDiceRoll();
-				Debug.Log("프로틴 주사위 굴리기: " + roll);
-                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
-                photonView.RPC("RollDice", RpcTarget.All, roll);
-			}
+			//if (diceTimer >= diceCoolTime)
+			//{
+			//	diceTimer = 0f;
+   //             int roll = GetWeightedDiceRoll();
+			//	Debug.Log("프로틴 주사위 굴리기: " + roll);
+   //             SoundManager.GetInstance().SfxPlay(SoundManager.sfx.RollADice, false, 0.5f);
+   //             photonView.RPC("RollDice", RpcTarget.All, roll);
+			//}
 
             UpdateSkillCooldown();
         }
