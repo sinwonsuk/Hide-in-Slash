@@ -280,29 +280,29 @@ public class Protein : Ghost, IPunObservable
         camTransform.rotation = originalRot;
     }
 
-    //[PunRPC]
-    //private void DrinkProtein()
-    //{
-    //    if (!photonView.IsMine) return;
+    [PunRPC]
+    private void DrinkProtein()
+    {
+        if (!photonView.IsMine) return;
 
-    //    UseSkill();
+        UseSkill();
 
-    //    float angle = Random.value > 0.5f ? 90f : 180f;
-    //    float duration = 3f;
+        float angle = Random.value > 0.5f ? 90f : 180f;
+        float duration = 3f;
 
-    //    Debug.Log($"[프로틴] 화면 회전 스킬 발동! {angle}도");
+        Debug.Log($"[프로틴] 화면 회전 스킬 발동! {angle}도");
 
-    //    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
-    //    {
-    //        PhotonView pv = obj.GetComponent<PhotonView>();
-    //        if (pv != null)
-    //        {
-    //            pv.RPC("RotateSurvivorScreen", RpcTarget.All, angle, duration);
-    //        }
-    //    }
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PhotonView pv = obj.GetComponent<PhotonView>();
+            if (pv != null)
+            {
+                pv.RPC("RotateSurvivorScreen", RpcTarget.All, angle, duration);
+            }
+        }
 
-    //    ghostStateMachine.ChangeState(useSkillState);
-    //}
+        ghostStateMachine.ChangeState(useSkillState);
+    }
 
     [PunRPC]
     public void EndDrinkProtein()
