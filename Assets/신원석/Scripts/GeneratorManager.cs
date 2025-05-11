@@ -15,7 +15,7 @@ public class GeneratorManager : MonoBehaviourPunCallbacks
     void Update()
     {
 
-        if (generatorCount == 5 && isCheck ==false && PhotonNetwork.IsMasterClient)
+        if (generatorCount == 6 && isCheck ==false && PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("BroadcastSuecss", RpcTarget.All);       
         }
