@@ -33,6 +33,7 @@ public class SceneManager : MonoBehaviour
 	}
     private void Start()
     {
+        Screen.SetResolution(1920, 1080, false);
         SoundManager.GetInstance().PlayBgm(SoundManager.bgm.PleaseFind);
     }
 
