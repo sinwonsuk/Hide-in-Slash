@@ -83,7 +83,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        Screen.SetResolution(960, 540, false);
 
         if (Instance == null)
         {
