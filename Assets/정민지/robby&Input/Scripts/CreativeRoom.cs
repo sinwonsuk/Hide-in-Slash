@@ -11,9 +11,4 @@ public class CreativeRoom : MonoBehaviour
         createRoomPopup.SetActive(true);
     }
 
-    public void OnClickEnterRoom()
-    {
-        Instantiate(pw);
-    }
-
 }

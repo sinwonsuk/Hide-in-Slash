@@ -478,9 +478,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
-    //public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //방 생성
-
-    // public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } //랜덤 참가
 
     private IEnumerator InitializeSlotStatesAfterSceneLoad()
     {
@@ -515,7 +512,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
                     slot.SetProfileImage((int)profileIdx);
             }
         }
-        RoomRenewal();  //채팅 메시지
 
         foreach (var kvp in slotMap)
         {
@@ -721,14 +717,6 @@ public class GameReadyManager : MonoBehaviourPunCallbacks
 
             AssignManager.instance.StartGame();
         }
-    }
-
-    void RoomRenewal()
-    {
-        //ListText.text = "";
-        //for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-        //    ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        //RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
 
     private void AssignProfileIndex(RealtimePlayer p)
