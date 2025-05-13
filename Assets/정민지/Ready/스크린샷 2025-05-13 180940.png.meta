@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bd404df48045a494aaac593d55dcf069
+guid: f2764dd8e8cec854ca1076a1d1c902de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3213894890664657467
-    second: CreativeRoom_Sprite_0
+      213: -6388600617837708740
+    second: "\uC2A4\uD06C\uB9B0\uC0F7 2025-05-13 180940_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 7
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CreativeRoom_Sprite_0
+      name: "\uC2A4\uD06C\uB9B0\uC0F7 2025-05-13 180940_0"
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 93
-        height: 57
+        x: 8
+        y: 6
+        width: 216
+        height: 215
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b328287006c0a9c20800000000000000
-      internalID: 3213894890664657467
+      spriteID: c3a31f916912757a0800000000000000
+      internalID: -6388600617837708740
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CreativeRoom_Sprite_0: 3213894890664657467
+      "\uC2A4\uD06C\uB9B0\uC0F7 2025-05-13 180940_0": -6388600617837708740
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

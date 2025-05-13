@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bd404df48045a494aaac593d55dcf069
+guid: 487b05a8822af6e4d979f2971aa64db3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3213894890664657467
-    second: CreativeRoom_Sprite_0
+      213: -1771479615761153780
+    second: "\uC2A4\uD06C\uB9B0\uC0F7 2025-05-13 175933_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 7
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CreativeRoom_Sprite_0
+      name: "\uC2A4\uD06C\uB9B0\uC0F7 2025-05-13 175933_0"
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 93
-        height: 57
+        x: 21
+        y: 14
+        width: 216
+        height: 215
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b328287006c0a9c20800000000000000
-      internalID: 3213894890664657467
+      spriteID: c0106b7dca07a67e0800000000000000
+      internalID: -1771479615761153780
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      CreativeRoom_Sprite_0: 3213894890664657467
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
