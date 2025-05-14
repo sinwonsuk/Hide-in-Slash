@@ -25,13 +25,14 @@ public class Ghost : MonoBehaviourPun
                 if (allDeath != null)
                     allKillUI = allDeath.gameObject;
 
-            }
+                Transform noneKill = bossCanvas.transform.Find("BossLose");
+                if (noneKill != null)
+                    noneKillUI = noneKill.gameObject;
 
-            if (bossCanvas != null)
-            {
                 Transform someDeath = bossCanvas.transform.Find("DeathAndEscape");
                 if (someDeath != null)
                     someKillUI = someDeath.gameObject;
+
             }
         }
     }
@@ -165,17 +166,27 @@ public class Ghost : MonoBehaviourPun
         hasShownGhostEnding = true;
 
         int deadCount = 0;
+        int escapeCount = 0;
         foreach (RunnerStatus status in runnerStatusList)
         {
             if (status == RunnerStatus.Dead)
             {
                 deadCount++;
             }
+
+            if (status == RunnerStatus.Escaped)
+            {
+                escapeCount++;
+            }
         }
 
         if (deadCount == runnerList.Count)
         {
             ShowGhostUI(allKillUI);
+        }
+        else if (escapeCount == runnerList.Count)
+        {
+            ShowGhostUI(noneKillUI);
         }
         else
         {
@@ -214,6 +225,7 @@ public class Ghost : MonoBehaviourPun
     private bool hasShownGhostEnding = false;
     public GameObject allKillUI;
     public GameObject someKillUI;
+    public GameObject noneKillUI;
     public float uiDuration = 5f;
 
 
