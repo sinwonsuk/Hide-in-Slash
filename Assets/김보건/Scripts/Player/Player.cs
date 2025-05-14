@@ -908,26 +908,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         lightCollider.points = scaled;
     }
 
-    //public void OnEvent(EventData data)
-    //{
-    //    if (data.Code != EVENT_BLACKOUT) return;
-
-    //    float duration = (float)data.CustomData;
-    //    if (photonView.IsMine)
-    //    {
-    //        flashLight.enabled = false;
-    //        circleLight.enabled = false;
-    //        StartCoroutine(DelayedTurnOn(duration));
-    //    }
-    //}
-
-    //private IEnumerator DelayedTurnOn(float duration)
-    //{
-    //    yield return new WaitForSeconds(duration);
-    //    flashLight.enabled = true;
-    //    circleLight.enabled = true;
-    //}
-
     private void CheckInBlackOut(object data)
     {
         isBlackoutPlayer = (bool)data;
@@ -1545,8 +1525,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     private float blinkTimer = 0f;
     private float blinkInterval = 0.3f; // 깜빡속도
     private Vector2[] defaultColliderPoints;
-    //private bool hasUpgradedFlashlight = false;
-    private const byte EVENT_BLACKOUT = 1;
 
     [Header("감옥키")]
     [SerializeField] private bool hasPrisonKey = false;

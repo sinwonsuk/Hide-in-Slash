@@ -1,9 +1,7 @@
 using UnityEngine;
 
 public class PlayerStateMachine
-{
-    public PlayerState currentState { get; private set; }
-
+{ 
     public void Initialize(PlayerState _startState)
     {
         currentState = _startState;
@@ -15,8 +13,10 @@ public class PlayerStateMachine
         currentState.Exit();
         currentState = _newState;
 
-        Debug.Log($"ÇöÀç »óÅÂ: {currentState.StateType} (Code: {(int)currentState.StateType})");
+        Debug.Log($"í˜„ì¬ ìƒíƒœ: {currentState.StateType} (Code: {(int)currentState.StateType})");
 
         currentState.Enter();
     }
+
+    public PlayerState currentState { get; private set; }
 }

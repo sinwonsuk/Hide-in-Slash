@@ -11,22 +11,6 @@ public enum PlayerStateType
 
 public class PlayerState
 {
-
-    protected PlayerStateMachine stateMachine;
-    protected Player player;
-
-    protected Rigidbody2D rb;
-
-    protected Vector2 moveInput;
-    private string animBoolName;
-
-    protected float stateTimer;
-    protected bool triggerCalled;
-
-    protected PlayerStateType stateType;
-    public PlayerStateType StateType => stateType;
-
-
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
         this.player = _player;
@@ -67,4 +51,18 @@ public class PlayerState
         player.FlipController(moveInput.x, moveInput.y);
     }
 
+
+    protected PlayerStateMachine stateMachine;
+    protected Player player;
+
+    protected Rigidbody2D rb;
+
+    protected Vector2 moveInput;
+    private string animBoolName;
+
+    protected float stateTimer;
+    protected bool triggerCalled;
+
+    protected PlayerStateType stateType;
+    public PlayerStateType StateType => stateType;
 }
