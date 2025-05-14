@@ -10,21 +10,6 @@ public enum GhostStateType
 }
 public class GhostState
 {
-    protected GhostStateMachine stateMachine;
-    protected Ghost ghost;
-
-    protected Rigidbody2D rb;
-
-    protected Vector2 moveInput;
-    private string animBoolName;
-
-    protected GhostStateType stateType;
-    public GhostStateType StateType => stateType;
-
-    protected float stateTimer;
-    protected bool triggerCalled;
-
-
     public GhostState(Ghost _ghost, GhostStateMachine _stateMachine, string _animBoolName)
     {
         this.ghost = _ghost;
@@ -69,5 +54,20 @@ public class GhostState
     {
         return moveInput;
     }
+
+
+    protected GhostStateMachine stateMachine;
+    protected Ghost ghost;
+
+    protected Rigidbody2D rb;
+
+    protected Vector2 moveInput;
+    private string animBoolName;
+
+    protected GhostStateType stateType;
+    public GhostStateType StateType => stateType;
+
+    protected float stateTimer;
+    protected bool triggerCalled;
 
 }

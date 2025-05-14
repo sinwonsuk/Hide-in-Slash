@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class GhostStateMachine
 {
-    public GhostState currentState { get; private set; }
-    public Vector2 CurrentStateMoveInput => currentState.GetMoveInput();
-    public GhostStateType CurrentStateType => currentState.StateType;
-
     public void Initialize(GhostState _startState)
     {
         currentState = _startState;
@@ -22,4 +18,9 @@ public class GhostStateMachine
         if (currentState != null)
             currentState.Enter();
     }
+
+    public GhostState currentState { get; private set; }
+    public Vector2 CurrentStateMoveInput => currentState.GetMoveInput();
+    public GhostStateType CurrentStateType => currentState.StateType;
+
 }

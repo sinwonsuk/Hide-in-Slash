@@ -40,8 +40,6 @@ public enum EventType
 
 public class EventManager
 {
-    private static readonly Dictionary<EventType, Action> _eventMap = new();
-    private static readonly Dictionary<EventType, Action<object>> _eventMapWithEventData = new();
 
     public static Dictionary<EventType, Action> GeteventMap()
     {
@@ -93,4 +91,7 @@ public class EventManager
         if (_eventMapWithEventData.TryGetValue(eventType, out var action))
             action?.Invoke(eventData);
     }
+
+    private static readonly Dictionary<EventType, Action> _eventMap = new();
+    private static readonly Dictionary<EventType, Action<object>> _eventMapWithEventData = new();
 }

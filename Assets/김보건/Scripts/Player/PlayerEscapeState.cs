@@ -31,10 +31,6 @@ public class PlayerEscapeState : PlayerState
 
         if (player.photonView.IsMine)      
         {
-            //  DeadManager.Instance.photonView.RPC(
-            //"RunnerEscaped",
-            //RpcTarget.MasterClient,
-            //PhotonNetwork.LocalPlayer.ActorNumber);   // 내 ActorNumber 전달
             player.BroadcastStatus(RunnerStatus.Escaped);
         }
 
@@ -42,22 +38,7 @@ public class PlayerEscapeState : PlayerState
         {
             case EscapeType.ExitDoor:
 
-                //if (player.ExitDoorEscapeUI != null )
-                //{
-                //    player.ExitDoorEscapeUI.transform.SetParent(null); 
-                //    Object.DontDestroyOnLoad(player.ExitDoorEscapeUI);   
-                //    player.ExitDoorEscapeUI.SetActive(true);
-
-                //    var black = player.ExitDoorEscapeUI.transform.Find("Black");
-                //    if (black != null)
-                //    {
-                //        var fade = black.GetComponent<playerDeath>();    
-                //        if (fade != null) fade.TriggerFade();                
-                //    }
-                //}
-
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
-                //player.StartCoroutine(EscapeWithDelay(2f));
                 break;
 
             case EscapeType.Hatch:

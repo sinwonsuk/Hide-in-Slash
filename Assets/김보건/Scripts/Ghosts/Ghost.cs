@@ -5,33 +5,6 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviourPun
 {
-    [Header("UI")]
-    private bool hasShownGhostEnding = false;
-    public GameObject allKillUI;
-    public GameObject someKillUI;
-    public float uiDuration = 5f;
-
-
-    public Vector2 MoveInput => ghostStateMachine.CurrentStateMoveInput;
-    public Animator anim { get; protected set; }
-    public Rigidbody2D rb { get; protected set; }
-
-    public SpriteRenderer sr { get; protected set; }
-
-    public int facingDir { get; private set; } = 1;
-    public int facingUpDir { get; private set; } = 1;   // 1 = 위, -1 = 아래
-    protected bool facingRight = true;
-    protected bool facingUp = true;
-
-    [Header("이동 속도")]
-    [SerializeField] protected float moveSpeed = 5f;
-
-    public GhostStateMachine ghostStateMachine { get; protected set; }
-    public virtual GhostState idleState { get; protected set; }
-    public virtual GhostState moveState { get; protected set; }
-
-    public virtual GhostState useSkillState { get; protected set; }
-    public virtual GhostState idleSkillState { get; protected set; }
 
     protected virtual void Awake()
     {
@@ -234,4 +207,34 @@ public class Ghost : MonoBehaviourPun
     }
 
     public virtual void UpdateAnimParam(Vector2 input) { }
+
+
+
+    [Header("UI")]
+    private bool hasShownGhostEnding = false;
+    public GameObject allKillUI;
+    public GameObject someKillUI;
+    public float uiDuration = 5f;
+
+
+    public Vector2 MoveInput => ghostStateMachine.CurrentStateMoveInput;
+    public Animator anim { get; protected set; }
+    public Rigidbody2D rb { get; protected set; }
+
+    public SpriteRenderer sr { get; protected set; }
+
+    public int facingDir { get; private set; } = 1;
+    public int facingUpDir { get; private set; } = 1;   // 1 = 위, -1 = 아래
+    protected bool facingRight = true;
+    protected bool facingUp = true;
+
+    [Header("이동 속도")]
+    [SerializeField] protected float moveSpeed = 5f;
+
+    public GhostStateMachine ghostStateMachine { get; protected set; }
+    public virtual GhostState idleState { get; protected set; }
+    public virtual GhostState moveState { get; protected set; }
+
+    public virtual GhostState useSkillState { get; protected set; }
+    public virtual GhostState idleSkillState { get; protected set; }
 }
