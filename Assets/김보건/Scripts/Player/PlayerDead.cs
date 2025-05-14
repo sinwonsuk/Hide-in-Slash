@@ -20,12 +20,12 @@ public class PlayerDead : PlayerState
 
         player.isDead = true;
 
-        if (player.photonView.IsMine)
-        {
-            ExitGames.Client.Photon.Hashtable props = new();
-            props["IsDead"] = true;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
+        //if (player.photonView.IsMine)
+        //{
+        //    ExitGames.Client.Photon.Hashtable props = new();
+        //    props["IsDead"] = true;
+        //    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        //}
 
         if (player.photonView.IsMine && !hasReportedDeath)          // 중복 호출 방지
         {

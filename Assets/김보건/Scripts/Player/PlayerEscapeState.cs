@@ -21,6 +21,7 @@ public class PlayerEscapeState : PlayerState
     {
         base.Enter();
         player.SetZeroVelocity();
+        player.BecomeObserver();
         player.SetEscapeType(currentEscapeType);
 
         if (!player.photonView.IsMine)
@@ -28,15 +29,6 @@ public class PlayerEscapeState : PlayerState
         PhotonNetwork.AutomaticallySyncScene = false;
         Debug.Log($"탈출 상태: {StateType} (Code: {(int)StateType}), 탈출 유형: {currentEscapeType} (Code: {(int)currentEscapeType})");
         player.profileSlotManager.photonView.RPC("SyncProfileState", RpcTarget.All, PhotonNetwork.LocalPlayer, ProfileState.Escape);
-
-        if (player.photonView.IsMine)      
-        {
-            //  DeadManager.Instance.photonView.RPC(
-            //"RunnerEscaped",
-            //RpcTarget.MasterClient,
-            //PhotonNetwork.LocalPlayer.ActorNumber);   // 내 ActorNumber 전달
-            player.BroadcastStatus(RunnerStatus.Escaped);
-        }
 
         switch (currentEscapeType)
         {
@@ -55,30 +47,31 @@ public class PlayerEscapeState : PlayerState
                 //        if (fade != null) fade.TriggerFade();                
                 //    }
                 //}
-
+                player.BroadcastStatus(RunnerStatus.ExitDoor);
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
+
                 //player.StartCoroutine(EscapeWithDelay(2f));
                 break;
 
             case EscapeType.Hatch:
-                if (player.UseItemAndEscapeUI != null)
-                {
-                    player.UseItemAndEscapeUI.transform.SetParent(null);
-                    Object.DontDestroyOnLoad(player.UseItemAndEscapeUI);
-                    player.UseItemAndEscapeUI.SetActive(true);
+                //if (player.UseItemAndEscapeUI != null)
+                //{
+                //    player.UseItemAndEscapeUI.transform.SetParent(null);
+                //    Object.DontDestroyOnLoad(player.UseItemAndEscapeUI);
+                //    player.UseItemAndEscapeUI.SetActive(true);
 
-                    Transform black = player.UseItemAndEscapeUI.transform.Find("Black");
-                    if (black != null)
-                    {
-                        playerDeath fadeEffect = black.GetComponent<playerDeath>();
-                        if (fadeEffect != null)
-                            fadeEffect.TriggerFade();
-                    }
-                }
-
+                //    Transform black = player.UseItemAndEscapeUI.transform.Find("Black");
+                //    if (black != null)
+                //    {
+                //        playerDeath fadeEffect = black.GetComponent<playerDeath>();
+                //        if (fadeEffect != null)
+                //            fadeEffect.TriggerFade();
+                //    }
+                //}
+                player.BroadcastStatus(RunnerStatus.Hatch);
                 player.photonView.RPC("EscapePlayerObject", RpcTarget.Others);
 
-                player.StartCoroutine(EscapeWithDelay(5f));
+                //player.StartCoroutine(EscapeWithDelay(5f));
 
                 break;
 
@@ -87,33 +80,41 @@ public class PlayerEscapeState : PlayerState
         }
     }
 
-    private IEnumerator EscapeWithDelay(float delay)
+    public override void Update()
     {
-        yield return new WaitForSeconds(delay);
+        base.Update();
 
-        if (player.UseItemAndEscapeUI != null)
-        {
-            Object.Destroy(player.UseItemAndEscapeUI);
-        }
-        if(player.ExitDoorEscapeUI != null)
-        {
-            Object.Destroy(player.ExitDoorEscapeUI);
-        }
-
-        Player.runnerStatuses.Clear();
-
-        if (player.photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(player.gameObject);
-
-            // 방을 먼저 나감
-            if (PhotonNetwork.InRoom)
-                PhotonNetwork.LeaveRoom();
-
-            yield return new WaitForSeconds(0.1f);
-            if (!PhotonNetwork.InLobby)
-                PhotonNetwork.JoinLobby();
-        }
+        if (moveInput != Vector2.zero)
+            stateMachine.ChangeState(player.moveState);
     }
+
+    //private IEnumerator EscapeWithDelay(float delay)
+    //{
+    //    yield return new WaitForSeconds(delay);
+
+    //    if (player.UseItemAndEscapeUI != null)
+    //    {
+    //        Object.Destroy(player.UseItemAndEscapeUI);
+    //    }
+    //    if(player.ExitDoorEscapeUI != null)
+    //    {
+    //        Object.Destroy(player.ExitDoorEscapeUI);
+    //    }
+
+    //    Player.runnerStatuses.Clear();
+
+    //    if (player.photonView.IsMine)
+    //    {
+    //        PhotonNetwork.Destroy(player.gameObject);
+
+    //         방을 먼저 나감
+    //        if (PhotonNetwork.InRoom)
+    //            PhotonNetwork.LeaveRoom();
+
+    //        yield return new WaitForSeconds(0.1f);
+    //        if (!PhotonNetwork.InLobby)
+    //            PhotonNetwork.JoinLobby();
+    //    }
+    //}
 
 }

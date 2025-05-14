@@ -23,7 +23,9 @@ public enum RunnerStatus
     Alive,
     Prison,
     Dead,
-    Escaped
+    Escaped,
+    Hatch,
+    ExitDoor
 }
 
 public class Player : MonoBehaviourPun, IPunObservable
@@ -242,30 +244,19 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             if (Input.GetKeyDown(KeyCode.M))
             {
-                if (!hasMap)
-                {
-                    Debug.Log("지도 없음");
-                }
+                if (!isInMap)
+                    OpenMap();
                 else
-                {
-                    if (!isInMap)
-                        OpenMap();
-                    else
-                        CloseMap();
-                }
+                    CloseMap();
+
             }
 
-            if (Input.GetKeyUp(KeyCode.R))
+            if (Input.GetKeyUp(KeyCode.R) && hasHatch && isInHatch)
             {
-                if (hasHatch && isInHatch)
-                {
-                    useHatchItem();
-                    Debug.Log("개구멍사용");
-                }
-                else
-                {
-                    Debug.Log("사용못함");
-                }
+
+                useHatchItem();
+                Debug.Log("개구멍사용");
+
             }
 
             // 투명물약지속시간
@@ -400,11 +391,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         anim.SetBool("IsMoving", isMoving);
         anim.SetFloat("DirX", lastDir.x);
         anim.SetFloat("DirY", lastDir.y);
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
 
     }
 
@@ -573,8 +559,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             //props["IsInPrison"] = true;
             //PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
-
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -646,12 +630,12 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (portal != null)
             transform.position = portal.position;
 
-        if (photonView.IsMine)
-        {
-            ExitGames.Client.Photon.Hashtable props = new();
-            props["IsInPrison"] = true;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
+        //if (photonView.IsMine)
+        //{
+        //    ExitGames.Client.Photon.Hashtable props = new();
+        //    props["IsInPrison"] = true;
+        //    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        //}
     }
 
     private IEnumerator UpdateCameraConfinerDelayed()
@@ -1009,6 +993,34 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (col != null)
                 col.enabled = false;
         }
+    }
+
+    public void BecomeObserver()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        Color c = sr.color;
+        c.a = 0.5f;
+        sr.color = c;
+
+        gameObject.tag = "EscapePlayer";
+        gameObject.layer = LayerMask.NameToLayer("EscapePlayer");
+
+        photonView.RPC("SetObserverVisual", RpcTarget.Others);
+        photonView.RPC("SetFlashEntireLight", RpcTarget.Others, false);
+
+    }
+
+    [PunRPC]
+    public void SetObserverVisual()
+    {
+        Color c = sr.color;
+        c.a = 0f;
+        sr.color = c;
+        playerNickName.SetActive(false);
+        gameObject.tag = "EscapePlayer";
+        gameObject.layer = LayerMask.NameToLayer("EscapePlayer");
     }
     #endregion
 
@@ -1428,7 +1440,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 case RunnerStatus.Escaped:
                     if (escapeType == EscapeType.Hatch)
-                        return;
+                    return;
+                    ShowLocalUI(someEscapeUI);
+                    break;
+                case RunnerStatus.Hatch:
+                    ShowLocalUI(someEscapeUI);
+                    break;
+                case RunnerStatus.ExitDoor:
                     ShowLocalUI(someEscapeUI);
                     break;
                 case RunnerStatus.Dead:
