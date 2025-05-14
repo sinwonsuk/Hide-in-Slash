@@ -14,6 +14,7 @@ public class roomClick : MonoBehaviour
 
     public void OnRoomButtonClicked()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         string selectedRoomName = roomName.text;
 
         RoomInfo getRoom = GameReadyManager.Instance.GetRoomByName(selectedRoomName); //방이름으로 방정보 가져오기

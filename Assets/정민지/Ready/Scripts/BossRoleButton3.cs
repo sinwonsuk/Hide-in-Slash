@@ -8,6 +8,7 @@ public class BossRoleButton3 : MonoBehaviour
 
     public void OnClickPeanut()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         Peanut.SetActive(true);
         Mamarote.SetActive(false);
         Cancer.SetActive(false);
@@ -15,6 +16,7 @@ public class BossRoleButton3 : MonoBehaviour
 
     public void OnClickMamarote()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         Peanut.SetActive(false);
         Mamarote.SetActive(true);
         Cancer.SetActive(false);
@@ -22,6 +24,7 @@ public class BossRoleButton3 : MonoBehaviour
 
     public void OnClickCancer()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         Peanut.SetActive(false);
         Mamarote.SetActive(false);
         Cancer.SetActive(true);

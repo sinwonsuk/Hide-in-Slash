@@ -23,6 +23,7 @@ public class PlayerNameInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && warning == 0)
         {
+            SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
             Destroy(gameObject);
         }
             
@@ -45,7 +46,6 @@ public class PlayerNameInput : MonoBehaviour
 
     public void SavePlayerName()
     {
-        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         string playerName = nameInputField.text;
 
         GameReadyManager.Instance.Test(playerName);
@@ -54,12 +54,14 @@ public class PlayerNameInput : MonoBehaviour
         {
             if (playerName.Length < 7)
             {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
                 GameReadyManager.Instance.Connect();
 			}
             else
             {
                 if(currentWarning==null)
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Warning, false);
                     currentWarning = Instantiate(lengthExceeded); // 현재 경고 = 길이 초과
                 }
                 warning = 2;
@@ -69,7 +71,11 @@ public class PlayerNameInput : MonoBehaviour
         {
             warning = 1;
             if(currentWarning==null)
-            currentWarning = Instantiate(nicknameIsNull); // 현재 경고 = 텍스트 빔
+            {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Warning, false);
+                currentWarning = Instantiate(nicknameIsNull); // 현재 경고 = 텍스트 빔
+            }
+            
         }
     }
 

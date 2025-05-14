@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
         Scream,
         Rotte,
         SfxSetting,
+        Warning,
     }
     public enum bgm
     {

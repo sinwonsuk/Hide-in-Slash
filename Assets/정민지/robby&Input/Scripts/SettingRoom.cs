@@ -24,6 +24,7 @@ public class SettingRoom : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && warning == 0)
         {
+            SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
             Time.timeScale = 1;
             popupPanel.SetActive(false); // 팝업 닫기
         }
@@ -33,6 +34,7 @@ public class SettingRoom : MonoBehaviour
         {
             if (currentWarning != null)
             {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
                 Destroy(currentWarning);
                 Time.timeScale = 0;
             }
@@ -50,7 +52,7 @@ public class SettingRoom : MonoBehaviour
     {
 
         Time.timeScale = 1;
-        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
+       
         string roomName = roomNameInput.text;
         string password = roomPasswordInput.text;
 
@@ -58,7 +60,7 @@ public class SettingRoom : MonoBehaviour
         {
             if (roomName.Length < 14)
             {
-
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
                 GameReadyManager.Instance.RequestCreateRoomWithPassword(roomName,password);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
@@ -67,6 +69,7 @@ public class SettingRoom : MonoBehaviour
             {
                 if (currentWarning == null)
                 {
+                    SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Warning, false);
                     currentWarning = Instantiate(lengthExceeded); // 현재 경고 = 길이 초과
                 }
                 warning = 2;
@@ -75,7 +78,7 @@ public class SettingRoom : MonoBehaviour
 
             if (!string.IsNullOrEmpty(password))
             {
-
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
                 GameReadyManager.Instance.RequestCreateRoomWithOutPassword(roomName);
                 popupPanel.SetActive(false); // 팝업 닫기
                 roomNameInput.text = "";
@@ -86,7 +89,11 @@ public class SettingRoom : MonoBehaviour
         {
             warning = 1;
             if (currentWarning == null)
+            {
+                SoundManager.GetInstance().SfxPlay(SoundManager.sfx.Warning, false);
                 currentWarning = Instantiate(nicknameIsNull); // 현재 경고 = 텍스트 빔
+            }
+                
         }
     }
 

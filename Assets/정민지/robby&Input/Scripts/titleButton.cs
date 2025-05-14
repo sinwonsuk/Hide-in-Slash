@@ -43,8 +43,9 @@ public class titleButton : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape)&&guide.activeSelf)
         {
+            SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
             guide.SetActive(false);
         }
     }

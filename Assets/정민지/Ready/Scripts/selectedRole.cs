@@ -7,12 +7,14 @@ public class selectedRole : MonoBehaviour
 
     public void OnClickPlayerRole()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         playerRole.SetActive(true);
         bossRole.SetActive(false);
     }
 
     public void OnClickBossRole()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         bossRole.SetActive(true);
         playerRole.SetActive(false);
     }

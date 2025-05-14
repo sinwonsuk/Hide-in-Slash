@@ -3033,8 +3033,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 136.87354, y: 61.40088}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: 182, y: 61.40088}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &386228469850685773
 CanvasRenderer:
@@ -3064,7 +3064,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\"\uD53C\uB0C4\uC0C8\uAC00.. \uB290\uAEF4\uC9C4\uB2E4...\""
+  m_text: "\"\uB10C \uB0B4 \uC190\uBC14\uB2E5 \uC548\uC774\uC57C. \uBC97\uC5B4\uB0A0
+    \uC218 \uC5C6\uC744\uAC78?\""
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
   m_sharedMaterial: {fileID: 817788767588260179, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
@@ -15814,7 +15815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'MotherRote
+  m_text: 'Mother Rot
 
 '
   m_isRightToLeft: 0
@@ -17985,7 +17986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\"\uD06C\uC544\uC544\uC544\uC545\""
+  m_text: "\"\uC778\uAC04\uB0C4\uC0C8.. \uB9DB\uC788\uB294 \uB0C4\uC0C8!\""
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}
   m_sharedMaterial: {fileID: 817788767588260179, guid: e71d3443fdc302b40a827ebb8ad54c33, type: 2}

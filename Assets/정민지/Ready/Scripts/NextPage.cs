@@ -7,6 +7,7 @@ public class NextPage : MonoBehaviour
 
     public void OnClickNext()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         CurrentPage.SetActive(false);
         NewPage.SetActive(true);
     }

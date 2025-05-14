@@ -713,6 +713,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 281127770134752231, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
+      propertyPath: m_text
+      value: 'Mother Rot
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110533887120147426, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
+      propertyPath: m_text
+      value: "\"\uC778\uAC04\uB0C4\uC0C8.. \uB9DB\uC788\uB294 \uB0C4\uC0C8!\""
+      objectReference: {fileID: 0}
     - target: {fileID: 1898793635735681399, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -793,6 +803,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2689532316897093646, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
+      propertyPath: m_text
+      value: "\"\uB10C \uB0B4 \uC190\uBC14\uB2E5 \uC548\uC774\uC57C. \uBC97\uC5B4\uB0A0
+        \uC218 \uC5C6\uC744\uAC78?\""
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649498874927227972, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649498874927227972, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 182
+      objectReference: {fileID: 0}
     - target: {fileID: 4331969795643227992, guid: c0208caefcc1ced43ad71dc83c77104d, type: 3}
       propertyPath: m_Name
       value: Guide
@@ -862,6 +885,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3a458069e5680884e9f869259b67d929, type: 3}
   - {fileID: 8300000, guid: f0ecbde24e82b2a48a14605ae8fbcee7, type: 3}
   - {fileID: 8300000, guid: bb74612980664ce46ac07d883d1bf309, type: 3}
+  - {fileID: 8300000, guid: 46a384fc649b8d246b00bdfde3f39944, type: 3}
   sfxVolume: 0.5
   channels: 20
 --- !u!4 &881139572

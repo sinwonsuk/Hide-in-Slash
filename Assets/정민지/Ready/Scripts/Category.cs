@@ -17,6 +17,7 @@ public class Category : MonoBehaviour
 
     public void OnClickMission()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         targetImage.sprite = MissionSprite;
         Mission.SetActive(true);
         Generartor.SetActive(false);
@@ -26,6 +27,7 @@ public class Category : MonoBehaviour
 
     public void OnClickGenerator()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         targetImage.sprite = GeneratorSprite;
         Mission.SetActive(false);
         Generartor.SetActive(true);
@@ -35,6 +37,7 @@ public class Category : MonoBehaviour
 
     public void OnClickMiniGame()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         targetImage.sprite = MiniGameSprite;
         Mission.SetActive(false);
         Generartor.SetActive(false);
@@ -44,6 +47,7 @@ public class Category : MonoBehaviour
 
     public void OnClickItem()
     {
+        SoundManager.GetInstance().SfxPlay(SoundManager.sfx.SfxSetting, false);
         targetImage.sprite = ItemSprite;
         Mission.SetActive(false);
         Generartor.SetActive(false);
