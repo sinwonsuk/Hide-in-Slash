@@ -258,7 +258,7 @@ public class Inventory : MonoBehaviour
     List<GameObject> inventoryList = new List<GameObject>();
     Dictionary<InventoryType,GameObject> ItemDictionary = new Dictionary<InventoryType, GameObject>();
 
-    private List<InventoryType> orderedKeys; // ���ĵ� Ű ����Ʈ
+    private List<InventoryType> orderedKeys;
 
     [SerializeField]
     List<GameObject> itemNumbersRenders = new List<GameObject>();
